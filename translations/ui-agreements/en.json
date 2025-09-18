@@ -885,5 +885,23 @@
   "remoteKb.altNames": "Alternative names",
   "remoteKb.scheme": "Scheme",
   "remoteKb.heading": "Heading",
-  "remoteKb.noAccordionContent": "No {accordion} content available."
+  "remoteKb.noAccordionContent": "No {accordion} content available.",
+
+  "remoteKb.displayName": "Display name",
+  "remoteKb.resourceInstanceId": "Resource Instance ID",
+
+  "remoteKb.associatedActivities": "Associated Activities",
+  "remoteKb.mapPopup": "Map Popup",
+
+"remoteKb.displayDescription": "Display description",
+"remoteKb.referenceId": "Reference ID",
+"remoteKb.graphId": "Graph ID",
+"remoteKb.primaryReferenceId": "Primary Reference ID",
+"remoteKb.activityDescriptors": "Activity Descriptors",
+"remoteKb.geospatialData": "Geospatial Data",
+"remoteKb.activityNames": "Activity Names",
+"remoteKb.filters.type.bibliographicInstance": "Bibliographic Instance",
+"remoteKb.filters.type.graphInstance": "Graph instance"
+
+
 }

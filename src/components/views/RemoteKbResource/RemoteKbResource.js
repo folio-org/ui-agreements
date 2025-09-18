@@ -24,7 +24,13 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { handlebarsCompile, renderPublicationDates, stableKeyFrom } from '../../utilities';
+import { Link } from 'react-router-dom';
+
+import {
+  handlebarsCompile,
+  renderPublicationDates,
+  stableKeyFrom,
+} from '../../utilities';
 import getResultsDisplayConfig from '../../../routes/utilities/getResultsDisplayConfig';
 
 const PANE_DEFAULT_WIDTH = '50%';
@@ -40,7 +46,7 @@ const propTypes = {
   onClose: PropTypes.func.isRequired,
   resource: PropTypes.oneOfType([
     PropTypes.shape({}),
-    PropTypes.arrayOf(PropTypes.shape({}))
+    PropTypes.arrayOf(PropTypes.shape({})),
   ]),
   queryProps: PropTypes.shape({
     isLoading: PropTypes.bool,
@@ -53,25 +59,153 @@ const RemoteKbResource = ({
   onClose,
   queryProps: { isLoading },
 }) => {
+  resource = {
+    displaydescription:
+      'Observation of groundworks involved with structural repair, including underpinning. No archaeological deposits were observed.',
+    displayname: 'Watching Brief at Spring Hill',
+    graph_id: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+    legacyid: "{'en': {'direction': 'ltr', 'value': 'E5522'}}",
+    map_popup:
+      'Observation of groundworks involved with structural repair, including underpinning. No archaeological deposits were observed.',
+    resource: {
+      'Activity Descriptions': [
+        {
+          'Activity Description':
+            'Observation of groundworks involved with structural repair, including underpinning. No archaeological deposits were observed.',
+          'Activity Description Type': {
+            '@value': 'Summary',
+            'Activity Description Metatype': '',
+          },
+        },
+      ],
+      'Activity Names': [
+        {
+          'Activity Name': 'Watching Brief at Spring Hill',
+          'Activity Name Currency': {
+            '@value': '',
+            'Activity Name Currency Metatype': '',
+          },
+          'Activity Name Type': {
+            '@value': 'Primary',
+            'Activity Name Metatype': '',
+          },
+          'Activity Name Use Type': {
+            '@value': '',
+            'Activity Name Use Metatype': '',
+          },
+        },
+      ],
+      'Activity Timespan': {
+        'Activity Date Qualifier': {
+          '@value': '',
+          'Activity Date Qualifier Metatype': '',
+        },
+        'Activity End Date': '2000-09-18',
+        'Activity Start Date': '2000-09-18',
+        'Display Date': null,
+      },
+      'Activity Type': {
+        '@value': 'Watching Brief',
+        'Activity Metatype': '',
+      },
+      'Associated Monuments and Areas': 'Castle Mount, Spring Hill',
+      'Bibliographic Source Citation': [
+        {
+          '@value':
+            'Voluntary Observations of interventions by staff of the Heritage Team, Lincoln City Council.',
+          Figures: {
+            'Figs.': null,
+            'Figures Type': {
+              '@value': '',
+              'Figures Metatype': '',
+            },
+          },
+          Pages: {
+            'Page(s)': null,
+            'Pages Type': {
+              '@value': '',
+              'Pages Metatype': '',
+            },
+          },
+          Plates: {
+            'Plate(s)': null,
+            'Plates Type': {
+              '@value': '',
+              'Plates metatype': '',
+            },
+          },
+          'Source Comment': {
+            Comment: null,
+            'Source Comment Type': {
+              '@value': '',
+              'Source Comment Metatype': '',
+            },
+          },
+          'Source Number': {
+            'Source Number Type': {
+              '@value': '',
+              'Source Number Metatype': '',
+            },
+            'Source Number Value': null,
+          },
+        },
+      ],
+      'Location Data': {
+        Geometry: {
+          'Feature Shape': {
+            '@value': '',
+            'Feature Shape Metatype': '',
+          },
+          'Geospatial Coordinates':
+            "{'type': 'FeatureCollection', 'features': [{'id': '9fb04cd3-e6ca-4a42-b8bd-667c27e758b5', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.542554016810026, 53.2337139891952]}, 'properties': {}}]}",
+        },
+      },
+      'System Reference Numbers': {
+        LegacyID: {
+          'Legacy ID': 'E5522',
+          'Legacy ID Type': {
+            '@value': '',
+            'Legacy ID Metatype': '',
+          },
+        },
+        PrimaryReferenceNumber: {
+          'Primary Reference Number': '1131',
+          'Primary Reference Number Type': {
+            '@value': '',
+            'Primary Reference Number Metatype': '',
+          },
+        },
+        UUID: {
+          ResourceID: '000543e8-bfea-40b3-8325-010981f2369e',
+          'ResourceID Type': {
+            '@value': '',
+            'ResourceID Metatype': '',
+          },
+        },
+      },
+    },
+    primaryreferenceid: '1131',
+    resourceid: '000543e8-bfea-40b3-8325-010981f2369e',
+    resourceinstanceid: '000543e8-bfea-40b3-8325-010981f2369e',
+  };
   const intl = useIntl();
   const accordionStatusRef = createRef();
 
-  const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
+  const applyJsonPath = (expression) =>
+    JSONPath({ path: expression, json: resource }) || [];
 
   /*
     we need the initial status for each accordion
     maybe later we use a config entry for the boolean value instead of false as default
   */
-  const initialAccordionsState = (
+  const initialAccordionsState =
     displayConfig.renderStrategy?.values
-      ?.find(s => s.renderStrategy?.type === 'accordionset')
-      ?.renderStrategy?.values
-      ?.filter(s => s.collapsable)
+      ?.find((s) => s.renderStrategy?.type === 'accordionset')
+      ?.renderStrategy?.values?.filter((s) => s.collapsable)
       ?.reduce((acc, s) => {
         acc[s.name] = false;
         return acc;
-      }, {}) || {}
-  );
+      }, {}) || {};
 
   // treat '', null/false, empty arrays as "empty"
   const hasVisualContent = (node) => {
@@ -80,7 +214,8 @@ const RemoteKbResource = ({
     if (Array.isArray(node)) return node.some(hasVisualContent);
 
     if (isValidElement(node)) {
-      if ('children' in (node.props || {})) return hasVisualContent(node.props.children);
+      if ('children' in (node.props || {}))
+        return hasVisualContent(node.props.children);
       return true;
     }
     return true;
@@ -95,12 +230,16 @@ const RemoteKbResource = ({
         }
         return '';
       case 'keyValue':
-        return <KeyValue
-          label={<FormattedMessage id={`ui-agreements.remoteKb.${value.name}`} />}
-          value={renderValue(value.value)}
-        />;
+        return (
+          <KeyValue
+            label={
+              <FormattedMessage id={`ui-agreements.remoteKb.${value.name}`} />
+            }
+            value={renderValue(value.value)}
+          />
+        );
       case 'row': {
-        const colSize = value.colCount ? (12 / Number(value.colCount)) : 12;
+        const colSize = value.colCount ? 12 / Number(value.colCount) : 12;
         return (
           <>
             {value.values.map((val) => (
@@ -112,19 +251,20 @@ const RemoteKbResource = ({
         );
       }
       case 'metadata':
-        return <MetaSection
-          contentId="remoteKbResourceMetaContent"
-          createdDate={renderValue(value.createdDate)}
-          hideSource
-          lastUpdatedDate={renderValue(value.lastUpdatedDate)}
-        />;
+        return (
+          <MetaSection
+            contentId="remoteKbResourceMetaContent"
+            createdDate={renderValue(value.createdDate)}
+            hideSource
+            lastUpdatedDate={renderValue(value.lastUpdatedDate)}
+          />
+        );
       case 'heading':
         return (
-          <Headline
-            size="xx-large"
-            tag="h2"
-          >
-            {renderValue(value.value)}
+          <Headline size="xx-large" tag="h2">
+            <a href="https://arcade-test.lincoln.gov.uk/report/000543e8-bfea-40b3-8325-010981f2369e">
+              {renderValue(value.value)}
+            </a>
           </Headline>
         );
       case 'displayDates': {
@@ -139,10 +279,17 @@ const RemoteKbResource = ({
         return result || <NoValue />;
       }
       case 'handlebars':
-        if (value.value?.type === 'access' && value.value?.accessType === 'JSONPath') {
+        if (
+          value.value?.type === 'access' &&
+          value.value?.accessType === 'JSONPath'
+        ) {
           const result = applyJsonPath(value.value?.expression);
           const template = handlebarsCompile(value.templateString);
-          return result.length > 0 ? result.map(obj => template(obj)).join(', ') : <NoValue />;
+          return result.length > 0 ? (
+            result.map((obj) => template(obj)).join(', ')
+          ) : (
+            <NoValue />
+          );
         } else {
           return '';
         }
@@ -151,22 +298,25 @@ const RemoteKbResource = ({
         // MCL expects array of objects
         const raw = applyJsonPath(value.resource?.expression);
         const nameKey = value.columns[0].name;
-        const resourceData = Array.isArray(raw) && raw.length > 0 && typeof raw[0] !== 'object'
-          ? raw.map(v => ({ [nameKey]: v }))   // only wrap primitives
-          : raw;                           // leave objects alone
+        const resourceData =
+          Array.isArray(raw) && raw.length > 0 && typeof raw[0] !== 'object'
+            ? raw.map((v) => ({ [nameKey]: v })) // only wrap primitives
+            : raw; // leave objects alone
 
-        return (
-          resourceData.length > 0 ?
-            <MultiColumnList
-              columnMapping={value.columns.reduce((acc, col) => {
-                acc[col.name] = <FormattedMessage id={`ui-agreements.remoteKb.${col.name}`} />;
-                return acc;
-              }, {})}
-              contentData={resourceData}
-              formatter={formatter}
-              visibleColumns={(value?.columns || []).map(c => c.name)}
-            />
-            : ''
+        return resourceData.length > 0 ? (
+          <MultiColumnList
+            columnMapping={value.columns.reduce((acc, col) => {
+              acc[col.name] = (
+                <FormattedMessage id={`ui-agreements.remoteKb.${col.name}`} />
+              );
+              return acc;
+            }, {})}
+            contentData={resourceData}
+            formatter={formatter}
+            visibleColumns={(value?.columns || []).map((c) => c.name)}
+          />
+        ) : (
+          ''
         );
       }
       default:
@@ -179,23 +329,31 @@ const RemoteKbResource = ({
       case 'sections':
         return strategy.values?.map((section) => (
           <div key={section.name}>
-            {applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)}
+            {applyRenderStrategy(
+              section.renderStrategy,
+              section?.collapsable,
+              section.name
+            )}
           </div>
         ));
       case 'accordionset':
         return (
           <AccordionStatus ref={accordionStatusRef}>
-            {Object.keys(initialAccordionsState).length > 1 &&
+            {Object.keys(initialAccordionsState).length > 1 && (
               <Row end="xs">
                 <Col xs>
                   <ExpandAllButton />
                 </Col>
               </Row>
-            }
+            )}
             <AccordionSet initialStatus={initialAccordionsState}>
               {strategy.values?.map((section) => (
                 <div key={section.name}>
-                  {applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)}
+                  {applyRenderStrategy(
+                    section.renderStrategy,
+                    section?.collapsable,
+                    section.name
+                  )}
                 </div>
               ))}
             </AccordionSet>
@@ -211,7 +369,9 @@ const RemoteKbResource = ({
         }, []);
 
         if (collapsable) {
-          const accordionTitle = intl.formatMessage({ id: `ui-agreements.remoteKb.${name}` });
+          const accordionTitle = intl.formatMessage({
+            id: `ui-agreements.remoteKb.${name}`,
+          });
           const accordion = accordionTitle.toLowerCase();
 
           return (
@@ -221,14 +381,14 @@ const RemoteKbResource = ({
               id={name}
               label={accordionTitle}
             >
-              {rows.length
-                ? rows
-                : (
-                  <FormattedMessage
-                    id="ui-agreements.remoteKb.noAccordionContent"
-                    values={{ accordion }}
-                  />
-                )}
+              {rows.length ? (
+                rows
+              ) : (
+                <FormattedMessage
+                  id="ui-agreements.remoteKb.noAccordionContent"
+                  values={{ accordion }}
+                />
+              )}
             </Accordion>
           );
         }
@@ -267,7 +427,9 @@ const RemoteKbResource = ({
       scope={document.body}
     >
       <Pane
-        appIcon={<AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />}
+        appIcon={
+          <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />
+        }
         defaultWidth={PANE_DEFAULT_WIDTH}
         dismissible
         onClose={onClose}

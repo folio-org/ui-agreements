@@ -1,0 +1,4834 @@
+{
+  "@context": "https://www.w3.org/ns/ldp/",
+  "@id": "",
+  "@type": "ldp:BasicContainer",
+  "ldp:contains": [
+    {
+      "displaydescription": "Observation of groundworks involved with structural repair, including underpinning. No archaeological deposits were observed.",
+      "displayname": "Watching Brief at Spring Hill",
+      "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'E5522'}}",
+      "map_popup": "Observation of groundworks involved with structural repair, including underpinning. No archaeological deposits were observed.",
+      "resource": {
+        "Activity Descriptions": [
+          {
+            "Activity Description": "Observation of groundworks involved with structural repair, including underpinning. No archaeological deposits were observed.",
+            "Activity Description Type": {
+              "@value": "Summary",
+              "Activity Description Metatype": ""
+            }
+          }
+        ],
+        "Activity Names": [
+          {
+            "Activity Name": "Watching Brief at Spring Hill",
+            "Activity Name Currency": {
+              "@value": "",
+              "Activity Name Currency Metatype": ""
+            },
+            "Activity Name Type": {
+              "@value": "Primary",
+              "Activity Name Metatype": ""
+            },
+            "Activity Name Use Type": {
+              "@value": "",
+              "Activity Name Use Metatype": ""
+            }
+          }
+        ],
+        "Activity Timespan": {
+          "Activity Date Qualifier": {
+            "@value": "",
+            "Activity Date Qualifier Metatype": ""
+          },
+          "Activity End Date": "2000-09-18",
+          "Activity Start Date": "2000-09-18",
+          "Display Date": null
+        },
+        "Activity Type": {
+          "@value": "Watching Brief",
+          "Activity Metatype": ""
+        },
+        "Associated Monuments and Areas": "Castle Mount, Spring Hill",
+        "Bibliographic Source Citation": [
+          {
+            "@value": "Voluntary Observations of interventions by staff of the Heritage Team, Lincoln City Council.",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '9fb04cd3-e6ca-4a42-b8bd-667c27e758b5', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.542554016810026, 53.2337139891952]}, 'properties': {}}]}"
+          }
+        },
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "E5522",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "1131",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "000543e8-bfea-40b3-8325-010981f2369e",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        }
+      },
+      "primaryreferenceid": "1131",
+      "resourceid": "000543e8-bfea-40b3-8325-010981f2369e",
+      "resourceinstanceid": "000543e8-bfea-40b3-8325-010981f2369e"
+    },
+    {
+      "displaydescription": "<Description>",
+      "displayname": "North Row",
+      "graph_id": "24d7b54f-5464-11e9-a86b-000d3ab1e588",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'S1071'}}",
+      "map_popup": "Undefined",
+      "resource": {
+        "Bibliographic Source Names": [
+          {
+            "Bibliographic Source Name": "North Row",
+            "Bibliographic Source Name Type": {
+              "@value": "Primary",
+              "Bibliographic Source Name Metatype": ""
+            },
+            "Bibliographic Source Name Use Type": {
+              "@value": "",
+              "Bibliographic Source Name Use Metatype": ""
+            },
+            "Bibliographic Source Volume Number": {
+              "Volume Number": null,
+              "Volume Number Type": {
+                "@value": "",
+                "Volume Number Metatype": ""
+              }
+            },
+            "Bibliographic Source Volume Part": {
+              "Volume Part": null,
+              "Volume Part Type": {
+                "@value": "",
+                "Volume Part Metatype": ""
+              }
+            }
+          }
+        ],
+        "Bibliographic Source Type": {
+          "@value": "Article",
+          "Bibliographic Source Metatype": ""
+        },
+        "Publication": {
+          "Publication Event": {
+            "Place of Publication": {
+              "Publication Placename": {
+                "Publication Placename Type": {
+                  "@value": "",
+                  "Publication Placename Metatype": ""
+                },
+                "Publication Placename Value": null
+              }
+            },
+            "Publication Time Span": {
+              "Date of Publication": "1946"
+            },
+            "Publishers": {
+              "Publisher Names": {
+                "Publisher": "Lincoln Archaeological Research Committee",
+                "Publisher Name Type": {
+                  "@value": "",
+                  "Publisher Name Metatype": ""
+                }
+              }
+            }
+          }
+        },
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "S1071",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "4426",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "0009e6bc-2002-48c3-86a9-d3cceaf7503c",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        }
+      },
+      "resourceinstanceid": "0009e6bc-2002-48c3-86a9-d3cceaf7503c"
+    },
+    {
+      "displaydescription": "<p>Road bridge. Mid C20 replacement of the bridge of 1813 by William Hayward, retaining most of the original parapet. Ashlar, with some concrete balusters. Single segmental arch with rusticated soffit and keystone, flanked by single blank panels. Coped parapet with quadrant ends and square piers. (Buildings of England : Lincolnshire: Pevsner N: Lincolnshire: London: 1989-: 526).<br />\n&nbsp;</p>\n",
+      "displayname": "GOWTS BRIDGE",
+      "graph_id": "360a22d8-7097-11ed-b2a8-09a7eb3130f4",
+      "legacyid": "000a40b2-7eaf-11ec-8a58-066e122e3f0a",
+      "map_popup": " GOWTS BRIDGE",
+      "resource": {
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": null,
+              "Construction Phase Start Date": "1950"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Asset Type": {
+                "@value": "",
+                "Asset Metatype": ""
+              },
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "<p>Road bridge. Mid C20 replacement of the bridge of 1813 by William Hayward, retaining most of the original parapet. Ashlar, with some concrete balusters. Single segmental arch with rusticated soffit and keystone, flanked by single blank panels. Coped parapet with quadrant ends and square piers. (Buildings of England : Lincolnshire: Pevsner N: Lincolnshire: London: 1989-: 526).<br />\n&nbsp;</p>\n",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Designation and Protection Assignment": [
+          {
+            "Designation Names": {
+              "Designation Name": null,
+              "Designation Name Type": {
+                "@value": "",
+                "Designation Name Metatype": ""
+              },
+              "Designation Name Use Type": {
+                "@value": "",
+                "Designation Name Use Metatype": ""
+              }
+            },
+            "Designation and Protection Timespan": {
+              "Date Qualifier": {
+                "@value": "",
+                "Date Qualifier Metatype": ""
+              },
+              "Designation Amendment Date": null,
+              "Designation End Date": null,
+              "Designation Start Date": "1973-08-15",
+              "Display Date": null
+            },
+            "Designation or Protection Type": {
+              "@value": "Listed Building",
+              "Designation or Protection Metatype": ""
+            },
+            "Digital File(s)": "",
+            "Grade": {
+              "@value": "Grade II",
+              "Grade Metatype": ""
+            },
+            "Local Heritage List Criteria Type": {
+              "@value": "",
+              "Local Heritage List Criteria Metatype": ""
+            },
+            "Reference URL": null,
+            "Risk Status": {
+              "@value": "",
+              "Risk Status Metatype": ""
+            }
+          }
+        ],
+        "External Cross References": [
+          {
+            "External Cross Reference": "1388601",
+            "External Cross Reference Notes": {
+              "External Cross Reference Description": null,
+              "External Cross Reference Description Type": {
+                "@value": "",
+                "External Cross Reference Description Metatype": ""
+              }
+            },
+            "External Cross Reference Source": "National Heritage List for England List Entry Number",
+            "URL": null
+          }
+        ],
+        "Heritage Asset Names": [
+          {
+            "Asset Name": "GOWTS BRIDGE",
+            "Asset Name Currency": {
+              "@value": "",
+              "Asset Name Currency Metatype": ""
+            },
+            "Asset Name Type": {
+              "@value": "Primary",
+              "Asset Name Metatype": ""
+            },
+            "Asset Name Use Type": {
+              "@value": "",
+              "Asset Name Use Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '25acbb3a-9fc7-4692-9f6b-7f76db149f31', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.54483968, 53.22011889]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9725670217"
+          }
+        },
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": null,
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "18369",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "000a40b2-7eaf-11ec-8a58-066e122e3f0a",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        }
+      },
+      "resourceinstanceid": "000a40b2-7eaf-11ec-8a58-066e122e3f0a"
+    },
+    {
+      "displaydescription": "Found at a depth of 10ft (3m) during the building of St Pauls Church in 1875-7, in the area to the west of the central group of seven columns on Bailgate. Of plain white tesserae according to Richmond, but described by Venables (SOURCE482) as being black and red.",
+      "displayname": "Roman tessellated pavement, St Pauls Church, Westgate",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M1108.0'}}",
+      "map_popup": "Found at a depth of 10ft (3m) during the building of St Pauls Church in 1875-7, in the area to the west of the central group of seven columns on Bailgate. Of plain white tesserae according to Richmond, but described by Venables (SOURCE482) as being black and red.",
+      "resource": {
+        "Associated Activities": "Casual Observation at Bailgate/Westgate",
+        "Bibliographic Source Citation": [
+          {
+            "@value": "The Roman city of Lincoln and the four coloniae of Roman Britain",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Some account of the Roman Colonnade discovered in Bailgate, Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "0250",
+              "Construction Phase Start Date": "0125"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "Tessellated Floor",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "Found at a depth of 10ft (3m) during the building of St Pauls Church in 1875-7, in the area to the west of the central group of seven columns on Bailgate. Of plain white tesserae according to Richmond, but described by Venables (SOURCE482) as being black and red.",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '5cbf822c-df3d-4432-94be-6ea62346391e', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.539084591520267, 53.2357211553356]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9760571961"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "Roman tessellated pavement, St Pauls Church, Westgate",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M1108.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8348",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "000ee2fe-4568-457b-960c-3e1ec3f53e10",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "Roman",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "000ee2fe-4568-457b-960c-3e1ec3f53e10"
+    },
+    {
+      "displaydescription": "Architects Reynolds and Scott of Parker Fairburn and Manton. Church constructed in brick with concrete frame, with slim spire. Presbytery and hall added in 1961. New hall, club and Community Centre added in 1980.",
+      "displayname": "Our Lady of Lincoln Roman Catholic Church, Laughton Way",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M3496.0'}}",
+      "map_popup": "Architects Reynolds and Scott of Parker Fairburn and Manton. Church constructed in brick with concrete frame, with slim spire. Presbytery and hall added in 1961. New hall, club and Community Centre added in 1980.",
+      "resource": {
+        "Bibliographic Source Citation": [
+          {
+            "@value": "1:1250 map of Lincoln.",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Nineteenth- and twentieth-century churches and chapels in the district",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Lincolnshire",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "2000",
+              "Construction Phase Start Date": "1964"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "Roman Catholic Church",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "Architects Reynolds and Scott of Parker Fairburn and Manton. Church constructed in brick with concrete frame, with slim spire. Presbytery and hall added in 1961. New hall, club and Community Centre added in 1980.",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '2518a4c9-01e3-49b8-ba94-c62bce4e5326', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.524823977125939, 53.2478163874521]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9852973326"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "Our Lady of Lincoln Roman Catholic Church, Laughton Way",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M3496.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8349",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "000fa53f-0f06-4648-a960-c42b8accd235",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "20th Century",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "000fa53f-0f06-4648-a960-c42b8accd235"
+    },
+    {
+      "displaydescription": "Detached house built by A B Sindell",
+      "displayname": "203 Boultham Park Road",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M7088.0'}}",
+      "map_popup": "Detached house built by A B Sindell",
+      "resource": {
+        "Bibliographic Source Citation": [
+          {
+            "@value": "Digital map of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "2000",
+              "Construction Phase Start Date": "1934"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "House",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "Detached house built by A B Sindell",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '17977a7c-60f2-4118-8349-b2276c8aca56', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.559288403624841, 53.2132233001817]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9630769431"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "203 Boultham Park Road",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M7088.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8352",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "00131129-7451-435d-aab9-33eb9031e6d1",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "20th Century",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "00131129-7451-435d-aab9-33eb9031e6d1"
+    },
+    {
+      "displaydescription": "A wall running east-west made of roughly dressed limestone blocks, possibly part of building predating John of Gaunts palace. The dating is estimated from the stratigraphy",
+      "displayname": "Medieval wall, 116 High Street",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M8367.0'}}",
+      "map_popup": "A wall running east-west made of roughly dressed limestone blocks, possibly part of building predating John of Gaunts palace. The dating is estimated from the stratigraphy",
+      "resource": {
+        "Associated Activities": "Trial Trench at 116 High Street",
+        "Bibliographic Source Citation": [
+          {
+            "@value": "Archaeological Evaluation Report: Trial Trenching at 116 High Street, Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Lincoln: 116 High Street",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "1380",
+              "Construction Phase Start Date": "1300"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "Wall",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "A wall running east-west made of roughly dressed limestone blocks, possibly part of building predating John of Gaunts palace. The dating is estimated from the stratigraphy",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '905ebc89-bd96-4540-9367-aba52042ce6d', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.544592469455141, 53.2226456839495]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9726770499"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "Medieval wall, 116 High Street",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M8367.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8351",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "0013cc2b-bd4e-410d-82e7-67e7efb71693",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "Post Medieval",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "0013cc2b-bd4e-410d-82e7-67e7efb71693"
+    },
+    {
+      "displaydescription": "A row of 9 houses built by Mills, Otter and Co. 39 was a originally a bakery and shop (S Jackson 1940s-1969) a fish and chip shop (M E Mulhearn) from 1969-1979. 1979 change of use from shop to plumber?s office for A Beaumont. 1988 (rear of 39) change of use to dwelling (presumably the stables?)",
+      "displayname": "27-39 Avondale Street",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M4609.0'}}",
+      "map_popup": "A row of 9 houses built by Mills, Otter and Co. 39 was a originally a bakery and shop (S Jackson 1940s-1969) a fish and chip shop (M E Mulhearn) from 1969-1979. 1979 change of use from shop to plumber?s office for A Beaumont. 1988 (rear of 39) change of use to dwelling (presumably the stables?)",
+      "resource": {
+        "Bibliographic Source Citation": [
+          {
+            "@value": "Directory of the City of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "1:2500 map of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "1:1250 map of Lincoln.",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "1901",
+              "Construction Phase Start Date": "1892"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "House",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "A row of 9 houses built by Mills, Otter and Co. 39 was a originally a bakery and shop (S Jackson 1940s-1969) a fish and chip shop (M E Mulhearn) from 1969-1979. 1979 change of use from shop to plumber?s office for A Beaumont. 1988 (rear of 39) change of use to dwelling (presumably the stables?)",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': 'a4aa25bc-fa17-4993-bc8a-77f70e37866a', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.527669493792885, 53.2295396649384]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9838171289"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "27-39 Avondale Street",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M4609.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8355",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "001599b9-bccb-40f0-b38c-175b9aa7c800",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "Bakery",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "Victorian",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": "1892"
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "001599b9-bccb-40f0-b38c-175b9aa7c800"
+    },
+    {
+      "displaydescription": "Two attached houses at the east end of the north side of Rasen Lane, one small cottage with small yard aligned lengthways with the street, the other more substantial property to the east, edge on to the street with its entrance via a path on the east side, with a westwards extension on the north side of its neighbour. (As seen on 1887 OS Town Plan). Numbered 75-76 Rasen Lane until 1897-8, but variously 52-53 and 63-64 before the 1870s. After demolition, the site was a surface car park until September 2011, when houses were built. A barrel vaulted cellar of brick and stone with three square alcoves with segmental arches was excavated in 2011.",
+      "displayname": "2-4 Rasen Lane",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M8976.0'}}",
+      "map_popup": "Two attached houses at the east end of the north side of Rasen Lane, one small cottage with small yard aligned lengthways with the street, the other more substantial property to the east, edge on to the street with its entrance via a path on the east side, with a westwards extension on the north side of its neighbour. (As seen on 1887 OS Town Plan). Numbered 75-76 Rasen Lane until 1897-8, but variously 52-53 and 63-64 before the 1870s. After demolition, the site was a surface car park until September 2011, when houses were built. A barrel vaulted cellar of brick and stone with three square alcoves with segmental arches was excavated in 2011.",
+      "resource": {
+        "Associated Activities": "Trial Trench at 2-4 Rasen Lane, Watching Brief at 2-4 Rasen Lane",
+        "Bibliographic Source Citation": [
+          {
+            "@value": "Archaeological evaluation by trial trenching: land to the rear of 6 Rasen Lane, Lincoln, Lincolnshire",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Archaeological Watching Brief Report: land adjacent to 6 Rasen Lane, Lincoln, Lincolnshire",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "1:500 Town Plan of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Map of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "1956",
+              "Construction Phase Start Date": "1817"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "House",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "Two attached houses at the east end of the north side of Rasen Lane, one small cottage with small yard aligned lengthways with the street, the other more substantial property to the east, edge on to the street with its entrance via a path on the east side, with a westwards extension on the north side of its neighbour. (As seen on 1887 OS Town Plan). Numbered 75-76 Rasen Lane until 1897-8, but variously 52-53 and 63-64 before the 1870s. After demolition, the site was a surface car park until September 2011, when houses were built. A barrel vaulted cellar of brick and stone with three square alcoves with segmental arches was excavated in 2011.",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '529ed1af-c7b9-4021-b803-bf267623bbaf', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.53906310312751, 53.2385526254398]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9760072276"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "2-4 Rasen Lane",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M8976.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8356",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "00187bec-a122-4df5-930a-bc762f95d961",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "Georgian",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "00187bec-a122-4df5-930a-bc762f95d961"
+    },
+    {
+      "displaydescription": "<Description>",
+      "displayname": "Archaeological Journal 49",
+      "graph_id": "24d7b54f-5464-11e9-a86b-000d3ab1e588",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'S4212'}}",
+      "map_popup": "Undefined",
+      "resource": {
+        "Bibliographic Source Names": [
+          {
+            "Bibliographic Source Name": "Archaeological Journal 49",
+            "Bibliographic Source Name Type": {
+              "@value": "Primary",
+              "Bibliographic Source Name Metatype": ""
+            },
+            "Bibliographic Source Name Use Type": {
+              "@value": "",
+              "Bibliographic Source Name Use Metatype": ""
+            },
+            "Bibliographic Source Volume Number": {
+              "Volume Number": null,
+              "Volume Number Type": {
+                "@value": "",
+                "Volume Number Metatype": ""
+              }
+            },
+            "Bibliographic Source Volume Part": {
+              "Volume Part": null,
+              "Volume Part Type": {
+                "@value": "",
+                "Volume Part Metatype": ""
+              }
+            }
+          }
+        ],
+        "Bibliographic Source Type": {
+          "@value": "Journal",
+          "Bibliographic Source Metatype": ""
+        },
+        "Publication": {
+          "Publication Event": {
+            "Place of Publication": {
+              "Publication Placename": {
+                "Publication Placename Type": {
+                  "@value": "",
+                  "Publication Placename Metatype": ""
+                },
+                "Publication Placename Value": null
+              }
+            },
+            "Publication Time Span": {
+              "Date of Publication": "1892"
+            },
+            "Publishers": {
+              "Publisher Names": {
+                "Publisher": "Archaeological Institute of Great Britain and Ireland",
+                "Publisher Name Type": {
+                  "@value": "",
+                  "Publisher Name Metatype": ""
+                }
+              }
+            }
+          }
+        },
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "S4212",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "5142",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "00199d1e-1486-44c9-9755-6ffbfde54de0",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        }
+      },
+      "resourceinstanceid": "00199d1e-1486-44c9-9755-6ffbfde54de0"
+    },
+    {
+      "displaydescription": "The parish of St Swithin was quite a populous and wealthy one, including as it did the northern waterfront east of High Bridge and the suburb of Thorngate, and this had some impact on the architecture of the medieval church which is known from early views to have been a large and elaborately detailed building.  The prosperity of the citizens might also be indicated by the foundation here of at least two chantries (for the Pinson family in 1324 and the Chesterfield family in 1352 - Venables 1887-8c, 25) and these are likely to have had some impact on liturgical layout.  Throughout the later middle ages there is a sequence of elite burials here extending until the early 16th century (ed. Gibbon 1888, 43, 58, 152, 164, 171).  The church survived the Reformation and so the site should preserve archaeological evidence for alterations in liturgical layout etc. It seems to have survived in good condition until 1644, when it is said that an explosion of gunpowder in Cornmarket Hill (200m away!) caused damage and a fire which destroyed it (Venables 1887-8c, 26).  Thereafter the parish camped out in the ruins of the south aisle, although the date at which they fitted it out seems to be unknown. The reality of this sequence of this events should be visible in the archaeological record and the re-fitting of the south aisle will be of interest in its own right as a rare example of a newly fitted-out church of the later 17th century. \n\nThe graveyard population of St Swithin is likely to be of considerable interest as, like the church, it will also have contained elite burials, although it may have been dominated by families of lesser rank in this quayside environment.  The graveyard continued in use until the 19th century, and, if dealt with as a single population, it will permit a useful study of the development of the parish population through 1000 years.",
+      "displayname": "St Swithin",
+      "graph_id": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
+      "legacyid": "001c0e41-f561-406f-8855-a7079da852f7",
+      "map_popup": "The parish of St Swithin was quite a populous and wealthy one, including as it did the northern waterfront east of High Bridge and the suburb of Thorngate, and this had some impact on the architecture of the medieval church which is known from early views to have been a large and elaborately detailed building.  The prosperity of the citizens might also be indicated by the foundation here of at least two chantries (for the Pinson family in 1324 and the Chesterfield family in 1352 - Venables 1887-8c, 25) and these are likely to have had some impact on liturgical layout.  Throughout the later middle ages there is a sequence of elite burials here extending until the early 16th century (ed. Gibbon 1888, 43, 58, 152, 164, 171).  The church survived the Reformation and so the site should preserve archaeological evidence for alterations in liturgical layout etc. It seems to have survived in good condition until 1644, when it is said that an explosion of gunpowder in Cornmarket Hill (200m away!) caused damage and a fire which destroyed it (Venables 1887-8c, 26).  Thereafter the parish camped out in the ruins of the south aisle, although the date at which they fitted it out seems to be unknown. The reality of this sequence of this events should be visible in the archaeological record and the re-fitting of the south aisle will be of interest in its own right as a rare example of a newly fitted-out church of the later 17th century. \n\nThe graveyard population of St Swithin is likely to be of considerable interest as, like the church, it will also have contained elite burials, although it may have been dominated by families of lesser rank in this quayside environment.  The graveyard continued in use until the 19th century, and, if dealt with as a single population, it will permit a useful study of the development of the parish population through 1000 years.",
+      "resource": {
+        "Area Names": [
+          {
+            "Area Name": "St Swithin",
+            "Area Name Type": {
+              "@value": "",
+              "Area Name Metatype": ""
+            },
+            "Area Name Use Type": {
+              "@value": "",
+              "Area Name Use Metatype": ""
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "The parish of St Swithin was quite a populous and wealthy one, including as it did the northern waterfront east of High Bridge and the suburb of Thorngate, and this had some impact on the architecture of the medieval church which is known from early views to have been a large and elaborately detailed building.  The prosperity of the citizens might also be indicated by the foundation here of at least two chantries (for the Pinson family in 1324 and the Chesterfield family in 1352 - Venables 1887-8c, 25) and these are likely to have had some impact on liturgical layout.  Throughout the later middle ages there is a sequence of elite burials here extending until the early 16th century (ed. Gibbon 1888, 43, 58, 152, 164, 171).  The church survived the Reformation and so the site should preserve archaeological evidence for alterations in liturgical layout etc. It seems to have survived in good condition until 1644, when it is said that an explosion of gunpowder in Cornmarket Hill (200m away!) caused damage and a fire which destroyed it (Venables 1887-8c, 26).  Thereafter the parish camped out in the ruins of the south aisle, although the date at which they fitted it out seems to be unknown. The reality of this sequence of this events should be visible in the archaeological record and the re-fitting of the south aisle will be of interest in its own right as a rare example of a newly fitted-out church of the later 17th century. \n\nThe graveyard population of St Swithin is likely to be of considerable interest as, like the church, it will also have contained elite burials, although it may have been dominated by families of lesser rank in this quayside environment.  The graveyard continued in use until the 19th century, and, if dealt with as a single population, it will permit a useful study of the development of the parish population through 1000 years.",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Designation and Protection Assignment": [
+          {
+            "Designation Names": {
+              "Designation Name": null,
+              "Designation Name Type": {
+                "@value": "",
+                "Designation Name Metatype": ""
+              },
+              "Designation Name Use Type": {
+                "@value": "",
+                "Designation Name Use Metatype": ""
+              }
+            },
+            "Designation and Protection Timespan": {
+              "Date Qualifier": {
+                "@value": "",
+                "Date Qualifier Metatype": ""
+              },
+              "Designation Amendment Date": null,
+              "Designation End Date": null,
+              "Designation Start Date": null,
+              "Display Date": null
+            },
+            "Designation or Protection Type": {
+              "@value": "Early Modern Research Agenda Zone",
+              "Designation or Protection Metatype": ""
+            },
+            "Digital File(s)": "",
+            "Grade": {
+              "@value": "",
+              "Grade Metatype": ""
+            },
+            "Local Heritage List Criteria Type": {
+              "@value": "",
+              "Local Heritage List Criteria Metatype": ""
+            },
+            "Reference URL": null,
+            "Risk Status": {
+              "@value": "",
+              "Risk Status Metatype": ""
+            }
+          }
+        ],
+        "External Cross References": [
+          {
+            "External Cross Reference": "10.60.45",
+            "External Cross Reference Notes": {
+              "External Cross Reference Description": "Lincoln Archaeological Resource Assessment",
+              "External Cross Reference Description Type": {
+                "@value": "",
+                "External Cross Reference Description Metatype": ""
+              }
+            },
+            "External Cross Reference Source": "",
+            "URL": null
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '903a0bfe-dac0-4284-9467-1fb10b97f46d', 'type': 'Feature', 'geometry': {'type': 'MultiPolygon', 'coordinates': [[[[-0.53874, 53.22899], [-0.53865, 53.22927], [-0.53785, 53.22919], [-0.53796, 53.22891], [-0.53874, 53.22899]]]]}, 'properties': {}}]}"
+          },
+          "Location Descriptions": [
+            {
+              "Location Description": "The site of the medieval church is known and it extended further south than the 19th-century churchyard wall (RAZ 9.60.45). This area of Saltergate is included within the RAZ and should be watched for during work on services in this area.",
+              "Location Description Type": {
+                "@value": "Full",
+                "Location Description Metatype": ""
+              }
+            }
+          ],
+          "National Grid References": {
+            "National Grid Reference": "SK9767271224"
+          }
+        },
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": null,
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "7938",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "001c0e41-f561-406f-8855-a7079da852f7",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        }
+      },
+      "resourceinstanceid": "001c0e41-f561-406f-8855-a7079da852f7"
+    },
+    {
+      "displaydescription": "17th C remodelling of Service wing. Limestone.",
+      "displayname": "Deloraine Court 5 James Street",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M563.0'}}",
+      "map_popup": "17th C remodelling of Service wing. Limestone.",
+      "resource": {
+        "Associated Activities": "Building Survey at 4, 5 and 6 James Street",
+        "Bibliographic Source Citation": [
+          {
+            "@value": "1:500 Town Plan of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Houses in Eastgate, Priorygate, and James Street",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Lincolnshire",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "1901",
+              "Construction Phase Start Date": "1650"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "House",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "17th C remodelling of Service wing. Limestone.",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '05e652b3-94d0-4456-97c0-5206abbc5ed9', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.537289468362236, 53.2356362140455]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9772571954"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "Deloraine Court 5 James Street",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M563.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8358",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "001dc641-83de-4a5a-b237-6e3b9e846071",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "Post Medieval",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "001dc641-83de-4a5a-b237-6e3b9e846071"
+    },
+    {
+      "displaydescription": "Four houses built for Thomas Wallis, architects W Mortimer and Son. Wallis was a timber merchant and alderman.",
+      "displayname": "16-22 St Catherines",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M4713.0'}}",
+      "map_popup": "Four houses built for Thomas Wallis, architects W Mortimer and Son. Wallis was a timber merchant and alderman.",
+      "resource": {
+        "Bibliographic Source Citation": [
+          {
+            "@value": "St Catherines: the birth of a Victorian suburb",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "1:2500 map of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "1901",
+              "Construction Phase Start Date": "1895"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "House",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "Four houses built for Thomas Wallis, architects W Mortimer and Son. Wallis was a timber merchant and alderman.",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': 'd4aea057-4870-4d26-941d-f38ee3b9879c', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.547351666720698, 53.2114872314171]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9710869254"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "16-22 St Catherines",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M4713.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8361",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "00211cee-ac75-4947-ac6e-898eb8657025",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "Victorian",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "00211cee-ac75-4947-ac6e-898eb8657025"
+    },
+    {
+      "displaydescription": "Well north of the house. Marked as W on the 1907 OS map. Now to the south of 53-55 Drake Street",
+      "displayname": "Well, 167 Carholme Road",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M8949.0'}}",
+      "map_popup": "Well north of the house. Marked as W on the 1907 OS map. Now to the south of 53-55 Drake Street",
+      "resource": {
+        "Bibliographic Source Citation": [
+          {
+            "@value": "1:2500 map of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "1907",
+              "Construction Phase Start Date": "1907"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "Documentary Evidence",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "Well",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "Well north of the house. Marked as W on the 1907 OS map. Now to the south of 53-55 Drake Street",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '5a5840a4-a890-4291-890e-c4248d1ecb99', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.556487125049985, 53.2337396968991]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9644871717"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "Well, 167 Carholme Road",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M8949.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8362",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "0022e98c-1ae2-4606-9f52-6d241e31a308",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "Post Medieval",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "0022e98c-1ae2-4606-9f52-6d241e31a308"
+    },
+    {
+      "displaydescription": "Archaeological monitoring and recording (watching brief) of trenches excavated during relining and reconfiguration of water mains. Trench ten of 48. Trench 10, Bailgate. No archaeological deposits were observed.",
+      "displayname": "Watching Brief at Bailgate",
+      "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'E7898'}}",
+      "map_popup": "Archaeological monitoring and recording (watching brief) of trenches excavated during relining and reconfiguration of water mains. Trench ten of 48. Trench 10, Bailgate. No archaeological deposits were observed.",
+      "resource": {
+        "Activity Descriptions": [
+          {
+            "Activity Description": "Archaeological monitoring and recording (watching brief) of trenches excavated during relining and reconfiguration of water mains. Trench ten of 48. Trench 10, Bailgate. No archaeological deposits were observed.",
+            "Activity Description Type": {
+              "@value": "Summary",
+              "Activity Description Metatype": ""
+            }
+          }
+        ],
+        "Activity Names": [
+          {
+            "Activity Name": "Watching Brief at Bailgate",
+            "Activity Name Currency": {
+              "@value": "",
+              "Activity Name Currency Metatype": ""
+            },
+            "Activity Name Type": {
+              "@value": "Primary",
+              "Activity Name Metatype": ""
+            },
+            "Activity Name Use Type": {
+              "@value": "",
+              "Activity Name Use Metatype": ""
+            }
+          }
+        ],
+        "Activity Timespan": {
+          "Activity Date Qualifier": {
+            "@value": "",
+            "Activity Date Qualifier Metatype": ""
+          },
+          "Activity End Date": "2002-10-10",
+          "Activity Start Date": "2002-04-26",
+          "Display Date": null
+        },
+        "Activity Type": {
+          "@value": "Watching Brief",
+          "Activity Metatype": ""
+        },
+        "Bibliographic Source Citation": [
+          {
+            "@value": "Westgate, Lincoln. Water Mains Replacement Scheme",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Lincoln: Westgate, Bailgate, Exchequergate, Steep Hill",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': 'a1dc2862-c05f-46bb-8a7d-23cdeb6cec45', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.538669567225726, 53.234268737241]}, 'properties': {}}]}"
+          }
+        },
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "E7898",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "3223",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "00239274-5436-4e45-a8cd-dcde5e46c7b1",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        }
+      },
+      "resourceinstanceid": "00239274-5436-4e45-a8cd-dcde5e46c7b1"
+    },
+    {
+      "displaydescription": "Former coach house for Newport Manor. Row of four attached workshops. Built of roughly-dressed stone with pantile roofs, except for the easternmost, which has a corrugated sheeting roof. Two 2-storey buildings with a single-storey building between them, and a single-storey lean-to building on the extreme west end. Brick chimney stack on each of the 2 central buildings. The more western of these has 2, possibly reused, gothic lancet windows, one of which has been partly blocked in to receive an inserted rectangular window. Shown on Padley 1842 map. Now used as monumental masons workshop by Drapers Memorials",
+      "displayname": "Stone workshop buildings, 58a Newport",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M6157.0'}}",
+      "map_popup": "Former coach house for Newport Manor. Row of four attached workshops. Built of roughly-dressed stone with pantile roofs, except for the easternmost, which has a corrugated sheeting roof. Two 2-storey buildings with a single-storey building between them, and a single-storey lean-to building on the extreme west end. Brick chimney stack on each of the 2 central buildings. The more western of these has 2, possibly reused, gothic lancet windows, one of which has been partly blocked in to receive an inserted rectangular window. Shown on Padley 1842 map. Now used as monumental masons workshop by Drapers Memorials",
+      "resource": {
+        "Bibliographic Source Citation": [
+          {
+            "@value": "Plan of the City of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Map of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "1:2500 map of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Map of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Plan of the City of Lincoln, from a Survey made by Jas S Padley, 1819",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "1:500 Town Plan of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Plan of the City of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "The Ancient Suburb of Newport Lincoln and The Parishes of St Nicholas and St John Baptist",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "1:2500 map of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "1901",
+              "Construction Phase Start Date": "1700"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "Workshop",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "Former coach house for Newport Manor. Row of four attached workshops. Built of roughly-dressed stone with pantile roofs, except for the easternmost, which has a corrugated sheeting roof. Two 2-storey buildings with a single-storey building between them, and a single-storey lean-to building on the extreme west end. Brick chimney stack on each of the 2 central buildings. The more western of these has 2, possibly reused, gothic lancet windows, one of which has been partly blocked in to receive an inserted rectangular window. Shown on Padley 1842 map. Now used as monumental masons workshop by Drapers Memorials",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '54e73076-b4af-4a59-875a-f456c2f1a9f4', 'type': 'Feature', 'geometry': {'type': 'Polygon', 'coordinates': [[[-0.537149, 53.240017], [-0.537147, 53.239973], [-0.537034, 53.239974], [-0.537034, 53.239952], [-0.536986, 53.239953], [-0.536987, 53.239972], [-0.536926, 53.239972], [-0.536926, 53.239948], [-0.536836, 53.239948], [-0.536837, 53.239972], [-0.53681, 53.239972], [-0.536805, 53.239949], [-0.53675, 53.239948], [-0.53675, 53.239961], [-0.53675, 53.239963], [-0.53675, 53.239973], [-0.536739, 53.239974], [-0.536696, 53.239973], [-0.536697, 53.239966], [-0.536697, 53.239966], [-0.536664, 53.239965], [-0.536654, 53.239965], [-0.536634, 53.239965], [-0.536623, 53.239964], [-0.536622, 53.240025], [-0.536739, 53.240022], [-0.536989, 53.240019], [-0.537149, 53.240017]]]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9774272438"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "Stone workshop buildings, 58a Newport",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M6157.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8364",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "0027c86e-5a73-4819-afec-08fac0423102",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "Post Medieval",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "0027c86e-5a73-4819-afec-08fac0423102"
+    },
+    {
+      "displaydescription": "Single-storey offices and warehouse built for Wecando, flooring specialists and builders (F Bilton). Used as religious meeting house in 1975-6. Replaced by Jehovahs Witness place of worship (MON6887)",
+      "displayname": "Constantine House, Danes Terrace",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M6886.0'}}",
+      "map_popup": "Single-storey offices and warehouse built for Wecando, flooring specialists and builders (F Bilton). Used as religious meeting house in 1975-6. Replaced by Jehovahs Witness place of worship (MON6887)",
+      "resource": {
+        "Bibliographic Source Citation": [
+          {
+            "@value": "1:1250 map of Lincoln.",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "1976",
+              "Construction Phase Start Date": "1960"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "Warehouse",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "Single-storey offices and warehouse built for Wecando, flooring specialists and builders (F Bilton). Used as religious meeting house in 1975-6. Replaced by Jehovahs Witness place of worship (MON6887)",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '028ce193-1d34-41a0-82ce-02dc4ec17244', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.538096283508405, 53.2321851017442]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9767971569"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "Constantine House, Danes Terrace",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M6886.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8363",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "002a227d-d2e1-4332-8261-da6571379d84",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "Church",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "20th Century",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": "1960"
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "002a227d-d2e1-4332-8261-da6571379d84"
+    },
+    {
+      "displaydescription": "Water pump in the rear yard on the house wall, presumably over a water well. Marked as P on 1886 OS Town Plan. Now within the northern car park of City Hall",
+      "displayname": "Water pump, 15 Orchard Street",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M8603.0'}}",
+      "map_popup": "Water pump in the rear yard on the house wall, presumably over a water well. Marked as P on 1886 OS Town Plan. Now within the northern car park of City Hall",
+      "resource": {
+        "Bibliographic Source Citation": [
+          {
+            "@value": "1:500 Town Plan of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "1886",
+              "Construction Phase Start Date": "1886"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "Documentary Evidence",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "Water Pump",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "Water pump in the rear yard on the house wall, presumably over a water well. Marked as P on 1886 OS Town Plan. Now within the northern car park of City Hall",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': 'cb459232-fccc-4053-ba6c-f9d717ac2385', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.543730250144038, 53.2312831851632]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9730571461"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "Water pump, 15 Orchard Street",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M8603.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8365",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "00302fc7-1424-4930-a43d-6cc8c42a9513",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "Victorian",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "00302fc7-1424-4930-a43d-6cc8c42a9513"
+    },
+    {
+      "displaydescription": "E J Willson records the finding of coin moulds in 1812. Two small furnaces found on Motherby Hill, near the South-west corner of the Castle, when the foundations were dug for a house, built by the late Mr Henry Otter. In these places had been made for the purpose of casting coins of silver, after the Roman types. Many moulds made of baked potting clay, bearing the impressions of Roman coins of a late date have been found both here and in other places on the outside of the walls of this city. The site may be Hilton House or West Hill House or close by.",
+      "displayname": "Coin moulding furnaces, Motherby Hill",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M3447.0'}}",
+      "map_popup": "E J Willson records the finding of coin moulds in 1812. Two small furnaces found on Motherby Hill, near the South-west corner of the Castle, when the foundations were dug for a house, built by the late Mr Henry Otter. In these places had been made for the purpose of casting coins of silver, after the Roman types. Many moulds made of baked potting clay, bearing the impressions of Roman coins of a late date have been found both here and in other places on the outside of the walls of this city. The site may be Hilton House or West Hill House or close by.",
+      "resource": {
+        "Bibliographic Source Citation": [
+          {
+            "@value": "Notes, drawings etc on Lincoln and Lincolnshire antiquities, etc",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "0250",
+              "Construction Phase Start Date": "0150"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "Furnace",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "E J Willson records the finding of coin moulds in 1812. Two small furnaces found on Motherby Hill, near the South-west corner of the Castle, when the foundations were dug for a house, built by the late Mr Henry Otter. In these places had been made for the purpose of casting coins of silver, after the Roman types. Many moulds made of baked potting clay, bearing the impressions of Roman coins of a late date have been found both here and in other places on the outside of the walls of this city. The site may be Hilton House or West Hill House or close by.",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '88588da1-de04-493f-97b0-f6a4023a85a9', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.542924464382063, 53.2338353831809]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9735371746"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "Coin moulding furnaces, Motherby Hill",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M3447.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8367",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "00311f28-432b-41f4-81fa-8d1b7e38dd63",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "Roman",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "00311f28-432b-41f4-81fa-8d1b7e38dd63"
+    },
+    {
+      "displaydescription": "Residential street on the north side of Skellingthorpe Road (cul-de-sac). Its construction was proposed by Mrs E Blank, builder, in April 1929, architect and surveyor F Baker.",
+      "displayname": "St Helens Avenue",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M5543.0'}}",
+      "map_popup": "Residential street on the north side of Skellingthorpe Road (cul-de-sac). Its construction was proposed by Mrs E Blank, builder, in April 1929, architect and surveyor F Baker.",
+      "resource": {
+        "Bibliographic Source Citation": [
+          {
+            "@value": "1:2500 map of Lincoln",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "2000",
+              "Construction Phase Start Date": "1929"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "Road",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "Residential street on the north side of Skellingthorpe Road (cul-de-sac). Its construction was proposed by Mrs E Blank, builder, in April 1929, architect and surveyor F Baker.",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': 'e49cca80-6476-451d-9c66-851430542959', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.566448711391805, 53.2122668472356]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9583169315"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "St Helens Avenue",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M5543.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8290",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "0031e8c0-845a-4d5c-861c-41801603d00f",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "20th Century",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "0031e8c0-845a-4d5c-861c-41801603d00f"
+    },
+    {
+      "displaydescription": "Trench 1 of two. Renewal of the existing land drainage system allowed a 0.90m deep trench to be watched. Moderately compact grey sandy/clayey earth containing grass (very waterlogged) overlay a layer of clayey sand containing pebbles. No features of finds",
+      "displayname": "Watching Brief at West Common",
+      "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'E684'}}",
+      "map_popup": "Trench 1 of two. Renewal of the existing land drainage system allowed a 0.90m deep trench to be watched. Moderately compact grey sandy/clayey earth containing grass (very waterlogged) overlay a layer of clayey sand containing pebbles. No features of finds",
+      "resource": {
+        "Activity Descriptions": [
+          {
+            "Activity Description": "Trench 1 of two. Renewal of the existing land drainage system allowed a 0.90m deep trench to be watched. Moderately compact grey sandy/clayey earth containing grass (very waterlogged) overlay a layer of clayey sand containing pebbles. No features of finds",
+            "Activity Description Type": {
+              "@value": "Summary",
+              "Activity Description Metatype": ""
+            }
+          }
+        ],
+        "Activity Names": [
+          {
+            "Activity Name": "Watching Brief at West Common",
+            "Activity Name Currency": {
+              "@value": "",
+              "Activity Name Currency Metatype": ""
+            },
+            "Activity Name Type": {
+              "@value": "Primary",
+              "Activity Name Metatype": ""
+            },
+            "Activity Name Use Type": {
+              "@value": "",
+              "Activity Name Use Metatype": ""
+            }
+          }
+        ],
+        "Activity Timespan": {
+          "Activity Date Qualifier": {
+            "@value": "",
+            "Activity Date Qualifier Metatype": ""
+          },
+          "Activity End Date": "1994-04-21",
+          "Activity Start Date": "1994-04-21",
+          "Display Date": null
+        },
+        "Activity Type": {
+          "@value": "Watching Brief",
+          "Activity Metatype": ""
+        },
+        "Associated Monuments and Areas": "Golf club and course, West Common, Carholme Road",
+        "Bibliographic Source Citation": [
+          {
+            "@value": "Observation Notes: card archive on observation notes (Ons) maintained by CLAU",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': 'f3f424e0-33b8-4c58-a347-8a93861d593c', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.569075599738482, 53.2390425145994]}, 'properties': {}}]}"
+          }
+        },
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "E684",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "1135",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "0035febf-0e1b-4129-b851-dbf4bd0a69b4",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        }
+      },
+      "resourceinstanceid": "0035febf-0e1b-4129-b851-dbf4bd0a69b4"
+    },
+    {
+      "displaydescription": "Dumps seem to have advanced the river bank c.6m to the west.",
+      "displayname": "Medieval dumps, Brayford Wharf East",
+      "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "legacyid": "{'en': {'direction': 'ltr', 'value': 'M124.0'}}",
+      "map_popup": "Dumps seem to have advanced the river bank c.6m to the west.",
+      "resource": {
+        "Associated Activities": "Excavation at Cornhill, Excavation at Brayford Wharf East",
+        "Bibliographic Source Citation": [
+          {
+            "@value": "The Archaeology of Wigford and the Brayford Pool",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Brayford Wharf East",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          },
+          {
+            "@value": "Brayford Wharf East. Level III Archive Report",
+            "Figures": {
+              "Figs.": null,
+              "Figures Type": {
+                "@value": "",
+                "Figures Metatype": ""
+              }
+            },
+            "Pages": {
+              "Page(s)": null,
+              "Pages Type": {
+                "@value": "",
+                "Pages Metatype": ""
+              }
+            },
+            "Plates": {
+              "Plate(s)": null,
+              "Plates Type": {
+                "@value": "",
+                "Plates metatype": ""
+              }
+            },
+            "Source Comment": {
+              "Comment": null,
+              "Source Comment Type": {
+                "@value": "",
+                "Source Comment Metatype": ""
+              }
+            },
+            "Source Number": {
+              "Source Number Type": {
+                "@value": "",
+                "Source Number Metatype": ""
+              },
+              "Source Number Value": null
+            }
+          }
+        ],
+        "Construction Phases": [
+          {
+            "Construction Method": {
+              "@value": "",
+              "Construction Method Metatype": ""
+            },
+            "Construction Phase Timespan": {
+              "Confidence of Dating": {
+                "@value": "",
+                "Confidence of Dating Metatype": ""
+              },
+              "Construction Phase Date Qualifier": {
+                "@value": "",
+                "Construction Phase Date Qualifier Metatype": ""
+              },
+              "Construction Phase Display Date": null,
+              "Construction Phase End Date": "1350",
+              "Construction Phase Start Date": "1150"
+            },
+            "Construction Phase Type": {
+              "@value": "",
+              "Construction Phase Metatype": ""
+            },
+            "Construction Technique": {
+              "@value": "",
+              "Construction Technique Metatype": ""
+            },
+            "Covering Material": {
+              "@value": "",
+              "Covering Material Metatype": ""
+            },
+            "Cultural Period": "",
+            "Main Construction Material": {
+              "@value": "",
+              "Main Construction Material Metatype": ""
+            },
+            "Phase Classification": {
+              "Construction Phase Evidence Type": {
+                "@value": "",
+                "Construction Phase Evidence Metatype": ""
+              },
+              "Monument Type": {
+                "@value": "Land Reclamation",
+                "Monument Metatype": ""
+              },
+              "Phase Certainty": {
+                "@value": "",
+                "Phase Certainty Metatype": ""
+              },
+              "Phase Classification Description": {
+                "Phase Description": null,
+                "Phase Description Type": {
+                  "@value": "",
+                  "Phase Desctiption Metatype": ""
+                }
+              }
+            }
+          }
+        ],
+        "Descriptions": [
+          {
+            "Description": "Dumps seem to have advanced the river bank c.6m to the west.",
+            "Description Language": {
+              "@value": "",
+              "Description Language Metatype": ""
+            },
+            "Description Type": {
+              "@value": "Summary",
+              "Description Metatype": ""
+            }
+          }
+        ],
+        "Location Data": {
+          "Geometry": {
+            "Feature Shape": {
+              "@value": "",
+              "Feature Shape Metatype": ""
+            },
+            "Geospatial Coordinates": "{'type': 'FeatureCollection', 'features': [{'id': '692f62f6-3800-4c6a-b64b-4648eded773f', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.544041879599525, 53.2265134952143]}, 'properties': {}}]}"
+          },
+          "National Grid References": {
+            "National Grid Reference": "SK9729570930"
+          }
+        },
+        "Monument Names": [
+          {
+            "Monument Name": "Medieval dumps, Brayford Wharf East",
+            "Monument Name Currency": {
+              "@value": "",
+              "Monument Name Currency Metatype": ""
+            },
+            "Monument Name Type": {
+              "@value": "Primary",
+              "Monument Name Metatype": ""
+            },
+            "Monument Name Use Type": {
+              "@value": "",
+              "Monument Name Use Metatype": ""
+            }
+          }
+        ],
+        "System Reference Numbers": {
+          "LegacyID": {
+            "Legacy ID": "M124.0",
+            "Legacy ID Type": {
+              "@value": "",
+              "Legacy ID Metatype": ""
+            }
+          },
+          "PrimaryReferenceNumber": {
+            "Primary Reference Number": "8368",
+            "Primary Reference Number Type": {
+              "@value": "",
+              "Primary Reference Number Metatype": ""
+            }
+          },
+          "UUID": {
+            "ResourceID": "00390606-29b9-435d-8fa6-347b6931719a",
+            "ResourceID Type": {
+              "@value": "",
+              "ResourceID Metatype": ""
+            }
+          }
+        },
+        "Use Phase": [
+          {
+            "Use Phase Classification": {
+              "Functional Type": {
+                "@value": "",
+                "Functional Metatype": ""
+              },
+              "Use Phase Classification Description": {
+                "Use Phase Description": null,
+                "Use Phase Description Type": {
+                  "@value": "",
+                  "Use Phase Desctiption Metatype": ""
+                }
+              },
+              "Use Phase Evidence Type": {
+                "@value": "",
+                "Use Phase Evidence Metatype": ""
+              }
+            },
+            "Use Phase Display Date": null,
+            "Use Phase Period": "Medieval",
+            "Use Phase Timespan": {
+              "Use Phase Date Qualifier": {
+                "@value": "",
+                "Use Phase Date Qualifier Metatype": ""
+              },
+              "Use Phase End Date": null,
+              "Use Phase Start Date": null
+            }
+          }
+        ]
+      },
+      "resourceinstanceid": "00390606-29b9-435d-8fa6-347b6931719a"
+    }
+  ]
+}

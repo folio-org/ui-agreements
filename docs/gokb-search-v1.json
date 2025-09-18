@@ -10,217 +10,39 @@
       "display": {
         "columns": [
           {
-            "name": "name",
+            "name": "displayName",
             "type": "String",
-            "sortable": true,
             "value": {
               "type": "access",
               "accessType": "JSONPath",
-              "expression": "$.name"
+              "expression": "$.displayname"
             }
           },
           {
-            "name": "publicationType",
+            "name": "resourceInstanceId",
             "type": "String",
             "value": {
-              "type": "Handlebars",
-              "templateString": "{{{replace this 'Instance' ''}}}",
-              "value": {
-                "type": "access",
-                "accessType": "JSONPath",
-                "expression": "$.componentType"
-              }
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.resourceinstanceid"
             }
           },
           {
-            "name": "isbns",
+            "name": "associatedActivities",
+            "type": "String",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.resource.Associated Activities"
+            }
+          },
+          {
+            "name": "mapPopup",
             "type": "Array",
-            "arrayType": "String",
-            "renderStrategy": {
-              "type": "joinString",
-              "separator": ", "
-            },
             "value": {
               "type": "access",
               "accessType": "JSONPath",
-              "expression": "$.identifiers[?(@.namespace == 'isbn' || @.namespace == 'eisbn' || @.namespace == 'pisbn')].value"
-            }
-          },
-          {
-            "name": "issns",
-            "type": "Array",
-            "arrayType": "String",
-            "renderStrategy": {
-              "type": "joinString",
-              "separator": ", "
-            },
-            "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.identifiers[?(@.namespace == 'issn' || @.namespace == 'eissn' || @.namespace == 'pissn')].value"
-            }
-          },
-          {
-            "name": "zdbids",
-            "type": "Array",
-            "arrayType": "String",
-            "renderStrategy": {
-              "type": "joinString",
-              "separator": ", "
-            },
-            "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.identifiers[?(@.namespace == 'zdb')].value"
-            }
-          },
-          {
-            "name": "ezbids",
-            "type": "Array",
-            "arrayType": "String",
-            "renderStrategy": {
-              "type": "joinString",
-              "separator": ", "
-            },
-            "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.identifiers[?(@.namespace == 'ezb')].value"
-            }
-          },
-          {
-            "name": "publicationDates",
-            "type": "Object",
-            "renderStrategy": {
-              "type": "renderPublicationDates"
-            },
-            "value": {
-              "type": "displayDates",
-              "value": [
-                {
-                  "type": "access",
-                  "accessType": "JSONPath",
-                  "expression": "$.dateFirstOnline",
-                  "key": "dateFirstOnline"
-                },
-                {
-                  "type": "access",
-                  "accessType": "JSONPath",
-                  "expression": "$.dateFirstInPrint",
-                  "key": "dateFirstInPrint"
-                },
-                {
-                  "type": "access",
-                  "accessType": "JSONPath",
-                  "expression": "$.publishedFrom",
-                  "key": "publishedFrom"
-                },
-                {
-                  "type": "access",
-                  "accessType": "JSONPath",
-                  "expression": "$.publishedTo",
-                  "key": "publishedTo"
-                }
-              ]
-            }
-          },
-          {
-            "name": "otherIds",
-            "type": "Array",
-            "arrayType": "String",
-            "renderStrategy": {
-              "type": "joinString",
-              "separator": ", "
-            },
-            "value": {
-              "type": "HandlebarsEach",
-              "templateString": "{{{namespaceName}}}: {{{value}}}",
-              "value": {
-                "type": "access",
-                "accessType": "JSONPath",
-                "expression": "$.identifiers[?(@.namespace != 'issn' && @.namespace != 'eissn' && @.namespace != 'pissn' && @.namespace != 'isbn' && @.namespace != 'eisbn' && @.namespace != 'pisbn' && @.namespace != 'zdb' && @.namespace != 'ezb')]"
-              }
-            }
-          },
-          {
-            "name": "publisher",
-            "type": "String",
-            "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.publisherName"
-            }
-          },
-          {
-            "name": "firstAuthor",
-            "type": "String",
-            "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.firstAuthor"
-            }
-          },
-          {
-            "name": "firstEditor",
-            "type": "String",
-            "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.firstEditor"
-            }
-          },
-          {
-            "name": "edition",
-            "type": "String",
-            "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.editionStatement"
-            }
-          },
-          {
-            "name": "volume",
-            "type": "String",
-            "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.volumeNumber"
-            }
-          },
-          {
-            "name": "subjects",
-            "type": "Array",
-            "arrayType": "String",
-            "renderStrategy": {
-              "type": "joinString",
-              "separator": ", "
-            },
-            "value": {
-              "type": "HandlebarsEach",
-              "templateString": "{{{scheme}}}: {{{heading}}}",
-              "value": {
-                "type": "access",
-                "accessType": "JSONPath",
-                "expression": "$.subjects[*]"
-              }
-            }
-          },
-          {
-            "name": "gokbid",
-            "type": "String",
-            "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.id"
-            }
-          },
-          {
-            "name": "gokbuuid",
-            "type": "String",
-            "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.uuid"
+              "expression": "$.map_popup"
             }
           }
         ]
@@ -243,71 +65,6 @@
               "type": "Handlebars",
               "templateString": "q={{query}}",
               "default": true
-            },
-            {
-              "name": "nameAndAltNames",
-              "type": "Handlebars",
-              "templateString": "label={{query}}"
-            },
-            {
-              "name": "name",
-              "type": "Handlebars",
-              "templateString": "name={{query}}"
-            },
-            {
-              "name": "altname",
-              "type": "Handlebars",
-              "templateString": "altname={{query}}"
-            },
-            {
-              "name": "identifiers",
-              "type": "Handlebars",
-              "templateString": "identifier={{query}}"
-            },
-            {
-              "name": "eisbn",
-              "type": "Handlebars",
-              "templateString": "identifier=isbn,{{query}}"
-            },
-            {
-              "name": "isbn",
-              "type": "Handlebars",
-              "templateString": "identifier=pisbn,{{query}}"
-            },
-            {
-              "name": "eissn",
-              "type": "Handlebars",
-              "templateString": "identifier=eissn,{{query}}"
-            },
-            {
-              "name": "issn",
-              "type": "Handlebars",
-              "templateString": "identifier=issn,{{query}}"
-            },
-            {
-              "name": "ezb",
-              "type": "Handlebars",
-              "templateString": "identifier=ezb,{{query}}"
-            },
-            {
-              "name": "zdb",
-              "type": "Handlebars",
-              "templateString": "identifier=zdb,{{query}}"
-            },
-            {
-              "name": "uuid",
-              "type": "Handlebars",
-              "templateString": "uuid={{query}}"
-            },
-            {
-              "name": "gokbId",
-              "type": "Handlebars",
-              "templateString": "id={{query}}"
-            },
-            {
-              "name": "authorEditor",
-              "type": "Handlebars",
-              "templateString": "q={{query}}&qfields=firstAuthor&qfields=firstEditor"
             }
           ]
         },
@@ -322,25 +79,13 @@
             "type": "singleSelect",
             "values": [
               {
-                "name": "all",
-                "value": "Title",
+                "name": "bibliographicInstance",
+                "value": "Bibliographic Instance",
                 "default": true
               },
               {
-                "name": "book",
+                "name": "graphInstance",
                 "value": "Book"
-              },
-              {
-                "name": "database",
-                "value": "Database"
-              },
-              {
-                "name": "journal",
-                "value": "Journal"
-              },
-              {
-                "name": "other",
-                "value": "Other"
               }
             ]
           }
@@ -353,7 +98,7 @@
     },
     "view": {
       "fetch": {
-        "baseUrl": "https://gokbt.gbv.de/gokb/api/find/",
+        "baseUrl": "https://arcade-test.lincoln.gov.uk/resources/",
         "mapping": {
           "data": "records"
         }
@@ -383,7 +128,7 @@
                         "value": {
                           "type": "access",
                           "accessType": "JSONPath",
-                          "expression": "$.name"
+                          "expression": "$.displayname"
                         }
                       }
                     ]
@@ -413,174 +158,53 @@
                     "values": [
                       {
                         "type": "keyValue",
-                        "name": "publicationType",
+                        "name": "displayDescription",
                         "value": {
-                          "type": "handlebars",
-                          "templateString": "{{{replace this 'Instance' ''}}}",
-                          "value": {
-                            "type": "access",
-                            "accessType": "JSONPath",
-                            "expression": "$.componentType"
-                          }
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.displaydescription"
                         }
                       },
                       {
-                        "name": "firstAuthor",
+                        "name": "associatedActivities",
                         "type": "keyValue",
                         "value": {
                           "type": "access",
                           "accessType": "JSONPath",
-                          "expression": "$.firstAuthor"
+                          "expression": "$.resource.Associated Activities"
                         }
                       },
                       {
-                        "name": "firstEditor",
+                        "name": "graphId",
                         "type": "keyValue",
                         "value": {
                           "type": "access",
                           "accessType": "JSONPath",
-                          "expression": "$.firstEditor"
+                          "expression": "$.graph_id"
                         }
                       }
                     ]
                   },
                   {
                     "type": "row",
-                    "colCount": "4",
+                    "colCount": "3",
                     "values": [
                       {
-                        "name": "publicationDates",
                         "type": "keyValue",
+                        "name": "referenceId",
                         "value": {
-                          "type": "displayDates",
-                          "value": [
-                            {
-                              "type": "access",
-                              "accessType": "JSONPath",
-                              "expression": "$.dateFirstOnline",
-                              "key": "dateFirstOnline"
-                            },
-                            {
-                              "type": "access",
-                              "accessType": "JSONPath",
-                              "expression": "$.dateFirstInPrint",
-                              "key": "dateFirstInPrint"
-                            },
-                            {
-                              "type": "access",
-                              "accessType": "JSONPath",
-                              "expression": "$.publishedFrom",
-                              "key": "publishedFrom"
-                            },
-                            {
-                              "type": "access",
-                              "accessType": "JSONPath",
-                              "expression": "$.publishedTo",
-                              "key": "publishedTo"
-                            }
-                          ]
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.resourceid"
                         }
                       },
                       {
-                        "name": "volume",
+                        "name": "primaryReferenceId",
                         "type": "keyValue",
                         "value": {
                           "type": "access",
                           "accessType": "JSONPath",
-                          "expression": "$.volumeNumber"
-                        }
-                      },
-                      {
-                        "name": "edition",
-                        "type": "keyValue",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.editionStatement"
-                        }
-                      },
-                      {
-                        "name": "publisher",
-                        "type": "keyValue",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.publisherName"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "type": "row",
-                    "colCount": "2",
-                    "values": [
-                      {
-                        "name": "gokbid",
-                        "type": "keyValue",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.id"
-                        }
-                      },
-                      {
-                        "name": "gokbuuid",
-                        "type": "keyValue",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.uuid"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "type": "row",
-                    "colCount": "5",
-                    "values": [
-                      {
-                        "name": "issns",
-                        "type": "keyValue",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.identifiers[?(@.namespace == 'issn' || @.namespace == 'eissn' || @.namespace == 'pissn')].value"
-                        }
-                      },
-                      {
-                        "name": "isbns",
-                        "type": "keyValue",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.identifiers[?(@.namespace == 'isbn' || @.namespace == 'eisbn' || @.namespace == 'pisbn')].value"
-                        }
-                      },
-                      {
-                        "name": "zdbids",
-                        "type": "keyValue",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.identifiers[?(@.namespace == 'zdb')].value"
-                        }
-                      },
-                      {
-                        "name": "ezbids",
-                        "type": "keyValue",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.identifiers[?(@.namespace == 'ezb')].value"
-                        }
-                      },
-                      {
-                        "name": "dois",
-                        "type": "keyValue",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.identifiers[?(@.namespace == 'doi')].value"
+                          "expression": "$.primaryreferenceid"
                         }
                       }
                     ]
@@ -595,7 +219,7 @@
                 "type": "accordionset",
                 "values": [
                   {
-                    "name": "extendedTitleInformation",
+                    "name": "activityDescriptors",
                     "collapsable": true,
                     "renderStrategy": {
                       "type": "rows",
@@ -605,16 +229,16 @@
                           "resource": {
                             "type": "access",
                             "accessType": "JSONPath",
-                            "expression": "$.altname[*]"
+                            "expression": "$.resource.Activity Names[*]"
                           },
                           "columns": [
                             {
-                              "name": "altNames",
+                              "name": "activityNames",
                               "type": "String",
                               "value": {
                                 "type": "access",
                                 "accessType": "JSONPath",
-                                "expression": "$.altNames"
+                                "expression": "$.Activity Name"
                               }
                             }
                           ]
@@ -624,25 +248,62 @@
                           "resource": {
                             "type": "access",
                             "accessType": "JSONPath",
-                            "expression": "$.identifiers[*]"
+                            "expression": "$.subjects[*]"
                           },
                           "columns": [
                             {
-                              "name": "type",
+                              "name": "scheme",
                               "type": "String",
                               "value": {
                                 "type": "access",
                                 "accessType": "JSONPath",
-                                "expression": "$.namespaceName"
+                                "expression": "$.scheme"
                               }
                             },
                             {
-                              "name": "identifier",
+                              "name": "heading",
                               "type": "String",
                               "value": {
                                 "type": "access",
                                 "accessType": "JSONPath",
-                                "expression": "$.value"
+                                "expression": "$.heading"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "accordions",
+              "collapsable": true,
+              "renderStrategy": {
+                "type": "accordionset",
+                "values": [
+                  {
+                    "name": "geospatialData",
+                    "collapsable": true,
+                    "renderStrategy": {
+                      "type": "rows",
+                      "values": [
+                        {
+                          "type": "table",
+                          "resource": {
+                            "type": "access",
+                            "accessType": "JSONPath",
+                            "expression": "$.resource.Activity Names[*]"
+                          },
+                          "columns": [
+                            {
+                              "name": "activityNames",
+                              "type": "String",
+                              "value": {
+                                "type": "access",
+                                "accessType": "JSONPath",
+                                "expression": "$.Activity Name"
                               }
                             }
                           ]

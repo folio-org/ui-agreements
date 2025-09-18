@@ -13,6 +13,7 @@ import { SASQRoute } from '@k-int/stripes-kint-components';
 import RemoteKbResource from '../../components/views/RemoteKbResource';
 
 import config from '../../../docs/gokb-search-v1';
+import archesjsonblob from '../../../docs/archesjsonblob';
 
 import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigConstructor';
 
@@ -48,11 +49,10 @@ const GokbRoute = () => {
     <RemoteKbResource {...props} displayConfig={displayConfig} />
   );
 
-  const {
-    formatter,
-    resultColumns,
-    sortableColumns,
-  } = getResultsDisplayConfig(columnsConfig, { iconKey: displayConfig.icon });
+  const { formatter, resultColumns, sortableColumns } = getResultsDisplayConfig(
+    columnsConfig,
+    { iconKey: displayConfig.icon }
+  );
 
   const fetchParameters = {
     endpoint: endpointData.endpoint,
@@ -112,8 +112,8 @@ const GokbRoute = () => {
 
   const columnMapping = resultColumns?.length
     ? Object.fromEntries(
-      resultColumns.map((col) => [col.propertyPath, col.label])
-    )
+        resultColumns.map((col) => [col.propertyPath, col.label])
+      )
     : {};
 
   const { visibleColumns, toggleColumn } = useColumnManager(
@@ -146,16 +146,19 @@ const GokbRoute = () => {
         return kyImport.get(`${endpoint}${queryParams}`).json();
       }}
       lookupResponseTransform={(data) => {
+        const blob = archesjsonblob;
         const transformedData = {
           ...data,
           totalRecords: data?.[endpointData.totalRecords],
-          results: data?.[endpointData.results],
+          results: blob?.['ldp:contains'],
         };
         return transformedData;
       }}
       mainPaneProps={{
         actionMenu: renderActionMenu,
-        appIcon: <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />,
+        appIcon: (
+          <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />
+        ),
         id: `${kbKey}-search-main-pane`,
         paneTitle: <FormattedMessage id="ui-agreements.remoteKb.gokbTitles" />,
       }}
@@ -177,11 +180,140 @@ const GokbRoute = () => {
       searchFieldAriaLabel={`input-${kbKey}-search`}
       ViewComponent={ViewComponent}
       viewQueryPromise={({ _ky, resourceId, endpoint }) => {
-        return kyImport.get(`${endpoint}/${resourceId}`).json();
+        return kyImport
+          .get(
+            'https://arcade-test.lincoln.gov.uk/resources/00390606-29b9-435d-8fa6-347b6931719a?format=json'
+          )
+          .json();
       }}
       viewResponseTransform={(data) => {
-        const raw = data?.[resourcePath];
-        return Array.isArray(raw) ? raw[0] : raw;
+        return {
+          displaydescription:
+            'Observation of groundworks involved with structural repair, including underpinning. No archaeological deposits were observed.',
+          displayname: 'Watching Brief at Spring Hill',
+          graph_id: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+          legacyid: "{'en': {'direction': 'ltr', 'value': 'E5522'}}",
+          map_popup:
+            'Observation of groundworks involved with structural repair, including underpinning. No archaeological deposits were observed.',
+          resource: {
+            'Activity Descriptions': [
+              {
+                'Activity Description':
+                  'Observation of groundworks involved with structural repair, including underpinning. No archaeological deposits were observed.',
+                'Activity Description Type': {
+                  '@value': 'Summary',
+                  'Activity Description Metatype': '',
+                },
+              },
+            ],
+            'Activity Names': [
+              {
+                'Activity Name': 'Watching Brief at Spring Hill',
+                'Activity Name Currency': {
+                  '@value': '',
+                  'Activity Name Currency Metatype': '',
+                },
+                'Activity Name Type': {
+                  '@value': 'Primary',
+                  'Activity Name Metatype': '',
+                },
+                'Activity Name Use Type': {
+                  '@value': '',
+                  'Activity Name Use Metatype': '',
+                },
+              },
+            ],
+            'Activity Timespan': {
+              'Activity Date Qualifier': {
+                '@value': '',
+                'Activity Date Qualifier Metatype': '',
+              },
+              'Activity End Date': '2000-09-18',
+              'Activity Start Date': '2000-09-18',
+              'Display Date': null,
+            },
+            'Activity Type': {
+              '@value': 'Watching Brief',
+              'Activity Metatype': '',
+            },
+            'Associated Monuments and Areas': 'Castle Mount, Spring Hill',
+            'Bibliographic Source Citation': [
+              {
+                '@value':
+                  'Voluntary Observations of interventions by staff of the Heritage Team, Lincoln City Council.',
+                Figures: {
+                  'Figs.': null,
+                  'Figures Type': {
+                    '@value': '',
+                    'Figures Metatype': '',
+                  },
+                },
+                Pages: {
+                  'Page(s)': null,
+                  'Pages Type': {
+                    '@value': '',
+                    'Pages Metatype': '',
+                  },
+                },
+                Plates: {
+                  'Plate(s)': null,
+                  'Plates Type': {
+                    '@value': '',
+                    'Plates metatype': '',
+                  },
+                },
+                'Source Comment': {
+                  Comment: null,
+                  'Source Comment Type': {
+                    '@value': '',
+                    'Source Comment Metatype': '',
+                  },
+                },
+                'Source Number': {
+                  'Source Number Type': {
+                    '@value': '',
+                    'Source Number Metatype': '',
+                  },
+                  'Source Number Value': null,
+                },
+              },
+            ],
+            'Location Data': {
+              Geometry: {
+                'Feature Shape': {
+                  '@value': '',
+                  'Feature Shape Metatype': '',
+                },
+                'Geospatial Coordinates':
+                  "{'type': 'FeatureCollection', 'features': [{'id': '9fb04cd3-e6ca-4a42-b8bd-667c27e758b5', 'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.542554016810026, 53.2337139891952]}, 'properties': {}}]}",
+              },
+            },
+            'System Reference Numbers': {
+              LegacyID: {
+                'Legacy ID': 'E5522',
+                'Legacy ID Type': {
+                  '@value': '',
+                  'Legacy ID Metatype': '',
+                },
+              },
+              PrimaryReferenceNumber: {
+                'Primary Reference Number': '1131',
+                'Primary Reference Number Type': {
+                  '@value': '',
+                  'Primary Reference Number Metatype': '',
+                },
+              },
+              UUID: {
+                ResourceID: '000543e8-bfea-40b3-8325-010981f2369e',
+                'ResourceID Type': {
+                  '@value': '',
+                  'ResourceID Metatype': '',
+                },
+              },
+            },
+          },
+          resourceinstanceid: '000543e8-bfea-40b3-8325-010981f2369e',
+        };
       }}
     />
   );
