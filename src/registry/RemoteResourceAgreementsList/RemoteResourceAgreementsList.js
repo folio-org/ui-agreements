@@ -1,6 +1,6 @@
-// import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { EntitlementAgreementsBaseList } from '../../components/EntitlementsAgreementsList';
@@ -17,6 +17,7 @@ const RemoteResourceAgreementsList = ({
   setBadgeCount
 }) => {
   const ky = useOkapiKy();
+  let isEmptyMessage;
 
   const {
     data: eresourceId,
@@ -25,9 +26,15 @@ const RemoteResourceAgreementsList = ({
     () => ky.get(`${TITLES_ELECTRONIC_ENDPOINT}?match=identifiers.identifier.value&term=${remoteId}`).json(),
     {
       enabled: !!remoteId,
+      // for now only handle the first match
+      // TODO: handle multiple TI found with same remote identifier
       select: (d) => d?.[0]?.id ?? null,
     }
   );
+
+  if (eresourceId === null) {
+    isEmptyMessage = <FormattedMessage id="ui-agreements.remoteKb.remoteTitleNotFound" />;
+  }
 
   const {
     data: entitlements = [],
@@ -50,6 +57,7 @@ const RemoteResourceAgreementsList = ({
       entitlements={entitlements}
       eresourceId={eresourceId}
       id="remote-resource-agreements-list"
+      isEmptyMessage={isEmptyMessage}
       visibleColumns={['name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage']}
     />
   );
