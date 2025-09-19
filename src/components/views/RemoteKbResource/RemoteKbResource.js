@@ -82,7 +82,7 @@ const RemoteKbResource = ({
 
   const setBadgeCount = (sectionName) => (count) => {
     setBadges(prev => {
-      if (!count) {
+      if (count == null) {
         const { [sectionName]: _omit, ...rest } = prev;
         return rest;
       }
@@ -92,8 +92,8 @@ const RemoteKbResource = ({
   };
 
   const renderBadge = (name) => {
-    const count = badges[name] || 0;
-    return count ? <Badge>{count}</Badge> : null;
+    const count = badges[name] ?? 0;
+    return <Badge>{count}</Badge>;
   };
 
   // treat '', null/false, empty arrays as "empty"
