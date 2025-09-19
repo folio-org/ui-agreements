@@ -8,7 +8,7 @@ import {
 import AgreementLookup from '../AgreementLookup';
 
 import { GokbBasketButton, GokbTIPPTable } from './Gokb';
-import RemoteResourceAgreementsList from './RemoteResourceAgreementsList/RemoteResourceAgreementsList';
+import RemoteResourceAgreementsList from './RemoteResourceAgreementsList';
 
 const setUpRegistry = (registry) => {
   // Agreement Resource
