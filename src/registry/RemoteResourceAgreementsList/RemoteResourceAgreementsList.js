@@ -3,9 +3,9 @@ import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { EntitlementAgreementsBaseList } from '../../EntitlementsAgreementsList';
+import { EntitlementAgreementsBaseList } from '../../components/EntitlementsAgreementsList';
 
-import { ERESOURCE_ENTITLEMENTS_ENDPOINT, TITLES_ELECTRONIC_ENDPOINT } from '../../../constants';
+import { ERESOURCE_ENTITLEMENTS_ENDPOINT, TITLES_ELECTRONIC_ENDPOINT } from '../../constants';
 
 const propTypes = {
   remoteId: PropTypes.string.isRequired,
