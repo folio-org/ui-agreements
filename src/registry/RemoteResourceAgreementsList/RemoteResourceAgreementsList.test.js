@@ -1,5 +1,3 @@
-// RemoteResourceAgreementsList.props.test.js
-import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { useQuery } from 'react-query';
@@ -38,9 +36,13 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
   test('passes eresourceId and entitlements to child, sets badge count', () => {
     useQuery.mockImplementation((key, _fn, opts) => {
       if (key[1] === 'fetchLocalTitleId') {
+        // enabled should be true because remoteId is truthy
+        expect(opts?.enabled).toBe(true);
         return { data: eresourceId };
       }
       if (key[1] === 'fetchEntitlementsForTitle') {
+        // with a truthy eresourceId this should be enabled
+        expect(opts?.enabled).toBe(true);
         opts?.onSuccess?.(entitlements);
         return { data: entitlements };
       }
@@ -56,17 +58,24 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
     expect(Array.isArray(props.entitlements)).toBe(true);
     expect(props.entitlements).toHaveLength(entitlements.length);
     expect(props.id).toBe('remote-resource-agreements-list');
+    expect(props.visibleColumns).toEqual([
+      'name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage'
+    ]);
+    expect(props.isEmptyMessage).toBeUndefined();
 
     expect(setBadgeCount).toHaveBeenCalledWith(entitlements.length);
   });
 
   test('remote title not found, child gets null TI, empty entitlements, empty message set, no badge', () => {
-    useQuery.mockImplementation((key) => {
+    let entitlementsQueryOpts;
+    useQuery.mockImplementation((key, _fn, opts) => {
       if (key[1] === 'fetchLocalTitleId') {
-        return { data: null }; // select() would yield null
+        expect(opts?.enabled).toBe(true);
+        return { data: null };
       }
       if (key[1] === 'fetchEntitlementsForTitle') {
-        // would be disabled, but returning empty keeps props stable
+        entitlementsQueryOpts = opts;
+        expect(opts?.enabled).toBe(false);
         return { data: [] };
       }
       return { data: undefined };
@@ -79,8 +88,8 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
 
     expect(props.eresourceId).toBeNull();
     expect(props.entitlements).toEqual([]);
-    // FormattedMessage instance → check the id prop
     expect(props.isEmptyMessage?.props?.id).toBe('ui-agreements.remoteKb.remoteTitleNotFound');
+    expect(entitlementsQueryOpts?.enabled).toBe(false);
 
     expect(setBadgeCount).not.toHaveBeenCalled();
   });
@@ -105,6 +114,50 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
 
     expect(props.eresourceId).toBe(eresourceId);
     expect(props.entitlements).toEqual([]);
+
+    expect(setBadgeCount).toHaveBeenCalledWith(0);
+  });
+
+  test('select function in fetchLocalTitleId query works as expected', () => {
+    let firstQueryOpts;
+    let secondQueryOpts;
+
+    useQuery.mockImplementation((key, _fn, opts) => {
+      if (key[1] === 'fetchLocalTitleId') {
+        firstQueryOpts = opts;
+        expect(opts?.enabled).toBe(true);
+        return { data: eresourceId };
+      }
+      if (key[1] === 'fetchEntitlementsForTitle') {
+        secondQueryOpts = opts;
+        expect(opts?.enabled).toBe(true);
+        return { data: entitlements };
+      }
+      return { data: undefined };
+    });
+
+    renderIt();
+
+    expect(firstQueryOpts.select([{ id: 'abc' }])).toBe('abc');
+    expect(firstQueryOpts.select([])).toBeNull();
+
+    expect(secondQueryOpts?.enabled).toBe(true);
+  });
+
+  test('handles non-array entitlements and error in entitlements query by setting badge count to 0', () => {
+    useQuery.mockImplementation((key, _fn, opts) => {
+      if (key[1] === 'fetchLocalTitleId') {
+        return { data: eresourceId };
+      }
+      if (key[1] === 'fetchEntitlementsForTitle') {
+        opts?.onSuccess?.({ not: 'an array' });
+        opts?.onError?.(new Error('boom'));
+        return { data: undefined };
+      }
+      return { data: undefined };
+    });
+
+    renderIt();
 
     expect(setBadgeCount).toHaveBeenCalledWith(0);
   });
