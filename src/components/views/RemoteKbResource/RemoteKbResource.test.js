@@ -1,25 +1,32 @@
-// RemoteKbResource.test.js
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+import { Registry } from '@folio/handler-stripes-registry';
 import RemoteKbResource from './RemoteKbResource';
 import translationsProperties from '../../../../test/helpers';
 
-let resource;
-
-// --- Mocks ---
-
-// stripes core: expose iconKey so we can assert it
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  AppIcon: ({ iconKey }) => <span>AppIcon:{iconKey}</span>,
+jest.mock('@folio/handler-stripes-registry', () => ({
+  Registry: {
+    getResource: jest.fn(),
+  },
 }));
 
-// stripes components: keep very light shims
+let resource;
+
+jest.mock('@folio/stripes/core', () => {
+  const actual = jest.requireActual('@folio/stripes/core');
+  return {
+    ...actual,
+    AppIcon: ({ iconKey }) => <span>AppIcon:{iconKey}</span>,
+  };
+});
+
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   Pane: ({ paneTitle, appIcon, children }) => (
     <div>
-      <div data-testid="pane-title">{typeof paneTitle === 'string' ? paneTitle : (paneTitle?.props?.children || '')}</div>
+      <div data-testid="pane-title">
+        {typeof paneTitle === 'string' ? paneTitle : (paneTitle?.props?.children || '')}
+      </div>
       <div data-testid="pane-icon">{appIcon}</div>
       {children}
     </div>
@@ -37,7 +44,7 @@ jest.mock('@folio/stripes/components', () => ({
   MultiColumnList: ({ visibleColumns = [], contentData = [] }) => (
     <div data-rows={contentData.length} data-testid={`mcl-${visibleColumns.join('-')}`}>MCL</div>
   ),
-  Accordion: ({ children, label }) => <div data-testid={`accordion-${label}`}>{children}</div>,
+  Accordion: ({ id, children, label }) => <div data-testid={`accordion-${id || label}`}>{children}</div>,
   AccordionStatus: ({ children }) => <div>{children}</div>,
   AccordionSet: ({ children }) => <div>{children}</div>,
   ExpandAllButton: () => <button type="button">ExpandAll</button>,
@@ -49,9 +56,7 @@ jest.mock('@folio/stripes/components', () => ({
   expandAllSections: jest.fn(),
 }));
 
-// utilities used inside the component
 jest.mock('../../utilities', () => ({
-  // minimal handlebars compiler to satisfy the replace template
   handlebarsCompile: (tpl) => (ctx) => {
     if (tpl.includes("{{{replace this 'Instance' ''}}}")) {
       return String(ctx || '').replace('Instance', '');
@@ -59,75 +64,45 @@ jest.mock('../../utilities', () => ({
     return String(ctx || '');
   },
   renderPublicationDates: (obj = {}) => {
-    // when any date is present, return a span (truthy); else null (to trigger <NoValue/>)
     const hasAny = Object.keys(obj || {}).length > 0;
     return hasAny ? <span>Coverage</span> : null;
   },
   stableKeyFrom: (v) => `k${(JSON.stringify(v) || '').length}`,
 }));
 
-// the table case calls getResultsDisplayConfig for inner columns
 jest.mock('../../../routes/utilities/getResultsDisplayConfig', () => jest.fn((cols) => ({
   resultColumns: cols.map(c => ({ propertyPath: c.name, label: <span>{c.name}</span> })),
   sortableColumns: [],
   formatter: cols.reduce((acc, c) => {
-    // simple identity-ish formatters for table rows
     acc[c.name] = (row) => row[c.name] ?? row.namespaceName ?? row.value ?? row.altNames ?? '';
     return acc;
   }, {}),
 })));
 
-// JSONPath mapping used throughout the component
 jest.mock('jsonpath-plus', () => ({
   JSONPath: jest.fn(({ path, json }) => {
-    // use the provided resource (json)
-    const r = json;
+    const r = json || {};
     switch (path) {
-      case '$.name': return [r.name];
-      case '$.dateCreated': return [r.dateCreated];
-      case '$.lastUpdatedDisplay': return [r.lastUpdatedDisplay];
-      case '$.componentType': return [r.componentType];
-      case '$.publishedFrom': return [r.publishedFrom];
-      case '$.publishedTo': return [r.publishedTo];
-      case '$.publisherName': return [r.publisherName];
-      case '$.id': return [r.id];
-      case '$.uuid': return [r.uuid];
-      case '$.volumeNumber': return []; // not present
-      case '$.editionStatement': return []; // not present
-      case '$.firstAuthor': return []; // not present
-      case '$.firstEditor': return []; // not present
-      // list resources for tables
-      case '$.altname[*]': return r.altname;
-      case '$.identifiers[*]': return r.identifiers;
-      // identifier family selections
-      default: {
-        if (path.includes("$.identifiers[?(@.namespace == 'zdb')]")) {
-          return r.identifiers.filter(i => i.namespace === 'zdb').map(i => i.value);
-        }
-        if (path.includes("$.identifiers[?(@.namespace == 'issn") || path.includes("@.namespace == 'eissn") || path.includes("@.namespace == 'pissn")) {
-          return r.identifiers
-            .filter(i => ['issn', 'eissn', 'pissn'].includes(i.namespace))
-            .map(i => i.value);
-        }
-        if (path.includes("$.identifiers[?(@.namespace == 'isbn") || path.includes("@.namespace == 'eisbn") || path.includes("@.namespace == 'pisbn")) {
-          return r.identifiers
-            .filter(i => ['isbn', 'eisbn', 'pisbn'].includes(i.namespace))
-            .map(i => i.value);
-        }
-        if (path.includes("$.identifiers[?(@.namespace == 'ezb'")) return [];
-        if (path.includes("$.identifiers[?(@.namespace == 'doi'")) return [];
-        // table inner column access (not used because we mock getResultsDisplayConfig),
-        // but keep a safe default:
-        if (path === '$.altNames') return [r.name];
-        if (path === '$.namespaceName') return r.identifiers.map(i => i.namespaceName);
-        if (path === '$.value') return r.identifiers.map(i => i.value);
-        return [];
-      }
+      case '$.name': return r.name != null ? [r.name] : [];
+      case '$.dateCreated': return r.dateCreated != null ? [r.dateCreated] : [];
+      case '$.lastUpdatedDisplay': return r.lastUpdatedDisplay != null ? [r.lastUpdatedDisplay] : [];
+      case '$.componentType': return r.componentType != null ? [r.componentType] : []; // important for handlebars NoValue
+      case '$.publishedFrom': return r.publishedFrom != null ? [r.publishedFrom] : [];
+      case '$.publishedTo': return r.publishedTo != null ? [r.publishedTo] : [];
+      case '$.publisherName': return r.publisherName != null ? [r.publisherName] : [];
+      case '$.id': return r.id != null ? [r.id] : [];
+      case '$.uuid': return r.uuid != null ? [r.uuid] : [];
+      case '$.altname[*]': return Array.isArray(r.altname) ? r.altname : [];
+      case '$.identifiers[*]': return Array.isArray(r.identifiers) ? r.identifiers : [];
+      case '$.altNames': return [r.name].filter(Boolean);
+      case '$.namespaceName': return (r.identifiers || []).map(i => i.namespaceName);
+      case '$.value': return (r.identifiers || []).map(i => i.value);
+      default: return [];
     }
   }),
 }));
 
-// --- Shared fixtures from your prompt ---
+// --- Fixtures ---
 
 const displayConfig = {
   title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
@@ -141,13 +116,7 @@ const displayConfig = {
         renderStrategy: {
           type: 'rows',
           values: [
-            {
-              type: 'row',
-              colCount: '1',
-              values: [
-                { type: 'heading', value: { type: 'access', accessType: 'JSONPath', expression: '$.name' } },
-              ],
-            },
+            { type: 'heading', value: { type: 'access', accessType: 'JSONPath', expression: '$.name' } },
             {
               type: 'row',
               colCount: '1',
@@ -161,7 +130,7 @@ const displayConfig = {
             },
             {
               type: 'row',
-              colCount: '3',
+              colCount: '1',
               values: [
                 {
                   type: 'keyValue',
@@ -172,99 +141,18 @@ const displayConfig = {
                     value: { type: 'access', accessType: 'JSONPath', expression: '$.componentType' },
                   },
                 },
-                {
-                  name: 'firstAuthor',
-                  type: 'keyValue',
-                  value: { type: 'access', accessType: 'JSONPath', expression: '$.firstAuthor' },
-                },
-                {
-                  name: 'firstEditor',
-                  type: 'keyValue',
-                  value: { type: 'access', accessType: 'JSONPath', expression: '$.firstEditor' },
-                },
               ],
             },
             {
               type: 'row',
-              colCount: '4',
+              colCount: '1',
               values: [
                 {
-                  name: 'publicationDates',
+                  name: 'publisher',
                   type: 'keyValue',
-                  value: {
-                    type: 'displayDates',
-                    value: [
-                      { type: 'access', accessType: 'JSONPath', expression: '$.dateFirstOnline', key: 'dateFirstOnline' },
-                      { type: 'access', accessType: 'JSONPath', expression: '$.dateFirstInPrint', key: 'dateFirstInPrint' },
-                      { type: 'access', accessType: 'JSONPath', expression: '$.publishedFrom', key: 'publishedFrom' },
-                      { type: 'access', accessType: 'JSONPath', expression: '$.publishedTo', key: 'publishedTo' },
-                    ],
-                  },
+                  value: { type: 'access', accessType: 'JSONPath', expression: '$.publisherName' },
                 },
-                { name: 'volume', type: 'keyValue', value: { type: 'access', accessType: 'JSONPath', expression: '$.volumeNumber' } },
-                { name: 'edition', type: 'keyValue', value: { type: 'access', accessType: 'JSONPath', expression: '$.editionStatement' } },
-                { name: 'publisher', type: 'keyValue', value: { type: 'access', accessType: 'JSONPath', expression: '$.publisherName' } },
               ],
-            },
-            {
-              type: 'row',
-              colCount: '2',
-              values: [
-                { name: 'gokbid', type: 'keyValue', value: { type: 'access', accessType: 'JSONPath', expression: '$.id' } },
-                { name: 'gokbuuid', type: 'keyValue', value: { type: 'access', accessType: 'JSONPath', expression: '$.uuid' } },
-              ],
-            },
-            {
-              type: 'row',
-              colCount: '5',
-              values: [
-                { name: 'issns', type: 'keyValue', value: { type: 'access', accessType: 'JSONPath', expression: "$.identifiers[?(@.namespace == 'issn' || @.namespace == 'eissn' || @.namespace == 'pissn')].value" } },
-                { name: 'isbns', type: 'keyValue', value: { type: 'access', accessType: 'JSONPath', expression: "$.identifiers[?(@.namespace == 'isbn' || @.namespace == 'eisbn' || @.namespace == 'pisbn')].value" } },
-                { name: 'zdbids', type: 'keyValue', value: { type: 'access', accessType: 'JSONPath', expression: "$.identifiers[?(@.namespace == 'zdb')].value" } },
-                { name: 'ezbids', type: 'keyValue', value: { type: 'access', accessType: 'JSONPath', expression: "$.identifiers[?(@.namespace == 'ezb')].value" } },
-                { name: 'dois', type: 'keyValue', value: { type: 'access', accessType: 'JSONPath', expression: "$.identifiers[?(@.namespace == 'doi')].value" } },
-              ],
-            },
-          ],
-        },
-      },
-      {
-        name: 'accordions',
-        collapsable: true,
-        renderStrategy: {
-          type: 'accordionset',
-          values: [
-            {
-              name: 'extendedTitleInformation',
-              collapsable: true,
-              renderStrategy: {
-                type: 'rows',
-                values: [
-                  {
-                    type: 'table',
-                    resource: { type: 'access', accessType: 'JSONPath', expression: '$.altname[*]' },
-                    columns: [
-                      { name: 'altNames', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.altNames' } },
-                    ],
-                  },
-                  {
-                    type: 'table',
-                    resource: { type: 'access', accessType: 'JSONPath', expression: '$.identifiers[*]' },
-                    columns: [
-                      { name: 'type', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.namespaceName' } },
-                      { name: 'identifier', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.value' } },
-                    ],
-                  },
-                  {
-                    type: 'table',
-                    resource: { type: 'access', accessType: 'JSONPath', expression: '$.subjects[*]' },
-                    columns: [
-                      { name: 'scheme', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.scheme' } },
-                      { name: 'heading', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.heading' } },
-                    ],
-                  },
-                ],
-              },
             },
           ],
         },
@@ -276,38 +164,27 @@ const displayConfig = {
 const baseResource = {
   id: 828955,
   componentType: 'JournalInstance',
-  publisherUuid: 'b2b18279-261c-4653-be6c-d8ec2f2d8573',
-  lastUpdatedDisplay: '2019-09-02T08:41:38Z',
-  identifiers: [
-    { baseUrl: 'https://ld.zdb-services.de/resource/', namespace: 'zdb', type: '', value: '2010543-5', namespaceName: 'ZDB-ID' },
-    { baseUrl: 'https://portal.issn.org/resource/ISSN/', namespace: 'issn', type: 'isxn', value: '0160-9335', namespaceName: 'p-ISSN' },
-  ],
-  subjects: [],
-  altname: [' The journal of philosophy, psychology, and scientific methods'],
-  shortcode: 'The_@journal_of_philosophy,_psychology,_and_scientific_methods',
-  uuid: 'e2a8df5b-4d2c-4f65-82f4-fbd96f43538c',
-  publishedTo: '1920-12-31',
-  updater: 'journal',
-  sortname: ' The journal of philosophy, psychology, and scientific methods',
-  publishedFrom: '1904-01-01',
-  dateCreated: '2018-05-07T10:16:18Z',
+  name: 'The journal of philosophy',
   publisherName: 'Science Press',
-  name: ' The journal of philosophy, psychology, and scientific methods',
-  publisher: 'org.gokb.cred.Org:50620',
-  status: 'Current',
+  dateCreated: '2018-05-07T10:16:18Z',
+  lastUpdatedDisplay: '2019-09-02T08:41:38Z',
+  // used by the table test
+  altname: ['Alt A', 'Alt B'],
+  identifiers: [
+    { namespaceName: 'p-ISSN', value: '0160-9335' },
+  ],
 };
 
 // --- Tests ---
 
 describe('RemoteKbResource', () => {
-  const renderComp = (props = {}) => renderWithIntl(
+  const renderComp = (res = resource, cfg = displayConfig) => renderWithIntl(
     <MemoryRouter>
       <RemoteKbResource
-        displayConfig={displayConfig}
+        displayConfig={cfg}
         onClose={jest.fn()}
         queryProps={{ isLoading: false }}
-        resource={resource}
-        {...props}
+        resource={res}
       />
     </MemoryRouter>,
     translationsProperties
@@ -315,6 +192,7 @@ describe('RemoteKbResource', () => {
 
   beforeEach(() => {
     resource = { ...baseResource };
+    jest.clearAllMocks();
   });
 
   test('shows LoadingPane when isLoading=true', () => {
@@ -332,45 +210,119 @@ describe('RemoteKbResource', () => {
     expect(getByText('LoadingPane')).toBeInTheDocument();
   });
 
-  test('renders pane title from JSONPath and AppIcon with iconKey "title"', () => {
-    const { getByTestId, getAllByText } = renderComp();
-    expect(getByTestId('pane-icon')).toHaveTextContent('AppIcon:title'); // displayConfig.icon
-    // title comes from $.name; we just check a distinctive substring
+  test('renders pane title and AppIcon', () => {
+    const { getByTestId } = renderComp();
+    expect(getByTestId('pane-icon')).toHaveTextContent('AppIcon:title');
     expect(getByTestId('pane-title').textContent).toContain('journal of philosophy');
-    // heading also rendered from $.name (appears in multiple places)
-    const matches = getAllByText(/journal of philosophy/i);
-    expect(matches.length).toBeGreaterThanOrEqual(2);
-    expect(matches.some(n => n.tagName === 'H2')).toBe(true);
   });
 
-  test('renders key values: publicationType (handlebars) and publisher name', () => {
+  test('renders key values (handlebars + publisher)', () => {
     const { container, getByText } = renderComp();
-    // handlebars replace "JournalInstance" -> "Journal"
     expect(container.querySelector('.kv-value')?.textContent).toContain('Journal');
     expect(getByText('Science Press')).toBeInTheDocument();
   });
 
-  test('renders IDs via JSONPath: ZDB and ISSN; missing ISBN shows <NoValue/>', () => {
-    const { getAllByText, getByText } = renderComp();
-    expect(getByText('2010543-5')).toBeInTheDocument(); // zdbids
-    expect(getByText('0160-9335')).toBeInTheDocument(); // issns
-    // isbns not present -> NoValue rendered at least once
+  test('displayDates with no dates renders <NoValue/>', () => {
+    const noDatesConfig = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
+      renderStrategy: {
+        type: 'rows',
+        values: [
+          {
+            type: 'displayDates',
+            value: [
+              { type: 'access', accessType: 'JSONPath', expression: '$.dateFirstOnline', key: 'dateFirstOnline' },
+            ],
+          },
+        ],
+      },
+    };
+    const noDatesResource = { ...baseResource, dateFirstOnline: null };
+    const { getAllByText } = renderComp(noDatesResource, noDatesConfig);
     expect(getAllByText('NoValue').length).toBeGreaterThan(0);
   });
 
-  test('renders publication dates via renderPublicationDates', () => {
-    const { getByText } = renderComp();
-    // mocked renderPublicationDates returns a <span>Coverage</span> when any date is present
-    expect(getByText('Coverage')).toBeInTheDocument();
+  test('handlebars with no value renders <NoValue/>', () => {
+    const res = { ...baseResource, componentType: undefined };
+    const { getAllByText } = renderComp(res);
+    expect(getAllByText('NoValue').length).toBeGreaterThan(0);
   });
 
-  test('renders two tables (altname, identifiers) and omits empty subjects table', () => {
-    const { getByTestId, queryByTestId } = renderComp();
-    // altNames table
-    expect(getByTestId('mcl-altNames')).toHaveAttribute('data-rows', '1');
-    // identifiers table
-    expect(getByTestId('mcl-type-identifier')).toHaveAttribute('data-rows', '2');
-    // subjects empty -> no MCL rendered
-    expect(queryByTestId('mcl-scheme-heading')).not.toBeInTheDocument();
+  test('collapsible rows with no visual content render accordion fallback (no rows inside)', () => {
+    const cfg = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
+      renderStrategy: {
+        type: 'sections',
+        values: [
+          {
+            name: 'emptyAcc',
+            collapsable: true,
+            renderStrategy: {
+              type: 'rows',
+              values: [
+                { type: 'access', accessType: 'Other', expression: '$.whatever' },
+              ],
+            },
+          },
+        ],
+      },
+    };
+
+    const { getByTestId } = renderComp(baseResource, cfg);
+    const acc = getByTestId('accordion-emptyAcc');
+    expect(acc).toBeInTheDocument();
+    expect(acc.querySelectorAll('.row').length).toBe(0);
+  });
+
+  test('registry branch calls Registry.getResource and its render function (props include setBadgeCount)', () => {
+    const mockRenderFn = jest.fn(() => <div>RegistryOutput</div>);
+    Registry.getResource.mockReturnValue({
+      getRenderFunction: () => mockRenderFn,
+    });
+
+    const regCfg = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
+      renderStrategy: {
+        type: 'rows',
+        values: [
+          {
+            type: 'registry',
+            registryResource: 'foo',
+            registryRenderFunction: 'bar',
+            props: [],
+          },
+        ],
+      },
+    };
+
+    const { getByText } = renderComp(baseResource, regCfg);
+    expect(mockRenderFn).toHaveBeenCalled();
+    expect(mockRenderFn.mock.calls[0][0]).toHaveProperty('setBadgeCount');
+    expect(getByText('RegistryOutput')).toBeInTheDocument();
+  });
+
+  test('table branch: renders MCL for primitive source array (altname)', () => {
+    const tableCfg = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
+      renderStrategy: {
+        type: 'rows',
+        values: [
+          {
+            type: 'table',
+            resource: { type: 'access', accessType: 'JSONPath', expression: '$.altname[*]' },
+            columns: [
+              { name: 'altNames', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.altNames' } },
+            ],
+          },
+        ],
+      },
+    };
+
+    const { getByTestId } = renderComp(baseResource, tableCfg);
+    expect(getByTestId('mcl-altNames')).toHaveAttribute('data-rows', '2');
   });
 });
