@@ -687,7 +687,7 @@
                       "values": [
                         {
                           "type": "registry",
-                          "registryResource": "remoteKbAgreements",
+                          "registryResource": "remoteKb",
                           "registryRenderFunction": "agreementsList",
                           "props": [
                             {

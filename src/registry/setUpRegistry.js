@@ -41,14 +41,14 @@ const setUpRegistry = (registry) => {
   const ermPkgReg = registry.registerResource('ermPackage');
   ermPkgReg.setViewResource(pkg => `/erm/packages/${pkg.id}`);
 
-  // GOKB TIPP resource
-  const gokbTIPPResource = registry.registerResource('gokb');
-  gokbTIPPResource.setRenderFunction('addToBasketButton', ({ tipp }) => <GokbBasketButton tipp={tipp} />);
-  gokbTIPPResource.setRenderFunction('tippTable', ({ tipps }) => <GokbTIPPTable tipps={tipps} />);
+  // RemoteKb resource
+  const remoteKbResource = registry.registerResource('remoteKb');
+  // GOKB TIPP
+  remoteKbResource.setRenderFunction('gokbAddToBasketButton', ({ tipp }) => <GokbBasketButton tipp={tipp} />);
+  remoteKbResource.setRenderFunction('gokbTippTable', ({ tipps }) => <GokbTIPPTable tipps={tipps} />);
 
   // Render RemoteKb Agreements List
-  const remoteKbAgreementsReg = registry.registerResource('remoteKbAgreements');
-  remoteKbAgreementsReg.setRenderFunction('agreementsList', ({ remoteId, setBadgeCount }) => <RemoteResourceAgreementsList remoteId={remoteId} setBadgeCount={setBadgeCount} />);
+  remoteKbResource.setRenderFunction('agreementsList', ({ remoteId, setBadgeCount }) => <RemoteResourceAgreementsList remoteId={remoteId} setBadgeCount={setBadgeCount} />);
 };
 
 export default setUpRegistry;
