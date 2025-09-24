@@ -10,7 +10,7 @@ const useLinkedWarning = (change, input, parentAgreementId, triggerButton) => {
   }, [input, triggerButton]);
 
   useEffect(() => {
-    if (parentAgreementId === input.value?.id && !selfLinkedWarning) {
+    if (parentAgreementId && parentAgreementId === input.value?.id && !selfLinkedWarning) {
       change(input.name, undefined);
       setSelfLinkedWarning(true);
     }
