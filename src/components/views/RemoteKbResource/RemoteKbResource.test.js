@@ -1,3 +1,4 @@
+import React from 'react';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Registry } from '@folio/handler-stripes-registry';
@@ -24,9 +25,7 @@ jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   Pane: ({ paneTitle, appIcon, children }) => (
     <div>
-      <div data-testid="pane-title">
-        {typeof paneTitle === 'string' ? paneTitle : (paneTitle?.props?.children || '')}
-      </div>
+      <div data-testid="pane-title">{typeof paneTitle === 'string' ? paneTitle : (paneTitle?.props?.children || '')}</div>
       <div data-testid="pane-icon">{appIcon}</div>
       {children}
     </div>
@@ -44,7 +43,14 @@ jest.mock('@folio/stripes/components', () => ({
   MultiColumnList: ({ visibleColumns = [], contentData = [] }) => (
     <div data-rows={contentData.length} data-testid={`mcl-${visibleColumns.join('-')}`}>MCL</div>
   ),
-  Accordion: ({ id, children, label }) => <div data-testid={`accordion-${id || label}`}>{children}</div>,
+  Badge: ({ children }) => <span data-testid="badge">{children}</span>,
+  Accordion: ({ id, label, displayWhenClosed, displayWhenOpen, children }) => (
+    <div data-testid={`accordion-${id || label}`}>
+      {displayWhenClosed}
+      {displayWhenOpen}
+      {children}
+    </div>
+  ),
   AccordionStatus: ({ children }) => <div>{children}</div>,
   AccordionSet: ({ children }) => <div>{children}</div>,
   ExpandAllButton: () => <button type="button">ExpandAll</button>,
@@ -86,7 +92,7 @@ jest.mock('jsonpath-plus', () => ({
       case '$.name': return r.name != null ? [r.name] : [];
       case '$.dateCreated': return r.dateCreated != null ? [r.dateCreated] : [];
       case '$.lastUpdatedDisplay': return r.lastUpdatedDisplay != null ? [r.lastUpdatedDisplay] : [];
-      case '$.componentType': return r.componentType != null ? [r.componentType] : []; // important for handlebars NoValue
+      case '$.componentType': return r.componentType != null ? [r.componentType] : [];
       case '$.publishedFrom': return r.publishedFrom != null ? [r.publishedFrom] : [];
       case '$.publishedTo': return r.publishedTo != null ? [r.publishedTo] : [];
       case '$.publisherName': return r.publisherName != null ? [r.publisherName] : [];
@@ -94,6 +100,7 @@ jest.mock('jsonpath-plus', () => ({
       case '$.uuid': return r.uuid != null ? [r.uuid] : [];
       case '$.altname[*]': return Array.isArray(r.altname) ? r.altname : [];
       case '$.identifiers[*]': return Array.isArray(r.identifiers) ? r.identifiers : [];
+      case '$.subjects[*]': return Array.isArray(r.subjects) ? r.subjects : [];
       case '$.altNames': return [r.name].filter(Boolean);
       case '$.namespaceName': return (r.identifiers || []).map(i => i.namespaceName);
       case '$.value': return (r.identifiers || []).map(i => i.value);
@@ -101,8 +108,6 @@ jest.mock('jsonpath-plus', () => ({
     }
   }),
 }));
-
-// --- Fixtures ---
 
 const displayConfig = {
   title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
@@ -168,14 +173,10 @@ const baseResource = {
   publisherName: 'Science Press',
   dateCreated: '2018-05-07T10:16:18Z',
   lastUpdatedDisplay: '2019-09-02T08:41:38Z',
-  // used by the table test
   altname: ['Alt A', 'Alt B'],
-  identifiers: [
-    { namespaceName: 'p-ISSN', value: '0160-9335' },
-  ],
+  identifiers: [{ namespaceName: 'p-ISSN', value: '0160-9335' }],
+  subjects: [],
 };
-
-// --- Tests ---
 
 describe('RemoteKbResource', () => {
   const renderComp = (res = resource, cfg = displayConfig) => renderWithIntl(
@@ -216,10 +217,11 @@ describe('RemoteKbResource', () => {
     expect(getByTestId('pane-title').textContent).toContain('journal of philosophy');
   });
 
-  test('renders key values (handlebars + publisher)', () => {
+  test('renders key values (handlebars + publisher) and label ids', () => {
     const { container, getByText } = renderComp();
     expect(container.querySelector('.kv-value')?.textContent).toContain('Journal');
     expect(getByText('Science Press')).toBeInTheDocument();
+    expect(getByText('ui-agreements.remoteKb.publisher')).toBeInTheDocument();
   });
 
   test('displayDates with no dates renders <NoValue/>', () => {
@@ -243,13 +245,13 @@ describe('RemoteKbResource', () => {
     expect(getAllByText('NoValue').length).toBeGreaterThan(0);
   });
 
-  test('handlebars with no value renders <NoValue/>', () => {
+  test('handlebars with no JSONPath value (value undefined) returns <NoValue/>', () => {
     const res = { ...baseResource, componentType: undefined };
     const { getAllByText } = renderComp(res);
     expect(getAllByText('NoValue').length).toBeGreaterThan(0);
   });
 
-  test('collapsible rows with no visual content render accordion fallback (no rows inside)', () => {
+  test('handlebars non-access branch returns "" and row omitted (accordion fallback path)', () => {
     const cfg = {
       icon: 'title',
       title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
@@ -257,12 +259,12 @@ describe('RemoteKbResource', () => {
         type: 'sections',
         values: [
           {
-            name: 'emptyAcc',
+            name: 'hbElse',
             collapsable: true,
             renderStrategy: {
               type: 'rows',
               values: [
-                { type: 'access', accessType: 'Other', expression: '$.whatever' },
+                { type: 'access', accessType: 'Other', expression: '$.noop' },
               ],
             },
           },
@@ -271,41 +273,179 @@ describe('RemoteKbResource', () => {
     };
 
     const { getByTestId } = renderComp(baseResource, cfg);
-    const acc = getByTestId('accordion-emptyAcc');
-    expect(acc).toBeInTheDocument();
+    const acc = getByTestId('accordion-hbElse');
     expect(acc.querySelectorAll('.row').length).toBe(0);
   });
 
-  test('registry branch calls Registry.getResource and its render function (props include setBadgeCount)', () => {
-    const mockRenderFn = jest.fn(() => <div>RegistryOutput</div>);
+  test('accordionset with >1 collapsible sections renders ExpandAllButton', () => {
+    const cfg = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
+      renderStrategy: {
+        type: 'sections',
+        values: [
+          {
+            name: 'accordions',
+            collapsable: true,
+            renderStrategy: {
+              type: 'accordionset',
+              values: [
+                {
+                  name: 'sec1',
+                  collapsable: true,
+                  renderStrategy: {
+                    type: 'rows',
+                    values: [
+                      {
+                        type: 'keyValue',
+                        name: 'publisher',
+                        value: { type: 'access', accessType: 'JSONPath', expression: '$.publisherName' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  name: 'sec2',
+                  collapsable: true,
+                  renderStrategy: {
+                    type: 'rows',
+                    values: [
+                      {
+                        type: 'keyValue',
+                        name: 'publisher',
+                        value: { type: 'access', accessType: 'JSONPath', expression: '$.publisherName' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    };
+
+    const { getByText } = renderComp(baseResource, cfg);
+    expect(getByText('ExpandAll')).toBeInTheDocument();
+  });
+
+  test('badge rendering via registry setBadgeCount()', () => {
+    const RegistryContent = ({ setBadgeCount }) => {
+      React.useEffect(() => {
+        setBadgeCount(7);
+      }, [setBadgeCount]);
+      return <div>RegistryContent</div>;
+    };
+
+    const mockRenderFn = jest.fn((props) => <RegistryContent {...props} />);
     Registry.getResource.mockReturnValue({
       getRenderFunction: () => mockRenderFn,
     });
 
-    const regCfg = {
+    const cfg = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
+      renderStrategy: {
+        type: 'sections',
+        values: [
+          {
+            name: 'accordions',
+            collapsable: true,
+            renderStrategy: {
+              type: 'accordionset',
+              values: [
+                {
+                  name: 'withBadge',
+                  collapsable: true,
+                  badge: true,
+                  renderStrategy: {
+                    type: 'rows',
+                    values: [
+                      {
+                        type: 'registry',
+                        registryResource: 'foo',
+                        registryRenderFunction: 'bar',
+                        props: [],
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    };
+
+    const { getAllByTestId, getByText } = renderComp(baseResource, cfg);
+    expect(getByText('RegistryContent')).toBeInTheDocument();
+    const badges = getAllByTestId('badge');
+    expect(badges.length).toBeGreaterThan(0);
+    expect(badges.some(b => b.textContent === '7')).toBe(true);
+  });
+
+  test('row kept when partially visual (hasVisualContent=true)', () => {
+    const cfg = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
+      renderStrategy: {
+        type: 'sections',
+        values: [
+          {
+            name: 'vis',
+            collapsable: true,
+            renderStrategy: {
+              type: 'rows',
+              values: [
+                {
+                  type: 'row',
+                  colCount: '2',
+                  values: [
+                    { type: 'access', accessType: 'Other', expression: '$.noop' },
+                    {
+                      type: 'keyValue',
+                      name: 'publisher',
+                      value: { type: 'access', accessType: 'JSONPath', expression: '$.publisherName' },
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+      },
+    };
+
+    const { getByTestId } = renderComp(baseResource, cfg);
+    const acc = getByTestId('accordion-vis');
+    expect(acc.querySelectorAll('.row').length).toBeGreaterThan(0);
+  });
+
+  test('table empty branch: subjects array empty → no MCL rendered', () => {
+    const cfg = {
       icon: 'title',
       title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
       renderStrategy: {
         type: 'rows',
         values: [
           {
-            type: 'registry',
-            registryResource: 'foo',
-            registryRenderFunction: 'bar',
-            props: [],
+            type: 'table',
+            resource: { type: 'access', accessType: 'JSONPath', expression: '$.subjects[*]' },
+            columns: [
+              { name: 'scheme', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.scheme' } },
+              { name: 'heading', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.heading' } },
+            ],
           },
         ],
       },
     };
 
-    const { getByText } = renderComp(baseResource, regCfg);
-    expect(mockRenderFn).toHaveBeenCalled();
-    expect(mockRenderFn.mock.calls[0][0]).toHaveProperty('setBadgeCount');
-    expect(getByText('RegistryOutput')).toBeInTheDocument();
+    const { queryByTestId } = renderComp(baseResource, cfg);
+    expect(queryByTestId('mcl-scheme-heading')).not.toBeInTheDocument();
   });
 
-  test('table branch: renders MCL for primitive source array (altname)', () => {
-    const tableCfg = {
+  test('table with primitive source array: altname → rows wrapped & rendered', () => {
+    const cfg = {
       icon: 'title',
       title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
       renderStrategy: {
@@ -322,7 +462,29 @@ describe('RemoteKbResource', () => {
       },
     };
 
-    const { getByTestId } = renderComp(baseResource, tableCfg);
+    const { getByTestId } = renderComp(baseResource, cfg);
     expect(getByTestId('mcl-altNames')).toHaveAttribute('data-rows', '2');
+  });
+
+  test('registry safe null: missing resource or render fn → renders nothing gracefully', () => {
+    Registry.getResource.mockReturnValueOnce(null);
+    const cfg = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
+      renderStrategy: {
+        type: 'rows',
+        values: [
+          {
+            type: 'registry',
+            registryResource: 'missing',
+            registryRenderFunction: 'nope',
+            props: [],
+          },
+        ],
+      },
+    };
+
+    const { container } = renderComp(baseResource, cfg);
+    expect(container).toBeTruthy();
   });
 });
