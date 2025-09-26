@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { useStripes } from '@folio/stripes/core';
+import { useStripes, CalloutContext } from '@folio/stripes/core';
 
 import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
@@ -17,8 +17,8 @@ import mockRefdata from '../../../test/jest/refdata';
 import AgreementCreateRoute from './AgreementCreateRoute';
 
 
-
 const mockBasketLinesAdded = jest.fn();
+const mockSendCallout = jest.fn();
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -81,7 +81,9 @@ describe('AgreementCreateRoute', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <AgreementCreateRoute {...data} />
+          <CalloutContext.Provider value={{ sendCallout: mockSendCallout }}>
+            <AgreementCreateRoute {...data} />
+          </CalloutContext.Provider>
         </MemoryRouter>,
         translationsProperties
       );
@@ -116,6 +118,15 @@ describe('AgreementCreateRoute', () => {
         expect(historyPushMock).toHaveBeenCalled();
       });
     });
+
+    // test('sends a callout when save and close is clicked', async () => {
+    //   await waitFor(async () => {
+    //     await ButtonInteractor('CloseButton').click();
+    //   });
+    //   await waitFor(() => {
+    //     expect(mockSendCallout).toHaveBeenCalled();
+    //   });
+    // });
   });
 
   describe('rendering loading view', () => {

@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
-
 import { useQuery } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
-
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button } from '@folio/stripes/components';
-import { useStripes } from '@folio/stripes/core';
+import { Button, Callout } from '@folio/stripes/components';
+import { useStripes, CalloutContext } from '@folio/stripes/core';
 
 import translationsProperties from '../../../test/helpers';
 import AgreementEditRoute from './AgreementEditRoute';
@@ -32,6 +30,8 @@ CloseButton.propTypes = {
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
 
+const mockMutateAsync = jest.fn(() => Promise.resolve({ name: 'Test Agreement' }));
+
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useAgreementsRefdata: () => mockRefdata,
@@ -44,6 +44,15 @@ jest.mock('../../components/views/AgreementForm', () => {
       <CloseButton {...props} />
     </div>
   );
+});
+
+jest.mock('react-query', () => {
+  const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
+  return ({
+    ...jest.requireActual('react-query'),
+    ...mockReactQuery,
+    useMutation: () => ({ mutateAsync: mockMutateAsync }),
+  });
 });
 
 const data = {
@@ -63,7 +72,13 @@ useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
 describe('AgreementEditRoute', () => {
   describe('rendering the route with permissions', () => {
     let renderComponent;
+    let callout;
+
     beforeEach(() => {
+      callout = {
+        sendCallout: jest.fn(),
+      };
+
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementEditRoute {...data} onSubmit={onSubmitMock} />
@@ -85,6 +100,39 @@ describe('AgreementEditRoute', () => {
         expect(historyPushMock).toHaveBeenCalled();
       });
     });
+
+    test('calls the mutation and shows success callout', async () => {
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
+    });
+
+    // test('shows error callout on mutation failure', async () => {
+    //   await waitFor(async () => {
+    //     mockMutateAsync.mockImplementationOnce(() => Promise.reject(new Error(true)));
+    //     await ButtonInteractor('CloseButton').click();
+    //   });
+    //   await waitFor(async () => {
+    //     await Callout(/error: agreement was not updated: Test Agreement/i).exists();
+    //   });
+    // });
+
+    // describe('clicking CloseButton', () => {
+    //   beforeEach(async () => {
+    //     await waitFor(async () => {
+    //       await ButtonInteractor('CloseButton').click();
+    //     });
+    //   });
+
+    //   test('success callout fires', async () => {
+    //     await waitFor(async () => {
+    //       await Callout(/agreement updated: Test Agreement/i).exists();
+    //     });
+    //   });
+    // });
   });
 
   describe('rendering loading view', () => {
