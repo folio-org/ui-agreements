@@ -118,8 +118,8 @@ const EntitlementAgreementsList = (
 };
 
 EntitlementAgreementsList.propTypes = {
-  entitlements: PropTypes.arrayOf(PropTypes.object),
-  eresourceId: PropTypes.string,
+  entitlements: PropTypes.arrayOf(PropTypes.shape({})),
+  eresourceId: PropTypes.string.isRequired,
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,
