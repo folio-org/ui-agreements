@@ -35,10 +35,6 @@ const RemoteResourceAgreementsList = ({
     }
   );
 
-  if (eresourceId === null) {
-    isEmptyMessage = <FormattedMessage id="ui-agreements.remoteKb.remoteTitleNotFound" />;
-  }
-
   const {
     data: entitlements = [],
   } = useQuery(
@@ -56,13 +52,15 @@ const RemoteResourceAgreementsList = ({
   );
 
   return (
-    <EntitlementAgreementsList
-      entitlements={entitlements}
-      eresourceId={eresourceId}
-      id="remote-resource-agreements-list"
-      isEmptyMessage={isEmptyMessage}
-      visibleColumns={['name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage']}
-    />
+    eresourceId ?
+      <EntitlementAgreementsList
+        entitlements={entitlements}
+        eresourceId={eresourceId}
+        id="remote-resource-agreements-list"
+        isEmptyMessage={isEmptyMessage}
+        visibleColumns={['name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage']}
+      />
+      : <FormattedMessage id="ui-agreements.remoteKb.remoteTitleNotFound" />
   );
 };
 
