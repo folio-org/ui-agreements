@@ -12,8 +12,6 @@ import {
   checkScope,
   collapseAllSections,
   Col,
-  Dropdown,
-  DropdownMenu,
   Button,
   ExpandAllButton,
   expandAllSections,
@@ -25,7 +23,6 @@ import {
   MultiColumnList,
   NoValue,
   Pane,
-  PaneMenu,
   Row,
 } from '@folio/stripes/components';
 
@@ -49,6 +46,7 @@ const propTypes = {
       values: PropTypes.arrayOf(PropTypes.shape({})),
     }),
   }).isRequired,
+  kbKey: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   resource: PropTypes.oneOfType([
     PropTypes.shape({}),
@@ -61,6 +59,7 @@ const propTypes = {
 
 const RemoteKbResource = ({
   displayConfig,
+  kbKey,
   resource,
   onClose,
   queryProps: { isLoading },
@@ -348,10 +347,9 @@ const RemoteKbResource = ({
   }
 
   const renderActionMenu = () => {
-    // const renderLastMenu = () => {
-    const remoteKbName = displayConfig.title?.remoteKbName || 'remote KB';
-    // const localURL = displayConfig.title?.localURL || '#';
-    // const remoteURL = `https://gokbt.gbv.de/gokb/api/title/${resource.uuid}`;
+    const remoteKbName = intl.formatMessage({
+      id: `ui-agreements.${kbKey}`,
+    }) || 'remote KB';
     const remoteURL = `https://gokbt.gbv.de/gokb-ui/title/${resource.uuid}`;
 
     return (

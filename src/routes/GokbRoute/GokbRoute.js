@@ -45,7 +45,7 @@ const GokbRoute = () => {
   );
 
   const ViewComponent = (props) => (
-    <RemoteKbResource {...props} displayConfig={displayConfig} />
+    <RemoteKbResource {...props} displayConfig={displayConfig} kbKey={kbKey} />
   );
 
   const {
