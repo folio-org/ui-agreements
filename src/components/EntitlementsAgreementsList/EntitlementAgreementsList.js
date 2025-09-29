@@ -32,7 +32,7 @@ const EntitlementAgreementsList = (
     totalCount,
     visibleColumns = ['name', 'type', 'startDate', 'endDate'] }
 ) => {
-  const settings = useAgreementsDisplaySettings();
+  const settings = useAgreementsDisplaySettings({ namespaceAppend: ['entitlementAgreements'] });
   const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
   const {
     paginationMCLProps,
