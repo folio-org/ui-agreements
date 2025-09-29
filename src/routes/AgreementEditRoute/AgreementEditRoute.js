@@ -134,36 +134,41 @@ const AgreementEditRoute = ({
 
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
-    (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
-      .then(async (resp) => {
-        const { name } = resp;
-        // Grab id from response and submit a claim ... CRUCIALLY await the response.
-        // TODO we need to think about failure cases here.
-        return claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } })
-          .then(() => {
-            callout.sendCallout({
-              type: 'success',
-              message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.callout" values={{ name }} />,
-            });
-            return resp; // Allow it to continue downstream
-          })
-          .catch((claimError) => {
-            callout.sendCallout({
-              type: 'error',
-              message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.error.callout" values={{ name, error: claimError.message }} />,
-              timeout: 0,
-            });
-            return resp;
-          });
-      })
-      .then(async (response) => {
+    async (payload) => {
+      try {
+        const response = await ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json();
         const { name, linkedLicenses } = response;
         // Invalidate any linked license's linkedAgreements calls
+
+        try {
+          await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+          callout.sendCallout({
+            type: 'success',
+            message: (
+              <FormattedMessage
+                id="ui-agreements.agreements.claimPolicies.update.callout"
+                values={{ name }}
+              />
+            )
+          });
+
+          history.push(`${urls.agreementView(agreementId)}${location.search}`);
+        } catch (claimError) {
+          callout.sendCallout({
+            type: 'error',
+            message: (
+              <FormattedMessage
+                id="ui-agreements.agreements.claimPolicies.update.error.callout"
+                values={{ name, error: claimError.message }}
+              />
+            ),
+            timeout: 0,
+          });
+        }
+
         if (linkedLicenses?.length) {
-          await Promise.all(linkedLicenses.map(linkLic => {
-            // I'm still not 100% sure this is the "right" way to go about this.
-            return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']);
-          }));
+          // I'm still not 100% sure this is the "right" way to go about this.
+          await Promise.all(linkedLicenses.map(linkLic => queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements'])));
         }
 
         /* Invalidate cached queries */
@@ -172,21 +177,33 @@ const AgreementEditRoute = ({
 
         callout.sendCallout({
           type: 'success',
-          message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} />
+          message: (
+            <FormattedMessage
+              id="ui-agreements.agreements.update.callout"
+              values={{ name }}
+            />
+          )
         });
-
         history.push(`${urls.agreementView(agreementId)}${location.search}`);
 
         return response;
-      })
-      .catch((agreementError) => {
+      } catch (agreementError) {
         callout.sendCallout({
           type: 'error',
-          message: <FormattedMessage id="ui-agreements.agreements.update.error.callout" values={{ name: payload?.name ?? '', error: agreementError.message }} />,
+          message: (
+            <FormattedMessage
+              id="ui-agreements.agreements.update.error.callout"
+              values={{
+                name: payload?.name ?? '',
+                error: agreementError.message
+              }}
+            />
+          ),
           timeout: 0,
         });
         throw agreementError;
-      })
+      }
+    }
   );
 
   const { policies } = usePolicies({
