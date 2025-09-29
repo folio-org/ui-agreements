@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { EntitlementAgreementsBaseList } from '../../components/EntitlementsAgreementsList';
+import EntitlementAgreementsList from '../../components/EntitlementsAgreementsList';
 
 import { ERESOURCE_ENTITLEMENTS_ENDPOINT, TITLES_ELECTRONIC_ENDPOINT } from '../../constants';
 
@@ -53,7 +53,7 @@ const RemoteResourceAgreementsList = ({
   );
 
   return (
-    <EntitlementAgreementsBaseList
+    <EntitlementAgreementsList
       entitlements={entitlements}
       eresourceId={eresourceId}
       id="remote-resource-agreements-list"
