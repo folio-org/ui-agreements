@@ -236,9 +236,9 @@ const RemoteKbResource = ({
         };
 
         return registryRenderFunction ?
-          value?.props
+          props
             ? registryRenderFunction(props)
-            : null
+            : registryRenderFunction()
           : null;
       }
       default:
