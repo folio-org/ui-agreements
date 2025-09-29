@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button, Callout } from '@folio/stripes/components';
-import { useStripes, CalloutContext } from '@folio/stripes/core';
+
+import { Button as ButtonInteractor, renderWithIntl, Callout } from '@folio/stripes-erm-testing';
+import { Button } from '@folio/stripes/components';
+import { useStripes } from '@folio/stripes/core';
 
 import translationsProperties from '../../../test/helpers';
 import AgreementEditRoute from './AgreementEditRoute';
@@ -27,10 +28,14 @@ CloseButton.propTypes = {
   }),
 };
 
+const SubmitButton = (props) => {
+  return <Button onClick={props.onClick}>SubmitButton</Button>;
+};
+
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
 
-const mockMutateAsync = jest.fn(() => Promise.resolve({ name: 'Test Agreement' }));
+const mockMutateAsync = jest.fn(() => Promise.resolve({ name: 'Test Agreement', linkedLicenses: [] }));
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -42,6 +47,7 @@ jest.mock('../../components/views/AgreementForm', () => {
     <div>
       <div>AgreementForm</div>
       <CloseButton {...props} />
+      <SubmitButton onClick={() => props.onSubmit({ name: 'Test Agreement' })} />
     </div>
   );
 });
@@ -51,9 +57,10 @@ jest.mock('react-query', () => {
   return ({
     ...jest.requireActual('react-query'),
     ...mockReactQuery,
-    useMutation: () => ({ mutateAsync: mockMutateAsync }),
+    useMutation: () => ({ mutateAsync: mockMutateAsync })
   });
 });
+
 
 const data = {
   history: {
@@ -72,13 +79,8 @@ useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
 describe('AgreementEditRoute', () => {
   describe('rendering the route with permissions', () => {
     let renderComponent;
-    let callout;
 
     beforeEach(() => {
-      callout = {
-        sendCallout: jest.fn(),
-      };
-
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementEditRoute {...data} onSubmit={onSubmitMock} />
@@ -101,38 +103,17 @@ describe('AgreementEditRoute', () => {
       });
     });
 
-    test('calls the mutation and shows success callout', async () => {
-      await waitFor(async () => {
-        await ButtonInteractor('CloseButton').click();
-      });
-      await waitFor(async () => {
-        expect(historyPushMock).toHaveBeenCalled();
-      });
+    test('shows success callout for agreement update', async () => {
+      await ButtonInteractor('SubmitButton').click();
+      await Callout(/Agreement updated: Test Agreement/i).exists();
     });
 
-    // test('shows error callout on mutation failure', async () => {
-    //   await waitFor(async () => {
-    //     mockMutateAsync.mockImplementationOnce(() => Promise.reject(new Error(true)));
-    //     await ButtonInteractor('CloseButton').click();
-    //   });
-    //   await waitFor(async () => {
-    //     await Callout(/error: agreement was not updated: Test Agreement/i).exists();
-    //   });
-    // });
-
-    // describe('clicking CloseButton', () => {
-    //   beforeEach(async () => {
-    //     await waitFor(async () => {
-    //       await ButtonInteractor('CloseButton').click();
-    //     });
-    //   });
-
-    //   test('success callout fires', async () => {
-    //     await waitFor(async () => {
-    //       await Callout(/agreement updated: Test Agreement/i).exists();
-    //     });
-    //   });
-    // });
+    test('shows success callout for claim policies', async () => {
+      await ButtonInteractor('SubmitButton').click();
+      await waitFor(async () => {
+        await Callout(/Agreement acquisition units updated: Test Agreement/i).exists();
+      }, { timeout: 3000 });
+    });
   });
 
   describe('rendering loading view', () => {
