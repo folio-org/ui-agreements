@@ -12,6 +12,9 @@ import {
   checkScope,
   collapseAllSections,
   Col,
+  Dropdown,
+  DropdownMenu,
+  Button,
   ExpandAllButton,
   expandAllSections,
   HasCommand,
@@ -22,6 +25,7 @@ import {
   MultiColumnList,
   NoValue,
   Pane,
+  PaneMenu,
   Row,
 } from '@folio/stripes/components';
 
@@ -64,6 +68,7 @@ const RemoteKbResource = ({
   const intl = useIntl();
   const accordionStatusRef = createRef();
   const [badges, setBadges] = useState({});
+  const [localEresourceId, setLocalEresourceId] = useState(undefined);
 
   const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
 
@@ -211,7 +216,7 @@ const RemoteKbResource = ({
           registryResource?.getRenderFunction(value.registryRenderFunction) ??
           null;
 
-        const props = (value.props || []).reduce((acc, p) => {
+        const baseProps = (value.props || []).reduce((acc, p) => {
           if (p.value?.type === 'access') {
             acc[p.name] = renderValue(p.value);
             return acc;
@@ -219,7 +224,17 @@ const RemoteKbResource = ({
           return null;
         }, {});
 
-        props.setBadgeCount = setBadgeCount(sectionName);
+        const inject = value.inject || [];
+
+        const props = {
+          ...baseProps,
+          ...(inject.includes('setBadgeCount') && sectionName
+            ? { setBadgeCount: setBadgeCount(sectionName) }
+            : {}),
+          ...(inject.includes('setLocalEresourceId')
+            ? { setLocalEresourceId }
+            : {}),
+        };
 
         return registryRenderFunction ?
           value?.props
@@ -332,6 +347,44 @@ const RemoteKbResource = ({
     );
   }
 
+  const renderLastMenu = () => {
+    const remoteKbName = displayConfig.title?.remoteKbName || 'remote KB';
+    // const localURL = displayConfig.title?.localURL || '#';
+    // const remoteURL = `https://gokbt.gbv.de/gokb/api/title/${resource.uuid}`;
+    const remoteURL = `https://gokbt.gbv.de/gokb-ui/title/${resource.uuid}`;
+
+    return (
+      <PaneMenu>
+        <Dropdown
+          placement="bottom-end"
+          renderTrigger={({ getTriggerProps, triggerRef, isOpen }) => (
+            <Button
+              {...getTriggerProps()}
+              ref={triggerRef}
+              aria-expanded={isOpen}
+              aria-haspopup="menu"
+              marginBottom0
+            >
+              <FormattedMessage id="ui-agreements.remoteKb.view.actions" />
+            </Button>
+          )}
+        >
+          <DropdownMenu data-role="menu">
+            <Button
+              buttonStyle="dropdownItem"
+              onClick={() => window.location.assign(remoteURL)}
+            >
+              <FormattedMessage id="ui-agreements.remoteKb.view.actions.remote" values={{ remoteKbName }} />
+            </Button>
+            <Button buttonStyle="dropdownItem" disabled={!localEresourceId} to={`/erm/titles/${localEresourceId}`}>
+              <FormattedMessage id="ui-agreements.remoteKb.view.actions.local" />
+            </Button>
+          </DropdownMenu>
+        </Dropdown>
+      </PaneMenu>
+    );
+  };
+
   return (
     <HasCommand
       commands={shortcuts}
@@ -344,6 +397,7 @@ const RemoteKbResource = ({
         }
         defaultWidth={PANE_DEFAULT_WIDTH}
         dismissible
+        lastMenu={renderLastMenu()}
         onClose={onClose}
         paneTitle={renderValue(displayConfig.title)}
       >

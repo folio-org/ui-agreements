@@ -48,7 +48,7 @@ const setUpRegistry = (registry) => {
   remoteKbResource.setRenderFunction('gokbTippTable', ({ tipps }) => <GokbTIPPTable tipps={tipps} />);
 
   // Render RemoteKb Agreements List
-  remoteKbResource.setRenderFunction('agreementsList', ({ remoteId, setBadgeCount }) => <RemoteResourceAgreementsList remoteId={remoteId} setBadgeCount={setBadgeCount} />);
+  remoteKbResource.setRenderFunction('agreementsList', ({ remoteId, setBadgeCount, setLocalEresourceId }) => <RemoteResourceAgreementsList remoteId={remoteId} setBadgeCount={setBadgeCount} setLocalEresourceId={setLocalEresourceId} />);
 };
 
 export default setUpRegistry;

@@ -119,7 +119,7 @@ const EntitlementAgreementsList = (
 
 EntitlementAgreementsList.propTypes = {
   entitlements: PropTypes.arrayOf(PropTypes.object),
-  eresourceId: PropTypes.string.isRequired,
+  eresourceId: PropTypes.string,
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,
