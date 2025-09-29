@@ -347,41 +347,25 @@ const RemoteKbResource = ({
     );
   }
 
-  const renderLastMenu = () => {
+  const renderActionMenu = () => {
+    // const renderLastMenu = () => {
     const remoteKbName = displayConfig.title?.remoteKbName || 'remote KB';
     // const localURL = displayConfig.title?.localURL || '#';
     // const remoteURL = `https://gokbt.gbv.de/gokb/api/title/${resource.uuid}`;
     const remoteURL = `https://gokbt.gbv.de/gokb-ui/title/${resource.uuid}`;
 
     return (
-      <PaneMenu>
-        <Dropdown
-          placement="bottom-end"
-          renderTrigger={({ getTriggerProps, triggerRef, isOpen }) => (
-            <Button
-              {...getTriggerProps()}
-              ref={triggerRef}
-              aria-expanded={isOpen}
-              aria-haspopup="menu"
-              marginBottom0
-            >
-              <FormattedMessage id="ui-agreements.remoteKb.view.actions" />
-            </Button>
-          )}
+      <>
+        <Button
+          buttonStyle="dropdownItem"
+          onClick={() => window.location.assign(remoteURL)}
         >
-          <DropdownMenu data-role="menu">
-            <Button
-              buttonStyle="dropdownItem"
-              onClick={() => window.location.assign(remoteURL)}
-            >
-              <FormattedMessage id="ui-agreements.remoteKb.view.actions.remote" values={{ remoteKbName }} />
-            </Button>
-            <Button buttonStyle="dropdownItem" disabled={!localEresourceId} to={`/erm/titles/${localEresourceId}`}>
-              <FormattedMessage id="ui-agreements.remoteKb.view.actions.local" />
-            </Button>
-          </DropdownMenu>
-        </Dropdown>
-      </PaneMenu>
+          <FormattedMessage id="ui-agreements.remoteKb.view.actions.remote" values={{ remoteKbName }} />
+        </Button>
+        <Button buttonStyle="dropdownItem" disabled={!localEresourceId} to={`/erm/titles/${localEresourceId}`}>
+          <FormattedMessage id="ui-agreements.remoteKb.view.actions.local" />
+        </Button>
+      </>
     );
   };
 
@@ -392,12 +376,12 @@ const RemoteKbResource = ({
       scope={document.body}
     >
       <Pane
+        actionMenu={renderActionMenu}
         appIcon={
           <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />
         }
         defaultWidth={PANE_DEFAULT_WIDTH}
         dismissible
-        lastMenu={renderLastMenu()}
         onClose={onClose}
         paneTitle={renderValue(displayConfig.title)}
       >
