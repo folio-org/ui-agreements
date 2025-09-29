@@ -6,9 +6,10 @@ import translationsProperties from '../../../test/helpers';
 import RemoteResourceAgreementsList from './RemoteResourceAgreementsList';
 import { entitlements, eresourceId, remoteId } from '../../../test/jest/GOKB/entitlements';
 
-const mockEntitlementAgreementsBaseList = jest.fn(() => <div data-testid="EntitlementAgreementsBaseList" />);
+const mockEntitlementAgreementsList = jest.fn(() => <div data-testid="EntitlementAgreementsList" />);
 jest.mock('../../components/EntitlementsAgreementsList', () => ({
-  EntitlementAgreementsBaseList: (props) => mockEntitlementAgreementsBaseList(props),
+  __esModule: true,
+  default: (props) => mockEntitlementAgreementsList(props),
 }));
 
 jest.mock('react-query', () => ({
@@ -36,12 +37,10 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
   test('passes eresourceId and entitlements to child, sets badge count', () => {
     useQuery.mockImplementation((key, _fn, opts) => {
       if (key[1] === 'fetchLocalTitleId') {
-        // enabled should be true because remoteId is truthy
         expect(opts?.enabled).toBe(true);
         return { data: eresourceId };
       }
       if (key[1] === 'fetchEntitlementsForTitle') {
-        // with a truthy eresourceId this should be enabled
         expect(opts?.enabled).toBe(true);
         opts?.onSuccess?.(entitlements);
         return { data: entitlements };
@@ -51,8 +50,8 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
 
     renderIt();
 
-    expect(mockEntitlementAgreementsBaseList).toHaveBeenCalledTimes(1);
-    const props = mockEntitlementAgreementsBaseList.mock.calls[0][0];
+    expect(mockEntitlementAgreementsList).toHaveBeenCalledTimes(1);
+    const props = mockEntitlementAgreementsList.mock.calls[0][0];
 
     expect(props.eresourceId).toBe(eresourceId);
     expect(Array.isArray(props.entitlements)).toBe(true);
@@ -83,8 +82,8 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
 
     renderIt();
 
-    expect(mockEntitlementAgreementsBaseList).toHaveBeenCalledTimes(1);
-    const props = mockEntitlementAgreementsBaseList.mock.calls[0][0];
+    expect(mockEntitlementAgreementsList).toHaveBeenCalledTimes(1);
+    const props = mockEntitlementAgreementsList.mock.calls[0][0];
 
     expect(props.eresourceId).toBeNull();
     expect(props.entitlements).toEqual([]);
@@ -109,8 +108,8 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
 
     renderIt();
 
-    expect(mockEntitlementAgreementsBaseList).toHaveBeenCalledTimes(1);
-    const props = mockEntitlementAgreementsBaseList.mock.calls[0][0];
+    expect(mockEntitlementAgreementsList).toHaveBeenCalledTimes(1);
+    const props = mockEntitlementAgreementsList.mock.calls[0][0];
 
     expect(props.eresourceId).toBe(eresourceId);
     expect(props.entitlements).toEqual([]);
