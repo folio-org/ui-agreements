@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 
-
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useStripes } from '@folio/stripes/core';
 
-import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Callout, Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
 import { MemoryRouter } from 'react-router-dom';
 
@@ -16,9 +15,8 @@ import translationsProperties from '../../../test/helpers';
 import mockRefdata from '../../../test/jest/refdata';
 import AgreementCreateRoute from './AgreementCreateRoute';
 
-
-
 const mockBasketLinesAdded = jest.fn();
+const mockMutateAsync = jest.fn(() => Promise.resolve({ name: 'Test Agreement' }));
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -50,17 +48,23 @@ CloseButton.propTypes = {
   }),
 };
 
+const SubmitButton = (props) => {
+  return <Button onClick={props.onClick}>SubmitButton</Button>;
+};
+
 const historyPushMock = jest.fn();
 
 jest.mock('../../components/views/AgreementForm', () => {
   return (props) => (
     <div>
       <div>AgreementForm</div>
-      <BasketLineButton {...props} />
       <CloseButton {...props} />
+      <BasketLineButton {...props} />
+      <SubmitButton onClick={() => props.onSubmit({ name: 'Test Agreement' })} />
     </div>
   );
 });
+
 
 const data = {
   history: {
@@ -74,6 +78,14 @@ const data = {
     basket,
   }
 };
+
+jest.mock('react-query', () => {
+  const actual = jest.requireActual('react-query');
+  return {
+    ...actual,
+    useMutation: () => ({ mutateAsync: mockMutateAsync }),
+  };
+});
 
 describe('AgreementCreateRoute', () => {
   describe('rendering the route with permissions', () => {
@@ -115,6 +127,11 @@ describe('AgreementCreateRoute', () => {
       await waitFor(async () => {
         expect(historyPushMock).toHaveBeenCalled();
       });
+    });
+
+    test('shows success callout for agreement create', async () => {
+      await ButtonInteractor('SubmitButton').click();
+      await Callout(/Agreement created: Test Agreement/i).exists();
     });
   });
 

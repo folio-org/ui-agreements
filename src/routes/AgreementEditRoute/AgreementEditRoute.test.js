@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
-
 import { useQuery } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
-
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+
+import { Button as ButtonInteractor, renderWithIntl, Callout } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
 
@@ -29,8 +28,14 @@ CloseButton.propTypes = {
   }),
 };
 
+const SubmitButton = (props) => {
+  return <Button onClick={props.onClick}>SubmitButton</Button>;
+};
+
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
+
+const mockMutateAsync = jest.fn(() => Promise.resolve({ name: 'Test Agreement', linkedLicenses: [] }));
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -42,9 +47,20 @@ jest.mock('../../components/views/AgreementForm', () => {
     <div>
       <div>AgreementForm</div>
       <CloseButton {...props} />
+      <SubmitButton onClick={() => props.onSubmit({ name: 'Test Agreement' })} />
     </div>
   );
 });
+
+jest.mock('react-query', () => {
+  const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
+  return ({
+    ...jest.requireActual('react-query'),
+    ...mockReactQuery,
+    useMutation: () => ({ mutateAsync: mockMutateAsync })
+  });
+});
+
 
 const data = {
   history: {
@@ -63,6 +79,7 @@ useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
 describe('AgreementEditRoute', () => {
   describe('rendering the route with permissions', () => {
     let renderComponent;
+
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -84,6 +101,18 @@ describe('AgreementEditRoute', () => {
       await waitFor(async () => {
         expect(historyPushMock).toHaveBeenCalled();
       });
+    });
+
+    test('shows success callout for agreement update', async () => {
+      await ButtonInteractor('SubmitButton').click();
+      await Callout(/Agreement updated: Test Agreement/i).exists();
+    });
+
+    test('shows success callout for claim policies', async () => {
+      await ButtonInteractor('SubmitButton').click();
+      await waitFor(async () => {
+        await Callout(/Agreement acquisition units updated: Test Agreement/i).exists();
+      }, { timeout: 3000 });
     });
   });
 

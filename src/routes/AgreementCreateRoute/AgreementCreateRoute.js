@@ -111,29 +111,85 @@ const AgreementCreateRoute = ({
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
-      .then(async (response) => {
-        const { id: agreementId } = response;
-        // Grab id from response and submit a claim ... CRUCIALLY await the response.
-        // TODO we need to think about failure cases here.
-        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+      .then((response) => {
+        const { id: agreementId, name } = response;
+        const claims = payload.claimPolicies ?? [];
 
+        if (claims.length > 0) {
+          // only show the toast if there is a claim policy
+          return claim({ resourceId: agreementId, payload: { claims } })
+            .then(() => {
+              callout.sendCallout({
+                type: 'success',
+                message: (
+                  <FormattedMessage
+                    id="ui-agreements.agreements.claimPolicies.update.callout"
+                    values={{ name }}
+                  />
+                )
+              });
+              return response;
+            })
+            .catch((claimError) => {
+              callout.sendCallout({
+                type: 'error',
+                message: (
+                  <FormattedMessage
+                    id="ui-agreements.agreements.claimPolicies.update.error.callout"
+                    values={{ name, error: claimError.message }}
+                  />
+                ),
+                timeout: 0,
+              });
+              return response;
+            });
+        }
+
+        //  just return agreement response if no claim policies
         return response;
       })
       .then((response) => {
         const { id, name, linkedLicenses } = response;
+
         // Invalidate any linked license's linkedAgreements calls
         if (linkedLicenses?.length) {
           linkedLicenses.forEach(linkLic => {
             // I'm still not 100% sure this is the "right" way to go about this.
-            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']);
           });
         }
+
         /* Invalidate cached queries */
         queryClient.invalidateQueries(['ERM', 'Agreements']);
 
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
+        callout.sendCallout({
+          type: 'success',
+          message: (
+            <FormattedMessage
+              id="ui-agreements.agreements.create.callout"
+              values={{ name }}
+            />
+          )
+        });
+
         handleClose(id);
         return response;
+      })
+      .catch((agreementError) => {
+        callout.sendCallout({
+          type: 'error',
+          message: (
+            <FormattedMessage
+              id="ui-agreements.agreements.error.callout"
+              values={{
+                name: payload?.name ?? 'unknown',
+                error: agreementError.message
+              }}
+            />
+          ),
+          timeout: 0,
+        });
+        throw agreementError;
       })
   );
 
@@ -223,7 +279,7 @@ AgreementCreateRoute.propTypes = {
   }).isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
-    pathname: PropTypes.string.isRequired
+    pathname: PropTypes.string.isRequired,
   }).isRequired,
 };
 
