@@ -2,6 +2,7 @@ import { createRef, isValidElement, useState } from 'react';
 import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { isEmpty } from 'lodash';
 import { AppIcon } from '@folio/stripes/core';
 
 import {
@@ -12,12 +13,10 @@ import {
   checkScope,
   collapseAllSections,
   Col,
-  Button,
   ExpandAllButton,
   expandAllSections,
   HasCommand,
   Headline,
-  Icon,
   KeyValue,
   LoadingPane,
   MetaSection,
@@ -25,7 +24,6 @@ import {
   NoValue,
   Pane,
   Row,
-  TextLink
 } from '@folio/stripes/components';
 
 import { Registry } from '@folio/handler-stripes-registry';
@@ -42,6 +40,7 @@ const PANE_DEFAULT_WIDTH = '50%';
 
 const propTypes = {
   displayConfig: PropTypes.shape({
+    actions: PropTypes.shape(PropTypes.shape({})),
     icon: PropTypes.string,
     title: PropTypes.objectOf(PropTypes.string),
     renderStrategy: PropTypes.shape({
@@ -61,7 +60,6 @@ const propTypes = {
 
 const RemoteKbResource = ({
   displayConfig,
-  kbKey,
   resource,
   onClose,
   queryProps: { isLoading },
@@ -69,7 +67,6 @@ const RemoteKbResource = ({
   const intl = useIntl();
   const accordionStatusRef = createRef();
   const [badges, setBadges] = useState({});
-  const [localEresourceId, setLocalEresourceId] = useState(undefined);
 
   const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
 
@@ -115,7 +112,7 @@ const RemoteKbResource = ({
     return true;
   };
 
-  const renderValue = (value, sectionName) => {
+  const renderValue = (value, sectionName, badge) => {
     switch (value.type) {
       case 'access':
         if (value.accessType === 'JSONPath') {
@@ -123,6 +120,8 @@ const RemoteKbResource = ({
           return result.length > 0 ? result.join(', ') : <NoValue />;
         }
         return '';
+      case 'static':
+        return value.value;
       case 'keyValue':
         return (
           <KeyValue
@@ -170,21 +169,22 @@ const RemoteKbResource = ({
         const result = renderPublicationDates(combinedData);
         return result || <NoValue />;
       }
-      case 'handlebars':
+      case 'handlebars': {
+        const template = handlebarsCompile(value.templateString);
         if (
           value.value?.type === 'access' &&
           value.value?.accessType === 'JSONPath'
         ) {
           const result = applyJsonPath(value.value?.expression);
-          const template = handlebarsCompile(value.templateString);
           return result.length > 0 ? (
             result.map((obj) => template(obj)).join(', ')
           ) : (
             <NoValue />
           );
         } else {
-          return '';
+          return template({ resource });
         }
+      }
       case 'table': {
         const { formatter } = getResultsDisplayConfig(value.columns);
         // MCL expects array of objects
@@ -218,23 +218,13 @@ const RemoteKbResource = ({
           null;
 
         const baseProps = (value.props || []).reduce((acc, p) => {
-          if (p.value?.type === 'access') {
-            acc[p.name] = renderValue(p.value);
-            return acc;
-          }
-          return null;
+          acc[p.name] = renderValue(p.value);
+          return acc;
         }, {});
-
-        const inject = value.inject || [];
 
         const props = {
           ...baseProps,
-          ...(inject.includes('setBadgeCount') && sectionName
-            ? { setBadgeCount: setBadgeCount(sectionName) }
-            : {}),
-          ...(inject.includes('setLocalEresourceId')
-            ? { setLocalEresourceId }
-            : {}),
+          ...(badge && sectionName ? { setBadgeCount: setBadgeCount(sectionName) } : {}),
         };
 
         return registryRenderFunction ?
@@ -287,7 +277,7 @@ const RemoteKbResource = ({
         );
       case 'rows': {
         const rows = (strategy.values || []).reduce((acc, val) => {
-          const child = renderValue(val, name);
+          const child = renderValue(val, name, badge);
           if (!collapsable || hasVisualContent(child)) {
             acc.push(<Row key={stableKeyFrom(val)}>{child}</Row>);
           }
@@ -349,31 +339,9 @@ const RemoteKbResource = ({
   }
 
   const renderActionMenu = () => {
-    const remoteKbName = intl.formatMessage({
-      id: `ui-agreements.${kbKey}`,
-    }) || 'remote KB';
-    const remoteURL = `https://gokbt.gbv.de/gokb-ui/title/${resource.uuid}`;
-
     return (
       <div>
-        <Button buttonStyle="dropdownItem"> {/* onClick={() => window.location.assign(remoteURL)} */}
-          <Icon icon="external-link">
-            <TextLink href={remoteURL} rel="noopener noreferrer">
-              <FormattedMessage id="ui-agreements.remoteKb.view.actions.remote" values={{ remoteKbName }} />
-            </TextLink>
-          </Icon>
-        </Button>
-        <Button buttonStyle="dropdownItem" disabled={!localEresourceId}>
-          <Icon icon={!localEresourceId ? 'eye-closed' : 'eye-open'}>
-            {localEresourceId ? (
-              <TextLink to={`/erm/titles/${localEresourceId}`}>
-                <FormattedMessage id="ui-agreements.remoteKb.view.actions.local" />
-              </TextLink>
-            ) :
-              <FormattedMessage id="ui-agreements.remoteKb.view.actions.local" />
-            }
-          </Icon>
-        </Button>
+        {displayConfig.actions.values.map((value) => renderValue(value))}
       </div>
     );
   };
@@ -385,7 +353,7 @@ const RemoteKbResource = ({
       scope={document.body}
     >
       <Pane
-        actionMenu={renderActionMenu}
+        actionMenu={!isEmpty(displayConfig.actions) && renderActionMenu}
         appIcon={
           <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />
         }

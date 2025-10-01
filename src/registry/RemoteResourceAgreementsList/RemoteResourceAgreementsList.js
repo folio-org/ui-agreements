@@ -15,7 +15,6 @@ const propTypes = {
 const RemoteResourceAgreementsList = ({
   remoteId,
   setBadgeCount,
-  setLocalEresourceId,
 }) => {
   const ky = useOkapiKy();
   let isEmptyMessage;
@@ -30,8 +29,7 @@ const RemoteResourceAgreementsList = ({
       // for now only handle the first match
       // TODO: handle multiple TI found with same remote identifier
       select: (d) => d?.[0]?.id ?? null,
-      onSuccess: (id) => setLocalEresourceId(id),
-      onError: () => setLocalEresourceId(null),
+      staleTime: 5 * 60 * 1000, // 5 minutes
     }
   );
 

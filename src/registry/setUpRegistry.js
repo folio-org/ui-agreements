@@ -9,6 +9,7 @@ import AgreementLookup from '../AgreementLookup';
 
 import { GokbBasketButton, GokbTIPPTable } from './Gokb';
 import RemoteResourceAgreementsList from './RemoteResourceAgreementsList';
+import { ViewInLocalKbButton, ViewInRemoteKbButton } from './ViewActions';
 
 const setUpRegistry = (registry) => {
   // Agreement Resource
@@ -48,7 +49,9 @@ const setUpRegistry = (registry) => {
   remoteKbResource.setRenderFunction('gokbTippTable', ({ tipps }) => <GokbTIPPTable tipps={tipps} />);
 
   // Render RemoteKb Agreements List
-  remoteKbResource.setRenderFunction('agreementsList', ({ remoteId, setBadgeCount, setLocalEresourceId }) => <RemoteResourceAgreementsList remoteId={remoteId} setBadgeCount={setBadgeCount} setLocalEresourceId={setLocalEresourceId} />);
+  remoteKbResource.setRenderFunction('agreementsList', ({ remoteId, setBadgeCount }) => <RemoteResourceAgreementsList remoteId={remoteId} setBadgeCount={setBadgeCount} />);
+  remoteKbResource.setRenderFunction('viewInLocalKbButton', ({ remoteId }) => <ViewInLocalKbButton remoteId={remoteId} />);
+  remoteKbResource.setRenderFunction('viewInRemoteKbButton', ({ url, remoteKbName }) => <ViewInRemoteKbButton remoteKbName={remoteKbName} url={url} />);
 };
 
 export default setUpRegistry;
