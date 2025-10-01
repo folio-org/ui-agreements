@@ -65,7 +65,8 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
     expect(setBadgeCount).toHaveBeenCalledWith(entitlements.length);
   });
 
-  test('remote title not found, child gets null TI, empty entitlements, empty message set, no badge', () => {
+  test('remote title not found, renders message (no child), entitlements query disabled, no badge', () => {
+    // test('remote title not found, child gets null TI, empty entitlements, empty message set, no badge', () => {
     let entitlementsQueryOpts;
     useQuery.mockImplementation((key, _fn, opts) => {
       if (key[1] === 'fetchLocalTitleId') {
@@ -80,14 +81,12 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
       return { data: undefined };
     });
 
-    renderIt();
+    const { queryByText } = renderIt();
 
-    expect(mockEntitlementAgreementsList).toHaveBeenCalledTimes(1);
-    const props = mockEntitlementAgreementsList.mock.calls[0][0];
+    expect(mockEntitlementAgreementsList).not.toHaveBeenCalled();
+    const messageNode = queryByText('Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion');
+    expect(messageNode).toBeInTheDocument();
 
-    expect(props.eresourceId).toBeNull();
-    expect(props.entitlements).toEqual([]);
-    expect(props.isEmptyMessage?.props?.id).toBe('ui-agreements.remoteKb.remoteTitleNotFound');
     expect(entitlementsQueryOpts?.enabled).toBe(false);
 
     expect(setBadgeCount).not.toHaveBeenCalled();
