@@ -17,6 +17,7 @@ import {
   expandAllSections,
   HasCommand,
   Headline,
+  Icon,
   KeyValue,
   LoadingPane,
   MetaSection,
@@ -24,6 +25,7 @@ import {
   NoValue,
   Pane,
   Row,
+  TextLink
 } from '@folio/stripes/components';
 
 import { Registry } from '@folio/handler-stripes-registry';
@@ -353,17 +355,26 @@ const RemoteKbResource = ({
     const remoteURL = `https://gokbt.gbv.de/gokb-ui/title/${resource.uuid}`;
 
     return (
-      <>
-        <Button
-          buttonStyle="dropdownItem"
-          onClick={() => window.location.assign(remoteURL)}
-        >
-          <FormattedMessage id="ui-agreements.remoteKb.view.actions.remote" values={{ remoteKbName }} />
+      <div>
+        <Button buttonStyle="dropdownItem"> {/* onClick={() => window.location.assign(remoteURL)} */}
+          <Icon icon="external-link">
+            <TextLink href={remoteURL} rel="noopener noreferrer">
+              <FormattedMessage id="ui-agreements.remoteKb.view.actions.remote" values={{ remoteKbName }} />
+            </TextLink>
+          </Icon>
         </Button>
-        <Button buttonStyle="dropdownItem" disabled={!localEresourceId} to={`/erm/titles/${localEresourceId}`}>
-          <FormattedMessage id="ui-agreements.remoteKb.view.actions.local" />
+        <Button buttonStyle="dropdownItem" disabled={!localEresourceId}>
+          <Icon icon={!localEresourceId ? 'eye-closed' : 'eye-open'}>
+            {localEresourceId ? (
+              <TextLink to={`/erm/titles/${localEresourceId}`}>
+                <FormattedMessage id="ui-agreements.remoteKb.view.actions.local" />
+              </TextLink>
+            ) :
+              <FormattedMessage id="ui-agreements.remoteKb.view.actions.local" />
+            }
+          </Icon>
         </Button>
-      </>
+      </div>
     );
   };
 
