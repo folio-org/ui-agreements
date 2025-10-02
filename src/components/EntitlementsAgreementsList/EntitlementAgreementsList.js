@@ -32,7 +32,7 @@ const EntitlementAgreementsList = (
     totalCount,
     visibleColumns = ['name', 'type', 'startDate', 'endDate'] }
 ) => {
-  const settings = useAgreementsDisplaySettings();
+  const settings = useAgreementsDisplaySettings({ namespaceAppend: ['entitlementAgreements'] });
   const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
   const {
     paginationMCLProps,
@@ -118,7 +118,7 @@ const EntitlementAgreementsList = (
 };
 
 EntitlementAgreementsList.propTypes = {
-  entitlements: PropTypes.arrayOf(PropTypes.object),
+  entitlements: PropTypes.arrayOf(PropTypes.shape({})),
   eresourceId: PropTypes.string.isRequired,
   headline: PropTypes.node,
   id: PropTypes.string,

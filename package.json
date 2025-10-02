@@ -21,6 +21,7 @@
     "@babel/eslint-parser": "^7.15.0",
     "@folio/eslint-config-stripes": "^8.0.0",
     "@folio/jest-config-stripes": "^3.0.0",
+    "@folio/handler-stripes-registry": "^3.0.0",
     "@folio/stripes": "^10.0.0",
     "@folio/stripes-acq-components": "^7.0.0",
     "@folio/stripes-cli": "^4.0.0",

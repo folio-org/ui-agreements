@@ -8,6 +8,8 @@ import {
 import AgreementLookup from '../AgreementLookup';
 
 import { GokbBasketButton, GokbTIPPTable } from './Gokb';
+import RemoteResourceAgreementsList from './RemoteResourceAgreementsList';
+import { ViewInLocalKbButton, ViewInRemoteKbButton } from './ViewActions';
 
 const setUpRegistry = (registry) => {
   // Agreement Resource
@@ -40,10 +42,16 @@ const setUpRegistry = (registry) => {
   const ermPkgReg = registry.registerResource('ermPackage');
   ermPkgReg.setViewResource(pkg => `/erm/packages/${pkg.id}`);
 
-  // GOKB TIPP resource
-  const gokbTIPPResource = registry.registerResource('gokb');
-  gokbTIPPResource.setRenderFunction('addToBasketButton', ({ tipp }) => <GokbBasketButton tipp={tipp} />);
-  gokbTIPPResource.setRenderFunction('tippTable', ({ tipps }) => <GokbTIPPTable tipps={tipps} />);
+  // RemoteKb resource
+  const remoteKbResource = registry.registerResource('remoteKb');
+  // GOKB TIPP
+  remoteKbResource.setRenderFunction('gokbAddToBasketButton', ({ tipp }) => <GokbBasketButton tipp={tipp} />);
+  remoteKbResource.setRenderFunction('gokbTippTable', ({ tipps }) => <GokbTIPPTable tipps={tipps} />);
+
+  // Render RemoteKb Agreements List
+  remoteKbResource.setRenderFunction('agreementsList', ({ remoteId, setBadgeCount }) => <RemoteResourceAgreementsList remoteId={remoteId} setBadgeCount={setBadgeCount} />);
+  remoteKbResource.setRenderFunction('viewInLocalKbButton', ({ remoteId }) => <ViewInLocalKbButton remoteId={remoteId} />);
+  remoteKbResource.setRenderFunction('viewInRemoteKbButton', ({ url, remoteKbName }) => <ViewInRemoteKbButton remoteKbName={remoteKbName} url={url} />);
 };
 
 export default setUpRegistry;
