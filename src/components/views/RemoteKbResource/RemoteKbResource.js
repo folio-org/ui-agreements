@@ -47,7 +47,6 @@ const propTypes = {
       values: PropTypes.arrayOf(PropTypes.shape({})),
     }),
   }).isRequired,
-  kbKey: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   resource: PropTypes.oneOfType([
     PropTypes.shape({}),
