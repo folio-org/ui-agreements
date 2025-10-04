@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { useStripes } from '@folio/stripes/core';
+import { useStripes, CalloutContext } from '@folio/stripes/core';
 
-import { Callout, Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
 import { MemoryRouter } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ import mockRefdata from '../../../test/jest/refdata';
 import AgreementCreateRoute from './AgreementCreateRoute';
 
 const mockBasketLinesAdded = jest.fn();
-const mockMutateAsync = jest.fn(() => Promise.resolve({ name: 'Test Agreement' }));
+const mockSendCallout = jest.fn();
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -79,11 +79,31 @@ const data = {
   }
 };
 
-jest.mock('react-query', () => {
-  const actual = jest.requireActual('react-query');
+jest.mock('@folio/stripes/core', () => {
+  const actual = jest.requireActual('@folio/stripes/core');
   return {
     ...actual,
-    useMutation: () => ({ mutateAsync: mockMutateAsync }),
+    useStripes: jest.fn(() => ({
+      hasPerm: jest.fn(() => true),
+    })),
+    useCallout: () => ({
+      sendCallout: mockSendCallout,
+    }),
+    useOkapiKy: () => ({
+      get: () => ({
+        json: () => Promise.resolve({}),
+      }),
+      post: () => ({
+        json: () => Promise.resolve({ name: 'Test Agreement' }),
+      }),
+      put: () => ({
+        json: () => Promise.resolve({}),
+      }),
+      delete: () => ({
+        json: () => Promise.resolve({}),
+      }),
+    }),
+    CalloutContext: actual.CalloutContext,
   };
 });
 
@@ -93,7 +113,9 @@ describe('AgreementCreateRoute', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <AgreementCreateRoute {...data} />
+          <CalloutContext.Provider value={{ sendCallout: mockSendCallout }}>
+            <AgreementCreateRoute {...data} />
+          </CalloutContext.Provider>
         </MemoryRouter>,
         translationsProperties
       );
@@ -129,9 +151,17 @@ describe('AgreementCreateRoute', () => {
       });
     });
 
-    test('shows success callout for agreement create', async () => {
+    test('calls the SubmitButton and shows success callout', async () => {
       await ButtonInteractor('SubmitButton').click();
-      await Callout(/Agreement created: Test Agreement/i).exists();
+
+      await waitFor(() => {
+        expect(mockSendCallout).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: 'success',
+            message: expect.any(Object),
+          })
+        );
+      });
     });
   });
 
@@ -159,8 +189,10 @@ describe('AgreementCreateRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
-      const { hasPerm } = useStripes();
-      hasPerm.mockImplementation(() => false);
+      // override hasPerm to return false
+      useStripes.mockImplementation(() => ({
+        hasPerm: jest.fn(() => false),
+      }));
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementCreateRoute
