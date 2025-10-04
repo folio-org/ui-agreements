@@ -155,7 +155,7 @@ const AgreementCreateRoute = ({
         if (linkedLicenses?.length) {
           linkedLicenses.forEach(linkLic => {
             // I'm still not 100% sure this is the "right" way to go about this.
-            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']);
+            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
           });
         }
 
@@ -279,7 +279,7 @@ AgreementCreateRoute.propTypes = {
   }).isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
-    pathname: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
   }).isRequired,
 };
 

@@ -162,7 +162,7 @@ const AgreementEditRoute = ({
         if (linkedLicenses?.length) {
           await Promise.all(linkedLicenses.map(linkLic => {
             // I'm still not 100% sure this is the "right" way to go about this.
-            return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']);
+            return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
           }));
         }
 
