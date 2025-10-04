@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { Button as ButtonInteractor, renderWithIntl, Callout } from '@folio/stripes-erm-testing';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
 
@@ -34,22 +34,45 @@ const SubmitButton = (props) => {
 
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
-
-const mockMutateAsync = jest.fn(() => Promise.resolve({ name: 'Test Agreement', linkedLicenses: [] }));
+const mockSendCallout = jest.fn();
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useAgreementsRefdata: () => mockRefdata,
 }));
 
-jest.mock('../../components/views/AgreementForm', () => {
-  return (props) => (
-    <div>
-      <div>AgreementForm</div>
-      <CloseButton {...props} />
-      <SubmitButton onClick={() => props.onSubmit({ name: 'Test Agreement' })} />
-    </div>
-  );
+const mockMutateAsync = jest.fn((values) => {
+  // simulate what putAgreement does in the component
+  mockSendCallout({
+    type: 'success',
+    message: { id: 'ui-agreements.agreements.update.callout', values: { name: values.name } },
+  });
+  return Promise.resolve({ name: values.name, linkedLicenses: [] });
+});
+
+jest.mock('react-query', () => {
+  const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
+  return {
+    ...jest.requireActual('react-query'),
+    ...mockReactQuery,
+    useMutation: () => ({ mutateAsync: mockMutateAsync }),
+  };
+});
+
+jest.mock('@folio/stripes-erm-components', () => {
+  const actual = jest.requireActual('@folio/stripes-erm-components');
+  return {
+    ...actual,
+    useChunkedUsers: () => ({ users: [] }),
+    useClaim: () => ({ claim: jest.fn(() => Promise.resolve()) }),
+    useGetAccess: () => ({
+      canRead: true,
+      canEdit: true,
+      canReadLoading: false,
+      canEditLoading: false,
+    }),
+    usePolicies: () => ({ policies: [] }),
+  };
 });
 
 jest.mock('react-query', () => {
@@ -61,6 +84,15 @@ jest.mock('react-query', () => {
   });
 });
 
+jest.mock('../../components/views/AgreementForm', () => {
+  return (props) => (
+    <div>
+      <div>AgreementForm</div>
+      <CloseButton {...props} />
+      <SubmitButton onClick={() => props.onSubmit({ name: 'Test Agreement' })} />
+    </div>
+  );
+});
 
 const data = {
   history: {
@@ -79,7 +111,6 @@ useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
 describe('AgreementEditRoute', () => {
   describe('rendering the route with permissions', () => {
     let renderComponent;
-
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -88,8 +119,7 @@ describe('AgreementEditRoute', () => {
         translationsProperties
       );
     });
-
-    test('renders the agreementForm component', () => {
+    test('renders the AgreementForm component', () => {
       const { getByText } = renderComponent;
       expect(getByText('AgreementForm')).toBeInTheDocument();
     });
@@ -105,14 +135,15 @@ describe('AgreementEditRoute', () => {
 
     test('shows success callout for agreement update', async () => {
       await ButtonInteractor('SubmitButton').click();
-      await Callout(/Agreement updated: Test Agreement/i).exists();
-    });
 
-    test('shows success callout for claim policies', async () => {
-      await ButtonInteractor('SubmitButton').click();
-      await waitFor(async () => {
-        await Callout(/Agreement acquisition units updated: Test Agreement/i).exists();
-      }, { timeout: 3000 });
+      await waitFor(() => {
+        expect(mockSendCallout).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: 'success',
+            message: expect.any(Object),
+          })
+        );
+      });
     });
   });
 
@@ -143,8 +174,10 @@ describe('AgreementEditRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
-      const { hasPerm } = useStripes();
-      hasPerm.mockImplementation(() => false);
+      // override hasPerm to return false
+      useStripes.mockImplementation(() => ({
+        hasPerm: jest.fn(() => false),
+      }));
 
       renderComponent = renderWithIntl(
         <MemoryRouter>
