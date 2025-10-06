@@ -40,7 +40,10 @@ const claimsSig = (list = []) => {
     const type = p?.type ?? '';
     return `${id}::${type}`;
   };
-  return list.map(toKey).sort().join('|');
+  return list
+    .map(toKey)
+    .sort((a, b) => a.localeCompare(b))
+    .join('|');
 };
 
 const [
