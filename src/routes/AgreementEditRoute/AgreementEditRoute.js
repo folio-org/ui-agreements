@@ -132,35 +132,49 @@ const AgreementEditRoute = ({
 
   const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
 
+  // Helper: stable signature for claimPolicies (policy.id + type), order-insensitive
+  const claimsSig = (list = []) => list
+    .map(p => `${p?.policy?.id ?? ''}::${p?.type ?? ''}`)
+    .filter(Boolean)
+    .sort()
+    .join('|');
+
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
-    (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
-      .then(async (resp) => {
-        // Grab id from response and submit a claim ... CRUCIALLY await the response.
-        // TODO we need to think about failure cases here.
-        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+    (params) => {
+      // Backward compatible: accept either raw payload or { payload, hasClaimsChanged }
+      const payload = params?.payload ?? params;
+      const hasClaimsChanged = params?.hasClaimsChanged ?? true;
 
-        return resp; // Allow it to continue downstream
-      })
-      .then(async (response) => {
-        const { name, linkedLicenses } = response;
-        // Invalidate any linked license's linkedAgreements calls
-        if (linkedLicenses?.length) {
-          await Promise.all(linkedLicenses.map(linkLic => {
-            // I'm still not 100% sure this is the "right" way to go about this.
-            return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
-          }));
-        }
+      return ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
+        .then(async (resp) => {
+          // Only submit claims when claimPolicies actually changed
+          if (hasClaimsChanged) {
+            await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+          }
 
-        /* Invalidate cached queries */
-        await queryClient.invalidateQueries(['ERM', 'Agreements']);
-        await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
+          return resp; // Allow it to continue downstream
+        })
+        .then(async (response) => {
+          const { name, linkedLicenses } = response;
+          // Invalidate any linked license's linkedAgreements calls
+          if (linkedLicenses?.length) {
+            await Promise.all(linkedLicenses.map(linkLic => {
+              // I'm still not 100% sure this is the "right" way to go about this.
+              return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+            }));
+          }
 
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
-        history.push(`${urls.agreementView(agreementId)}${location.search}`);
+          /* Invalidate cached queries */
+          await queryClient.invalidateQueries(['ERM', 'Agreements']);
+          await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
-        return response;
-      })
+          callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
+          history.push(`${urls.agreementView(agreementId)}${location.search}`);
+
+          return response;
+        });
+    }
   );
 
   const { policies } = usePolicies({
@@ -227,7 +241,12 @@ const AgreementEditRoute = ({
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
 
-    await putAgreement(values);
+    // Decide if claimPolicies changed (by policy.id + type, order-insensitive)
+    const initialSig = claimsSig(policies ?? []);
+    const nextSig = claimsSig(values?.claimPolicies ?? []);
+    const hasClaimsChanged = initialSig !== nextSig;
+
+    await putAgreement({ payload: values, hasClaimsChanged });
   };
 
   const fetchIsPending = () => {
