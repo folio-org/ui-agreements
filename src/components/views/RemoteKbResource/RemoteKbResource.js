@@ -27,7 +27,6 @@ import {
 } from '@folio/stripes/components';
 
 import { Registry } from '@folio/handler-stripes-registry';
-import baseKy from 'ky';
 
 import {
   handlebarsCompile,
@@ -66,7 +65,7 @@ const RemoteKbResource = ({
   const intl = useIntl();
   const accordionStatusRef = createRef();
   const [badges, setBadges] = useState({});
-  const { ky } = useOkapiKy();
+  const ky = useOkapiKy();
 
   const { data: { records: tipps = [] } = {} } = useQuery(
     ['GOKB', 'fetchTIPPS', resource?.uuid],
