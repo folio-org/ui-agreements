@@ -34,6 +34,15 @@ import {
 } from '../../constants';
 import { useAgreementsRefdata, useBasket } from '../../hooks';
 
+const claimsSig = (list = []) => {
+  const toKey = (p) => {
+    const id = p && p.policy && p.policy.id ? p.policy.id : '';
+    const type = p && p.type ? p.type : '';
+    return `${id}::${type}`;
+  };
+  return list.map(toKey).sort().join('|');
+};
+
 const [
   AGREEMENT_STATUS,
   REASON_FOR_CLOSURE,
@@ -46,17 +55,17 @@ const [
   RENEWAL_PRIORITY,
   RELATIONSHIP_TYPE
 ] = [
-    'SubscriptionAgreement.AgreementStatus',
-    'SubscriptionAgreement.ReasonForClosure',
-    'LicenseAmendmentStatus.Status',
-    'InternalContact.Role',
-    'DocumentAttachment.AtType',
-    'Global.Yes_No', // We use Global.Yes_No for IsPerpetual
-    'RemoteLicenseLink.Status',
-    'SubscriptionAgreementOrg.Role',
-    'SubscriptionAgreement.RenewalPriority',
-    'AgreementRelationship.Type'
-  ];
+  'SubscriptionAgreement.AgreementStatus',
+  'SubscriptionAgreement.ReasonForClosure',
+  'LicenseAmendmentStatus.Status',
+  'InternalContact.Role',
+  'DocumentAttachment.AtType',
+  'Global.Yes_No', // We use Global.Yes_No for IsPerpetual
+  'RemoteLicenseLink.Status',
+  'SubscriptionAgreementOrg.Role',
+  'SubscriptionAgreement.RenewalPriority',
+  'AgreementRelationship.Type'
+];
 
 const AgreementEditRoute = ({
   handlers = {},
@@ -131,13 +140,6 @@ const AgreementEditRoute = ({
   const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
 
   const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
-
-  // Helper: stable signature for claimPolicies (policy.id + type), order-insensitive
-  const claimsSig = (list = []) => list
-    .map(p => `${p?.policy?.id ?? ''}::${p?.type ?? ''}`)
-    .filter(Boolean)
-    .sort()
-    .join('|');
 
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
