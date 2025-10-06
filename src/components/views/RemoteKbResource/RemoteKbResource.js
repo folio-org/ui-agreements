@@ -40,13 +40,12 @@ const PANE_DEFAULT_WIDTH = '50%';
 
 const propTypes = {
   displayConfig: PropTypes.shape({
-    actions: PropTypes.shape(PropTypes.shape({})),
     icon: PropTypes.string,
     title: PropTypes.objectOf(PropTypes.string),
     renderStrategy: PropTypes.shape({
       values: PropTypes.arrayOf(PropTypes.shape({})),
     }),
-  }).isRequired,
+  }),
   onClose: PropTypes.func.isRequired,
   resource: PropTypes.oneOfType([
     PropTypes.shape({}),
@@ -352,7 +351,7 @@ const RemoteKbResource = ({
       scope={document.body}
     >
       <Pane
-        actionMenu={!isEmpty(displayConfig.actions) && renderActionMenu}
+        actionMenu={!isEmpty(displayConfig?.actions) && renderActionMenu}
         appIcon={
           <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />
         }

@@ -23,13 +23,28 @@ jest.mock('@folio/stripes/core', () => {
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
-  Pane: ({ paneTitle, appIcon, children }) => (
-    <div>
-      <div data-testid="pane-title">{typeof paneTitle === 'string' ? paneTitle : (paneTitle?.props?.children || '')}</div>
-      <div data-testid="pane-icon">{appIcon}</div>
-      {children}
-    </div>
-  ),
+  Pane: (props) => {
+    const { paneTitle, appIcon, children } = props;
+    const menu = typeof props.actionMenu === 'function' ? props.actionMenu() : null;
+    return (
+      <div>
+        <div data-testid="pane-title">
+          {typeof paneTitle === 'string' ? paneTitle : (paneTitle?.props?.children || '')}
+        </div>
+        <div data-testid="pane-icon">{appIcon}</div>
+        <div data-testid="action-menu">{menu}</div>
+        {children}
+      </div>
+    );
+  },
+  // Pane: ({ paneTitle, appIcon, children }) => (
+  //   <div>
+  //     <div data-testid="pane-title">{typeof paneTitle === 'string' ? paneTitle : (paneTitle?.props?.children || '')}</div>
+  //     <div data-testid="pane-icon">{appIcon}</div>
+  //     <div data-testid="action-menu">{typeof actionMenu === 'function' ? actionMenu() : null}</div>
+  //     {children}
+  //   </div>
+  // ),
   LoadingPane: () => <div>LoadingPane</div>,
   NoValue: () => <span>NoValue</span>,
   Headline: ({ children }) => <h2>{children}</h2>,
@@ -179,17 +194,21 @@ const baseResource = {
 };
 
 describe('RemoteKbResource', () => {
-  const renderComp = (res = resource, cfg = displayConfig) => renderWithIntl(
-    <MemoryRouter>
-      <RemoteKbResource
-        displayConfig={cfg}
-        onClose={jest.fn()}
-        queryProps={{ isLoading: false }}
-        resource={res}
-      />
-    </MemoryRouter>,
-    translationsProperties
-  );
+  // const renderComp = (res = resource, cfg = displayConfig) => renderWithIntl(
+  const renderComp = (res = resource, cfg = displayConfig) => {
+    const cfgWithActions = { ...cfg, actions: cfg.actions ?? { values: [] } };
+    return renderWithIntl(
+      <MemoryRouter>
+        <RemoteKbResource
+          displayConfig={cfgWithActions}
+          onClose={jest.fn()}
+          queryProps={{ isLoading: false }}
+          resource={res}
+        />
+      </MemoryRouter>,
+      translationsProperties
+    );
+  };
 
   beforeEach(() => {
     resource = { ...baseResource };
@@ -486,5 +505,97 @@ describe('RemoteKbResource', () => {
 
     const { container } = renderComp(baseResource, cfg);
     expect(container).toBeTruthy();
+  });
+
+  test('access JSONPath with no result renders <NoValue/>', () => {
+    const cfg = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.missing' },
+      renderStrategy: { type: 'rows', values: [{ type: 'access', accessType: 'JSONPath', expression: '$.missing' }] },
+    };
+    const { getAllByText } = renderWithIntl(
+      <MemoryRouter>
+        <RemoteKbResource displayConfig={cfg} onClose={jest.fn()} queryProps={{ isLoading: false }} resource={{}} />
+      </MemoryRouter>,
+      translationsProperties
+    );
+    expect(getAllByText('NoValue').length).toBeGreaterThan(0);
+  });
+
+  test('displayDates with values renders coverage (happy path)', () => {
+    const cfg = {
+      icon: 'title',
+      title: { type: 'static', value: 't' },
+      renderStrategy: {
+        type: 'rows',
+        values: [{
+          type: 'displayDates',
+          value: [
+            { key: 'publishedFrom', expression: '$.publishedFrom' },
+            { key: 'publishedTo', expression: '$.publishedTo' },
+          ],
+        }],
+      },
+    };
+    const res = { publishedFrom: '2001-01-01', publishedTo: '2002-02-02' };
+    const { getByText } = renderWithIntl(
+      <MemoryRouter>
+        <RemoteKbResource displayConfig={cfg} onClose={jest.fn()} queryProps={{ isLoading: false }} resource={res} />
+      </MemoryRouter>,
+      translationsProperties
+    );
+    expect(getByText('Coverage')).toBeInTheDocument();
+  });
+
+  test('handlebars non-access branch renders something (keeps row visible)', () => {
+    const cfg = {
+      icon: 'title',
+      title: { type: 'static', value: 't' },
+      renderStrategy: {
+        type: 'rows',
+        values: [{
+          type: 'handlebars',
+          templateString: 'whatever',
+          value: { type: 'static', value: 'ignored' },
+        }],
+      },
+    };
+    const { container } = renderWithIntl(
+      <MemoryRouter>
+        <RemoteKbResource displayConfig={cfg} onClose={jest.fn()} queryProps={{ isLoading: false }} resource={{ foo: 'bar' }} />
+      </MemoryRouter>,
+      translationsProperties
+    );
+    expect(container.textContent).toContain('[object Object]');
+  });
+
+  test('action menu renders values via renderValue()', () => {
+    const cfg = {
+      icon: 'title',
+      title: { type: 'static', value: 'Action Menu Title' },
+      actions: {
+        values: [
+          { type: 'static', value: 'Act1' },
+          { type: 'static', value: 'Act2' },
+        ],
+      },
+      renderStrategy: { type: 'rows', values: [] },
+    };
+
+    const { getByTestId } = renderWithIntl(
+      <MemoryRouter>
+        <RemoteKbResource
+          displayConfig={cfg}
+          onClose={jest.fn()}
+          queryProps={{ isLoading: false }}
+          resource={{}}
+        />
+      </MemoryRouter>,
+      translationsProperties
+    );
+
+    const menu = getByTestId('action-menu');
+    expect(menu.textContent).toContain('Act1');
+    expect(menu.textContent).toContain('Act2');
   });
 });
