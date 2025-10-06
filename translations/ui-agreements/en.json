@@ -885,5 +885,7 @@
   "remoteKb.altNames": "Alternative names",
   "remoteKb.scheme": "Scheme",
   "remoteKb.heading": "Heading",
-  "remoteKb.noAccordionContent": "No {accordion} content available."
+  "remoteKb.noAccordionContent": "No {accordion} content available.",
+  "remoteKb.eresourceAgreements": "Agreements for this e-resource",
+  "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion"
 }
