@@ -679,15 +679,26 @@
                     }
                   },
                   {
-                    "name": "packageTitles",
+                    "name": "eresourceAgreements",
                     "collapsable": true,
+                    "badge": true,
                     "renderStrategy": {
                       "type": "rows",
                       "values": [
                         {
                           "type": "registry",
-                          "registryResource": "gokb",
-                          "registryRenderFunction": "tippTable"
+                          "registryResource": "remoteKb",
+                          "registryRenderFunction": "agreementsList",
+                          "props": [
+                            {
+                              "name": "remoteId",
+                              "value": {
+                                "type": "access",
+                                "accessType": "JSONPath",
+                                "expression": "$.uuid"
+                              }
+                            }
+                          ]
                         }
                       ]
                     }

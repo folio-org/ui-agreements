@@ -1,4 +1,4 @@
-import { createRef, isValidElement } from 'react';
+import { createRef, isValidElement, useState } from 'react';
 import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -9,6 +9,7 @@ import {
   Accordion,
   AccordionSet,
   AccordionStatus,
+  Badge,
   checkScope,
   collapseAllSections,
   Col,
@@ -64,6 +65,7 @@ const RemoteKbResource = ({
 }) => {
   const intl = useIntl();
   const accordionStatusRef = createRef();
+  const [badges, setBadges] = useState({});
 
   const { data: { records: tipps } = {} } = useQuery(
     ['GOKB', 'fetchTIPPS', resource?.uuid],
@@ -89,6 +91,22 @@ const RemoteKbResource = ({
         return acc;
       }, {}) || {};
 
+  const setBadgeCount = (sectionName) => (count) => {
+    setBadges(prev => {
+      if (count == null) {
+        const { [sectionName]: _omit, ...rest } = prev;
+        return rest;
+      }
+      if (prev[sectionName] === count) return prev;
+      return { ...prev, [sectionName]: count };
+    });
+  };
+
+  const renderBadge = (name) => {
+    const count = badges[name] ?? 0;
+    return <Badge>{count}</Badge>;
+  };
+
   // treat '', null/false, empty arrays as "empty"
   const hasVisualContent = (node) => {
     if (node == null || node === false) return false;
@@ -102,7 +120,7 @@ const RemoteKbResource = ({
     return true;
   };
 
-  const renderValue = (value) => {
+  const renderValue = (value, sectionName) => {
     switch (value.type) {
       case 'access':
         if (value.accessType === 'JSONPath') {
@@ -204,8 +222,20 @@ const RemoteKbResource = ({
           registryResource?.getRenderFunction(value.registryRenderFunction) ??
           null;
 
-        return registryRenderFunction
-          ? registryRenderFunction({ tipps })
+        const props = (value.props || []).reduce((acc, p) => {
+          if (p.value?.type === 'access') {
+            acc[p.name] = renderValue(p.value);
+            return acc;
+          }
+          return null;
+        }, {});
+
+        props.setBadgeCount = setBadgeCount(sectionName);
+
+        return registryRenderFunction ?
+          value?.props
+            ? registryRenderFunction(props)
+            : null
           : null;
       }
       default:
@@ -213,7 +243,7 @@ const RemoteKbResource = ({
     }
   };
 
-  const applyRenderStrategy = (strategy, collapsable = false, name = '') => {
+  const applyRenderStrategy = (strategy, collapsable = false, badge = false, name = '') => {
     switch (strategy.type) {
       case 'sections':
         return strategy.values?.map((section) => (
@@ -221,6 +251,7 @@ const RemoteKbResource = ({
             {applyRenderStrategy(
               section.renderStrategy,
               section?.collapsable,
+              section?.badge,
               section.name
             )}
           </div>
@@ -241,6 +272,7 @@ const RemoteKbResource = ({
                   {applyRenderStrategy(
                     section.renderStrategy,
                     section?.collapsable,
+                    section?.badge,
                     section.name
                   )}
                 </div>
@@ -250,7 +282,7 @@ const RemoteKbResource = ({
         );
       case 'rows': {
         const rows = (strategy.values || []).reduce((acc, val) => {
-          const child = renderValue(val);
+          const child = renderValue(val, name);
           if (!collapsable || hasVisualContent(child)) {
             acc.push(<Row key={stableKeyFrom(val)}>{child}</Row>);
           }
@@ -267,6 +299,8 @@ const RemoteKbResource = ({
             <Accordion
               key={name}
               closedByDefault
+              displayWhenClosed={badge ? renderBadge(name) : null}
+              displayWhenOpen={badge ? renderBadge(name) : null}
               id={name}
               label={accordionTitle}
             >
