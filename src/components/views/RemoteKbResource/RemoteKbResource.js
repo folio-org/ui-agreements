@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppIcon } from '@folio/stripes/core';
-import { useQuery } from 'react-query';
 
 import {
   Accordion,
@@ -27,7 +26,6 @@ import {
 } from '@folio/stripes/components';
 
 import { Registry } from '@folio/handler-stripes-registry';
-import baseKy from 'ky';
 
 import {
   handlebarsCompile,
@@ -67,15 +65,6 @@ const RemoteKbResource = ({
   const accordionStatusRef = createRef();
   const [badges, setBadges] = useState({});
 
-  const { data: { records: tipps } = {} } = useQuery(
-    ['GOKB', 'fetchTIPPS', resource?.uuid],
-    () => baseKy
-      .get(
-        `https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&title=${resource?.uuid}`
-      )
-      .json()
-  );
-
   const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
 
   /*
@@ -92,7 +81,7 @@ const RemoteKbResource = ({
       }, {}) || {};
 
   const setBadgeCount = (sectionName) => (count) => {
-    setBadges(prev => {
+    setBadges((prev) => {
       if (count == null) {
         const { [sectionName]: _omit, ...rest } = prev;
         return rest;
@@ -231,9 +220,8 @@ const RemoteKbResource = ({
         }, {});
 
         props.setBadgeCount = setBadgeCount(sectionName);
-
-        return registryRenderFunction ?
-          value?.props
+        return registryRenderFunction
+          ? value?.props
             ? registryRenderFunction(props)
             : null
           : null;
@@ -243,7 +231,12 @@ const RemoteKbResource = ({
     }
   };
 
-  const applyRenderStrategy = (strategy, collapsable = false, badge = false, name = '') => {
+  const applyRenderStrategy = (
+    strategy,
+    collapsable = false,
+    badge = false,
+    name = ''
+  ) => {
     switch (strategy.type) {
       case 'sections':
         return strategy.values?.map((section) => (

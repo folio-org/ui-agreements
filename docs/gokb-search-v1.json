@@ -679,6 +679,30 @@
                     }
                   },
                   {
+                    "name": "packageTitles",
+                    "collapsable": true,
+                    "renderStrategy": {
+                      "type": "rows",
+                      "values": [
+                        {
+                          "type": "registry",
+                          "registryResource": "remoteKb",
+                          "registryRenderFunction": "gokbTippTable",
+                          "props": [
+                            {
+                              "name": "resourceId",
+                              "value": {
+                                "type": "access",
+                                "accessType": "JSONPath",
+                                "expression": "$.uuid"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
                     "name": "eresourceAgreements",
                     "collapsable": true,
                     "badge": true,
