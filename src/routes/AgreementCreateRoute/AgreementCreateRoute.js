@@ -114,14 +114,14 @@ const AgreementCreateRoute = ({
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: omit(payload, ['claimPolicies']) }).json()
       .then(async (response) => {
         const { id: agreementId } = response;
-        // Only submit claims if present and non-empty
-        const hasClaims = Array.isArray(payload?.claimPolicies) && payload.claimPolicies.length > 0;
-        if (hasClaims) {
+        // Grab id from response and submit a claim ... CRUCIALLY await the response.
+        // TODO we need to think about failure cases here.
+        if ('claimPolicies' in payload) {
           await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies } });
         }
-
         return response;
       })
+
       .then((response) => {
         const { id, name, linkedLicenses } = response;
         // Invalidate any linked license's linkedAgreements calls
