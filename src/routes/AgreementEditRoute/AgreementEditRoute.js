@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 
-import { cloneDeep, omit } from 'lodash';
+import { cloneDeep, isEqual, omit } from 'lodash';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -34,17 +34,15 @@ import {
 } from '../../constants';
 import { useAgreementsRefdata, useBasket } from '../../hooks';
 
-const claimsSig = (list = []) => {
-  const toKey = (p) => {
-    const id = p?.policy?.id ?? '';
-    const type = p?.type ?? '';
-    return `${id}::${type}`;
-  };
-  return list
-    .map(toKey)
-    .sort((a, b) => a.localeCompare(b))
-    .join('|');
-};
+const normalizeClaims = (list = []) => list
+  .map(p => ({
+    id: p?.policy?.id ?? '',
+    type: p?.type ?? ''
+  }))
+  .sort((a, b) => {
+    if (a.id === b.id) return a.type.localeCompare(b.type);
+    return a.id.localeCompare(b.id);
+  });
 
 const [
   AGREEMENT_STATUS,
@@ -156,9 +154,9 @@ const AgreementEditRoute = ({
       .then(async (resp) => {
         // Grab id from response and submit a claim ... CRUCIALLY await the response.
         // TODO we need to think about failure cases here.
-        const initialSig = claimsSig(policies ?? []);
-        const nextSig = claimsSig(payload?.claimPolicies ?? []);
-        if (initialSig !== nextSig) {
+        const initial = normalizeClaims(policies ?? []);
+        const next = normalizeClaims(payload?.claimPolicies ?? []);
+        if (!isEqual(initial, next)) {
           await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
         }
         return resp;
