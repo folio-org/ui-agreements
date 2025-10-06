@@ -690,11 +690,9 @@
                           "registryRenderFunction": "gokbTippTable",
                           "props": [
                             {
-                              "name": "resourceId",
+                              "name": "tipps",
                               "value": {
-                                "type": "access",
-                                "accessType": "JSONPath",
-                                "expression": "$.uuid"
+                                "type": "tipps"
                               }
                             }
                           ]

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppIcon } from '@folio/stripes/core';
+import { useQuery } from 'react-query';
 
 import {
   Accordion,
@@ -26,6 +27,7 @@ import {
 } from '@folio/stripes/components';
 
 import { Registry } from '@folio/handler-stripes-registry';
+import baseKy from 'ky';
 
 import {
   handlebarsCompile,
@@ -64,6 +66,15 @@ const RemoteKbResource = ({
   const intl = useIntl();
   const accordionStatusRef = createRef();
   const [badges, setBadges] = useState({});
+
+  const { data: { records: tipps = [] } = {} } = useQuery(
+    ['GOKB', 'fetchTIPPS', resource?.uuid],
+    () => baseKy
+      .get(
+        `https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&title=${resource?.uuid}`
+      )
+      .json()
+  );
 
   const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
 
@@ -211,15 +222,20 @@ const RemoteKbResource = ({
           registryResource?.getRenderFunction(value.registryRenderFunction) ??
           null;
 
-        const props = (value.props || []).reduce((acc, p) => {
+        const props = (value.props || [])?.reduce((acc, p) => {
           if (p.value?.type === 'access') {
             acc[p.name] = renderValue(p.value);
+            return acc;
+          }
+          if (p.value?.type === 'tipps') {
+            acc[p.name] = tipps;
             return acc;
           }
           return null;
         }, {});
 
         props.setBadgeCount = setBadgeCount(sectionName);
+
         return registryRenderFunction
           ? value?.props
             ? registryRenderFunction(props)
