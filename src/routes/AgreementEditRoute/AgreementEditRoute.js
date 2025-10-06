@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 
-import { cloneDeep } from 'lodash';
+import { cloneDeep, omit } from 'lodash';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -134,7 +134,7 @@ const AgreementEditRoute = ({
 
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
-    (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
+    (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: omit(payload, ['claimPolicies']) }).json()
       .then(async (resp) => {
         const { name } = resp;
         // Grab id from response and submit a claim ... CRUCIALLY await the response.

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
+import { omit } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
@@ -110,14 +111,16 @@ const AgreementCreateRoute = ({
 
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
-    (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
-      .then((response) => {
+    (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: omit(payload, ['claimPolicies']) }).json()
+      .then(async (response) => {
         const { id: agreementId, name } = response;
         const claims = payload.claimPolicies ?? [];
 
+        // Only make call to claims if there are claims
+        // TODO @Monireh this isn't what the issue actually asks for, we'll cover tomorrow
         if (claims.length > 0) {
-          // only show the toast if there is a claim policy
-          return claim({ resourceId: agreementId, payload: { claims } })
+          // Make blocking here, since we want this to happen FIRST before we try to save
+          await claim({ resourceId: agreementId, payload: { claims } })
             .then(() => {
               callout.sendCallout({
                 type: 'success',
@@ -128,7 +131,6 @@ const AgreementCreateRoute = ({
                   />
                 )
               });
-              return response;
             })
             .catch((claimError) => {
               callout.sendCallout({
@@ -141,11 +143,10 @@ const AgreementCreateRoute = ({
                 ),
                 timeout: 0,
               });
-              return response;
             });
         }
 
-        //  just return agreement response if no claim policies
+        //  return agreement response at the end for the agreement callouts to use
         return response;
       })
       .then((response) => {
@@ -176,6 +177,7 @@ const AgreementCreateRoute = ({
         return response;
       })
       .catch((agreementError) => {
+        // Agreement failed to create, send callout
         callout.sendCallout({
           type: 'error',
           message: (
@@ -189,7 +191,6 @@ const AgreementCreateRoute = ({
           ),
           timeout: 0,
         });
-        throw agreementError;
       })
   );
 
