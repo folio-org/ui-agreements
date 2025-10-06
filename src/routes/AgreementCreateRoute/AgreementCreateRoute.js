@@ -113,9 +113,11 @@ const AgreementCreateRoute = ({
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
       .then(async (response) => {
         const { id: agreementId } = response;
-        // Grab id from response and submit a claim ... CRUCIALLY await the response.
-        // TODO we need to think about failure cases here.
-        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+        // Only submit claims if present and non-empty
+        const hasClaims = Array.isArray(payload?.claimPolicies) && payload.claimPolicies.length > 0;
+        if (hasClaims) {
+          await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies } });
+        }
 
         return response;
       })
@@ -217,7 +219,9 @@ const AgreementCreateRoute = ({
 };
 
 AgreementCreateRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
