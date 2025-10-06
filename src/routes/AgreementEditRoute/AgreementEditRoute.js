@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 
-import { cloneDeep } from 'lodash';
+import { cloneDeep, omit } from 'lodash';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -55,17 +55,17 @@ const [
   RENEWAL_PRIORITY,
   RELATIONSHIP_TYPE
 ] = [
-  'SubscriptionAgreement.AgreementStatus',
-  'SubscriptionAgreement.ReasonForClosure',
-  'LicenseAmendmentStatus.Status',
-  'InternalContact.Role',
-  'DocumentAttachment.AtType',
-  'Global.Yes_No', // We use Global.Yes_No for IsPerpetual
-  'RemoteLicenseLink.Status',
-  'SubscriptionAgreementOrg.Role',
-  'SubscriptionAgreement.RenewalPriority',
-  'AgreementRelationship.Type'
-];
+    'SubscriptionAgreement.AgreementStatus',
+    'SubscriptionAgreement.ReasonForClosure',
+    'LicenseAmendmentStatus.Status',
+    'InternalContact.Role',
+    'DocumentAttachment.AtType',
+    'Global.Yes_No', // We use Global.Yes_No for IsPerpetual
+    'RemoteLicenseLink.Status',
+    'SubscriptionAgreementOrg.Role',
+    'SubscriptionAgreement.RenewalPriority',
+    'AgreementRelationship.Type'
+  ];
 
 const AgreementEditRoute = ({
   handlers = {},
@@ -143,151 +143,145 @@ const AgreementEditRoute = ({
 
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
-    (params) => {
-      // Backward compatible: accept either raw payload or { payload, hasClaimsChanged }
-      const payload = params?.payload ?? params;
-      const hasClaimsChanged = params?.hasClaimsChanged ?? true;
+    (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: omit(payload, ['claimPolicies']) }).json()
+      .then(async (resp) => {
+        // Grab id from response and submit a claim ... CRUCIALLY await the response.
+        // TODO we need to think about failure cases here.
+        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
 
-      return ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
-        .then(async (resp) => {
-          // Only submit claims when claimPolicies actually changed
-          if (hasClaimsChanged) {
-            await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
-          }
+        return resp; // Allow it to continue downstream
+      })
+      .then(async (response) => {
+        const { name, linkedLicenses } = response;
+        // Invalidate any linked license's linkedAgreements calls
+        if (linkedLicenses?.length) {
+          await Promise.all(linkedLicenses.map(linkLic => {
+            // I'm still not 100% sure this is the "right" way to go about this.
+            return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+          }));
+        }
 
-          return resp; // Allow it to continue downstream
-        })
-        .then(async (response) => {
-          const { name, linkedLicenses } = response;
-          // Invalidate any linked license's linkedAgreements calls
-          if (linkedLicenses?.length) {
-            await Promise.all(linkedLicenses.map(linkLic => {
-              // I'm still not 100% sure this is the "right" way to go about this.
-              return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
-            }));
-          }
+        /* Invalidate cached queries */
+        await queryClient.invalidateQueries(['ERM', 'Agreements']);
+        await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
-          /* Invalidate cached queries */
-          await queryClient.invalidateQueries(['ERM', 'Agreements']);
-          await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
+        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
+        history.push(`${urls.agreementView(agreementId)}${location.search}`);
 
-          callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
-          history.push(`${urls.agreementView(agreementId)}${location.search}`);
-
-          return response;
-        });
-    }
+        return response;
+      });
+}
   );
 
-  const { policies } = usePolicies({
-    resourceEndpoint: AGREEMENTS_ENDPOINT,
-    resourceId: agreementId,
-    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
-  });
+const { policies } = usePolicies({
+  resourceEndpoint: AGREEMENTS_ENDPOINT,
+  resourceId: agreementId,
+  queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
+});
 
-  const getInitialValues = useCallback(() => {
-    let initialValues = {};
+const getInitialValues = useCallback(() => {
+  let initialValues = {};
 
-    if (agreement?.id === agreementId) { // Not sure what this protects against right now
-      initialValues = cloneDeep(agreement);
-    }
+  if (agreement?.id === agreementId) { // Not sure what this protects against right now
+    initialValues = cloneDeep(agreement);
+  }
 
-    const {
-      agreementStatus = {},
-      contacts = [],
-      isPerpetual = {},
-      linkedLicenses = [],
-      orgs = [],
-      reasonForClosure = {},
-      renewalPriority = {},
-      supplementaryDocs = [],
-    } = initialValues;
+  const {
+    agreementStatus = {},
+    contacts = [],
+    isPerpetual = {},
+    linkedLicenses = [],
+    orgs = [],
+    reasonForClosure = {},
+    renewalPriority = {},
+    supplementaryDocs = [],
+  } = initialValues;
 
-    // Set the values of dropdown-controlled props as values rather than objects.
-    initialValues.agreementStatus = agreementStatus.value;
-    initialValues.isPerpetual = isPerpetual.value;
-    initialValues.reasonForClosure = reasonForClosure.value;
-    initialValues.renewalPriority = renewalPriority.value;
-    initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
-    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role?.value }));
-    initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: o.atType?.value }));
-    initialValues.linkedLicenses = linkedLicenses.map(l => ({
-      ...l,
-      status: l.status.value,
-      // Init the list of amendments based on the license's amendments to ensure
-      // we display those that have been created since this agreement's license was last
-      // edited. Ensure we provide defaults via amendmentId.
-      // eslint-disable-next-line camelcase
-      amendments: (l?.remoteId_object?.amendments ?? [])
-        .map(a => {
-          const assignedAmendment = (l.amendments || []).find(la => la.amendmentId === a.id) || {};
-          return {
-            ...assignedAmendment,
-            amendmentId: a.id,
-            status: assignedAmendment.status ? assignedAmendment.status.value : undefined,
-          };
-        })
-    }));
-    initialValues.claimPolicies = policies;
+  // Set the values of dropdown-controlled props as values rather than objects.
+  initialValues.agreementStatus = agreementStatus.value;
+  initialValues.isPerpetual = isPerpetual.value;
+  initialValues.reasonForClosure = reasonForClosure.value;
+  initialValues.renewalPriority = renewalPriority.value;
+  initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
+  initialValues.orgs = orgs.map(o => ({ ...o, role: o.role?.value }));
+  initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: o.atType?.value }));
+  initialValues.linkedLicenses = linkedLicenses.map(l => ({
+    ...l,
+    status: l.status.value,
+    // Init the list of amendments based on the license's amendments to ensure
+    // we display those that have been created since this agreement's license was last
+    // edited. Ensure we provide defaults via amendmentId.
+    // eslint-disable-next-line camelcase
+    amendments: (l?.remoteId_object?.amendments ?? [])
+      .map(a => {
+        const assignedAmendment = (l.amendments || []).find(la => la.amendmentId === a.id) || {};
+        return {
+          ...assignedAmendment,
+          amendmentId: a.id,
+          status: assignedAmendment.status ? assignedAmendment.status.value : undefined,
+        };
+      })
+  }));
+  initialValues.claimPolicies = policies;
 
-    joinRelatedAgreements(initialValues);
+  joinRelatedAgreements(initialValues);
 
-    return initialValues;
-  }, [agreement, agreementId, policies]);
+  return initialValues;
+}, [agreement, agreementId, policies]);
 
-  const handleClose = () => {
-    history.push(`${urls.agreementView(agreementId)}${location.search}`);
-  };
+const handleClose = () => {
+  history.push(`${urls.agreementView(agreementId)}${location.search}`);
+};
 
-  const handleSubmit = async (values) => {
-    const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
-    splitRelatedAgreements(values, relationshipTypeValues);
+const handleSubmit = async (values) => {
+  const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
+  splitRelatedAgreements(values, relationshipTypeValues);
 
-    // Decide if claimPolicies changed (by policy.id + type, order-insensitive)
-    const initialSig = claimsSig(policies ?? []);
-    const nextSig = claimsSig(values?.claimPolicies ?? []);
-    const hasClaimsChanged = initialSig !== nextSig;
+  // Decide if claimPolicies changed (by policy.id + type, order-insensitive)
+  const initialSig = claimsSig(policies ?? []);
+  const nextSig = claimsSig(values?.claimPolicies ?? []);
+  const hasClaimsChanged = initialSig !== nextSig;
 
-    await putAgreement({ payload: values, hasClaimsChanged });
-  };
+  await putAgreement({ payload: values, hasClaimsChanged });
+};
 
-  const fetchIsPending = () => {
-    return isAgreementLoading;
-  };
+const fetchIsPending = () => {
+  return isAgreementLoading;
+};
 
-  if (!stripes.hasPerm('ui-agreements.agreements.edit')) return <NoPermissions />;
-  if (fetchIsPending()) return <LoadingView dismissible onClose={handleClose} />;
+if (!stripes.hasPerm('ui-agreements.agreements.edit')) return <NoPermissions />;
+if (fetchIsPending()) return <LoadingView dismissible onClose={handleClose} />;
 
-  return (
-    <View
-      accessControlData={{
-        isAccessControlLoading: canEditLoading || canReadLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
-        isAccessDenied: !canRead || !canEdit, // Special prop used by AgreementForm to avoid edit/create distinctions
-        ...accessControlData
-      }}
-      data={{
-        agreementLineCount,
-        agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
-        reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
-        amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),
-        basket,
-        contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
-        documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
-        isPerpetualValues: getRefdataValuesByDesc(refdata, GLOBAL_YES_NO),
-        licenseLinkStatusValues: getRefdataValuesByDesc(refdata, REMOTE_LICENSE_LINK_STATUS),
-        orgRoleValues: getRefdataValuesByDesc(refdata, ORG_ROLE),
-        renewalPriorityValues: getRefdataValuesByDesc(refdata, RENEWAL_PRIORITY),
-        users,
-      }}
-      handlers={{
-        ...handlers,
-        onClose: handleClose,
-      }}
-      initialValues={getInitialValues()}
-      isLoading={fetchIsPending()}
-      onSubmit={handleSubmit}
-    />
-  );
+return (
+  <View
+    accessControlData={{
+      isAccessControlLoading: canEditLoading || canReadLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
+      isAccessDenied: !canRead || !canEdit, // Special prop used by AgreementForm to avoid edit/create distinctions
+      ...accessControlData
+    }}
+    data={{
+      agreementLineCount,
+      agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
+      reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
+      amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),
+      basket,
+      contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
+      documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
+      isPerpetualValues: getRefdataValuesByDesc(refdata, GLOBAL_YES_NO),
+      licenseLinkStatusValues: getRefdataValuesByDesc(refdata, REMOTE_LICENSE_LINK_STATUS),
+      orgRoleValues: getRefdataValuesByDesc(refdata, ORG_ROLE),
+      renewalPriorityValues: getRefdataValuesByDesc(refdata, RENEWAL_PRIORITY),
+      users,
+    }}
+    handlers={{
+      ...handlers,
+      onClose: handleClose,
+    }}
+    initialValues={getInitialValues()}
+    isLoading={fetchIsPending()}
+    onSubmit={handleSubmit}
+  />
+);
 };
 
 export default AgreementEditRoute;
