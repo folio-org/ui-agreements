@@ -46,17 +46,17 @@ const [
   RENEWAL_PRIORITY,
   RELATIONSHIP_TYPE
 ] = [
-  'SubscriptionAgreement.AgreementStatus',
-  'SubscriptionAgreement.ReasonForClosure',
-  'LicenseAmendmentStatus.Status',
-  'InternalContact.Role',
-  'DocumentAttachment.AtType',
-  'Global.Yes_No', // We use Global.Yes_No for IsPerpetual
-  'RemoteLicenseLink.Status',
-  'SubscriptionAgreementOrg.Role',
-  'SubscriptionAgreement.RenewalPriority',
-  'AgreementRelationship.Type'
-];
+    'SubscriptionAgreement.AgreementStatus',
+    'SubscriptionAgreement.ReasonForClosure',
+    'LicenseAmendmentStatus.Status',
+    'InternalContact.Role',
+    'DocumentAttachment.AtType',
+    'Global.Yes_No', // We use Global.Yes_No for IsPerpetual
+    'RemoteLicenseLink.Status',
+    'SubscriptionAgreementOrg.Role',
+    'SubscriptionAgreement.RenewalPriority',
+    'AgreementRelationship.Type'
+  ];
 
 const AgreementEditRoute = ({
   handlers = {},
@@ -291,7 +291,9 @@ const AgreementEditRoute = ({
 export default AgreementEditRoute;
 
 AgreementEditRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
