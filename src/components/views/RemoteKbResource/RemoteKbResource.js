@@ -2,7 +2,7 @@ import { createRef, isValidElement, useState } from 'react';
 import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { AppIcon } from '@folio/stripes/core';
+import { AppIcon, useOkapiKy } from '@folio/stripes/core';
 import { useQuery } from 'react-query';
 
 import {
@@ -66,10 +66,11 @@ const RemoteKbResource = ({
   const intl = useIntl();
   const accordionStatusRef = createRef();
   const [badges, setBadges] = useState({});
+  const { ky } = useOkapiKy();
 
   const { data: { records: tipps = [] } = {} } = useQuery(
     ['GOKB', 'fetchTIPPS', resource?.uuid],
-    () => baseKy
+    () => ky
       .get(
         `https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&title=${resource?.uuid}`
       )
