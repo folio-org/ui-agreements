@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   mockPost,
-  mockKyJson
+  mockKyJson,
+  useStripes
 } from '@folio/stripes/core';
 
 import { Button as ButtonInteractor, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
@@ -87,16 +88,7 @@ const data = {
   }
 };
 
-// jest.mock('@folio/stripes/core', () => {
-//   const actual = jest.requireActual('@folio/stripes/core');
-//   const mocks = jest.requireActual('@folio/stripes-erm-testing/jest/mocks/mockStripesCore');
-//   return {
-//     ...actual,
-//     ...mocks,
-
-//   };
-// });
-
+let renderComponent;
 describe('AgreementCreateRoute', () => {
   beforeEach(() => {
     mockPost.mockClear();
@@ -106,7 +98,6 @@ describe('AgreementCreateRoute', () => {
   });
 
   describe('rendering the route with permissions', () => {
-    let renderComponent;
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -202,48 +193,45 @@ describe('AgreementCreateRoute', () => {
         await Callout('<strong>Agreement acquisition units updated:</strong> {name}').exists();
       });
     });
+  });
+  describe('rendering loading view', () => {
+    beforeEach(() => {
+      useAddFromBasket.mockImplementation(() => ({
+        isExternalEntitlementLoading: true
+      }));
 
-  // describe('rendering loading view', () => {
-  //   let renderComponent;
-  //   beforeEach(() => {
-  //     useAddFromBasket.mockImplementationOnce(() => ({
-  //       ...useAddFromBasket(),
-  //       isExternalEntitlementLoading: true
-  //     }));
-  //     renderComponent = renderWithIntl(
-  //       <MemoryRouter>
-  //         <AgreementCreateRoute {...data} />
-  //       </MemoryRouter>,
-  //       translationsProperties
-  //     );
-  //   });
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementCreateRoute {...data} />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
 
-  //   test('renders loadingView', () => {
-  //     const { getByText } = renderComponent;
-  //     expect(getByText('LoadingView')).toBeInTheDocument();
-  //   });
-  // });
+    test('renders loadingView', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('LoadingView')).toBeInTheDocument();
+    });
+  });
 
-  // describe('rendering with no permissions', () => {
-  //   let renderComponent;
-  //   beforeEach(() => {
-  //     // override hasPerm to return false
-  //     // useStripes.mockImplementation(() => ({
-  //     //   hasPerm: jest.fn(() => false),
-  //     // }));
-  //     renderComponent = renderWithIntl(
-  //       <MemoryRouter>
-  //         <AgreementCreateRoute
-  //           {...data}
-  //         />
-  //       </MemoryRouter>,
-  //       translationsProperties
-  //     );
-  //   });
+  describe('rendering with no permissions', () => {
+    beforeEach(() => {
+      useStripes.mockImplementation(() => ({
+        hasPerm: jest.fn(() => false),
+      }));
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementCreateRoute
+            {...data}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
 
-  //   test('displays the permission error', () => {
-  //     const { getByText } = renderComponent;
-  //     expect(getByText('Sorry - your permissions do not allow access to this page.')).toBeInTheDocument();
-  //   });
+    test('displays the permission error', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('Sorry - your permissions do not allow access to this page.')).toBeInTheDocument();
+    });
   });
 });
