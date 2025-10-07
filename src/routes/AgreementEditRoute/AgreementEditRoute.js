@@ -1,10 +1,10 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 
-import { cloneDeep, isEqual, omit } from 'lodash';
+import { cloneDeep, omit } from 'lodash';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -19,7 +19,8 @@ import {
   useChunkedUsers,
   useClaim,
   useGetAccess,
-  usePolicies
+  usePolicies,
+  isEqualClaimPolicies
 } from '@folio/stripes-erm-components';
 
 import View from '../../components/views/AgreementForm';
@@ -33,16 +34,6 @@ import {
   AGREEMENTS_ENDPOINT
 } from '../../constants';
 import { useAgreementsRefdata, useBasket } from '../../hooks';
-
-const normalizeClaims = (list = []) => list
-  .map(p => ({
-    id: p?.policy?.id ?? '',
-    type: p?.type ?? ''
-  }))
-  .sort((a, b) => {
-    if (a.id === b.id) return a.type.localeCompare(b.type);
-    return a.id.localeCompare(b.id);
-  });
 
 const [
   AGREEMENT_STATUS,
@@ -154,9 +145,7 @@ const AgreementEditRoute = ({
       .then(async (resp) => {
         // Grab id from response and submit a claim ... CRUCIALLY await the response.
         // TODO we need to think about failure cases here.
-        const initial = normalizeClaims(policies ?? []);
-        const next = normalizeClaims(payload?.claimPolicies ?? []);
-        if (!isEqual(initial, next)) {
+        if (!isEqualClaimPolicies(policies ?? [], payload?.claimPolicies ?? [])) {
           await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
         }
         return resp;
