@@ -72,7 +72,6 @@ const FormEresource = ({
     <Field name="linkedResource" validate={required}>
       {({ input, meta }) => {
         const res = isExternal(input.value) ? input.value : (input.value.resource?._object ?? {});
-        // if the line has a non-detached eresource assigned and we are on the edit pane, show the card view only.
         if (!isEmpty(input.value) && !isDetached(input.value) && !isEmpty(String(input.value?.id))) {
           return (
             <FormEresourceCard
