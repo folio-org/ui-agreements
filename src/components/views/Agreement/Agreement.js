@@ -143,13 +143,20 @@ const Agreement = ({
 
   const getActionMenu = ({ onToggle }) => {
     const buttons = [];
-    const hasLinkedAcquisitionsUnit = data.policies?.length > 0;
+    console.log('Permissions:', {
+      canEdit,
+      canEditLoading,
+      canDelete,
+      canDeleteLoading,
+      hasEditPerm: stripes.hasPerm('ui-agreements.agreements.edit'),
+      hasDeletePerm: stripes.hasPerm('ui-agreements.agreements.delete')
+    });
     if (stripes.hasPerm('ui-agreements.agreements.edit') && canEdit !== false) {
       buttons.push(
         <Button
           key="clickable-dropdown-edit-agreement"
           buttonStyle="dropdownItem"
-          disabled={canEditLoading || hasLinkedAcquisitionsUnit}
+          disabled={canEditLoading || !canEdit}
           id="clickable-dropdown-edit-agreement"
           onClick={handlers.onEdit}
         >
@@ -158,6 +165,7 @@ const Agreement = ({
           </Icon>
         </Button>
       );
+
       buttons.push(
         <Button
           key="clickable-dropdown-duplicate-agreement"
@@ -198,7 +206,7 @@ const Agreement = ({
         <Button
           key="clickable-dropdown-delete-agreement"
           buttonStyle="dropdownItem"
-          disabled={canDeleteLoading || hasLinkedAcquisitionsUnit}
+          disabled={canDeleteLoading || !canDelete}
           id="clickable-dropdown-delete-agreement"
           onClick={() => {
             setShowDeleteConfirmationModal(true);

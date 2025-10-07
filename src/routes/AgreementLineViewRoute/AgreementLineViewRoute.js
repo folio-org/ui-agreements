@@ -36,9 +36,9 @@ const AgreementLineViewRoute = ({
 
   const accessControlData = useGetAccess({
     resourceEndpoint: AGREEMENT_LINES_ENDPOINT,
-    resourceId: lineId,
+    resourceId: agreementId,
     restrictions: [READ, UPDATE, DELETE],
-    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', lineId, canDo]
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo]
   });
   const {
     canRead,
