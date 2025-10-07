@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -9,7 +9,7 @@ import { cloneDeep, omit } from 'lodash';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { LoadingView } from '@folio/stripes/components';
-import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   APPLY_POLICIES,
   getRefdataValuesByDesc,
@@ -67,7 +67,7 @@ const AgreementEditRoute = ({
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
 
-  const callout = useContext(CalloutContext);
+  const callout = useCallout();
   const stripes = useStripes();
 
   const { basket = [] } = useBasket();

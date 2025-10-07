@@ -1,11 +1,14 @@
-import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button } from '@folio/stripes/components';
-import { useStripes } from '@folio/stripes/core';
+import { Button, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button as MockButton } from '@folio/stripes/components';
+import {
+  mockPost,
+  mockKyJson,
+  useStripes
+} from '@folio/stripes/core';
 
 import translationsProperties from '../../../test/helpers';
 import AgreementEditRoute from './AgreementEditRoute';
@@ -18,79 +21,29 @@ import {
 
 import mockRefdata from '../../../test/jest/refdata';
 
-const CloseButton = (props) => {
-  return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
-};
-
-CloseButton.propTypes = {
-  handlers: PropTypes.shape({
-    onClose: PropTypes.func,
-  }),
-};
-
-const SubmitButton = (props) => {
-  return <Button onClick={props.onClick}>SubmitButton</Button>;
-};
-
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
-const mockSendCallout = jest.fn();
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useAgreementsRefdata: () => mockRefdata,
 }));
 
-const mockMutateAsync = jest.fn((values) => {
-  // simulate what putAgreement does in the component
-  mockSendCallout({
-    type: 'success',
-    message: { id: 'ui-agreements.agreements.update.callout', values: { name: values.name } },
-  });
-  return Promise.resolve({ name: values.name, linkedLicenses: [] });
-});
-
-jest.mock('react-query', () => {
-  const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
-  return {
-    ...jest.requireActual('react-query'),
-    ...mockReactQuery,
-    useMutation: () => ({ mutateAsync: mockMutateAsync }),
-  };
-});
-
-jest.mock('@folio/stripes-erm-components', () => {
-  const actual = jest.requireActual('@folio/stripes-erm-components');
-  return {
-    ...actual,
-    useChunkedUsers: () => ({ users: [] }),
-    useClaim: () => ({ claim: jest.fn(() => Promise.resolve()) }),
-    useGetAccess: () => ({
-      canRead: true,
-      canEdit: true,
-      canReadLoading: false,
-      canEditLoading: false,
-    }),
-    usePolicies: () => ({ policies: [] }),
-  };
-});
-
-jest.mock('react-query', () => {
-  const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
-  return ({
-    ...jest.requireActual('react-query'),
-    ...mockReactQuery,
-    useMutation: () => ({ mutateAsync: mockMutateAsync })
-  });
-});
-
 jest.mock('../../components/views/AgreementForm', () => {
   return (props) => (
-    <div>
+    <>
       <div>AgreementForm</div>
-      <CloseButton {...props} />
-      <SubmitButton onClick={() => props.onSubmit({ name: 'Test Agreement' })} />
-    </div>
+      <MockButton onClick={props.handlers.onClose}>CloseButton</MockButton>
+      <MockButton
+        onClick={() => props.onSubmit({
+          name: 'Test Agreement',
+          fakeProp: true,
+          claimPolicies: 'I am the claims'
+        })}
+      >
+        SubmitButton
+      </MockButton>
+    </>
   );
 });
 
@@ -109,6 +62,13 @@ const data = {
 useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
 
 describe('AgreementEditRoute', () => {
+  beforeEach(() => {
+    mockPost.mockClear();
+    mockKyJson.mockClear();
+
+    mockKyJson.mockImplementation(() => Promise.resolve({ id: 'my-agreement-id', name: 'Test Agreement' }));
+  });
+
   describe('rendering the route with permissions', () => {
     let renderComponent;
     beforeEach(() => {
@@ -126,23 +86,26 @@ describe('AgreementEditRoute', () => {
 
     test('calls the CloseButton', async () => {
       await waitFor(async () => {
-        await ButtonInteractor('CloseButton').click();
+        await Button('CloseButton').click();
       });
       await waitFor(async () => {
         expect(historyPushMock).toHaveBeenCalled();
       });
     });
 
-    test('shows success callout for agreement update', async () => {
-      await ButtonInteractor('SubmitButton').click();
+    describe('clicking the submit button', () => {
+      beforeEach(async () => {
+        await Button('SubmitButton').click();
+      });
 
-      await waitFor(() => {
-        expect(mockSendCallout).toHaveBeenCalledWith(
-          expect.objectContaining({
-            type: 'success',
-            message: expect.any(Object),
-          })
-        );
+      test('Shows agreement edit success callout', async () => {
+        // EXAMPLE interactor selectors don't have injected intl values
+        await Callout('<strong>Agreement updated:</strong> {name}').exists();
+      });
+
+      test('Shows claims edit success callout', async () => {
+        // EXAMPLE interactor selectors don't have injected intl values
+        await Callout('<strong>Agreement acquisition units updated:</strong> {name}').exists();
       });
     });
   });

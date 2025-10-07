@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   mockPost,
@@ -7,8 +5,8 @@ import {
   useStripes
 } from '@folio/stripes/core';
 
-import { Button as ButtonInteractor, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button } from '@folio/stripes/components';
+import { Button, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button as MockButton } from '@folio/stripes/components';
 import { MemoryRouter } from 'react-router-dom';
 
 import basket from './testResources';
@@ -31,49 +29,26 @@ jest.mock('../../hooks', () => ({
   useAgreementsRefdata: () => mockRefdata,
 }));
 
-const BasketLineButton = (props) => {
-  return <Button onClick={props.handlers.onBasketLinesAdded}>BasketLineButton</Button>;
-};
-
-const CloseButton = (props) => {
-  return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
-};
-
-BasketLineButton.propTypes = {
-  handlers: PropTypes.shape({
-    onBasketLinesAdded: PropTypes.func,
-  }),
-};
-
-CloseButton.propTypes = {
-  handlers: PropTypes.shape({
-    onClose: PropTypes.func,
-  }),
-};
-
-const SubmitButton = (props) => {
-  return <Button onClick={props.onClick}>SubmitButton</Button>;
-};
-
 const historyPushMock = jest.fn();
 
 jest.mock('../../components/views/AgreementForm', () => {
   return (props) => (
-    <div>
+    <>
       <div>AgreementForm</div>
-      <CloseButton {...props} />
-      <BasketLineButton {...props} />
-      <SubmitButton
+      <MockButton onClick={props.handlers.onClose}>CloseButton</MockButton>
+      <MockButton onClick={props.handlers.onBasketLinesAdded}>BasketLineButton</MockButton>
+      <MockButton
         onClick={() => props.onSubmit({
           name: 'Test Agreement',
           fakeProp: true,
           claimPolicies: 'I am the claims'
         })}
-      />
-    </div>
+      >
+        SubmitButton
+      </MockButton>
+    </>
   );
 });
-
 
 const data = {
   history: {
@@ -119,7 +94,7 @@ describe('AgreementCreateRoute', () => {
 
     test('calls the BasketLineButton', async () => {
       await waitFor(async () => {
-        await ButtonInteractor('BasketLineButton').click();
+        await Button('BasketLineButton').click();
       });
       await waitFor(async () => {
         expect(mockBasketLinesAdded).toHaveBeenCalled();
@@ -129,7 +104,7 @@ describe('AgreementCreateRoute', () => {
     // we check if the button is clicked it calls the historyPushMock(push) function to invoke the child callback (handleClose) defined in Route
     test('calls the CloseButton', async () => {
       await waitFor(async () => {
-        await ButtonInteractor('CloseButton').click();
+        await Button('CloseButton').click();
       });
 
       await waitFor(async () => {
@@ -139,7 +114,7 @@ describe('AgreementCreateRoute', () => {
 
     describe('clicking the submit button', () => {
       beforeEach(async () => {
-        await ButtonInteractor('SubmitButton').click();
+        await Button('SubmitButton').click();
       });
 
       describe('testing Agreements POST', () => {
@@ -194,6 +169,7 @@ describe('AgreementCreateRoute', () => {
       });
     });
   });
+
   describe('rendering loading view', () => {
     beforeEach(() => {
       useAddFromBasket.mockImplementation(() => ({
