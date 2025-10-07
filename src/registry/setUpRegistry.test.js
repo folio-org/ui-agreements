@@ -9,8 +9,9 @@ import setUpRegistry from './setUpRegistry';
 
 import AgreementLookup from '../AgreementLookup';
 
-import { GokbBasketButton, GokbTIPPTable } from './Gokb';
+import { GokbBasketButton } from './Gokb';
 import RemoteResourceAgreementsList from './RemoteResourceAgreementsList';
+import RemoteResourceTIPPTable from './RemoteResourceTIPPTable';
 
 const makeRegistryMock = () => {
   const resources = {};
@@ -144,14 +145,14 @@ describe('setUpRegistry', () => {
       expect(el.props.tipp).toBe(tipp);
     });
 
-    test('gokbTippTable renderer passes tipps', () => {
-      const fn = registry.resources.remoteKb.renderers.gokbTippTable;
+    test('tippTable renderer passes tipps', () => {
+      const fn = registry.resources.remoteKb.renderers.tippTable;
       expect(typeof fn).toBe('function');
 
-      const tipps = [{ id: 't1' }, { id: 't2' }];
-      const el = fn({ tipps });
-      expect(el.type).toBe(GokbTIPPTable);
-      expect(el.props.tipps).toBe(tipps);
+      const resourceId = '04726caf-47a7-4392-93eb-5cc2c45cdf8d';
+      const el = fn({ resourceId });
+      expect(el.type).toBe(RemoteResourceTIPPTable);
+      expect(el.props.resourceId).toBe(resourceId);
     });
 
     test('agreementsList renderer passes remoteId and setBadgeCount', () => {
