@@ -687,12 +687,14 @@
                         {
                           "type": "registry",
                           "registryResource": "remoteKb",
-                          "registryRenderFunction": "gokbTippTable",
+                          "registryRenderFunction": "tippTable",
                           "props": [
                             {
-                              "name": "tipps",
+                              "name": "resourceId",
                               "value": {
-                                "type": "tipps"
+                                "type": "access",
+                                "accessType": "JSONPath",
+                                "expression": "$.uuid"
                               }
                             }
                           ]
