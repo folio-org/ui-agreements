@@ -7,8 +7,9 @@ import {
 
 import AgreementLookup from '../AgreementLookup';
 
-import { GokbBasketButton, GokbTIPPTable } from './Gokb';
+import { GokbBasketButton } from './Gokb';
 import RemoteResourceAgreementsList from './RemoteResourceAgreementsList';
+import RemoteResourceTIPPTable from './RemoteResourceTIPPTable';
 
 const setUpRegistry = (registry) => {
   // Agreement Resource
@@ -45,7 +46,7 @@ const setUpRegistry = (registry) => {
   const remoteKbResource = registry.registerResource('remoteKb');
   // GOKB TIPP
   remoteKbResource.setRenderFunction('gokbAddToBasketButton', ({ tipp }) => <GokbBasketButton tipp={tipp} />);
-  remoteKbResource.setRenderFunction('gokbTippTable', ({ tipps }) => <GokbTIPPTable tipps={tipps} />);
+  remoteKbResource.setRenderFunction('tippTable', ({ resourceId }) => <RemoteResourceTIPPTable resourceId={resourceId} />);
 
   // Render RemoteKb Agreements List
   remoteKbResource.setRenderFunction('agreementsList', ({ remoteId, setBadgeCount }) => <RemoteResourceAgreementsList remoteId={remoteId} setBadgeCount={setBadgeCount} />);

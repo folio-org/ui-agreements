@@ -81,7 +81,7 @@ const RemoteKbResource = ({
       }, {}) || {};
 
   const setBadgeCount = (sectionName) => (count) => {
-    setBadges(prev => {
+    setBadges((prev) => {
       if (count == null) {
         const { [sectionName]: _omit, ...rest } = prev;
         return rest;
@@ -211,7 +211,7 @@ const RemoteKbResource = ({
           registryResource?.getRenderFunction(value.registryRenderFunction) ??
           null;
 
-        const props = (value.props || []).reduce((acc, p) => {
+        const props = (value.props || [])?.reduce((acc, p) => {
           if (p.value?.type === 'access') {
             acc[p.name] = renderValue(p.value);
             return acc;
@@ -221,8 +221,8 @@ const RemoteKbResource = ({
 
         props.setBadgeCount = setBadgeCount(sectionName);
 
-        return registryRenderFunction ?
-          value?.props
+        return registryRenderFunction
+          ? value?.props
             ? registryRenderFunction(props)
             : null
           : null;
@@ -232,7 +232,12 @@ const RemoteKbResource = ({
     }
   };
 
-  const applyRenderStrategy = (strategy, collapsable = false, badge = false, name = '') => {
+  const applyRenderStrategy = (
+    strategy,
+    collapsable = false,
+    badge = false,
+    name = ''
+  ) => {
     switch (strategy.type) {
       case 'sections':
         return strategy.values?.map((section) => (
