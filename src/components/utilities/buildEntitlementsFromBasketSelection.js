@@ -1,7 +1,8 @@
-/* Turn Basket's "selectedItems" string (e.g. "0,2,5") + basket array
+/* Turn Basket's "selectedItems" string (e.g. "0,2,5") and basket array
 into the Agreement payload items.
 - Non-GOKB entries: { resource: item }  (unchanged behavior)
-- GOKB titles: { type: 'external', authority: 'GOKB-RESOURCE', reference: '<pkgUuid>:<titleUuid>' } */
+- GOKB titles:
+      { type: 'external', authority: 'GOKB-RESOURCE', reference: '<pkgUuid>:<titleUuid>' resourceName: resource.name } */
 
 export const buildEntitlementsFromBasketSelection = (selection, basket) => {
   const indices = String(selection)
