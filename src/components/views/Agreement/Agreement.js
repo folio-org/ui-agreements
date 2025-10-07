@@ -143,14 +143,6 @@ const Agreement = ({
 
   const getActionMenu = ({ onToggle }) => {
     const buttons = [];
-    console.log('Permissions:', {
-      canEdit,
-      canEditLoading,
-      canDelete,
-      canDeleteLoading,
-      hasEditPerm: stripes.hasPerm('ui-agreements.agreements.edit'),
-      hasDeletePerm: stripes.hasPerm('ui-agreements.agreements.delete')
-    });
 
     if (stripes.hasPerm('ui-agreements.agreements.edit')) {
       buttons.push(
@@ -168,7 +160,7 @@ const Agreement = ({
       );
     }
 
-    if (stripes.hasPerm('ui-agreements.agreements.edit') && canEdit !== false) {
+    if (stripes.hasPerm('ui-agreements.agreements.edit') && canEdit !== false && canDelete !== false) {
       buttons.push(
         <Button
           key="clickable-dropdown-duplicate-agreement"
