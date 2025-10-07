@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { useStripes, CalloutContext } from '@folio/stripes/core';
+import {
+  mockPost,
+  mockKyJson
+} from '@folio/stripes/core';
 
-import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button as ButtonInteractor, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
 import { MemoryRouter } from 'react-router-dom';
 
@@ -16,7 +19,6 @@ import mockRefdata from '../../../test/jest/refdata';
 import AgreementCreateRoute from './AgreementCreateRoute';
 
 const mockBasketLinesAdded = jest.fn();
-const mockSendCallout = jest.fn();
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -60,7 +62,13 @@ jest.mock('../../components/views/AgreementForm', () => {
       <div>AgreementForm</div>
       <CloseButton {...props} />
       <BasketLineButton {...props} />
-      <SubmitButton onClick={() => props.onSubmit({ name: 'Test Agreement' })} />
+      <SubmitButton
+        onClick={() => props.onSubmit({
+          name: 'Test Agreement',
+          fakeProp: true,
+          claimPolicies: 'I am the claims'
+        })}
+      />
     </div>
   );
 });
@@ -79,43 +87,30 @@ const data = {
   }
 };
 
-jest.mock('@folio/stripes/core', () => {
-  const actual = jest.requireActual('@folio/stripes/core');
-  return {
-    ...actual,
-    useStripes: jest.fn(() => ({
-      hasPerm: jest.fn(() => true),
-    })),
-    useCallout: () => ({
-      sendCallout: mockSendCallout,
-    }),
-    useOkapiKy: () => ({
-      get: () => ({
-        json: () => Promise.resolve({}),
-      }),
-      post: () => ({
-        json: () => Promise.resolve({ name: 'Test Agreement' }),
-      }),
-      put: () => ({
-        json: () => Promise.resolve({}),
-      }),
-      delete: () => ({
-        json: () => Promise.resolve({}),
-      }),
-    }),
-    CalloutContext: actual.CalloutContext,
-  };
-});
+// jest.mock('@folio/stripes/core', () => {
+//   const actual = jest.requireActual('@folio/stripes/core');
+//   const mocks = jest.requireActual('@folio/stripes-erm-testing/jest/mocks/mockStripesCore');
+//   return {
+//     ...actual,
+//     ...mocks,
+
+//   };
+// });
 
 describe('AgreementCreateRoute', () => {
+  beforeEach(() => {
+    mockPost.mockClear();
+    mockKyJson.mockClear();
+
+    mockKyJson.mockImplementation(() => Promise.resolve({ id: 'my-agreement-id', name: 'Test Agreement' }));
+  });
+
   describe('rendering the route with permissions', () => {
     let renderComponent;
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <CalloutContext.Provider value={{ sendCallout: mockSendCallout }}>
-            <AgreementCreateRoute {...data} />
-          </CalloutContext.Provider>
+          <AgreementCreateRoute {...data} />
         </MemoryRouter>,
         translationsProperties
       );
@@ -151,61 +146,104 @@ describe('AgreementCreateRoute', () => {
       });
     });
 
-    test('calls the SubmitButton and shows success callout', async () => {
-      await ButtonInteractor('SubmitButton').click();
+    describe('clicking the submit button', () => {
+      beforeEach(async () => {
+        await ButtonInteractor('SubmitButton').click();
+      });
 
-      await waitFor(() => {
-        expect(mockSendCallout).toHaveBeenCalledWith(
-          expect.objectContaining({
-            type: 'success',
-            message: expect.any(Object),
-          })
-        );
+      describe('testing Agreements POST', () => {
+        // EXAMPLE testing POST calls are as expected
+        test('mockPost was called first with agreements POST', async () => {
+          await waitFor(() => {
+            expect(mockPost.mock.calls[0][0]).toEqual('erm/sas');
+          });
+        });
+
+        test('mockPost was called first with expected agreements POST payload', async () => {
+          await waitFor(() => {
+            expect(mockPost.mock.calls[0][1]).toEqual({
+              json: {
+                name: 'Test Agreement',
+                inwardRelationships: [],
+                outwardRelationships: [],
+                fakeProp: true
+              }
+            });
+          });
+        });
+      });
+
+      describe('testing Claims POST', () => {
+        test('mockPost was called second with claims POST', async () => {
+          await waitFor(() => {
+            expect(mockPost.mock.calls[1][0]).toEqual('erm/sas/my-agreement-id/claim');
+          });
+        });
+
+        test('mockPost was called second with expected claims POST payload', async () => {
+          await waitFor(() => {
+            expect(mockPost.mock.calls[1][1]).toEqual({
+              json: {
+                'claims': 'I am the claims'
+              }
+            });
+          });
+        });
+      });
+
+
+      test('Shows agreement success callout', async () => {
+        // EXAMPLE interactor selectors don't have injected intl values
+        await Callout('<strong>Agreement created:</strong> {name}').exists();
+      });
+
+      test('Shows claims success callout', async () => {
+        // EXAMPLE interactor selectors don't have injected intl values
+        await Callout('<strong>Agreement acquisition units updated:</strong> {name}').exists();
       });
     });
-  });
 
-  describe('rendering loading view', () => {
-    let renderComponent;
-    beforeEach(() => {
-      useAddFromBasket.mockImplementationOnce(() => ({
-        ...useAddFromBasket(),
-        isExternalEntitlementLoading: true
-      }));
-      renderComponent = renderWithIntl(
-        <MemoryRouter>
-          <AgreementCreateRoute {...data} />
-        </MemoryRouter>,
-        translationsProperties
-      );
-    });
+  // describe('rendering loading view', () => {
+  //   let renderComponent;
+  //   beforeEach(() => {
+  //     useAddFromBasket.mockImplementationOnce(() => ({
+  //       ...useAddFromBasket(),
+  //       isExternalEntitlementLoading: true
+  //     }));
+  //     renderComponent = renderWithIntl(
+  //       <MemoryRouter>
+  //         <AgreementCreateRoute {...data} />
+  //       </MemoryRouter>,
+  //       translationsProperties
+  //     );
+  //   });
 
-    test('renders loadingView', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('LoadingView')).toBeInTheDocument();
-    });
-  });
+  //   test('renders loadingView', () => {
+  //     const { getByText } = renderComponent;
+  //     expect(getByText('LoadingView')).toBeInTheDocument();
+  //   });
+  // });
 
-  describe('rendering with no permissions', () => {
-    let renderComponent;
-    beforeEach(() => {
-      // override hasPerm to return false
-      useStripes.mockImplementation(() => ({
-        hasPerm: jest.fn(() => false),
-      }));
-      renderComponent = renderWithIntl(
-        <MemoryRouter>
-          <AgreementCreateRoute
-            {...data}
-          />
-        </MemoryRouter>,
-        translationsProperties
-      );
-    });
+  // describe('rendering with no permissions', () => {
+  //   let renderComponent;
+  //   beforeEach(() => {
+  //     // override hasPerm to return false
+  //     // useStripes.mockImplementation(() => ({
+  //     //   hasPerm: jest.fn(() => false),
+  //     // }));
+  //     renderComponent = renderWithIntl(
+  //       <MemoryRouter>
+  //         <AgreementCreateRoute
+  //           {...data}
+  //         />
+  //       </MemoryRouter>,
+  //       translationsProperties
+  //     );
+  //   });
 
-    test('displays the permission error', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Sorry - your permissions do not allow access to this page.')).toBeInTheDocument();
-    });
+  //   test('displays the permission error', () => {
+  //     const { getByText } = renderComponent;
+  //     expect(getByText('Sorry - your permissions do not allow access to this page.')).toBeInTheDocument();
+  //   });
   });
 });

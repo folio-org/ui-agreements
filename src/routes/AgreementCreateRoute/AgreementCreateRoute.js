@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { omit } from 'lodash';
@@ -7,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
-import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   CREATE,
   getRefdataValuesByDesc,
@@ -55,7 +54,7 @@ const AgreementCreateRoute = ({
 }) => {
   const { authority, referenceId } = queryString.parse(location?.search);
 
-  const callout = useContext(CalloutContext);
+  const callout = useCallout();
   const stripes = useStripes();
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
@@ -116,35 +115,31 @@ const AgreementCreateRoute = ({
         const { id: agreementId, name } = response;
         const claims = payload.claimPolicies ?? [];
 
-        // Only make call to claims if there are claims
-        // TODO @Monireh this isn't what the issue actually asks for, we'll cover tomorrow
-        if (claims.length > 0) {
-          // Make blocking here, since we want this to happen FIRST before we try to save
-          await claim({ resourceId: agreementId, payload: { claims } })
-            .then(() => {
-              callout.sendCallout({
-                type: 'success',
-                message: (
-                  <FormattedMessage
-                    id="ui-agreements.agreements.claimPolicies.update.callout"
-                    values={{ name }}
-                  />
-                )
-              });
-            })
-            .catch((claimError) => {
-              callout.sendCallout({
-                type: 'error',
-                message: (
-                  <FormattedMessage
-                    id="ui-agreements.agreements.claimPolicies.update.error.callout"
-                    values={{ name, error: claimError.message }}
-                  />
-                ),
-                timeout: 0,
-              });
+        // Make blocking here, since we want this to happen FIRST before we try to save
+        await claim({ resourceId: agreementId, payload: { claims } })
+          .then(() => {
+            callout.sendCallout({
+              type: 'success',
+              message: (
+                <FormattedMessage
+                  id="ui-agreements.agreements.claimPolicies.update.callout"
+                  values={{ name }}
+                />
+              )
             });
-        }
+          })
+          .catch((claimError) => {
+            callout.sendCallout({
+              type: 'error',
+              message: (
+                <FormattedMessage
+                  id="ui-agreements.agreements.claimPolicies.update.error.callout"
+                  values={{ name, error: claimError.message }}
+                />
+              ),
+              timeout: 0,
+            });
+          });
 
         //  return agreement response at the end for the agreement callouts to use
         return response;
