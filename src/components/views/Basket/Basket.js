@@ -18,7 +18,7 @@ import {
 
 import { AGREEMENT_ENDPOINT } from '../../../constants';
 
-import { urls } from '../../utilities';
+import { urls, buildEntitlementsFromBasketSelection } from '../../utilities';
 
 import BasketList from '../../BasketList';
 import AgreementModal from '../../AgreementModal';
@@ -63,8 +63,7 @@ const Basket = ({
         .then(() => {
           /* Quick FIX for ERM-3673; only add location.search when coming from agreements */
           history.push(
-            `${urls.agreementView(selectedAgreement?.id)}${
-              location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
+            `${urls.agreementView(selectedAgreement?.id)}${location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
             }`
           );
         });
@@ -72,20 +71,14 @@ const Basket = ({
   );
 
   const handleAddToExistingAgreement = useCallback(async (addFromBasket) => {
-    const submitValues = {
-      items: addFromBasket
-        .split(',')
-        .map((index) => ({ resource: basket[parseInt(index, 10)] }))
-        .filter((line) => line.resource),
-    };
-
-    await putAgreement(submitValues);
+    const items = buildEntitlementsFromBasketSelection(addFromBasket, basket);
+    await putAgreement({ items });
   }, [basket, putAgreement]);
 
   const getSelectedItems = useCallback(() => {
     return Object.entries(selectedItems)
       .filter(([_, selected]) => selected)
-      .map(([itemId]) => basket.findIndex((i) => i.id === itemId))
+      .map(([itemId]) => basket.findIndex((i) => String(i.id) === String(itemId)))
       .join(',');
   }, [basket, selectedItems]);
 

@@ -18,7 +18,8 @@ const isExternal = (resource) => {
   return (
     resource.type === 'external' ||
     resource.type === 'packages' ||
-    resource.type === 'resources'
+    resource.type === 'resources' ||
+    resource.type === 'GOKB_TITLE'
   );
 };
 

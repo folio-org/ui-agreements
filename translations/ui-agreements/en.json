@@ -888,5 +888,7 @@
   "remoteKb.noAccordionContent": "No {accordion} content available.",
   "remoteKb.packageTitles": "Package titles",
   "remoteKb.eresourceAgreements": "Agreements for this e-resource",
-  "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion"
+  "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion",
+  "eresources.gokbPackageUuid": "GOKB package UUID",
+  "eresources.gokbTitleUuid": "GOKB title UUID"
 }

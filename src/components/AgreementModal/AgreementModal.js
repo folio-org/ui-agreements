@@ -27,7 +27,7 @@ import { FormModal } from '@k-int/stripes-kint-components';
 import { AGREEMENTS_ENDPOINT, validationEndPoint } from '../../constants';
 
 import { useBasket, useAgreementsRefdata } from '../../hooks';
-import { urls } from '../utilities';
+import { urls, buildEntitlementsFromBasketSelection } from '../utilities';
 
 const propTypes = {
   showModal: PropTypes.bool,
@@ -64,24 +64,20 @@ const AgreementModal = ({ showModal, hideModal, selectedItems }) => {
       .then(({ id }) => {
         /* Quick FIX for ERM-3673; only add location.search when coming from agreements */
         history.push(
-          `${urls.agreementView(id)}${
-            location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
+          `${urls.agreementView(id)}${location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
           }`
         );
       })
   );
 
   const handleAddToNewAgreement = async (values) => {
-    const submitValues = {
+    const items = buildEntitlementsFromBasketSelection(selectedItems, basket);
+    await postAgreement({
       name: values?.name,
       agreementStatus: values?.agreementStatus,
       periods: [{ startDate: values?.startDate }],
-      items: selectedItems
-        .split(',')
-        .map((index) => ({ resource: basket[parseInt(index, 10)] }))
-        .filter((line) => line.resource),
-    };
-    await postAgreement(submitValues);
+      items,
+    });
   };
 
   return (

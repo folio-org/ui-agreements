@@ -16,3 +16,4 @@ export * from './handlebarsHelpers';
 export * from './specialTypes';
 export { default as stableKeyFrom } from './stableKeyFrom';
 export * from './entitlementOptions';
+export { buildEntitlementsFromBasketSelection } from './buildEntitlementsFromBasketSelection';
