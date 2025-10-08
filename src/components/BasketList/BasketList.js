@@ -62,7 +62,7 @@ const BasketList = ({
     if (basketItem.type === BASKET_TYPE_GOKB_TITLE) {
       return (
         <Link
-          to={`/erm/gokb/${basketItem.id}?query=${basketItem.name}`}
+          to={`${basketItem.titleUrl}`}
         >
           {basketItem.name}
         </Link>
@@ -74,10 +74,6 @@ const BasketList = ({
   }, []);
 
   const renderPublicationType = useCallback((basketItem) => {
-    if (basketItem.type === BASKET_TYPE_GOKB_TITLE) {
-      return basketItem.tipp?.componentType;
-    }
-
     // This defaults to "Title" in unknown circumstances
     return <EResourceType resource={basketItem} />;
   }, []);

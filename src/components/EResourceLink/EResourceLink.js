@@ -18,10 +18,6 @@ class EResourceLink extends React.Component {
   }
 
   getName = (eresource) => {
-    if (eresource.authority === 'GOKB-RESOURCE' || eresource.type === 'GOKB_TITLE') {
-      return eresource.resourceName || eresource.name || eresource.tipp?.name || eresource.tipp?.altname || 'Unknown title';
-    }
-
     if (isExternal(eresource)) {
       return eresource.reference_object.label;
     }

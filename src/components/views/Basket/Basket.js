@@ -18,7 +18,7 @@ import {
 
 import { AGREEMENT_ENDPOINT } from '../../../constants';
 
-import { urls, buildEntitlementsFromBasketSelection } from '../../utilities';
+import { urls } from '../../utilities';
 
 import BasketList from '../../BasketList';
 import AgreementModal from '../../AgreementModal';
@@ -72,14 +72,20 @@ const Basket = ({
   );
 
   const handleAddToExistingAgreement = useCallback(async (addFromBasket) => {
-    const items = buildEntitlementsFromBasketSelection(addFromBasket, basket);
-    await putAgreement({ items });
+    const submitValues = {
+      items: addFromBasket
+        .split(',')
+        .map((index) => ({ resource: basket[parseInt(index, 10)] }))
+        .filter((line) => line.resource),
+    };
+
+    await putAgreement(submitValues);
   }, [basket, putAgreement]);
 
   const getSelectedItems = useCallback(() => {
     return Object.entries(selectedItems)
       .filter(([_, selected]) => selected)
-      .map(([itemId]) => basket.findIndex((i) => String(i.id) === String(itemId)))
+      .map(([itemId]) => basket.findIndex((i) => i.id === itemId))
       .join(',');
   }, [basket, selectedItems]);
 
