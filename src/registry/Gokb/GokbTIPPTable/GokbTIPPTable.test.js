@@ -20,10 +20,12 @@ jest.mock('../../../hooks', () => ({
   })),
 }));
 
-// FIXME this will eventually need to be stripes-core
-jest.mock('../../../useChunkedIdTransformFetchLOCAL', () => () => ({
-  items: mockPcis.filter(p => p.name === '\'International Journal of Managerial Finance\' on Platform \'Emerald Insight\' in Package Accounting Finance and Economics eJournal collection'),
-  isLoading: false
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  useChunkedIdTransformFetch: () => ({
+    items: mockPcis.filter(p => p.name === '\'International Journal of Managerial Finance\' on Platform \'Emerald Insight\' in Package Accounting Finance and Economics eJournal collection'),
+    isLoading: false
+  })
 }));
 
 jest.mock('../GokbBasketButton', () => () => <div>GokbBasketButton</div>);
