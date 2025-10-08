@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -19,7 +19,8 @@ import {
   useChunkedUsers,
   useClaim,
   useGetAccess,
-  usePolicies
+  usePolicies,
+  isEqualClaimPolicies
 } from '@folio/stripes-erm-components';
 
 import View from '../../components/views/AgreementForm';
@@ -132,15 +133,22 @@ const AgreementEditRoute = ({
 
   const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
 
+  const { policies } = usePolicies({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    resourceId: agreementId,
+    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
+  });
+
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: omit(payload, ['claimPolicies']) }).json()
       .then(async (resp) => {
         // Grab id from response and submit a claim ... CRUCIALLY await the response.
         // TODO we need to think about failure cases here.
-        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
-
-        return resp; // Allow it to continue downstream
+        if (!isEqualClaimPolicies(policies ?? [], payload?.claimPolicies ?? [])) {
+          await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+        }
+        return resp;
       })
       .then(async (response) => {
         const { name, linkedLicenses } = response;
@@ -162,12 +170,6 @@ const AgreementEditRoute = ({
         return response;
       })
   );
-
-  const { policies } = usePolicies({
-    resourceEndpoint: AGREEMENTS_ENDPOINT,
-    resourceId: agreementId,
-    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
-  });
 
   const getInitialValues = useCallback(() => {
     let initialValues = {};
@@ -272,7 +274,9 @@ const AgreementEditRoute = ({
 export default AgreementEditRoute;
 
 AgreementEditRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

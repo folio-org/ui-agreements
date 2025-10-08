@@ -116,10 +116,12 @@ const AgreementCreateRoute = ({
         const { id: agreementId } = response;
         // Grab id from response and submit a claim ... CRUCIALLY await the response.
         // TODO we need to think about failure cases here.
-        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
-
+        if ('claimPolicies' in payload) {
+          await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies } });
+        }
         return response;
       })
+
       .then((response) => {
         const { id, name, linkedLicenses } = response;
         // Invalidate any linked license's linkedAgreements calls
@@ -218,7 +220,9 @@ const AgreementCreateRoute = ({
 };
 
 AgreementCreateRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
