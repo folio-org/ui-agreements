@@ -85,7 +85,7 @@ const AgreementLineCreateRoute = ({
         'type': 'external',
         'authority': 'GOKB-RESOURCE',
         'reference': `${resource.tipp.tippPackageUuid}:${resource.tipp.tippTitleUuid}`,
-        'resourceName': resource.name,
+        'resourceName': resource?.name || resource?.tipp?.name || resource?.tipp?.altname || 'Unknown title',
         ...rest
       };
     } else if (isEmpty(resource)) { // detached line

@@ -30,10 +30,11 @@ const TitleCardExternal = ({
 
   const renderHeaderStart = () => {
     if (title?.type === 'GOKB_TITLE') {
+      const resourceName = titleInfo?.name || titleInfo?.tipp?.name || titleInfo?.tipp?.altname || 'Unknown title';
       return (
         <AppIcon app="agreements" iconKey="title" size="small">
           <strong data-test-title-instance-name>
-            {titleInfo?.name ?? <NoValue />}
+            {resourceName}
           </strong>
         </AppIcon>
       );

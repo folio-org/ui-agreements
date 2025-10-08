@@ -23,7 +23,7 @@ export const buildEntitlementsFromBasketSelection = (selection, basket) => {
           type: 'external',
           authority: 'GOKB-RESOURCE',
           reference: `${pkgUuid}:${titleUuid}`,
-          resourceName: item?.name,
+          resourceName: item?.name || item?.tipp?.name || item?.tipp?.altname || 'Unknown title',
         };
       }
 
