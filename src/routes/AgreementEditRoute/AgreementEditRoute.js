@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -9,7 +9,7 @@ import { cloneDeep, omit } from 'lodash';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { LoadingView } from '@folio/stripes/components';
-import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   APPLY_POLICIES,
   getRefdataValuesByDesc,
@@ -68,7 +68,7 @@ const AgreementEditRoute = ({
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
 
-  const callout = useContext(CalloutContext);
+  const callout = useCallout();
   const stripes = useStripes();
 
   const { basket = [] } = useBasket();
@@ -142,13 +142,28 @@ const AgreementEditRoute = ({
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: omit(payload, ['claimPolicies']) }).json()
-      .then(async (resp) => {
+      .then(async (response) => {
+        const { name } = response;
         // Grab id from response and submit a claim ... CRUCIALLY await the response.
         // TODO we need to think about failure cases here.
         if (!isEqualClaimPolicies(policies ?? [], payload?.claimPolicies ?? [])) {
-          await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+          await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } })
+            .then(() => {
+              callout.sendCallout({
+                type: 'success',
+                message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.callout" values={{ name }} />,
+              });
+            })
+            .catch((claimError) => {
+              callout.sendCallout({
+                type: 'error',
+                message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.error.callout" values={{ name, error: claimError.message }} />,
+                timeout: 0,
+              });
+            });
         }
-        return resp;
+
+        return response;
       })
       .then(async (response) => {
         const { name, linkedLicenses } = response;
@@ -164,10 +179,22 @@ const AgreementEditRoute = ({
         await queryClient.invalidateQueries(['ERM', 'Agreements']);
         await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
+        callout.sendCallout({
+          type: 'success',
+          message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} />
+        });
+
         history.push(`${urls.agreementView(agreementId)}${location.search}`);
 
         return response;
+      })
+      .catch((agreementError) => {
+        callout.sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-agreements.agreements.update.error.callout" values={{ name: payload?.name ?? '', error: agreementError.message }} />,
+          timeout: 0,
+        });
+        throw agreementError;
       })
   );
 

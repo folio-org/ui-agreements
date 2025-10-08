@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { omit } from 'lodash';
@@ -7,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
-import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   CREATE,
   getRefdataValuesByDesc,
@@ -55,7 +54,7 @@ const AgreementCreateRoute = ({
 }) => {
   const { authority, referenceId } = queryString.parse(location?.search);
 
-  const callout = useContext(CalloutContext);
+  const callout = useCallout();
   const stripes = useStripes();
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
@@ -113,17 +112,42 @@ const AgreementCreateRoute = ({
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: omit(payload, ['claimPolicies']) }).json()
       .then(async (response) => {
-        const { id: agreementId } = response;
+        const { id: agreementId, name } = response;
         // Grab id from response and submit a claim ... CRUCIALLY await the response.
-        // TODO we need to think about failure cases here.
         if ('claimPolicies' in payload) {
-          await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies } });
+          // Make blocking here, since we want this to happen FIRST before we try to save
+          await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies } })
+            .then(() => {
+              callout.sendCallout({
+                type: 'success',
+                message: (
+                  <FormattedMessage
+                    id="ui-agreements.agreements.claimPolicies.update.callout"
+                    values={{ name }}
+                  />
+                )
+              });
+            })
+            .catch((claimError) => {
+              callout.sendCallout({
+                type: 'error',
+                message: (
+                  <FormattedMessage
+                    id="ui-agreements.agreements.claimPolicies.update.error.callout"
+                    values={{ name, error: claimError.message }}
+                  />
+                ),
+                timeout: 0,
+              });
+            });
         }
+
+        //  return agreement response at the end for the agreement callouts to use
         return response;
       })
-
       .then((response) => {
         const { id, name, linkedLicenses } = response;
+
         // Invalidate any linked license's linkedAgreements calls
         if (linkedLicenses?.length) {
           linkedLicenses.forEach(linkLic => {
@@ -131,12 +155,38 @@ const AgreementCreateRoute = ({
             queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
           });
         }
+
         /* Invalidate cached queries */
         queryClient.invalidateQueries(['ERM', 'Agreements']);
 
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
+        callout.sendCallout({
+          type: 'success',
+          message: (
+            <FormattedMessage
+              id="ui-agreements.agreements.create.callout"
+              values={{ name }}
+            />
+          )
+        });
+
         handleClose(id);
         return response;
+      })
+      .catch((agreementError) => {
+        // Agreement failed to create, send callout
+        callout.sendCallout({
+          type: 'error',
+          message: (
+            <FormattedMessage
+              id="ui-agreements.agreements.error.callout"
+              values={{
+                name: payload?.name ?? 'unknown',
+                error: agreementError.message
+              }}
+            />
+          ),
+          timeout: 0,
+        });
       })
   );
 
