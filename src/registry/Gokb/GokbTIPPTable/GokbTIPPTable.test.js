@@ -20,9 +20,12 @@ jest.mock('../../../hooks', () => ({
   })),
 }));
 
-jest.mock('@folio/stripes/core', () => () => ({
-  items: mockPcis.filter(p => p.name === '\'International Journal of Managerial Finance\' on Platform \'Emerald Insight\' in Package Accounting Finance and Economics eJournal collection'),
-  isLoading: false
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  useChunkedIdTransformFetch: () => ({
+    items: mockPcis.filter(p => p.name === '\'International Journal of Managerial Finance\' on Platform \'Emerald Insight\' in Package Accounting Finance and Economics eJournal collection'),
+    isLoading: false
+  })
 }));
 
 jest.mock('../GokbBasketButton', () => () => <div>GokbBasketButton</div>);
