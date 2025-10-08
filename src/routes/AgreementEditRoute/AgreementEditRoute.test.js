@@ -1,14 +1,16 @@
 import { useQuery } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { Button, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button as MockButton } from '@folio/stripes/components';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   mockPost,
   mockKyJson,
   useStripes
 } from '@folio/stripes/core';
+import { Button as MockButton } from '@folio/stripes/components';
+
+import { usePolicies } from '@folio/stripes-erm-components';
+import { Button, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../test/helpers';
 import AgreementEditRoute from './AgreementEditRoute';
@@ -38,7 +40,7 @@ jest.mock('../../components/views/AgreementForm', () => {
         onClick={() => props.onSubmit({
           name: 'Test Agreement',
           fakeProp: true,
-          claimPolicies: 'I am the claims'
+          claimPolicies: ['I am the claims']
         })}
       >
         SubmitButton
@@ -67,6 +69,7 @@ describe('AgreementEditRoute', () => {
     mockKyJson.mockClear();
 
     mockKyJson.mockImplementation(() => Promise.resolve({ id: 'my-agreement-id', name: 'Test Agreement' }));
+    usePolicies.mockImplementation(() => ({ policies: [] }));
   });
 
   describe('rendering the route with permissions', () => {

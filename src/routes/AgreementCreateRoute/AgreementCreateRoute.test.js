@@ -4,9 +4,11 @@ import {
   mockKyJson,
   useStripes
 } from '@folio/stripes/core';
-
-import { Button, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button as MockButton } from '@folio/stripes/components';
+
+import { usePolicies } from '@folio/stripes-erm-components';
+import { Button, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import { MemoryRouter } from 'react-router-dom';
 
 import basket from './testResources';
@@ -41,7 +43,7 @@ jest.mock('../../components/views/AgreementForm', () => {
         onClick={() => props.onSubmit({
           name: 'Test Agreement',
           fakeProp: true,
-          claimPolicies: 'I am the claims'
+          claimPolicies: ['I am the claims']
         })}
       >
         SubmitButton
@@ -70,6 +72,7 @@ describe('AgreementCreateRoute', () => {
     mockKyJson.mockClear();
 
     mockKyJson.mockImplementation(() => Promise.resolve({ id: 'my-agreement-id', name: 'Test Agreement' }));
+    usePolicies.mockImplementation(() => ({ policies: [] }));
   });
 
   describe('rendering the route with permissions', () => {
@@ -150,7 +153,7 @@ describe('AgreementCreateRoute', () => {
           await waitFor(() => {
             expect(mockPost.mock.calls[1][1]).toEqual({
               json: {
-                'claims': 'I am the claims'
+                'claims': ['I am the claims']
               }
             });
           });
