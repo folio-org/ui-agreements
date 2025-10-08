@@ -20,8 +20,7 @@ jest.mock('../../../hooks', () => ({
   })),
 }));
 
-// FIXME this will eventually need to be stripes-core
-jest.mock('../../../useChunkedIdTransformFetchLOCAL', () => () => ({
+jest.mock('@folio/stripes/core', () => () => ({
   items: mockPcis.filter(p => p.name === '\'International Journal of Managerial Finance\' on Platform \'Emerald Insight\' in Package Accounting Finance and Economics eJournal collection'),
   isLoading: false
 }));
