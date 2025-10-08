@@ -2,7 +2,6 @@ import { BASKET_TYPE_GOKB_TITLE } from '../../constants';
 
 export default (tipp, pkg) => {
   const titleName = tipp?.tippTitleName || tipp?.name || tipp?.altname[0] || 'Unknown title';
-  const publicationTypeLabel = tipp.titleType;
   const titleUuid = tipp.tippTitleUuid;
   const pkgUuid = tipp.tippPackageUuid;
   const reference = `${pkgUuid}:${titleUuid}`;
@@ -13,7 +12,7 @@ export default (tipp, pkg) => {
     type: BASKET_TYPE_GOKB_TITLE,
     tipp,
     pkg,
-    publicationType: { label: publicationTypeLabel },
+    publicationType: { label: tipp.titleType },
     payload: {
       type: 'external',
       authority: 'GOKB-RESOURCE',
