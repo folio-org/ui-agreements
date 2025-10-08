@@ -29,15 +29,15 @@ const TitleCardExternal = ({
   const titleInfo = title?.reference_object ?? title;
 
   const renderHeaderStart = () => {
-    // if (title?.type === 'GOKB_TITLE') {
-    //   return (
-    //     <AppIcon app="agreements" iconKey="title" size="small">
-    //       <strong data-test-title-instance-name>
-    //         {titleInfo?.name ?? <NoValue />}
-    //       </strong>
-    //     </AppIcon>
-    //   );
-    // }
+    if (title?.type === 'GOKB_TITLE') {
+      return (
+        <AppIcon app="agreements" iconKey="title" size="small">
+          <strong data-test-title-instance-name>
+            {titleInfo?.name ?? <NoValue />}
+          </strong>
+        </AppIcon>
+      );
+    }
     return (
       <AppIcon app="eholdings" size="small">
         <strong data-test-title-instance-name>
