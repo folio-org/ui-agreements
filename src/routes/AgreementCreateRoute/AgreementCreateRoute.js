@@ -113,33 +113,34 @@ const AgreementCreateRoute = ({
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: omit(payload, ['claimPolicies']) }).json()
       .then(async (response) => {
         const { id: agreementId, name } = response;
-        const claims = payload.claimPolicies ?? [];
-
-        // Make blocking here, since we want this to happen FIRST before we try to save
-        await claim({ resourceId: agreementId, payload: { claims } })
-          .then(() => {
-            callout.sendCallout({
-              type: 'success',
-              message: (
-                <FormattedMessage
-                  id="ui-agreements.agreements.claimPolicies.update.callout"
-                  values={{ name }}
-                />
-              )
+        // Grab id from response and submit a claim ... CRUCIALLY await the response.
+        if ('claimPolicies' in payload) {
+          // Make blocking here, since we want this to happen FIRST before we try to save
+          await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies } })
+            .then(() => {
+              callout.sendCallout({
+                type: 'success',
+                message: (
+                  <FormattedMessage
+                    id="ui-agreements.agreements.claimPolicies.update.callout"
+                    values={{ name }}
+                  />
+                )
+              });
+            })
+            .catch((claimError) => {
+              callout.sendCallout({
+                type: 'error',
+                message: (
+                  <FormattedMessage
+                    id="ui-agreements.agreements.claimPolicies.update.error.callout"
+                    values={{ name, error: claimError.message }}
+                  />
+                ),
+                timeout: 0,
+              });
             });
-          })
-          .catch((claimError) => {
-            callout.sendCallout({
-              type: 'error',
-              message: (
-                <FormattedMessage
-                  id="ui-agreements.agreements.claimPolicies.update.error.callout"
-                  values={{ name, error: claimError.message }}
-                />
-              ),
-              timeout: 0,
-            });
-          });
+        }
 
         //  return agreement response at the end for the agreement callouts to use
         return response;
@@ -269,7 +270,9 @@ const AgreementCreateRoute = ({
 };
 
 AgreementCreateRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
