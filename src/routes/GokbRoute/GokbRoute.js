@@ -32,8 +32,10 @@ const GokbRoute = () => {
   const filterConfig = getFilterConfig(config);
   const { filterMap, initialFilterState } = filterConfig;
 
-  const resourcePath = config.configuration.view.fetch.mapping.data;
-  const resourceEndpoint = config.configuration.view.fetch.baseUrl;
+  const itemEndpointData = {
+    endpoint: config.configuration.view.fetch.baseUrl,
+    ...config.configuration.view.fetch.mapping,
+  };
 
   const endpointData = {
     endpoint: config.configuration.results.fetch.baseUrl,
@@ -56,7 +58,7 @@ const GokbRoute = () => {
 
   const fetchParameters = {
     endpoint: endpointData.endpoint,
-    itemEndpoint: resourceEndpoint,
+    itemEndpoint: itemEndpointData.endpoint,
     SASQ_MAP: {},
   };
 
@@ -170,6 +172,8 @@ const GokbRoute = () => {
       }}
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
+      rowFetchId={itemEndpointData?.apiIdentifier || 'id'}
+      rowIdentifier={itemEndpointData?.urlIdentifier || 'id'}
       sasqProps={{
         initialFilterState,
         sortableColumns,
@@ -180,7 +184,7 @@ const GokbRoute = () => {
         return kyImport.get(`${endpoint}/${resourceId}`).json();
       }}
       viewResponseTransform={(data) => {
-        const raw = data?.[resourcePath];
+        const raw = data?.[itemEndpointData.data];
         return Array.isArray(raw) ? raw[0] : raw;
       }}
     />

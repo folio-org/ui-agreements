@@ -353,9 +353,10 @@
     },
     "view": {
       "fetch": {
-        "baseUrl": "https://gokbt.gbv.de/gokb/api/find/",
+        "baseUrl": "https://gokbt.gbv.de/gokb/api/find",
         "mapping": {
-          "data": "records"
+          "data": "records",
+          "urlIdentifier": "uuid"
         }
       },
       "display": {
