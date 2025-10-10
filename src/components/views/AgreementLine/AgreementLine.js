@@ -154,6 +154,7 @@ const AgreementLine = ({
     }
   ];
 
+  const isDisabled = !canEdit || !canDelete || canEditLoading || canDeleteLoading;
   return (
     <HasCommand
       commands={shortcuts}
@@ -166,7 +167,7 @@ const AgreementLine = ({
             <>
               <Button
                 buttonStyle="dropdownItem"
-                disabled={canEditLoading || !canEdit}
+                disabled={isDisabled}
                 id="clickable-dropdown-edit-agreement-line"
                 onClick={handlers.onEdit}
               >
@@ -176,7 +177,7 @@ const AgreementLine = ({
               </Button>
               <Button
                 buttonStyle="dropdownItem"
-                disabled={canDeleteLoading || !canDelete}
+                disabled={isDisabled}
                 id="clickable-dropdown-delete-agreement-line"
                 onClick={() => setShowDeleteConfirmationModal(true)}
               >
