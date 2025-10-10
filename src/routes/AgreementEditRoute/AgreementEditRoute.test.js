@@ -1,12 +1,16 @@
-import PropTypes from 'prop-types';
-
 import { useQuery } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button } from '@folio/stripes/components';
-import { useStripes } from '@folio/stripes/core';
+import {
+  mockPost,
+  mockKyJson,
+  useStripes
+} from '@folio/stripes/core';
+import { Button as MockButton } from '@folio/stripes/components';
+
+import { usePolicies } from '@folio/stripes-erm-components';
+import { Button, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../test/helpers';
 import AgreementEditRoute from './AgreementEditRoute';
@@ -19,16 +23,6 @@ import {
 
 import mockRefdata from '../../../test/jest/refdata';
 
-const CloseButton = (props) => {
-  return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
-};
-
-CloseButton.propTypes = {
-  handlers: PropTypes.shape({
-    onClose: PropTypes.func,
-  }),
-};
-
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
 
@@ -39,10 +33,19 @@ jest.mock('../../hooks', () => ({
 
 jest.mock('../../components/views/AgreementForm', () => {
   return (props) => (
-    <div>
+    <>
       <div>AgreementForm</div>
-      <CloseButton {...props} />
-    </div>
+      <MockButton onClick={props.handlers.onClose}>CloseButton</MockButton>
+      <MockButton
+        onClick={() => props.onSubmit({
+          name: 'Test Agreement',
+          fakeProp: true,
+          claimPolicies: ['I am the claims']
+        })}
+      >
+        SubmitButton
+      </MockButton>
+    </>
   );
 });
 
@@ -61,6 +64,14 @@ const data = {
 useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
 
 describe('AgreementEditRoute', () => {
+  beforeEach(() => {
+    mockPost.mockClear();
+    mockKyJson.mockClear();
+
+    mockKyJson.mockImplementation(() => Promise.resolve({ id: 'my-agreement-id', name: 'Test Agreement' }));
+    usePolicies.mockImplementation(() => ({ policies: [] }));
+  });
+
   describe('rendering the route with permissions', () => {
     let renderComponent;
     beforeEach(() => {
@@ -71,18 +82,33 @@ describe('AgreementEditRoute', () => {
         translationsProperties
       );
     });
-
-    test('renders the agreementForm component', () => {
+    test('renders the AgreementForm component', () => {
       const { getByText } = renderComponent;
       expect(getByText('AgreementForm')).toBeInTheDocument();
     });
 
     test('calls the CloseButton', async () => {
       await waitFor(async () => {
-        await ButtonInteractor('CloseButton').click();
+        await Button('CloseButton').click();
       });
       await waitFor(async () => {
         expect(historyPushMock).toHaveBeenCalled();
+      });
+    });
+
+    describe('clicking the submit button', () => {
+      beforeEach(async () => {
+        await Button('SubmitButton').click();
+      });
+
+      test('Shows agreement edit success callout', async () => {
+        // EXAMPLE interactor selectors don't have injected intl values
+        await Callout('<strong>Agreement updated:</strong> {name}').exists();
+      });
+
+      test('Shows claims edit success callout', async () => {
+        // EXAMPLE interactor selectors don't have injected intl values
+        await Callout('<strong>Agreement acquisition units updated:</strong> {name}').exists();
       });
     });
   });
@@ -114,8 +140,10 @@ describe('AgreementEditRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
-      const { hasPerm } = useStripes();
-      hasPerm.mockImplementation(() => false);
+      // override hasPerm to return false
+      useStripes.mockImplementation(() => ({
+        hasPerm: jest.fn(() => false),
+      }));
 
       renderComponent = renderWithIntl(
         <MemoryRouter>
