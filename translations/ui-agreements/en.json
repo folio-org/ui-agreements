@@ -168,6 +168,9 @@
   "agreements.editAgreement.name": "Edit agreement - {name}",
   "agreements.create.callout": "<strong>Agreement created:</strong> {name}",
   "agreements.update.callout": "<strong>Agreement updated:</strong> {name}",
+  "agreements.update.error.callout": "<strong>Error:</strong> Agreement {name} was not updated: {error}",
+  "agreements.claimPolicies.update.callout": "<strong>Agreement acquisition units updated:</strong> {name}",
+  "agreements.claimPolicies.update.error.callout": "<strong>Error:</strong> Acquisition units for agreement {name} were not updated: {error}",
   "agreementLineCountHeader": "{count, number} Agreement {count, plural, one {line} other {lines}}",
   "agreementLine": "Agreement line",
   "agreementLine.basket": "Basket",
@@ -886,6 +889,7 @@
   "remoteKb.scheme": "Scheme",
   "remoteKb.heading": "Heading",
   "remoteKb.noAccordionContent": "No {accordion} content available.",
+  "remoteKb.packageTitles": "Package titles",
   "remoteKb.eresourceAgreements": "Agreements for this e-resource",
   "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion"
 }

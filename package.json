@@ -63,6 +63,7 @@
     "zustand": "^5.0.0"
   },
   "peerDependencies": {
+    "@folio/handler-stripes-registry": "^3.0.0",
     "@folio/stripes": "^10.0.0",
     "@folio/stripes-acq-components": "^7.0.0",
     "@folio/stripes-erm-components": "^10.0.0",
