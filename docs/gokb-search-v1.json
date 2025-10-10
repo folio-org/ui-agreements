@@ -359,6 +359,49 @@
         }
       },
       "display": {
+        "actions": {
+          "type": "dropdown",
+          "values": [
+            {
+              "name": "viewInRemoteKb",
+              "type": "registry",
+              "registryResource": "remoteKb",
+              "registryRenderFunction": "viewInRemoteKbButton",
+              "props": [
+                {
+                  "name": "url",
+                  "value": {
+                    "type": "handlebars",
+                    "templateString": "https://gokbt.gbv.de/gokb-ui/title/{{resource.uuid}}"
+                  }
+                },
+                {
+                  "name": "remoteKbName",
+                  "value": {
+                    "type": "static",
+                    "value": "GOKB"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "viewInLocalKb",
+              "type": "registry",
+              "registryResource": "remoteKb",
+              "registryRenderFunction": "viewInLocalKbButton",
+              "props": [
+                {
+                  "name": "remoteId",
+                  "value": {
+                    "type": "access",
+                    "accessType": "JSONPath",
+                    "expression": "$.uuid"
+                  }
+                }
+              ]
+            }
+          ]
+        },
         "title": {
           "type": "access",
           "accessType": "JSONPath",

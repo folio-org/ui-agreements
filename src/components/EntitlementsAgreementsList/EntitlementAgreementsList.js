@@ -98,7 +98,7 @@ const EntitlementAgreementsList = (
   };
 
   return (
-    <div>
+    <div style={{ minWidth: 0, width: '100%' }}>
       {renderHeadline()}
       <MultiColumnList
         columnMapping={columnMapping}
@@ -118,7 +118,7 @@ const EntitlementAgreementsList = (
 };
 
 EntitlementAgreementsList.propTypes = {
-  entitlements: PropTypes.arrayOf(PropTypes.object),
+  entitlements: PropTypes.arrayOf(PropTypes.shape({})),
   eresourceId: PropTypes.string.isRequired,
   headline: PropTypes.node,
   id: PropTypes.string,
