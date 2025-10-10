@@ -80,6 +80,8 @@ const AgreementLineCreateRoute = ({
         'reference': resource.id,
         ...rest
       };
+    } else if (resource?.type === 'GOKB_TITLE') { // external line from GOKB
+      items = resource?.payload;
     } else if (isEmpty(resource)) { // detached line
       items = {
         'type': 'detached',
@@ -118,7 +120,9 @@ const AgreementLineCreateRoute = ({
 };
 
 AgreementLineCreateRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func.isRequired,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

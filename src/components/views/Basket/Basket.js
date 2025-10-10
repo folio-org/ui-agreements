@@ -41,6 +41,7 @@ const Basket = ({
   data: { basket },
   handlers: { onClose, onRemoveBasketItem },
 }) => {
+  console.log('basket', basket);
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
@@ -63,8 +64,7 @@ const Basket = ({
         .then(() => {
           /* Quick FIX for ERM-3673; only add location.search when coming from agreements */
           history.push(
-            `${urls.agreementView(selectedAgreement?.id)}${
-              location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
+            `${urls.agreementView(selectedAgreement?.id)}${location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
             }`
           );
         });
@@ -72,15 +72,19 @@ const Basket = ({
   );
 
   const handleAddToExistingAgreement = useCallback(async (addFromBasket) => {
-    const submitValues = {
-      items: addFromBasket
-        .split(',')
-        .map((index) => ({ resource: basket[parseInt(index, 10)] }))
-        .filter((line) => line.resource),
-    };
-
+    const items = addFromBasket
+      .split(',')
+      .map((index) => {
+        const item = basket[parseInt(index, 10)];
+        if (!item) return null;
+        if (item.type === 'GOKB_TITLE') return item.payload;
+        return { resource: item };
+      })
+      .filter(Boolean);
+    const submitValues = { items };
     await putAgreement(submitValues);
   }, [basket, putAgreement]);
+
 
   const getSelectedItems = useCallback(() => {
     return Object.entries(selectedItems)

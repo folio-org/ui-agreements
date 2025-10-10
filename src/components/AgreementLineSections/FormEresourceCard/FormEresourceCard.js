@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import PackageCard from '../../PackageCard';
 import PackageCardExternal from '../../PackageCardExternal';
@@ -11,14 +10,15 @@ const propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  resource: PropTypes.object,
+  resource: PropTypes.shape({}),
 };
 
 const isExternal = (resource) => {
   return (
     resource.type === 'external' ||
     resource.type === 'packages' ||
-    resource.type === 'resources'
+    resource.type === 'resources' ||
+    resource.type === 'GOKB_TITLE'
   );
 };
 

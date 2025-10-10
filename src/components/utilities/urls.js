@@ -17,6 +17,7 @@ const urls = {
 
   eholdingsPackageView: id => `/eholdings/packages/${id}`,
   eholdingsResourceView: id => `/eholdings/resources/${id}`,
+  gokbResourceView: id => `/erm/gokb/${id}`,
 
   packages: () => '/erm/packages',
   packageView: id => `/erm/packages/${id}`,
