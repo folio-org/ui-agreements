@@ -27,7 +27,7 @@ import { FormModal } from '@k-int/stripes-kint-components';
 import { AGREEMENTS_ENDPOINT, validationEndPoint } from '../../constants';
 
 import { useBasket, useAgreementsRefdata } from '../../hooks';
-import { urls, buildEntitlementsFromBasketSelection } from '../utilities';
+import { urls } from '../utilities';
 
 const propTypes = {
   showModal: PropTypes.bool,
@@ -71,13 +71,28 @@ const AgreementModal = ({ showModal, hideModal, selectedItems }) => {
   );
 
   const handleAddToNewAgreement = async (values) => {
-    const items = buildEntitlementsFromBasketSelection(selectedItems, basket);
-    await postAgreement({
+    const items = selectedItems
+      .split(',')
+      .map((index) => {
+        const item = basket[parseInt(index, 10)];
+        if (!item) return null;
+
+        if (item.type === 'GOKB_TITLE') {
+          return item?.payload;
+        }
+
+        return { resource: item };
+      })
+      .filter(Boolean);
+
+    const submitValues = {
       name: values?.name,
       agreementStatus: values?.agreementStatus,
       periods: [{ startDate: values?.startDate }],
       items,
-    });
+    };
+
+    await postAgreement(submitValues);
   };
 
   return (
