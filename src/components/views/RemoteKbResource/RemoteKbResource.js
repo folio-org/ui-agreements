@@ -82,7 +82,7 @@ const RemoteKbResource = ({
       }, {}) || {};
 
   const setBadgeCount = (sectionName) => (count) => {
-    setBadges(prev => {
+    setBadges((prev) => {
       if (count == null) {
         const { [sectionName]: _omit, ...rest } = prev;
         return rest;
@@ -236,7 +236,12 @@ const RemoteKbResource = ({
     }
   };
 
-  const applyRenderStrategy = (strategy, collapsable = false, badge = false, name = '') => {
+  const applyRenderStrategy = (
+    strategy,
+    collapsable = false,
+    badge = false,
+    name = ''
+  ) => {
     switch (strategy.type) {
       case 'sections':
         return strategy.values?.map((section) => (
