@@ -12,6 +12,41 @@ jest.mock('../../components/EntitlementsAgreementsList', () => ({
   default: (props) => mockEntitlementAgreementsList(props),
 }));
 
+jest.mock('@k-int/stripes-kint-components', () => {
+  const actual = jest.requireActual('@k-int/stripes-kint-components');
+  return {
+    ...actual,
+    usePrevNextPagination: jest.fn(() => ({
+      currentPage: 1,
+      paginationMCLProps: {
+        onNeedMoreData: jest.fn(),
+        pagingCanGoNext: false,
+        pagingCanGoPrevious: false,
+        pagingOffset: 0,
+        pagingType: 'prev-next'
+      },
+      handlePageChange: jest.fn(),
+      resetPage: jest.fn(),
+    })),
+  };
+});
+
+jest.mock('../../hooks', () => {
+  const actual = jest.requireActual('../../hooks');
+  return {
+    ...actual,
+    useAgreementsDisplaySettings: jest.fn(() => ({})),
+  };
+});
+
+jest.mock('../../components/utilities', () => {
+  const actual = jest.requireActual('../../components/utilities');
+  return {
+    ...actual,
+    parseMclPageSize: jest.fn(() => 1),
+  };
+});
+
 jest.mock('react-query', () => ({
   ...jest.requireActual('react-query'),
   useQuery: jest.fn(),
@@ -42,16 +77,17 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
       }
       if (key[1] === 'fetchEntitlementsForTitle') {
         expect(opts?.enabled).toBe(true);
-        opts?.onSuccess?.(entitlements);
-        return { data: entitlements };
+        const payload = { results: entitlements, totalRecords: entitlements.length };
+        opts?.onSuccess?.(payload);
+        return { data: payload };
       }
       return { data: undefined };
     });
 
     renderIt();
 
-    expect(mockEntitlementAgreementsList).toHaveBeenCalledTimes(1);
-    const props = mockEntitlementAgreementsList.mock.calls[0][0];
+    expect(mockEntitlementAgreementsList).toHaveBeenCalled();
+    const props = mockEntitlementAgreementsList.mock.calls.at(-1)[0];
 
     expect(props.eresourceId).toBe(eresourceId);
     expect(Array.isArray(props.entitlements)).toBe(true);
@@ -65,7 +101,7 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
     expect(setBadgeCount).toHaveBeenCalledWith(entitlements.length);
   });
 
-  test('remote title not found, child gets null TI, empty entitlements, empty message set, no badge', () => {
+  test('remote title not found, renders message (no child), entitlements query disabled, no badge', () => {
     let entitlementsQueryOpts;
     useQuery.mockImplementation((key, _fn, opts) => {
       if (key[1] === 'fetchLocalTitleId') {
@@ -75,19 +111,17 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
       if (key[1] === 'fetchEntitlementsForTitle') {
         entitlementsQueryOpts = opts;
         expect(opts?.enabled).toBe(false);
-        return { data: [] };
+        return { data: { results: [], totalRecords: 0 } };
       }
       return { data: undefined };
     });
 
-    renderIt();
+    const { queryByText } = renderIt();
 
-    expect(mockEntitlementAgreementsList).toHaveBeenCalledTimes(1);
-    const props = mockEntitlementAgreementsList.mock.calls[0][0];
+    expect(mockEntitlementAgreementsList).not.toHaveBeenCalled();
+    const messageNode = queryByText('Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion');
+    expect(messageNode).toBeInTheDocument();
 
-    expect(props.eresourceId).toBeNull();
-    expect(props.entitlements).toEqual([]);
-    expect(props.isEmptyMessage?.props?.id).toBe('ui-agreements.remoteKb.remoteTitleNotFound');
     expect(entitlementsQueryOpts?.enabled).toBe(false);
 
     expect(setBadgeCount).not.toHaveBeenCalled();
@@ -99,17 +133,17 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
         return { data: eresourceId };
       }
       if (key[1] === 'fetchEntitlementsForTitle') {
-        const empty = [];
-        opts?.onSuccess?.(empty);
-        return { data: empty };
+        const emptyPayload = { results: [], totalRecords: 0 };
+        opts?.onSuccess?.(emptyPayload);
+        return { data: emptyPayload };
       }
       return { data: undefined };
     });
 
     renderIt();
 
-    expect(mockEntitlementAgreementsList).toHaveBeenCalledTimes(1);
-    const props = mockEntitlementAgreementsList.mock.calls[0][0];
+    expect(mockEntitlementAgreementsList).toHaveBeenCalled();
+    const props = mockEntitlementAgreementsList.mock.calls.at(-1)[0];
 
     expect(props.eresourceId).toBe(eresourceId);
     expect(props.entitlements).toEqual([]);
@@ -130,7 +164,7 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
       if (key[1] === 'fetchEntitlementsForTitle') {
         secondQueryOpts = opts;
         expect(opts?.enabled).toBe(true);
-        return { data: entitlements };
+        return { data: { results: entitlements, totalRecords: entitlements.length } };
       }
       return { data: undefined };
     });
@@ -149,7 +183,8 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
         return { data: eresourceId };
       }
       if (key[1] === 'fetchEntitlementsForTitle') {
-        opts?.onSuccess?.({ not: 'an array' });
+        const weird = { not: 'an array' };
+        opts?.onSuccess?.(weird);
         opts?.onError?.(new Error('boom'));
         return { data: undefined };
       }

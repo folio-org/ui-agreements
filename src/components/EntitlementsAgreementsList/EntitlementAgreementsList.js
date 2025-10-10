@@ -98,7 +98,7 @@ const EntitlementAgreementsList = (
   };
 
   return (
-    <div>
+    <div style={{ minWidth: 0, width: '100%' }}>
       {renderHeadline()}
       <MultiColumnList
         columnMapping={columnMapping}
