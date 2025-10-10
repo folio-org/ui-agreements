@@ -17,8 +17,7 @@ export default (tipp, pkg) => {
       type: 'external',
       authority: 'GOKB-RESOURCE',
       reference,
-      resourceName: titleName
+      resourceName: titleName,
     },
-    titleUrl: `/erm/gokb/${titleUuid}`,
   });
 };

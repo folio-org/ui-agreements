@@ -22,6 +22,7 @@ import RemoteKbFilters from '../../components/RemoteKbFilters';
 import {
   getFilterConfig,
   transformFilterString,
+  handlebarsCompile
 } from '../../components/utilities';
 import getSortConfig from '../utilities/getSortConfig';
 
@@ -32,9 +33,11 @@ const GokbRoute = () => {
   const filterConfig = getFilterConfig(config);
   const { filterMap, initialFilterState } = filterConfig;
 
+  const viewFetchConfig = config.configuration.view.fetch;
+
   const itemEndpointData = {
-    endpoint: config.configuration.view.fetch.baseUrl,
-    ...config.configuration.view.fetch.mapping,
+    endpoint: viewFetchConfig.baseUrl,
+    ...viewFetchConfig.mapping,
   };
 
   const endpointData = {
@@ -172,8 +175,7 @@ const GokbRoute = () => {
       }}
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
-      rowFetchId={itemEndpointData?.apiIdentifier || 'id'}
-      rowIdentifier={itemEndpointData?.urlIdentifier || 'id'}
+      rowIdentifier={viewFetchConfig?.rowIdentifier || 'id'}
       sasqProps={{
         initialFilterState,
         sortableColumns,
@@ -181,6 +183,12 @@ const GokbRoute = () => {
       searchFieldAriaLabel={`input-${kbKey}-search`}
       ViewComponent={ViewComponent}
       viewQueryPromise={({ _ky, resourceId, endpoint }) => {
+        if (viewFetchConfig?.detailUrl?.templateString) {
+          const template = handlebarsCompile(viewFetchConfig.detailUrl.templateString);
+          const url = template({ endpoint, displayId: resourceId });
+          return kyImport.get(url).json();
+        }
+        // Fallback: path style
         return kyImport.get(`${endpoint}/${resourceId}`).json();
       }}
       viewResponseTransform={(data) => {

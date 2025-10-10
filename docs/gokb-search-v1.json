@@ -355,9 +355,13 @@
       "fetch": {
         "baseUrl": "https://gokbt.gbv.de/gokb/api/find",
         "mapping": {
-          "data": "records",
-          "urlIdentifier": "uuid"
-        }
+          "data": "records"
+        },
+        "detailUrl": {
+          "type": "Handlebars",
+          "templateString": "{{endpoint}}?uuid={{{displayId}}}"
+        },
+        "rowIdentifier": "uuid"
       },
       "display": {
         "title": {

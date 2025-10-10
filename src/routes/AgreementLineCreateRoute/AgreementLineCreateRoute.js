@@ -81,13 +81,7 @@ const AgreementLineCreateRoute = ({
         ...rest
       };
     } else if (resource?.type === 'GOKB_TITLE') { // external line from GOKB
-      items = {
-        'type': 'external',
-        'authority': 'GOKB-RESOURCE',
-        'reference': `${resource.tipp.tippPackageUuid}:${resource.tipp.tippTitleUuid}`,
-        'resourceName': resource?.name || resource?.tipp?.name || resource?.tipp?.altname || 'Unknown title',
-        ...rest
-      };
+      items = resource?.payload;
     } else if (isEmpty(resource)) { // detached line
       items = {
         'type': 'detached',
