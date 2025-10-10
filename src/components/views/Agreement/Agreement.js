@@ -73,7 +73,9 @@ const Agreement = ({
     canEdit: true,
     canEditLoading: false,
     canDelete: true,
-    canDeleteLoading: false
+    canDeleteLoading: false,
+    canCreate: true,
+    canCreateLoading: false,
   }, // If not passed, assume everything is accessible and not loading...?
   components: {
     HelperComponent,
@@ -141,6 +143,7 @@ const Agreement = ({
     };
   };
 
+  const isDisabled = canEditLoading || !canEdit || !canDelete || canDeleteLoading;
   const getActionMenu = ({ onToggle }) => {
     const buttons = [];
 
@@ -149,7 +152,7 @@ const Agreement = ({
         <Button
           key="clickable-dropdown-edit-agreement"
           buttonStyle="dropdownItem"
-          disabled={canEditLoading || !canEdit}
+          disabled={isDisabled}
           id="clickable-dropdown-edit-agreement"
           onClick={handlers.onEdit}
         >
@@ -160,7 +163,7 @@ const Agreement = ({
       );
     }
 
-    if (stripes.hasPerm('ui-agreements.agreements.edit') && canEdit !== false && canDelete !== false) {
+    if (canEdit && canDelete && stripes.hasPerm('ui-agreements.agreements.edit')) {
       buttons.push(
         <Button
           key="clickable-dropdown-duplicate-agreement"
@@ -201,14 +204,14 @@ const Agreement = ({
         <Button
           key="clickable-dropdown-delete-agreement"
           buttonStyle="dropdownItem"
-          disabled={canDeleteLoading || !canDelete}
+          disabled={isDisabled}
           id="clickable-dropdown-delete-agreement"
           onClick={() => {
             setShowDeleteConfirmationModal(true);
             onToggle();
           }}
         >
-          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'trash'}>
+          <Icon icon={canDeleteLoading ? 'spinner-ellipsis' : 'trash'}>
             <FormattedMessage id="ui-agreements.delete" />
           </Icon>
         </Button>
@@ -316,7 +319,13 @@ const Agreement = ({
                 <AllPeriods {...getSectionProps('allPeriods')} />
                 {data.policies?.length > 0 && <AccessControl policies={data.policies} />}
                 {data.agreement?.contacts?.length > 0 && <InternalContacts {...getSectionProps('internalContacts')} />}
-                <Lines {...getSectionProps('lines')} />
+                <Lines
+                  {...getSectionProps('lines')}
+                  accessControlData={{
+                    canEdit,
+                    canEditLoading,
+                  }}
+                />
                 {controllingLicenses?.length > 0 && <ControllingLicense {...getSectionProps('controllingLicense')} />}
                 {futureLicenses?.length > 0 && <FutureLicenses {...getSectionProps('futureLicenses')} />}
                 {historicalLicenses?.length > 0 && <HistoricalLicenses {...getSectionProps('historicalLicenses')} />}

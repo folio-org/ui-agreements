@@ -34,18 +34,21 @@ const propTypes = {
 
 const Lines = ({
   agreement,
-  data,
   eresourcesFilterPath,
   handlers,
   id,
+  accessControlData = {}
 }) => {
+  const {
+    canEdit = true,
+    canEditLoading = false,
+  } = accessControlData;
+
   const { visibleColumns, toggleColumn } = useColumnManager('line-listing-column-manager', LINE_LISTING_COLUMN_MAPPING);
   const renderBadge = () => {
     const count = agreement?.agreementLinesCount;
     return count !== undefined ? <Badge data-test-agreement-lines-count={count}>{count}</Badge> : <Spinner />;
   };
-
-  const hasLinkedAcquisitionsUnit = data?.policies?.length > 0;
 
   const getActionMenu = () => {
     return (
@@ -59,9 +62,9 @@ const Lines = ({
             <IfPermission perm="ui-agreements.agreements.edit">
               <Button
                 buttonStyle="dropdownItem"
-                disabled={hasLinkedAcquisitionsUnit}
+                disabled={canEditLoading || !canEdit}
                 id="add-agreement-line-button"
-                to={hasLinkedAcquisitionsUnit ? undefined : urls.agreementLineCreate(agreement.id)}
+                to={canEditLoading || !canEdit ? null : urls.agreementLineCreate(agreement.id)}
               >
                 <Icon icon="plus-sign">
                   <FormattedMessage id="ui-agreements.agreementLines.newLine" />
