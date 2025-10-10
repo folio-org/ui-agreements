@@ -18,10 +18,6 @@ const propTypes = {
     lines: PropTypes.arrayOf(PropTypes.object),
     orderLines: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
-  // Access to policies to determine acquisition unit restrictions
-  data: PropTypes.shape({
-    policies: PropTypes.arrayOf(PropTypes.shape({}))
-  }),
   eresourcesFilterPath: PropTypes.string,
   handlers: PropTypes.shape({
     onExportEResourcesAsJSON: PropTypes.func.isRequired,
