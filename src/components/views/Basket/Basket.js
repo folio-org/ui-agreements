@@ -72,15 +72,19 @@ const Basket = ({
   );
 
   const handleAddToExistingAgreement = useCallback(async (addFromBasket) => {
-    const submitValues = {
-      items: addFromBasket
-        .split(',')
-        .map((index) => ({ resource: basket[parseInt(index, 10)] }))
-        .filter((line) => line.resource),
-    };
-
+    const items = addFromBasket
+      .split(',')
+      .map((index) => {
+        const item = basket[parseInt(index, 10)];
+        if (!item) return null;
+        if (item.type === 'GOKB_TITLE') return item.payload;
+        return { resource: item };
+      })
+      .filter(Boolean);
+    const submitValues = { items };
     await putAgreement(submitValues);
   }, [basket, putAgreement]);
+
 
   const getSelectedItems = useCallback(() => {
     return Object.entries(selectedItems)
