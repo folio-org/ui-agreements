@@ -16,7 +16,7 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 
-import { AGREEMENT_ENDPOINT } from '../../../constants';
+import { AGREEMENT_ENDPOINT, BASKET_TYPE_GOKB_TITLE } from '../../../constants';
 
 import { urls } from '../../utilities';
 
@@ -77,7 +77,7 @@ const Basket = ({
       .map((index) => {
         const item = basket[parseInt(index, 10)];
         if (!item) return null;
-        if (item.type === 'GOKB_TITLE') return item.payload;
+        if (item.type === BASKET_TYPE_GOKB_TITLE) return item.payload;
         return { resource: item };
       })
       .filter(Boolean);

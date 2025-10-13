@@ -24,7 +24,7 @@ import {
 
 import { FormModal } from '@k-int/stripes-kint-components';
 
-import { AGREEMENTS_ENDPOINT, validationEndPoint } from '../../constants';
+import { AGREEMENTS_ENDPOINT, BASKET_TYPE_GOKB_TITLE, validationEndPoint } from '../../constants';
 
 import { useBasket, useAgreementsRefdata } from '../../hooks';
 import { urls } from '../utilities';
@@ -77,7 +77,7 @@ const AgreementModal = ({ showModal, hideModal, selectedItems }) => {
         const item = basket[parseInt(index, 10)];
         if (!item) return null;
 
-        if (item.type === 'GOKB_TITLE') {
+        if (item.type === BASKET_TYPE_GOKB_TITLE) {
           return item?.payload;
         }
 

@@ -3,7 +3,7 @@ import PackageCard from '../../PackageCard';
 import PackageCardExternal from '../../PackageCardExternal';
 import TitleCard from '../../TitleCard';
 import TitleCardExternal from '../../TitleCardExternal';
-import { resourceClasses } from '../../../constants';
+import { resourceClasses, BASKET_TYPE_GOKB_TITLE } from '../../../constants';
 
 const propTypes = {
   headerEnd: PropTypes.oneOfType([
@@ -18,7 +18,7 @@ const isExternal = (resource) => {
     resource.type === 'external' ||
     resource.type === 'packages' ||
     resource.type === 'resources' ||
-    resource.type === 'GOKB_TITLE'
+    resource.type === BASKET_TYPE_GOKB_TITLE
   );
 };
 
