@@ -175,20 +175,19 @@ const GokbRoute = () => {
       }}
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
-      rowIdentifier={viewFetchConfig?.rowIdentifier || 'id'}
       sasqProps={{
         initialFilterState,
         sortableColumns,
       }}
       searchFieldAriaLabel={`input-${kbKey}-search`}
       ViewComponent={ViewComponent}
+      viewQueryIdentifier={viewFetchConfig?.viewQueryIdentifier || 'id'}
       viewQueryPromise={({ _ky, resourceId, endpoint }) => {
-        if (viewFetchConfig?.detailUrl?.templateString) {
-          const template = handlebarsCompile(viewFetchConfig.detailUrl.templateString);
-          const url = template({ endpoint, displayId: resourceId });
+        if (viewFetchConfig?.viewQueryUrl?.templateString) {
+          const template = handlebarsCompile(viewFetchConfig.viewQueryUrl.templateString);
+          const url = template({ endpoint, resourceId });
           return kyImport.get(url).json();
         }
-        // Fallback: path style
         return kyImport.get(`${endpoint}/${resourceId}`).json();
       }}
       viewResponseTransform={(data) => {

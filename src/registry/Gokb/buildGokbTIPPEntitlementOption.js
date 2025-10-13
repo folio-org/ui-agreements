@@ -5,14 +5,13 @@ export default (tipp, pkg) => {
   const titleUuid = tipp.tippTitleUuid;
   const pkgUuid = tipp.tippPackageUuid;
   const reference = `${pkgUuid}:${titleUuid}`;
-
   return ({
     id: titleUuid,
     name: titleName,
     type: BASKET_TYPE_GOKB_TITLE,
     tipp,
     pkg,
-    publicationType: { label: tipp.titleType },
+    publicationType: { label: tipp?.titleType },
     payload: {
       type: 'external',
       authority: 'GOKB-RESOURCE',

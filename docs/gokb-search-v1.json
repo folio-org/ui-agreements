@@ -357,11 +357,11 @@
         "mapping": {
           "data": "records"
         },
-        "detailUrl": {
+        "viewQueryUrl": {
           "type": "Handlebars",
-          "templateString": "{{endpoint}}?uuid={{{displayId}}}"
+          "templateString": "{{endpoint}}?uuid={{resourceId}}"
         },
-        "rowIdentifier": "uuid"
+        "viewQueryIdentifier": "uuid"
       },
       "display": {
         "title": {
