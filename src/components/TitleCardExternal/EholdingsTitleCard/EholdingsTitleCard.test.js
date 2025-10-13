@@ -4,7 +4,7 @@ import { KeyValue, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
 import EholdingsTitleCard from './EholdingsTitleCard';
-import { title, titleWithReferenceObject } from './testResources';
+import { title, titleWithReferenceObject } from '../testResources';
 
 jest.mock('../../EResourceLink', () => () => <div>EResourceLink</div>);
 

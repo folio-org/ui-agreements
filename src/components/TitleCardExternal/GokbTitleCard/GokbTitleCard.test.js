@@ -3,13 +3,13 @@ import { KeyValue, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
 import GokbTitleCard from './GokbTitleCard';
-import { agreementLineTitle, basketTitle } from './testResources';
+import { gokbAgreementLineTitle, gokbBasketTitle } from '../testResources';
 
 jest.mock('../../EResourceLink', () => () => <div>EResourceLink</div>);
 
 const cases = [
-  ['with resource from basket', basketTitle],
-  ['with resource from agreement line', agreementLineTitle],
+  ['with resource from basket', gokbBasketTitle],
+  ['with resource from agreement line', gokbAgreementLineTitle],
 ];
 
 describe('GokbTitleCard', () => {
