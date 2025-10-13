@@ -41,7 +41,6 @@ const Basket = ({
   data: { basket },
   handlers: { onClose, onRemoveBasketItem },
 }) => {
-  console.log('basket', basket);
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();

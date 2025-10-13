@@ -2,19 +2,19 @@
 import { StaticRouter as Router } from 'react-router-dom';
 import { KeyValue, renderWithIntl } from '@folio/stripes-erm-testing';
 
-import translationsProperties from '../../../test/helpers';
-import GokbTitleCard from './GokbTitleCard';
+import translationsProperties from '../../../../test/helpers';
+import EholdingsTitleCard from './EholdingsTitleCard';
 import { title, titleWithReferenceObject } from './testResources';
 
-jest.mock('../EResourceLink', () => () => <div>EResourceLink</div>);
+jest.mock('../../EResourceLink', () => () => <div>EResourceLink</div>);
 
 let renderComponent;
-describe('GokbTitleCard', () => {
+describe('EholdingsTitleCard', () => {
   describe('with title resource', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <Router>
-          <GokbTitleCard
+          <EholdingsTitleCard
             title={title}
           />
         </Router>,
@@ -22,9 +22,9 @@ describe('GokbTitleCard', () => {
       );
     });
 
-    test('renders GokbTitleCard component', () => {
+    test('renders EholdingsTitleCard component', () => {
       const { getByTestId } = renderComponent;
-      expect(getByTestId('GokbTitleCard')).toBeInTheDocument();
+      expect(getByTestId('EholdingsTitleCard')).toBeInTheDocument();
     });
 
     test('renders EResourceLink component', () => {
@@ -49,7 +49,7 @@ describe('GokbTitleCard', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <Router>
-          <GokbTitleCard
+          <EholdingsTitleCard
             title={titleWithReferenceObject}
           />
         </Router>,
@@ -57,9 +57,9 @@ describe('GokbTitleCard', () => {
       );
     });
 
-    test('renders GokbTitleCard component', () => {
+    test('renders EholdingsTitleCard component', () => {
       const { getByTestId } = renderComponent;
-      expect(getByTestId('GokbTitleCard')).toBeInTheDocument();
+      expect(getByTestId('EholdingsTitleCard')).toBeInTheDocument();
     });
 
     test('renders EResourceLink component', () => {

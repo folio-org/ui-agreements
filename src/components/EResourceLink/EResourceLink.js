@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { NoValue } from '@folio/stripes/components';
 import { isExternal, urls } from '../utilities';
-import { BASKET_TYPE_GOKB_TITLE, resourceClasses } from '../../constants';
+import { BASKET_TYPE_GOKB_TITLE, GOKB_RESOURCE_AUTHORITY, resourceClasses } from '../../constants';
 
 class EResourceLink extends React.Component {
   static propTypes = {
@@ -34,7 +34,7 @@ class EResourceLink extends React.Component {
     if (authority === 'EKB-PACKAGE') return urls.eholdingsPackageView(reference);
     if (authority === 'EKB-TITLE') return urls.eholdingsResourceView(reference);
 
-    if (type === BASKET_TYPE_GOKB_TITLE) {
+    if (type === BASKET_TYPE_GOKB_TITLE || authority === GOKB_RESOURCE_AUTHORITY) {
       return urls.gokbResourceView(eresource.id);
     }
 

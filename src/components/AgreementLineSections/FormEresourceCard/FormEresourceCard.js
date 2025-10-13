@@ -3,20 +3,15 @@ import PackageCard from '../../PackageCard';
 import PackageCardExternal from '../../PackageCardExternal';
 import TitleCard from '../../TitleCard';
 import TitleCardExternal from '../../TitleCardExternal';
-import GokbTitleCard from '../../GokbTitleCard';
 import { resourceClasses, BASKET_TYPE_GOKB_TITLE } from '../../../constants';
 
 const propTypes = {
-  headerEnd: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]),
+  headerEnd: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
   resource: PropTypes.shape({}),
 };
 
 const FormEresourceCard = ({ headerEnd, resource }) => {
-  const isGokbTitle =
-    resource?.type === BASKET_TYPE_GOKB_TITLE;
+  const isGokbTitle = resource?.type === BASKET_TYPE_GOKB_TITLE;
 
   const isPackage =
     resource?.class === resourceClasses?.PACKAGE ||
@@ -29,15 +24,14 @@ const FormEresourceCard = ({ headerEnd, resource }) => {
     resource?.type === 'packages' ||
     resource?.type === 'resources';
 
-  if (isGokbTitle) {
-    return <GokbTitleCard headerEnd={headerEnd} title={resource} />;
-  }
-
   if (isExternal) {
     return isPackage ? (
       <PackageCardExternal headerEnd={headerEnd} packageData={resource} />
     ) : (
-      <TitleCardExternal headerEnd={headerEnd} title={resource} />
+      <TitleCardExternal
+        headerEnd={headerEnd}
+        title={resource} // passes the fallback explicitly
+      />
     );
   }
 

@@ -10,7 +10,7 @@ import {
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
-import EResourceLink from '../EResourceLink';
+import EResourceLink from '../../EResourceLink';
 
 const propTypes = {
   headerEnd: PropTypes.oneOfType([
@@ -33,8 +33,6 @@ const GokbTitleCard = ({
 
 
   const renderHeaderStart = () => {
-    console.log('title', title);
-    console.log('titleInfo', titleInfo);
     return (
       <AppIcon app="agreements" iconKey="gokb" size="small"> {/* TODO: add icon for GOKB titles */}
         <strong data-test-title-instance-name>
