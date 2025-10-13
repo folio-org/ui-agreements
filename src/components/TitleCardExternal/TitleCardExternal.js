@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -18,7 +19,7 @@ const propTypes = {
     PropTypes.arrayOf(PropTypes.node),
   ]),
   searchString: PropTypes.string,
-  title: PropTypes.shape({}),
+  title: PropTypes.object,
 };
 
 const TitleCardExternal = ({
@@ -28,48 +29,21 @@ const TitleCardExternal = ({
 }) => {
   const titleInfo = title?.reference_object ?? title;
 
-  const renderHeaderStart = () => {
-    if (title?.type === 'GOKB_TITLE') {
-      const resourceName = titleInfo?.name || titleInfo?.tipp?.name || titleInfo?.tipp?.altname || 'Unknown title';
-      return (
-        <AppIcon app="agreements" iconKey="title" size="small">
+  return (
+    <Card
+      cardStyle="positive"
+      data-test-title-card
+      data-testid="titleCardExternal"
+      headerEnd={headerEnd}
+      headerStart={(
+        <AppIcon app="eholdings" size="small">
           <strong data-test-title-instance-name>
-            {resourceName}
+            <EResourceLink eresource={title} searchString={searchString} />
           </strong>
         </AppIcon>
-      );
-    }
-    return (
-      <AppIcon app="eholdings" size="small">
-        <strong data-test-title-instance-name>
-          <EResourceLink eresource={title} searchString={searchString} />
-        </strong>
-      </AppIcon>
-    );
-  };
-
-  const renderCardContent = () => {
-    if (title?.type === 'GOKB_TITLE') {
-      return (
-        <Row>
-          <Col xs={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.gokbPackageUuid" />}>
-              <div data-test-title-pkg-uuid>
-                {titleInfo?.tipp?.tippPackageUuid ?? <NoValue />}
-              </div>
-            </KeyValue>
-          </Col>
-          <Col xs={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.gokbTitleUuid" />}>
-              <div data-test-title-uuid>
-                {titleInfo?.tipp?.tippTitleUuid ?? <NoValue />}
-              </div>
-            </KeyValue>
-          </Col>
-        </Row>
-      );
-    }
-    return (
+      )}
+      roundedBorder
+    >
       <Row>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.publicationType" />}>
@@ -95,19 +69,6 @@ const TitleCardExternal = ({
           </KeyValue>
         </Col>
       </Row>
-    );
-  };
-
-  return (
-    <Card
-      cardStyle="positive"
-      data-test-title-card
-      data-testid="titleCardExternal"
-      headerEnd={headerEnd}
-      headerStart={renderHeaderStart()}
-      roundedBorder
-    >
-      {renderCardContent()}
     </Card>
   );
 };
