@@ -35,14 +35,21 @@ jest.mock('../../../docs/gokb-search-v1', () => ({
       fetch: {
         baseUrl: 'https://example.org/find',
         mapping: { results: 'records', totalRecords: 'count' },
-        // used to build searchConfig
         search: { type: 'basic' },
         sort: { type: 'simple' },
       },
       display: { columns: [{ name: 'name' }, { name: 'publicationType' }, { name: 'publicationDates' }] },
     },
     view: {
-      fetch: { baseUrl: 'https://example.org/resource', mapping: { data: 'data' } },
+      fetch: {
+        baseUrl: 'https://example.org/resource',
+        mapping: { data: 'records' },
+        viewQueryUrl: {
+          type: 'Handlebars',
+          templateString: '{{endpoint}}?uuid={{resourceId}}'
+        },
+        viewQueryIdentifier: 'uuid'
+      },
       display: { icon: 'titles' },
     },
   },
@@ -61,6 +68,9 @@ jest.mock('../../components/utilities', () => ({
     initialFilterState: { pre: 'set' },
   })),
   transformFilterString: jest.fn((filters, _config) => (filters === 'type.Book' ? 'componentType=Book' : '')),
+  handlebarsCompile: jest.fn((tpl) => (ctx) => tpl
+    .replace('{{endpoint}}', ctx.endpoint)
+    .replace('{{resourceId}}', ctx.resourceId)),
 }));
 
 jest.mock('../utilities/getSortConfig', () => jest.fn(() => ({
@@ -96,6 +106,7 @@ jest.mock('ky', () => ({
 describe('GokbRoute', () => {
   beforeEach(() => {
     capturedProps = {};
+    ky.get.mockClear();
   });
 
   const renderComponent = () => renderWithIntl(
@@ -136,14 +147,14 @@ describe('GokbRoute', () => {
     expect(ky.get).toHaveBeenCalled();
   });
 
-  test('viewQueryPromise fetches via ky', async () => {
+  test('viewQueryPromise fetches via ky with uuid param (template branch)', async () => {
     renderComponent();
     await capturedProps.viewQueryPromise({
       _ky: {},
       resourceId: '123',
       endpoint: 'https://example.org/resource',
     });
-    expect(ky.get).toHaveBeenCalledWith('https://example.org/resource/123');
+    expect(ky.get).toHaveBeenCalledWith('https://example.org/resource?uuid=123');
   });
 
   test('lookupResponseTransform maps results and totalRecords from config mapping', () => {
@@ -158,10 +169,10 @@ describe('GokbRoute', () => {
 
   test('viewResponseTransform returns first element if array, otherwise object', () => {
     renderComponent();
-    const arr = capturedProps.viewResponseTransform({ data: [{ id: 1 }, { id: 2 }] });
+    const arr = capturedProps.viewResponseTransform({ records: [{ id: 1 }, { id: 2 }] });
     expect(arr).toEqual({ id: 1 });
 
-    const obj = capturedProps.viewResponseTransform({ data: { id: 9 } });
+    const obj = capturedProps.viewResponseTransform({ records: { id: 9 } });
     expect(obj).toEqual({ id: 9 });
   });
 
@@ -189,5 +200,10 @@ describe('GokbRoute', () => {
   test('initialFilterState is passed to SASQ via sasqProps', () => {
     renderComponent();
     expect(capturedProps.sasqProps.initialFilterState).toEqual({ pre: 'set' });
+  });
+
+  test('passes viewQueryIdentifier to SASQRoute', () => {
+    renderComponent();
+    expect(capturedProps.viewQueryIdentifier).toBe('uuid');
   });
 });
