@@ -30,7 +30,7 @@ const FormEresourceCard = ({ headerEnd, resource }) => {
     ) : (
       <TitleCardExternal
         headerEnd={headerEnd}
-        title={resource} // passes the fallback explicitly
+        title={resource}
       />
     );
   }
