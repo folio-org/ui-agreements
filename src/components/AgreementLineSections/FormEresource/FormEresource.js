@@ -11,14 +11,14 @@ import EresourceSelector from '../EresourceSelector';
 
 const propTypes = {
   agreementLineSource: PropTypes.string,
-  basket: PropTypes.arrayOf(PropTypes.shape({})),
+  basket: PropTypes.arrayOf(PropTypes.object),
   line: PropTypes.shape({
-    poLines: PropTypes.arrayOf(PropTypes.shape({})),
+    poLines: PropTypes.arrayOf(PropTypes.object),
   }),
   lineId: PropTypes.string,
   setFieldData: PropTypes.func,
   values: PropTypes.shape({
-    coverage: PropTypes.arrayOf(PropTypes.shape({})),
+    coverage: PropTypes.arrayOf(PropTypes.object),
   }),
 };
 
@@ -62,7 +62,7 @@ const FormEresource = ({
 
   // validation fires when there is no description and no eresource
   const required = (val, allValues) => {
-    if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val) && !isEmpty(String(val?.id)))) {
+    if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val) && !isEmpty(val?.id))) {
       return undefined;
     }
     return <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
@@ -72,7 +72,7 @@ const FormEresource = ({
     <Field name="linkedResource" validate={required}>
       {({ input, meta }) => {
         const res = isExternal(input.value) ? input.value : (input.value.resource?._object ?? {});
-        if (!isEmpty(input.value) && !isDetached(input.value) && !isEmpty(String(input.value?.id))) {
+        if (!isEmpty(input.value) && !isDetached(input.value) && !isEmpty(input.value?.id)) {
           return (
             <FormEresourceCard
               component={FormEresourceCard}
