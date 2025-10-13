@@ -45,14 +45,14 @@ const GokbTitleCard = ({
   const renderCardContent = () => {
     return (
       <Row>
-        <Col xs={3}>
+        <Col xs={6}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.gokbPackageUuid" />}>
             <div data-test-title-pkg-uuid>
               {titleInfo?.packageUuid ?? <NoValue />}
             </div>
           </KeyValue>
         </Col>
-        <Col xs={3}>
+        <Col xs={6}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.gokbTitleUuid" />}>
             <div data-test-title-uuid>
               {titleInfo?.titleUuid ?? <NoValue />}
