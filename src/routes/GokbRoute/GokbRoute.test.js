@@ -48,7 +48,7 @@ jest.mock('../../../docs/gokb-search-v1', () => ({
           type: 'Handlebars',
           templateString: '{{endpoint}}?uuid={{resourceId}}'
         },
-        viewQueryIdentifier: 'uuid'
+        viewQueryIdentifierKey: 'uuid'
       },
       display: { icon: 'titles' },
     },
@@ -202,8 +202,9 @@ describe('GokbRoute', () => {
     expect(capturedProps.sasqProps.initialFilterState).toEqual({ pre: 'set' });
   });
 
-  test('passes viewQueryIdentifier to SASQRoute', () => {
+  test('passes viewQueryIdentifier to SASQRoute as function', () => {
     renderComponent();
-    expect(capturedProps.viewQueryIdentifier).toBe('uuid');
+    expect(typeof capturedProps.viewQueryIdentifier).toBe('function');
+    expect(capturedProps.viewQueryIdentifier({ uuid: 'abc' })).toBe('abc');
   });
 });
