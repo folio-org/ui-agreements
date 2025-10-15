@@ -202,9 +202,9 @@ describe('GokbRoute', () => {
     expect(capturedProps.sasqProps.initialFilterState).toEqual({ pre: 'set' });
   });
 
-  test('passes viewQueryIdentifier to SASQRoute as function', () => {
+  test('passes getNavigationIdentifier to SASQRoute as function', () => {
     renderComponent();
-    expect(typeof capturedProps.viewQueryIdentifier).toBe('function');
-    expect(capturedProps.viewQueryIdentifier({ uuid: 'abc' })).toBe('abc');
+    expect(typeof capturedProps.getNavigationIdentifier).toBe('function');
+    expect(capturedProps.getNavigationIdentifier({ uuid: 'abc' })).toBe('abc');
   });
 });
