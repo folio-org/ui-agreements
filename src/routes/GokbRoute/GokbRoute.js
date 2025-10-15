@@ -147,6 +147,7 @@ const GokbRoute = () => {
       filterPaneProps={{
         id: `${kbKey}-search-main-filter-pane`,
       }}
+      getNavigationIdentifier={(row) => row?.[viewQueryIdKey]}
       id={`${kbKey}-search`}
       lookupQueryPromise={({ _ky, queryParams, endpoint }) => {
         return kyImport.get(`${endpoint}${queryParams}`).json();
@@ -182,7 +183,6 @@ const GokbRoute = () => {
       }}
       searchFieldAriaLabel={`input-${kbKey}-search`}
       ViewComponent={ViewComponent}
-      viewQueryIdentifier={(row) => row?.[viewQueryIdKey]}
       viewQueryPromise={({ _ky, resourceId, endpoint }) => {
         if (viewFetchConfig?.viewQueryUrl?.templateString) {
           const template = handlebarsCompile(viewFetchConfig.viewQueryUrl.templateString);
