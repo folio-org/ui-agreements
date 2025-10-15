@@ -892,6 +892,8 @@
   "remoteKb.packageTitles": "Package titles",
   "remoteKb.eresourceAgreements": "Agreements for this e-resource",
   "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion",
+  "remoteKb.actions.viewInLocalKb": "View title in local KB",
+  "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}",
   "eresources.gokbPackageUuid": "GOKB package UUID",
   "eresources.gokbTitleUuid": "GOKB title UUID"
 }

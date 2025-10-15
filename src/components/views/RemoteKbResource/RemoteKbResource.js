@@ -2,6 +2,7 @@ import { createRef, isValidElement, useState } from 'react';
 import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { isEmpty } from 'lodash';
 import { AppIcon } from '@folio/stripes/core';
 
 import {
@@ -44,7 +45,7 @@ const propTypes = {
     renderStrategy: PropTypes.shape({
       values: PropTypes.arrayOf(PropTypes.shape({})),
     }),
-  }).isRequired,
+  }),
   onClose: PropTypes.func.isRequired,
   resource: PropTypes.oneOfType([
     PropTypes.shape({}),
@@ -109,7 +110,7 @@ const RemoteKbResource = ({
     return true;
   };
 
-  const renderValue = (value, sectionName) => {
+  const renderValue = (value, sectionName, badge) => {
     switch (value.type) {
       case 'access':
         if (value.accessType === 'JSONPath') {
@@ -117,6 +118,8 @@ const RemoteKbResource = ({
           return result.length > 0 ? result.join(', ') : <NoValue />;
         }
         return '';
+      case 'static':
+        return value.value;
       case 'keyValue':
         return (
           <KeyValue
@@ -164,21 +167,22 @@ const RemoteKbResource = ({
         const result = renderPublicationDates(combinedData);
         return result || <NoValue />;
       }
-      case 'handlebars':
+      case 'handlebars': {
+        const template = handlebarsCompile(value.templateString);
         if (
           value.value?.type === 'access' &&
           value.value?.accessType === 'JSONPath'
         ) {
           const result = applyJsonPath(value.value?.expression);
-          const template = handlebarsCompile(value.templateString);
           return result.length > 0 ? (
             result.map((obj) => template(obj)).join(', ')
           ) : (
             <NoValue />
           );
         } else {
-          return '';
+          return template({ resource });
         }
+      }
       case 'table': {
         const { formatter } = getResultsDisplayConfig(value.columns);
         // MCL expects array of objects
@@ -211,20 +215,20 @@ const RemoteKbResource = ({
           registryResource?.getRenderFunction(value.registryRenderFunction) ??
           null;
 
-        const props = (value.props || [])?.reduce((acc, p) => {
-          if (p.value?.type === 'access') {
-            acc[p.name] = renderValue(p.value);
-            return acc;
-          }
-          return null;
+        const baseProps = (value.props || []).reduce((acc, p) => {
+          acc[p.name] = renderValue(p.value);
+          return acc;
         }, {});
 
-        props.setBadgeCount = setBadgeCount(sectionName);
+        const props = {
+          ...baseProps,
+          ...(badge && sectionName ? { setBadgeCount: setBadgeCount(sectionName) } : {}),
+        };
 
-        return registryRenderFunction
-          ? value?.props
+        return registryRenderFunction ?
+          props
             ? registryRenderFunction(props)
-            : null
+            : registryRenderFunction()
           : null;
       }
       default:
@@ -276,7 +280,7 @@ const RemoteKbResource = ({
         );
       case 'rows': {
         const rows = (strategy.values || []).reduce((acc, val) => {
-          const child = renderValue(val, name);
+          const child = renderValue(val, name, badge);
           if (!collapsable || hasVisualContent(child)) {
             acc.push(<Row key={stableKeyFrom(val)}>{child}</Row>);
           }
@@ -337,6 +341,14 @@ const RemoteKbResource = ({
     );
   }
 
+  const renderActionMenu = () => {
+    return (
+      <div>
+        {displayConfig.actions.values.map((value) => renderValue(value))}
+      </div>
+    );
+  };
+
   return (
     <HasCommand
       commands={shortcuts}
@@ -344,6 +356,7 @@ const RemoteKbResource = ({
       scope={document.body}
     >
       <Pane
+        actionMenu={!isEmpty(displayConfig?.actions) && renderActionMenu}
         appIcon={
           <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />
         }
