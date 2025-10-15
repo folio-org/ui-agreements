@@ -361,7 +361,7 @@
           "type": "Handlebars",
           "templateString": "{{endpoint}}?uuid={{resourceId}}"
         },
-        "viewQueryIdentifier": "uuid"
+        "viewQueryIdentifierKey": "uuid"
       },
       "display": {
         "actions": {

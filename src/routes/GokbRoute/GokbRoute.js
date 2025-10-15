@@ -34,6 +34,7 @@ const GokbRoute = () => {
   const { filterMap, initialFilterState } = filterConfig;
 
   const viewFetchConfig = config.configuration.view.fetch;
+  const viewQueryIdKey = viewFetchConfig?.viewQueryIdentifierKey || 'id';
 
   const itemEndpointData = {
     endpoint: viewFetchConfig.baseUrl,
@@ -181,7 +182,7 @@ const GokbRoute = () => {
       }}
       searchFieldAriaLabel={`input-${kbKey}-search`}
       ViewComponent={ViewComponent}
-      viewQueryIdentifier={viewFetchConfig?.viewQueryIdentifier || 'id'}
+      viewQueryIdentifier={(row) => row?.[viewQueryIdKey]}
       viewQueryPromise={({ _ky, resourceId, endpoint }) => {
         if (viewFetchConfig?.viewQueryUrl?.templateString) {
           const template = handlebarsCompile(viewFetchConfig.viewQueryUrl.templateString);
