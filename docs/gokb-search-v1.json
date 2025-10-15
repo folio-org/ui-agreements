@@ -369,7 +369,7 @@
           "accessType": "JSONPath",
           "expression": "$.name"
         },
-        "icon": "title",
+        "icon": "gokbTitle",
         "renderStrategy": {
           "type": "sections",
           "values": [

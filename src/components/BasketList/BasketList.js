@@ -50,7 +50,7 @@ const BasketList = ({
         <AppIcon
           app="agreements"
           iconKey={basketItem.class === resourceClasses.PACKAGE ? 'package' :
-            basketItem.type === BASKET_TYPE_GOKB_TITLE ? 'gokb' : 'title'} // TODO: add icon for GOKB titles
+            basketItem.type === BASKET_TYPE_GOKB_TITLE ? 'gokbTitle' : 'title'}
           size="small"
         >
           <EResourceLink eresource={basketItem} />

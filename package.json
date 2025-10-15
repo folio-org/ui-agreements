@@ -317,7 +317,7 @@
         "description": "Grants the ability to delete resources from the local KB",
         "visible": true,
         "subPermissions": [
-            "erm.resources.delete"
+          "erm.resources.delete"
         ]
       },
       {
@@ -327,7 +327,7 @@
         "subPermissions": [
           "erm.accesspolicies.view"
         ]
-       }
+      }
     ],
     "icons": [
       {
@@ -374,6 +374,11 @@
         "name": "printTitle",
         "alt": " ",
         "title": "Print title"
+      },
+      {
+        "name": "gokbTitle",
+        "alt": " ",
+        "title": "Gokb title"
       }
     ]
   }

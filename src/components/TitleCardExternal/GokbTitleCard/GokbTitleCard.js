@@ -34,7 +34,7 @@ const GokbTitleCard = ({
 
   const renderHeaderStart = () => {
     return (
-      <AppIcon app="agreements" iconKey="gokb" size="small"> {/* TODO: add icon for GOKB titles */}
+      <AppIcon app="agreements" iconKey="gokbTitle" size="small">
         <strong data-test-title-instance-name>
           <EResourceLink eresource={{ ...title, id: titleInfo.titleUuid }} searchString={searchString} />
         </strong>
