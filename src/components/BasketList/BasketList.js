@@ -1,7 +1,5 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-
 
 import uniqueId from 'lodash/uniqueId';
 import { FormattedMessage } from 'react-intl';
@@ -45,27 +43,18 @@ const BasketList = ({
   const renderName = useCallback((basketItem) => {
     if (
       basketItem.class === resourceClasses.PACKAGE ||
-      basketItem.class === resourceClasses.PCI
+      basketItem.class === resourceClasses.PCI ||
+      basketItem.type === BASKET_TYPE_GOKB_TITLE
     ) {
       return (
         <AppIcon
           app="agreements"
-          iconKey={basketItem.class === resourceClasses.PACKAGE ? 'package' : 'title'}
+          iconKey={basketItem.class === resourceClasses.PACKAGE ? 'package' :
+            basketItem.type === BASKET_TYPE_GOKB_TITLE ? 'gokbTitle' : 'title'}
           size="small"
         >
           <EResourceLink eresource={basketItem} />
         </AppIcon>
-      );
-    }
-
-    // Link direct to GOKB View if possible
-    if (basketItem.type === BASKET_TYPE_GOKB_TITLE) {
-      return (
-        <Link
-          to={`/erm/gokb/${basketItem.id}?query=${basketItem.name}`}
-        >
-          {basketItem.name}
-        </Link>
       );
     }
 
@@ -74,10 +63,6 @@ const BasketList = ({
   }, []);
 
   const renderPublicationType = useCallback((basketItem) => {
-    if (basketItem.type === BASKET_TYPE_GOKB_TITLE) {
-      return basketItem.tipp?.componentType;
-    }
-
     // This defaults to "Title" in unknown circumstances
     return <EResourceType resource={basketItem} />;
   }, []);

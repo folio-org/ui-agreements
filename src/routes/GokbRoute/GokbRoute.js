@@ -22,6 +22,7 @@ import RemoteKbFilters from '../../components/RemoteKbFilters';
 import {
   getFilterConfig,
   transformFilterString,
+  handlebarsCompile
 } from '../../components/utilities';
 import getSortConfig from '../utilities/getSortConfig';
 
@@ -32,8 +33,13 @@ const GokbRoute = () => {
   const filterConfig = getFilterConfig(config);
   const { filterMap, initialFilterState } = filterConfig;
 
-  const resourcePath = config.configuration.view.fetch.mapping.data;
-  const resourceEndpoint = config.configuration.view.fetch.baseUrl;
+  const viewFetchConfig = config.configuration.view.fetch;
+  const viewQueryIdKey = viewFetchConfig?.viewQueryIdentifierKey || 'id';
+
+  const itemEndpointData = {
+    endpoint: viewFetchConfig.baseUrl,
+    ...viewFetchConfig.mapping,
+  };
 
   const endpointData = {
     endpoint: config.configuration.results.fetch.baseUrl,
@@ -56,7 +62,7 @@ const GokbRoute = () => {
 
   const fetchParameters = {
     endpoint: endpointData.endpoint,
-    itemEndpoint: resourceEndpoint,
+    itemEndpoint: itemEndpointData.endpoint,
     SASQ_MAP: {},
   };
 
@@ -141,6 +147,7 @@ const GokbRoute = () => {
       filterPaneProps={{
         id: `${kbKey}-search-main-filter-pane`,
       }}
+      getNavigationIdentifier={(row) => row?.[viewQueryIdKey]}
       id={`${kbKey}-search`}
       lookupQueryPromise={({ _ky, queryParams, endpoint }) => {
         return kyImport.get(`${endpoint}${queryParams}`).json();
@@ -177,10 +184,15 @@ const GokbRoute = () => {
       searchFieldAriaLabel={`input-${kbKey}-search`}
       ViewComponent={ViewComponent}
       viewQueryPromise={({ _ky, resourceId, endpoint }) => {
+        if (viewFetchConfig?.viewQueryUrl?.templateString) {
+          const template = handlebarsCompile(viewFetchConfig.viewQueryUrl.templateString);
+          const url = template({ endpoint, resourceId });
+          return kyImport.get(url).json();
+        }
         return kyImport.get(`${endpoint}/${resourceId}`).json();
       }}
       viewResponseTransform={(data) => {
-        const raw = data?.[resourcePath];
+        const raw = data?.[itemEndpointData.data];
         return Array.isArray(raw) ? raw[0] : raw;
       }}
     />

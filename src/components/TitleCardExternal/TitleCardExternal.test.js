@@ -1,82 +1,47 @@
-
-import { StaticRouter as Router } from 'react-router-dom';
-import { KeyValue, renderWithIntl } from '@folio/stripes-erm-testing';
-
-import translationsProperties from '../../../test/helpers';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import TitleCardExternal from './TitleCardExternal';
-import { title, titleWithReferenceObject } from './testResources';
+import { BASKET_TYPE_GOKB_TITLE, GOKB_RESOURCE_AUTHORITY } from '../../constants';
 
-jest.mock('../EResourceLink', () => () => <div>EResourceLink</div>);
+jest.mock('./EholdingsTitleCard', () => () => <div>EholdingsTitleCard</div>);
+jest.mock('./GokbTitleCard', () => () => <div>GokbTitleCard</div>);
 
-let renderComponent;
 describe('TitleCardExternal', () => {
-  describe('with title resource', () => {
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <Router>
-          <TitleCardExternal
-            title={title}
-          />
-        </Router>,
-        translationsProperties
-      );
-    });
+  const headerEnd = <div>header</div>;
 
-    test('renders TitleCardExternal component', () => {
-      const { getByTestId } = renderComponent;
-      expect(getByTestId('titleCardExternal')).toBeInTheDocument();
-    });
-
-    test('renders EResourceLink component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('EResourceLink')).toBeInTheDocument();
-    });
-
-    test('renders the expected publicationType', async () => {
-      await KeyValue('Publication type').has({ value: 'Journal' });
-    });
-
-    test('renders the expected holdingStatus', async () => {
-      await KeyValue('Holding status').has({ value: 'Selected' });
-    });
-
-    test('renders the expected accessStatusType', async () => {
-      await KeyValue('Access status type').has({ value: 'an access status type' });
-    });
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  describe('with titleReferenceObject resource', () => {
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <Router>
-          <TitleCardExternal
-            title={titleWithReferenceObject}
-          />
-        </Router>,
-        translationsProperties
-      );
-    });
+  test('renders EholdingsTitleCard for non-GOKB titles', () => {
+    const title = { type: 'external' };
 
-    test('renders TitleCardExternal component', () => {
-      const { getByTestId } = renderComponent;
-      expect(getByTestId('titleCardExternal')).toBeInTheDocument();
-    });
+    const { getByText, queryByText } = renderWithIntl(
+      <TitleCardExternal headerEnd={headerEnd} title={title} />
+    );
 
-    test('renders EResourceLink component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('EResourceLink')).toBeInTheDocument();
-    });
+    expect(getByText('EholdingsTitleCard')).toBeInTheDocument();
+    expect(queryByText('GokbTitleCard')).not.toBeInTheDocument();
+  });
 
-    test('renders the expected publicationType', async () => {
-      await KeyValue('Publication type').has({ value: 'Book' });
-    });
+  test('renders GokbTitleCard when type is BASKET_TYPE_GOKB_TITLE', () => {
+    const title = { type: BASKET_TYPE_GOKB_TITLE };
 
-    test('renders the expected holdingStatus', async () => {
-      await KeyValue('Holding status').has({ value: 'Selected' });
-    });
+    const { getByText, queryByText } = renderWithIntl(
+      <TitleCardExternal headerEnd={headerEnd} title={title} />
+    );
 
-    test('renders the expected accessStatusType', async () => {
-      await KeyValue('Access status type').has({ value: 'another access status type' });
-    });
+    expect(getByText('GokbTitleCard')).toBeInTheDocument();
+    expect(queryByText('EholdingsTitleCard')).not.toBeInTheDocument();
+  });
+
+  test('renders GokbTitleCard when authority is GOKB_RESOURCE_AUTHORITY', () => {
+    const title = { authority: GOKB_RESOURCE_AUTHORITY };
+
+    const { getByText, queryByText } = renderWithIntl(
+      <TitleCardExternal headerEnd={headerEnd} title={title} />
+    );
+
+    expect(getByText('GokbTitleCard')).toBeInTheDocument();
+    expect(queryByText('EholdingsTitleCard')).not.toBeInTheDocument();
   });
 });

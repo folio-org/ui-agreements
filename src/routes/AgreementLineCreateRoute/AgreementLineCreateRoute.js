@@ -12,7 +12,7 @@ import { isPackage, getRefdataValuesByDesc } from '@folio/stripes-erm-components
 import View from '../../components/views/AgreementLineForm';
 import { urls } from '../../components/utilities';
 
-import { AGREEMENT_LINES_ENDPOINT } from '../../constants';
+import { AGREEMENT_LINES_ENDPOINT, BASKET_TYPE_GOKB_TITLE } from '../../constants';
 import { useBasket, useSuppressFromDiscovery, useAgreementsRefdata } from '../../hooks';
 
 const [DOC_ATTACHMENT_TYPE] = ['DocumentAttachment.AtType'];
@@ -80,6 +80,8 @@ const AgreementLineCreateRoute = ({
         'reference': resource.id,
         ...rest
       };
+    } else if (resource?.type === BASKET_TYPE_GOKB_TITLE) { // external line from GOKB
+      items = resource?.payload;
     } else if (isEmpty(resource)) { // detached line
       items = {
         'type': 'detached',
@@ -118,7 +120,9 @@ const AgreementLineCreateRoute = ({
 };
 
 AgreementLineCreateRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func.isRequired,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
