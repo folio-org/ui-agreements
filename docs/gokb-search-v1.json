@@ -353,10 +353,15 @@
     },
     "view": {
       "fetch": {
-        "baseUrl": "https://gokbt.gbv.de/gokb/api/find/",
+        "baseUrl": "https://gokbt.gbv.de/gokb/api/find",
         "mapping": {
           "data": "records"
-        }
+        },
+        "viewQueryUrl": {
+          "type": "Handlebars",
+          "templateString": "{{endpoint}}?uuid={{resourceId}}"
+        },
+        "viewQueryIdentifierKey": "uuid"
       },
       "display": {
         "actions": {
@@ -407,7 +412,7 @@
           "accessType": "JSONPath",
           "expression": "$.name"
         },
-        "icon": "title",
+        "icon": "gokbTitle",
         "renderStrategy": {
           "type": "sections",
           "values": [

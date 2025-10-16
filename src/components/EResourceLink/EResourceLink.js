@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { NoValue } from '@folio/stripes/components';
 import { isExternal, urls } from '../utilities';
-import { resourceClasses } from '../../constants';
+import { BASKET_TYPE_GOKB_TITLE, GOKB_RESOURCE_AUTHORITY, resourceClasses } from '../../constants';
 
 class EResourceLink extends React.Component {
   static propTypes = {
@@ -19,7 +19,7 @@ class EResourceLink extends React.Component {
 
   getName = (eresource) => {
     if (isExternal(eresource)) {
-      return eresource.reference_object.label;
+      return eresource?.reference_object?.label ?? eresource?.resourceName;
     }
 
     const pti = eresource?._object?.pti ?? eresource?.pti;
@@ -29,10 +29,14 @@ class EResourceLink extends React.Component {
   }
 
   getPath = (eresource) => {
-    const { authority, reference } = eresource;
+    const { authority, reference, type } = eresource;
 
     if (authority === 'EKB-PACKAGE') return urls.eholdingsPackageView(reference);
     if (authority === 'EKB-TITLE') return urls.eholdingsResourceView(reference);
+
+    if (type === BASKET_TYPE_GOKB_TITLE || authority === GOKB_RESOURCE_AUTHORITY) {
+      return urls.gokbResourceView(eresource.id);
+    }
 
     const pti = eresource?._object?.pti ?? eresource?.pti;
     const id = pti?.titleInstance?.id ?? eresource.id;

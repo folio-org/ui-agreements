@@ -1,0 +1,82 @@
+
+import { StaticRouter as Router } from 'react-router-dom';
+import { KeyValue, renderWithIntl } from '@folio/stripes-erm-testing';
+
+import translationsProperties from '../../../../test/helpers';
+import EholdingsTitleCard from './EholdingsTitleCard';
+import { title, titleWithReferenceObject } from '../testResources';
+
+jest.mock('../../EResourceLink', () => () => <div>EResourceLink</div>);
+
+let renderComponent;
+describe('EholdingsTitleCard', () => {
+  describe('with title resource', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <Router>
+          <EholdingsTitleCard
+            title={title}
+          />
+        </Router>,
+        translationsProperties
+      );
+    });
+
+    test('renders EholdingsTitleCard component', () => {
+      const { getByTestId } = renderComponent;
+      expect(getByTestId('EholdingsTitleCard')).toBeInTheDocument();
+    });
+
+    test('renders EResourceLink component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('EResourceLink')).toBeInTheDocument();
+    });
+
+    test('renders the expected publicationType', async () => {
+      await KeyValue('Publication type').has({ value: 'Journal' });
+    });
+
+    test('renders the expected holdingStatus', async () => {
+      await KeyValue('Holding status').has({ value: 'Selected' });
+    });
+
+    test('renders the expected accessStatusType', async () => {
+      await KeyValue('Access status type').has({ value: 'an access status type' });
+    });
+  });
+
+  describe('with titleReferenceObject resource', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <Router>
+          <EholdingsTitleCard
+            title={titleWithReferenceObject}
+          />
+        </Router>,
+        translationsProperties
+      );
+    });
+
+    test('renders EholdingsTitleCard component', () => {
+      const { getByTestId } = renderComponent;
+      expect(getByTestId('EholdingsTitleCard')).toBeInTheDocument();
+    });
+
+    test('renders EResourceLink component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('EResourceLink')).toBeInTheDocument();
+    });
+
+    test('renders the expected publicationType', async () => {
+      await KeyValue('Publication type').has({ value: 'Book' });
+    });
+
+    test('renders the expected holdingStatus', async () => {
+      await KeyValue('Holding status').has({ value: 'Selected' });
+    });
+
+    test('renders the expected accessStatusType', async () => {
+      await KeyValue('Access status type').has({ value: 'another access status type' });
+    });
+  });
+});
