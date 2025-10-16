@@ -1,6 +1,10 @@
 import { MemoryRouter } from 'react-router-dom';
+import { useStripes } from '@folio/stripes/core';
 
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  waitFor,
+  screen,
+} from '@folio/jest-config-stripes/testing-library/react';
 import { Button, Modal, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
@@ -24,6 +28,16 @@ jest.mock('@folio/stripes-erm-components', () => ({
   AccessControlErrorPane: () => <div>AccessControlErrorPane</div>,
 }));
 
+const agreementLineDefaultProps = {
+  components: {
+    HelperComponent: () => <div>HelperComponent</div>,
+    TagButton: () => <div>TagButton</div>,
+  },
+  data,
+  handlers,
+  isLoading: false,
+};
+
 describe('AgreementLine', () => {
   let renderComponent;
 
@@ -31,15 +45,7 @@ describe('AgreementLine', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <AgreementLine
-            components={{
-              HelperComponent: () => <div>HelperComponent</div>,
-              TagButton: () => <div>TagButton</div>,
-            }}
-            data={data}
-            handlers={handlers}
-            isLoading
-          />
+          <AgreementLine {...agreementLineDefaultProps} isLoading />
         </MemoryRouter>,
         translationsProperties
       );
@@ -55,15 +61,7 @@ describe('AgreementLine', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <AgreementLine
-            components={{
-              HelperComponent: () => <div>HelperComponent</div>,
-              TagButton: () => <div>TagButton</div>,
-            }}
-            data={data}
-            handlers={handlers}
-            isLoading={false}
-          />
+          <AgreementLine {...agreementLineDefaultProps} />
         </MemoryRouter>,
         translationsProperties
       );
@@ -164,14 +162,8 @@ describe('AgreementLine', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementLine
+            {...agreementLineDefaultProps}
             accessControlData={{ canRead: false, canReadLoading: false }}
-            components={{
-              HelperComponent: () => <div>HelperComponent</div>,
-              TagButton: () => <div>TagButton</div>,
-            }}
-            data={data}
-            handlers={handlers}
-            isLoading={false}
           />
         </MemoryRouter>,
         translationsProperties
@@ -189,6 +181,7 @@ describe('AgreementLine', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementLine
+            {...agreementLineDefaultProps}
             accessControlData={{
               canRead: true,
               canReadLoading: false,
@@ -197,13 +190,6 @@ describe('AgreementLine', () => {
               canDeleteLoading: false,
               canDelete: false,
             }}
-            components={{
-              HelperComponent: () => <div>HelperComponent</div>,
-              TagButton: () => <div>TagButton</div>,
-            }}
-            data={data}
-            handlers={handlers}
-            isLoading={false}
           />
         </MemoryRouter>,
         translationsProperties
@@ -216,7 +202,6 @@ describe('AgreementLine', () => {
           await Button('Actions').click();
         });
       });
-
       it('the Edit action button is disabled', async () => {
         await waitFor(() => {
           expect(Button('Edit').has({ disabled: true }));
@@ -227,6 +212,26 @@ describe('AgreementLine', () => {
         await waitFor(() => {
           expect(Button('Delete').has({ disabled: true }));
         });
+      });
+    });
+  });
+
+  describe('edit and delete permissions are false', () => {
+    beforeEach(() => {
+      useStripes.mockImplementation(() => ({
+        hasPerm: () => false,
+      }));
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLine {...agreementLineDefaultProps} />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    it('the actions menu button is not rendered', async () => {
+      await waitFor(() => {
+        expect(Button('Delete').absent());
       });
     });
   });
