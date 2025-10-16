@@ -159,14 +159,11 @@ const AgreementLine = ({
 
   const getActionMenu = () => {
     const buttons = [];
-    if (
-      stripes.hasPerm('ui-agreements.agreements.edit') &&
-      canEdit !== false
-    ) {
+    if (stripes.hasPerm('ui-agreements.agreements.edit')) {
       buttons.push(
         <Button
           buttonStyle="dropdownItem"
-          disabled={canEditLoading}
+          disabled={!canEdit || canEditLoading}
           id="clickable-dropdown-edit-agreement-line"
           onClick={handlers.onEdit}
         >
@@ -177,14 +174,11 @@ const AgreementLine = ({
       );
     }
 
-    if (
-      stripes.hasPerm('ui-agreements.agreements.delete') &&
-      canDelete !== false
-    ) {
+    if (stripes.hasPerm('ui-agreements.agreements.delete')) {
       buttons.push(
         <Button
           buttonStyle="dropdownItem"
-          disabled={canDeleteLoading}
+          disabled={!canDelete || canDeleteLoading}
           id="clickable-dropdown-delete-agreement-line"
           onClick={() => setShowDeleteConfirmationModal(true)}
         >

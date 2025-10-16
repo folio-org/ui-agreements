@@ -8,22 +8,33 @@ import AgreementLine from './AgreementLine';
 import { data, handlers } from './testResources';
 
 jest.mock('../../AgreementLineSections/Info', () => () => <div>Info</div>);
-jest.mock('../../AgreementLineSections/POLines', () => () => <div>POLines</div>);
-jest.mock('../../AgreementLineSections/Documents', () => () => <div>Documents</div>);
-jest.mock('../../AgreementLineSections/Coverage', () => () => <div>Coverage</div>);
+jest.mock('../../AgreementLineSections/POLines', () => () => (
+  <div>POLines</div>
+));
+jest.mock('../../AgreementLineSections/Documents', () => () => (
+  <div>Documents</div>
+));
+jest.mock('../../AgreementLineSections/Coverage', () => () => (
+  <div>Coverage</div>
+));
 jest.mock('../../DiscoverySettings', () => () => <div>DiscoverySettings</div>);
+
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  AccessControlErrorPane: () => <div>AccessControlErrorPane</div>,
+}));
 
 describe('AgreementLine', () => {
   let renderComponent;
 
-  describe('isLoading', () => {
+  describe('isLoading prop is true', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementLine
             components={{
               HelperComponent: () => <div>HelperComponent</div>,
-              TagButton: () => <div>TagButton</div>
+              TagButton: () => <div>TagButton</div>,
             }}
             data={data}
             handlers={handlers}
@@ -40,14 +51,14 @@ describe('AgreementLine', () => {
     });
   });
 
-  describe('after loading', () => {
+  describe('isLoading prop is false', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementLine
             components={{
               HelperComponent: () => <div>HelperComponent</div>,
-              TagButton: () => <div>TagButton</div>
+              TagButton: () => <div>TagButton</div>,
             }}
             data={data}
             handlers={handlers}
@@ -143,6 +154,78 @@ describe('AgreementLine', () => {
           await waitFor(() => {
             expect(handlers.onEdit).toHaveBeenCalled();
           });
+        });
+      });
+    });
+  });
+
+  describe('canRead access control property is flase', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLine
+            accessControlData={{ canRead: false, canReadLoading: false }}
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>,
+            }}
+            data={data}
+            handlers={handlers}
+            isLoading={false}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    it('renders the AccessControlErrorPane component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('AccessControlErrorPane')).toBeInTheDocument();
+    });
+  });
+
+  describe('canEdit and canDelete access control property is flase', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLine
+            accessControlData={{
+              canRead: true,
+              canReadLoading: false,
+              canEditLoading: false,
+              canEdit: false,
+              canDeleteLoading: false,
+              canDelete: false,
+            }}
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>,
+            }}
+            data={data}
+            handlers={handlers}
+            isLoading={false}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    describe('opening the actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
+      });
+
+      it('the Edit action button is disabled', async () => {
+        await waitFor(() => {
+          expect(Button('Edit').has({ disabled: true }));
+        });
+      });
+
+      it('the Delete action button is disabled', async () => {
+        await waitFor(() => {
+          expect(Button('Delete').has({ disabled: true }));
         });
       });
     });
