@@ -885,5 +885,13 @@
     "gokbSearch.basket.packageNotInKB": "Pacote não está na Base de Conhecimento local",
     "gokbSearch.basket.viewInKB": "Ver na Base de Conhecimento local",
     "gokbSearch.basket.packageNameNotInKB": "{name} não está na Base de Conhecimento local",
-    "gokbSearch.basket.manageBasketForPackageName": "Gerenciar cesto para {name}"
+    "gokbSearch.basket.manageBasketForPackageName": "Gerenciar cesto para {name}",
+    "remoteKb.eresourceAgreements": "Contratos para este recurso eletrônico",
+    "remoteKb.remoteTitleNotFound": "Título não presente atualmente na Base de Conhecimento Local. Para adicionar o título, sincronize um dos pacotes listados na opção Pacotes",
+    "remoteKb.packageTitles": "Títulos de pacotes",
+    "agreements.update.error.callout": "<strong>Erro:</strong> O contrato {name} não foi atualizado: {error}",
+    "agreements.claimPolicies.update.callout": "<strong>Unidades de aquisição de contratos atualizadas:</strong> {name}",
+    "agreements.claimPolicies.update.error.callout": "<strong>Erro:</strong> As unidades de aquisição do contrato {name} não foram atualizadas: {error}",
+    "remoteKb.actions.viewInLocalKb": "Ver título na Base de Conhecimento local",
+    "remoteKb.actions.viewInRemoteKb": "Ver título em {remoteKbName}"
 }
