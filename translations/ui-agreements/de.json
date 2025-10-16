@@ -885,5 +885,13 @@
     "gokbSearch.basket.packageNotInKB": "Paket nicht in lokaler KB",
     "gokbSearch.basket.viewInKB": "In lokaler KB anzeigen",
     "gokbSearch.basket.packageNameNotInKB": "{name} nicht in der lokalen KB",
-    "gokbSearch.basket.manageBasketForPackageName": "Merkliste für {name} verwalten"
+    "gokbSearch.basket.manageBasketForPackageName": "Merkliste für {name} verwalten",
+    "remoteKb.eresourceAgreements": "Agreements for this e-resource",
+    "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion",
+    "remoteKb.packageTitles": "Package titles",
+    "agreements.update.error.callout": "<strong>Error:</strong> Agreement {name} was not updated: {error}",
+    "agreements.claimPolicies.update.callout": "<strong>Agreement acquisition units updated:</strong> {name}",
+    "agreements.claimPolicies.update.error.callout": "<strong>Error:</strong> Acquisition units for agreement {name} were not updated: {error}",
+    "remoteKb.actions.viewInLocalKb": "View title in local KB",
+    "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}"
 }

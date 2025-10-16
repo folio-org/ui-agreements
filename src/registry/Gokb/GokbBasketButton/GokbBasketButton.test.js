@@ -14,7 +14,7 @@ import translationsProperties from '../../../../test/helpers';
 import { GokbBasketButton } from '../index';
 import { pcis, pkgs } from '../../../../test/jest/eresources';
 import { buildPackageEntitlementOption, buildPCIEntitlementOption } from '../../../components/utilities';
-import { BASKET_TYPE_GOKB_TITLE } from '../../../constants';
+import { BASKET_TYPE_GOKB_TITLE, GOKB_RESOURCE_AUTHORITY } from '../../../constants';
 
 // Allow IconButtons as normal
 jest.unmock('@folio/stripes/components');
@@ -54,12 +54,18 @@ describe('GokbBasketButton', () => {
           icon: 'plus-sign',
           label: 'Add title to basket',
           expectedAddShape: {
-            id: relevantTipp.id,
+            id: relevantTipp.tippTitleUuid,
             name: relevantTipp.name,
             type: BASKET_TYPE_GOKB_TITLE,
             tipp: relevantTipp,
+            publicationType: { label: relevantTipp?.titleType },
+            payload: {
+              type: 'external',
+              authority: GOKB_RESOURCE_AUTHORITY,
+              reference: `${relevantTipp.tippPackageUuid}:${relevantTipp.tippTitleUuid}`,
+              resourceName: relevantTipp.name,
+            },
             pkg: relevantPkg,
-            _object: relevantTipp
           }, // Built shape
         },
         {
