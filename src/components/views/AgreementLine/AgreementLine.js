@@ -18,14 +18,22 @@ import {
   Row,
   checkScope,
   collapseAllSections,
-  expandAllSections
+  expandAllSections,
 } from '@folio/stripes/components';
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
-import { AccessControl, AccessControlErrorPane } from '@folio/stripes-erm-components';
+import {
+  AccessControl,
+  AccessControlErrorPane,
+} from '@folio/stripes-erm-components';
 
-import { Info, POLines, Coverage, Documents } from '../../AgreementLineSections';
+import {
+  Info,
+  POLines,
+  Coverage,
+  Documents,
+} from '../../AgreementLineSections';
 
 import { isExternal, urls } from '../../utilities';
 import DiscoverySettings from '../../DiscoverySettings';
@@ -38,7 +46,7 @@ const propTypes = {
     canEdit: PropTypes.bool,
     canEditLoading: PropTypes.bool,
     canDelete: PropTypes.bool,
-    canDeleteLoading: PropTypes.bool
+    canDeleteLoading: PropTypes.bool,
   }),
   components: PropTypes.shape({
     HelperComponent: PropTypes.elementType,
@@ -95,23 +103,20 @@ const AgreementLine = ({
     canEdit,
     canEditLoading,
     canDelete,
-    canDeleteLoading
+    canDeleteLoading,
   } = {
     canRead: true,
     canReadLoading: false,
     canEdit: true,
     canEditLoading: false,
     canDelete: true,
-    canDeleteLoading: false
+    canDeleteLoading: false,
   }, // If not passed, assume everything is accessible and not loading...?
-  components: {
-    TagButton,
-    HelperComponent,
-  },
+  components: { TagButton, HelperComponent },
   data: { line, policies, tagsLink, tagsInvalidateLinks },
   handlers,
   isLoading,
-  id
+  id,
 }) => {
   const stripes = useStripes();
   const paneProps = {
@@ -123,20 +128,18 @@ const AgreementLine = ({
 
   const accordionStatusRef = useRef();
 
-  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
+    useState(false);
 
   if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
 
   if (!canRead) {
-    return (
-      <AccessControlErrorPane
-        {...paneProps}
-      />
-    );
+    return <AccessControlErrorPane {...paneProps} />;
   }
 
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
-  const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
+  const resourceName =
+    resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
 
   // istanbul ignore next
   const shortcuts = [
@@ -150,11 +153,50 @@ const AgreementLine = ({
     },
     {
       name: 'collapseAllSections',
-      handler: (e) => collapseAllSections(e, accordionStatusRef)
-    }
+      handler: (e) => collapseAllSections(e, accordionStatusRef),
+    },
   ];
 
-  const isDisabled = !canEdit || !canDelete || canEditLoading || canDeleteLoading;
+  const getActionMenu = () => {
+    const buttons = [];
+    if (
+      stripes.hasPerm('ui-agreements.agreements.edit') &&
+      canDelete !== false
+    ) {
+      buttons.push(
+        <Button
+          buttonStyle="dropdownItem"
+          disabled={canEditLoading}
+          id="clickable-dropdown-edit-agreement-line"
+          onClick={handlers.onEdit}
+        >
+          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
+            <FormattedMessage id="ui-agreements.agreements.edit" />
+          </Icon>
+        </Button>
+      );
+    }
+
+    if (
+      stripes.hasPerm('ui-agreements.agreements.delete') &&
+      canDelete !== false
+    ) {
+      buttons.push(
+        <Button
+          buttonStyle="dropdownItem"
+          disabled={canDeleteLoading}
+          id="clickable-dropdown-delete-agreement-line"
+          onClick={() => setShowDeleteConfirmationModal(true)}
+        >
+          <Icon icon={canDeleteLoading ? 'spinner-ellipsis' : 'trash'}>
+            <FormattedMessage id="ui-agreements.delete" />
+          </Icon>
+        </Button>
+      );
+    }
+    return buttons?.length ? buttons : null;
+  };
+
   return (
     <HasCommand
       commands={shortcuts}
@@ -163,30 +205,7 @@ const AgreementLine = ({
     >
       <>
         <Pane
-          actionMenu={() => (stripes.hasPerm('ui-agreements.agreements.edit') ? (
-            <>
-              <Button
-                buttonStyle="dropdownItem"
-                disabled={isDisabled}
-                id="clickable-dropdown-edit-agreement-line"
-                onClick={handlers.onEdit}
-              >
-                <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
-                  <FormattedMessage id="ui-agreements.agreements.edit" />
-                </Icon>
-              </Button>
-              <Button
-                buttonStyle="dropdownItem"
-                disabled={isDisabled}
-                id="clickable-dropdown-delete-agreement-line"
-                onClick={() => setShowDeleteConfirmationModal(true)}
-              >
-                <Icon icon={canDeleteLoading ? 'spinner-ellipsis' : 'trash'}>
-                  <FormattedMessage id="ui-agreements.delete" />
-                </Icon>
-              </Button>
-            </>
-          ) : null)}
+          actionMenu={getActionMenu}
           appIcon={<AppIcon app="agreements" iconKey="agreementLine" />}
           lastMenu={
             <IfPermission perm="ui-agreements.agreements.edit">
@@ -199,7 +218,9 @@ const AgreementLine = ({
           {...paneProps}
         >
           <Info
-            isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
+            isSuppressFromDiscoveryEnabled={
+              handlers.isSuppressFromDiscoveryEnabled
+            }
             line={line}
             resource={resource}
           />
