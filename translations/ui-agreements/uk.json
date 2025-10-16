@@ -885,5 +885,13 @@
     "gokbSearch.basket.packageNotInKB": "Пакет відсутній у локальній базі знань (KB)",
     "gokbSearch.basket.viewInKB": "Перегляд в локальній базі знань (KB)",
     "gokbSearch.basket.packageNameNotInKB": "{name} не в локальній базі знань (KB)",
-    "gokbSearch.basket.manageBasketForPackageName": "Управління кошиком для {name}"
+    "gokbSearch.basket.manageBasketForPackageName": "Управління кошиком для {name}",
+    "remoteKb.eresourceAgreements": "Agreements for this e-resource",
+    "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion",
+    "remoteKb.packageTitles": "Package titles",
+    "agreements.update.error.callout": "<strong>Error:</strong> Agreement {name} was not updated: {error}",
+    "agreements.claimPolicies.update.callout": "<strong>Agreement acquisition units updated:</strong> {name}",
+    "agreements.claimPolicies.update.error.callout": "<strong>Error:</strong> Acquisition units for agreement {name} were not updated: {error}",
+    "remoteKb.actions.viewInLocalKb": "View title in local KB",
+    "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}"
 }
