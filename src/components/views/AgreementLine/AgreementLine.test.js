@@ -1,10 +1,7 @@
 import { MemoryRouter } from 'react-router-dom';
 import { useStripes } from '@folio/stripes/core';
 
-import {
-  waitFor,
-  screen,
-} from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button, Modal, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
