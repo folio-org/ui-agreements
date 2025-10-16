@@ -203,14 +203,14 @@ describe('AgreementLine', () => {
         });
       });
       it('the Edit action button is disabled', async () => {
-        await waitFor(() => {
-          expect(Button('Edit').has({ disabled: true }));
+        await waitFor(async () => {
+          await Button('Edit').has({ disabled: true });
         });
       });
 
       it('the Delete action button is disabled', async () => {
-        await waitFor(() => {
-          expect(Button('Delete').has({ disabled: true }));
+        await waitFor(async () => {
+          await Button('Delete').has({ disabled: true });
         });
       });
     });
@@ -230,8 +230,78 @@ describe('AgreementLine', () => {
     });
 
     it('the actions menu button is not rendered', async () => {
-      await waitFor(() => {
-        expect(Button('Delete').absent());
+      await waitFor(async () => {
+        await Button('Delete').absent();
+      });
+    });
+  });
+
+  describe('agreements edit permission is true and delete permission is false', () => {
+    beforeEach(() => {
+      useStripes.mockImplementation(() => ({
+        hasPerm: (perm) => {
+          if (perm === 'ui-agreements.agreements.edit') return true;
+          return false;
+        },
+      }));
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLine {...agreementLineDefaultProps} />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+    describe('opening the actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
+      });
+      it('the Edit action button exists', async () => {
+        await waitFor(async () => {
+          await Button('Edit').exists();
+        });
+      });
+
+      it('the Delete action button is absent', async () => {
+        await waitFor(async () => {
+          await Button('Delete').absent();
+        });
+      });
+    });
+  });
+
+  describe('agreements edit permission is false and delete permission is true', () => {
+    beforeEach(() => {
+      useStripes.mockImplementation(() => ({
+        hasPerm: (perm) => {
+          if (perm === 'ui-agreements.agreements.delete') return true;
+          return false;
+        },
+      }));
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLine {...agreementLineDefaultProps} />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+    describe('opening the actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
+      });
+      it('the Edit action button exists', async () => {
+        await waitFor(async () => {
+          await Button('Edit').absent();
+        });
+      });
+
+      it('the Delete action button is absent', async () => {
+        await waitFor(async () => {
+          await Button('Delete').exists();
+        });
       });
     });
   });
