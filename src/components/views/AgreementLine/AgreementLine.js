@@ -161,7 +161,7 @@ const AgreementLine = ({
     const buttons = [];
     if (
       stripes.hasPerm('ui-agreements.agreements.edit') &&
-      canDelete !== false
+      canEdit !== false
     ) {
       buttons.push(
         <Button
