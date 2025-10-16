@@ -24,7 +24,7 @@ import {
 
 import { FormModal } from '@k-int/stripes-kint-components';
 
-import { AGREEMENTS_ENDPOINT, validationEndPoint } from '../../constants';
+import { AGREEMENTS_ENDPOINT, BASKET_TYPE_GOKB_TITLE, validationEndPoint } from '../../constants';
 
 import { useBasket, useAgreementsRefdata } from '../../hooks';
 import { urls } from '../utilities';
@@ -64,23 +64,34 @@ const AgreementModal = ({ showModal, hideModal, selectedItems }) => {
       .then(({ id }) => {
         /* Quick FIX for ERM-3673; only add location.search when coming from agreements */
         history.push(
-          `${urls.agreementView(id)}${
-            location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
+          `${urls.agreementView(id)}${location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
           }`
         );
       })
   );
 
   const handleAddToNewAgreement = async (values) => {
+    const items = selectedItems
+      .split(',')
+      .map((index) => {
+        const item = basket[parseInt(index, 10)];
+        if (!item) return null;
+
+        if (item.type === BASKET_TYPE_GOKB_TITLE) {
+          return item?.payload;
+        }
+
+        return { resource: item };
+      })
+      .filter(Boolean);
+
     const submitValues = {
       name: values?.name,
       agreementStatus: values?.agreementStatus,
       periods: [{ startDate: values?.startDate }],
-      items: selectedItems
-        .split(',')
-        .map((index) => ({ resource: basket[parseInt(index, 10)] }))
-        .filter((line) => line.resource),
+      items,
     };
+
     await postAgreement(submitValues);
   };
 
