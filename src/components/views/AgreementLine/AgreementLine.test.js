@@ -1,4 +1,5 @@
 import { MemoryRouter } from 'react-router-dom';
+import { useStripes } from '@folio/stripes/core';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button, Modal, renderWithIntl } from '@folio/stripes-erm-testing';
@@ -8,27 +9,40 @@ import AgreementLine from './AgreementLine';
 import { data, handlers } from './testResources';
 
 jest.mock('../../AgreementLineSections/Info', () => () => <div>Info</div>);
-jest.mock('../../AgreementLineSections/POLines', () => () => <div>POLines</div>);
-jest.mock('../../AgreementLineSections/Documents', () => () => <div>Documents</div>);
-jest.mock('../../AgreementLineSections/Coverage', () => () => <div>Coverage</div>);
+jest.mock('../../AgreementLineSections/POLines', () => () => (
+  <div>POLines</div>
+));
+jest.mock('../../AgreementLineSections/Documents', () => () => (
+  <div>Documents</div>
+));
+jest.mock('../../AgreementLineSections/Coverage', () => () => (
+  <div>Coverage</div>
+));
 jest.mock('../../DiscoverySettings', () => () => <div>DiscoverySettings</div>);
+
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  AccessControlErrorPane: () => <div>AccessControlErrorPane</div>,
+}));
+
+const agreementLineDefaultProps = {
+  components: {
+    HelperComponent: () => <div>HelperComponent</div>,
+    TagButton: () => <div>TagButton</div>,
+  },
+  data,
+  handlers,
+  isLoading: false,
+};
 
 describe('AgreementLine', () => {
   let renderComponent;
 
-  describe('isLoading', () => {
+  describe('isLoading prop is true', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <AgreementLine
-            components={{
-              HelperComponent: () => <div>HelperComponent</div>,
-              TagButton: () => <div>TagButton</div>
-            }}
-            data={data}
-            handlers={handlers}
-            isLoading
-          />
+          <AgreementLine {...agreementLineDefaultProps} isLoading />
         </MemoryRouter>,
         translationsProperties
       );
@@ -40,19 +54,11 @@ describe('AgreementLine', () => {
     });
   });
 
-  describe('after loading', () => {
+  describe('isLoading prop is false', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <AgreementLine
-            components={{
-              HelperComponent: () => <div>HelperComponent</div>,
-              TagButton: () => <div>TagButton</div>
-            }}
-            data={data}
-            handlers={handlers}
-            isLoading={false}
-          />
+          <AgreementLine {...agreementLineDefaultProps} />
         </MemoryRouter>,
         translationsProperties
       );
@@ -143,6 +149,155 @@ describe('AgreementLine', () => {
           await waitFor(() => {
             expect(handlers.onEdit).toHaveBeenCalled();
           });
+        });
+      });
+    });
+  });
+
+  describe('canRead access control property is flase', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLine
+            {...agreementLineDefaultProps}
+            accessControlData={{ canRead: false, canReadLoading: false }}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    it('renders the AccessControlErrorPane component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('AccessControlErrorPane')).toBeInTheDocument();
+    });
+  });
+
+  describe('canEdit and canDelete access control property is flase', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLine
+            {...agreementLineDefaultProps}
+            accessControlData={{
+              canRead: true,
+              canReadLoading: false,
+              canEditLoading: false,
+              canEdit: false,
+              canDeleteLoading: false,
+              canDelete: false,
+            }}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    describe('opening the actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
+      });
+      it('the Edit action button is disabled', async () => {
+        await waitFor(async () => {
+          await Button('Edit').has({ disabled: true });
+        });
+      });
+
+      it('the Delete action button is disabled', async () => {
+        await waitFor(async () => {
+          await Button('Delete').has({ disabled: true });
+        });
+      });
+    });
+  });
+
+  describe('edit and delete permissions are false', () => {
+    beforeEach(() => {
+      useStripes.mockImplementation(() => ({
+        hasPerm: () => false,
+      }));
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLine {...agreementLineDefaultProps} />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    it('the actions menu button is not rendered', async () => {
+      await waitFor(async () => {
+        await Button('Delete').absent();
+      });
+    });
+  });
+
+  describe('agreements edit permission is true and delete permission is false', () => {
+    beforeEach(() => {
+      useStripes.mockImplementation(() => ({
+        hasPerm: (perm) => {
+          if (perm === 'ui-agreements.agreements.edit') return true;
+          return false;
+        },
+      }));
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLine {...agreementLineDefaultProps} />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+    describe('opening the actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
+      });
+      it('the Edit action button exists', async () => {
+        await waitFor(async () => {
+          await Button('Edit').exists();
+        });
+      });
+
+      it('the Delete action button is absent', async () => {
+        await waitFor(async () => {
+          await Button('Delete').absent();
+        });
+      });
+    });
+  });
+
+  describe('agreements edit permission is false and delete permission is true', () => {
+    beforeEach(() => {
+      useStripes.mockImplementation(() => ({
+        hasPerm: (perm) => {
+          if (perm === 'ui-agreements.agreements.delete') return true;
+          return false;
+        },
+      }));
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLine {...agreementLineDefaultProps} />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+    describe('opening the actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
+      });
+      it('the Edit action button exists', async () => {
+        await waitFor(async () => {
+          await Button('Edit').absent();
+        });
+      });
+
+      it('the Delete action button is absent', async () => {
+        await waitFor(async () => {
+          await Button('Delete').exists();
         });
       });
     });
