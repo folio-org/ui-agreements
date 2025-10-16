@@ -60,7 +60,7 @@ const Lines = ({
                 buttonStyle="dropdownItem"
                 disabled={canEditLoading || !canEdit}
                 id="add-agreement-line-button"
-                to={canEditLoading || !canEdit ? null : urls.agreementLineCreate(agreement.id)}
+                to={urls.agreementLineCreate(agreement.id)}
               >
                 <Icon icon="plus-sign">
                   <FormattedMessage id="ui-agreements.agreementLines.newLine" />
