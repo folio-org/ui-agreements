@@ -12,7 +12,7 @@ const RemoteResourceTIPPTable = ({ resourceId }) => {
     ['GOKB', 'fetchTIPPS', resourceId],
     () => baseKy
       .get(
-        `https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&title=${resourceId}`
+        `https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&title=${resourceId}&status=Current&max=1000`
       )
       .json()
   );
