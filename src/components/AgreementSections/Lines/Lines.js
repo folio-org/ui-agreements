@@ -33,7 +33,13 @@ const Lines = ({
   eresourcesFilterPath,
   handlers,
   id,
+  accessControlData = {}
 }) => {
+  const {
+    canEdit = true,
+    canEditLoading = false,
+  } = accessControlData;
+
   const { visibleColumns, toggleColumn } = useColumnManager('line-listing-column-manager', LINE_LISTING_COLUMN_MAPPING);
   const renderBadge = () => {
     const count = agreement?.agreementLinesCount;
@@ -52,6 +58,7 @@ const Lines = ({
             <IfPermission perm="ui-agreements.agreements.edit">
               <Button
                 buttonStyle="dropdownItem"
+                disabled={canEditLoading || !canEdit}
                 id="add-agreement-line-button"
                 to={urls.agreementLineCreate(agreement.id)}
               >
