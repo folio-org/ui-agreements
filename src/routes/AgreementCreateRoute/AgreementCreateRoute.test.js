@@ -40,6 +40,7 @@ jest.mock('../../components/views/AgreementForm', () => {
       <MockButton onClick={props.handlers.onClose}>CloseButton</MockButton>
       <MockButton onClick={props.handlers.onBasketLinesAdded}>BasketLineButton</MockButton>
       <MockButton
+        data-testid="submit-button"
         onClick={() => props.onSubmit({
           name: 'Test Agreement',
           fakeProp: true,
@@ -171,7 +172,46 @@ describe('AgreementCreateRoute', () => {
         await Callout('<strong>Agreement acquisition units updated:</strong> {name}').exists();
       });
     });
+
+    describe('handling claim errors', () => {
+      beforeEach(() => {
+        jest.clearAllMocks();
+      });
+
+      test('falls back to claimError.message if JSON parsing fails', async () => {
+        // Mock Agreement POST success, Claim POST failure with invalid JSON
+        mockKyJson
+          .mockResolvedValueOnce({ id: 'my-agreement-id', name: 'Test Agreement' })
+          .mockRejectedValueOnce({
+            message: 'Something went wrong',
+            response: {
+              json: async () => {
+                throw new Error('Invalid JSON');
+              },
+            },
+          });
+
+        const { getByText, queryAllByRole } = renderWithIntl(
+          <MemoryRouter>
+            <AgreementCreateRoute {...data} />
+          </MemoryRouter>,
+          translationsProperties
+        );
+
+        const buttons = queryAllByRole('button', { name: 'SubmitButton' });
+        await buttons[0].click();
+
+        await waitFor(() => {
+          expect(mockKyJson).toHaveBeenCalledTimes(2);
+        });
+
+        await waitFor(() => {
+          expect(getByText(/Acquisition units for agreement {name} were not updated: {error}/)).toBeInTheDocument();
+        });
+      });
+    });
   });
+
 
   describe('rendering loading view', () => {
     beforeEach(() => {
