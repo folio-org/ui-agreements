@@ -40,7 +40,6 @@ jest.mock('../../components/views/AgreementForm', () => {
       <MockButton onClick={props.handlers.onClose}>CloseButton</MockButton>
       <MockButton onClick={props.handlers.onBasketLinesAdded}>BasketLineButton</MockButton>
       <MockButton
-        data-testid="submit-button"
         onClick={() => props.onSubmit({
           name: 'Test Agreement',
           fakeProp: true,
