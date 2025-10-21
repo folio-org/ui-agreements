@@ -139,7 +139,9 @@ const AgreementCreateRoute = ({
                   errorMessage =
                   body.message ||
                   body.error ||
-                  (Array.isArray(body.errors) && body.errors.map(e => e?.message || JSON.stringify(e)).join('; ')) ||
+                  (Array.isArray(body.errors)
+                    ? body.errors.map(error => error?.message || JSON.stringify(error)).join('; ')
+                    : null) ||
                   (Object.keys(body).length ? JSON.stringify(body) : errorMessage);
                 }
               } catch {
