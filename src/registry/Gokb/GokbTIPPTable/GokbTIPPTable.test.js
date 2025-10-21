@@ -103,11 +103,11 @@ describe('GokbTIPPTable', () => {
       if (
         isTitleInSystem
       ) {
-        expectedText = 'Synchronising';
+        expectedText = 'Enabled';
       } else if (
         isPkgInSystem
       ) {
-        expectedText = 'Paused';
+        expectedText = 'Disabled';
       } else {
         expectedText = 'Package not in local KB';
       }
