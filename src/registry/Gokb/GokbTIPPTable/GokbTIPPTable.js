@@ -47,28 +47,36 @@ const GokbTIPPTable = ({ tipps = [] }) => {
     queryParams: packagesQueryParams
   });
 
-  // Next let's first deduplicate Title uuids
-  const titleIdentifiers = [];
-  tipps.forEach((t) => {
-    if (!titleIdentifiers.includes(t.tippTitleUuid)) {
-      titleIdentifiers.push(t.tippTitleUuid);
-    }
+
+  // We need all the title UUIDs AND the package UUIDs for them as well, otherwise we'll only be making calls for one PCI
+  // The approach here is to get a list of ids structured as titleUUID:packageUUID, then feed them into useChunkedIdTransformFetch
+  // which only accepts a 1-dimensional list of strings to transform.
+  // We don't want to only fetch the PCIs by TITLE uuid in a chunked manner, as there could be an amount of those requiring pagination
+  // For example if we chunk 20 at a time, and each has even 6 PCIs, then pagination comes into play.
+  // useChunkedIdTransformFetch does NOT guarantee fetching all results if pagination is required
+  // (at least not right now... there could be improvements made to it) and so instead to ensure that this will always work
+  // even if the chunk size is tweaked, we fetch PCIs by title AND package, which _should_ be unique, hence only fetching
+  // STEP_SIZE PCIs per fetch (which should be kept below 100 for the same reason as above)
+
+  // So we construct our single-string representation of the 2D identifier space...
+  const fetchIdentifiers = tipps.map((tipp) => {
+    return `${tipp.tippTitleUuid}:${tipp.tippPackageUuid}`;
   });
 
   const pciChunkedQueryIdTransform = useCallback((chunkedIds) => {
     // We need to do funky things with the title identifiers list here because useChunkedIdTransformFetch ONLY accepts a list of string ids
-    // So we will in turn use that list to lookup in tipps again here for the titleUuid AND packageUuid -- this isn't particularly clean though
+    // So this will be titleId:packageId... not the cleanest though
     const queryParams = generateKiwtQueryParams({
       filters: [{
-        value: chunkedIds.map((titleId => {
-          const relevantTipp = tipps.find(t => t.tippTitleUuid === titleId);
+        value: chunkedIds.map((identifierPair => {
+          const [titleId, packageId] = identifierPair.split(':');
 
           return `(
             pti.titleInstance.identifiers.identifier.ns.value==gokb_uuid&&
             pti.titleInstance.identifiers.identifier.value==${titleId}&&
             pti.titleInstance.identifiers.status.value==approved&&
             pkg.identifiers.identifier.ns.value==gokb_uuid&&
-            pkg.identifiers.identifier.value==${relevantTipp.tippPackageUuid}&&
+            pkg.identifiers.identifier.value==${packageId}&&
             pkg.identifiers.status.value==approved
           )`.replace(/[\s]/gm, ''); // Whitespace to make development easier but breaks query
         })).join('||')
@@ -77,12 +85,12 @@ const GokbTIPPTable = ({ tipps = [] }) => {
     }, {});
 
     return queryParams.join('&');
-  }, [tipps]);
+  }, []);
 
   const { items: pcis, isLoading: arePcisLoading } = useChunkedIdTransformFetch({
     endpoint: PCIS_ENDPOINT,
     chunkedQueryIdTransform: pciChunkedQueryIdTransform,
-    ids: titleIdentifiers,
+    ids: fetchIdentifiers,
     reduceFunction: (queries) => (
       queries.reduce((acc, curr) => {
         return [...acc, ...(curr?.data ?? [])];
