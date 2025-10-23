@@ -28,7 +28,7 @@ describe('PackageCard', () => {
         reference: 'JSTOR_:_Arts_&_Sciences_III_Collection_:_NK',
         lifecycleStatus: 'Current',
         availability: 'Global',
-        syncContentsFromSource: 'Synchronising',
+        syncContentsFromSource: 'Enabled',
       },
     ],
     [
@@ -52,7 +52,7 @@ describe('PackageCard', () => {
         reference: 'JSTOR_:_Arts_&_Sciences_V_Collection_:_NK',
         lifecycleStatus: 'No value set-',
         availability: 'No value set-',
-        syncContentsFromSource: 'Paused',
+        syncContentsFromSource: 'Disabled',
       },
     ],
     [

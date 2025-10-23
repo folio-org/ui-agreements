@@ -378,7 +378,7 @@ describe('EResourceViewRoute', () => {
 
       test('synchronise callout fires', async () => {
         await waitFor(async () => {
-          await Callout(/Package: .* will synchronise/i).exists();
+          await Callout(/Package: Synchronisation of .* has been enabled/i).exists();
         });
       });
     });
@@ -392,7 +392,7 @@ describe('EResourceViewRoute', () => {
 
       test('pause callout fires', async () => {
         await waitFor(async () => {
-          await Callout(/Package: .* has been paused/i).exists();
+          await Callout(/Package: Synchronisation of .* has been disabled/i).exists();
         });
       });
     });
