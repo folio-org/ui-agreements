@@ -12,18 +12,14 @@ import GokbTIPPTable from './GokbTIPPTable';
 import { gokbTipps } from '../../../../test/jest/GOKB';
 import translationsProperties from '../../../../test/helpers';
 import { pcis as mockPcis, pkgs as mockPkgs } from '../../../../test/jest/eresources';
-
-jest.mock('../../../hooks', () => ({
-  usePackages: jest.fn(() => ({
-    arePackagesLoading: false,
-    packages: mockPkgs.filter(p => p.id === 'eab7a8ea-6665-4f06-a55a-73a5aad36215' || p.id === '9bd869e3-6c3c-42d2-aaf6-96d2725e71f3')
-  })),
-}));
+import { PACKAGES_ENDPOINT as MOCK_PACKAGES_ENDPOINT } from '../../../constants';
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
-  useChunkedIdTransformFetch: () => ({
-    items: mockPcis.filter(p => p.name === '\'International Journal of Managerial Finance\' on Platform \'Emerald Insight\' in Package Accounting Finance and Economics eJournal collection'),
+  useChunkedIdTransformFetch: ({ endpoint }) => ({
+    items: endpoint === MOCK_PACKAGES_ENDPOINT ?
+      mockPkgs.filter(p => p.id === 'eab7a8ea-6665-4f06-a55a-73a5aad36215' || p.id === '9bd869e3-6c3c-42d2-aaf6-96d2725e71f3') :
+      mockPcis.filter(p => p.name === '\'International Journal of Managerial Finance\' on Platform \'Emerald Insight\' in Package Accounting Finance and Economics eJournal collection'),
     isLoading: false
   })
 }));
