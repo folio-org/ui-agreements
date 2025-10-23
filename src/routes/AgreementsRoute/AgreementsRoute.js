@@ -7,6 +7,7 @@ import {
   getRefdataValuesByDesc,
   useTags,
   useSASQQIndex,
+  POLICIES_FILTER_CONFIG,
 } from '@folio/stripes-erm-components';
 
 import {
@@ -85,6 +86,9 @@ const AgreementsRoute = ({ children, history, location, match }) => {
       {
         /* There were problems with using truthiness ?? on an empty string '' */
         searchKey,
+        filterConfig: [
+          POLICIES_FILTER_CONFIG
+        ],
         filterKeys: {
           agreementContentType: 'agreementContentTypes.contentType.value',
           agreementStatus: 'agreementStatus.value',
