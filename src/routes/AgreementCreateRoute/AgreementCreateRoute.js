@@ -128,13 +128,32 @@ const AgreementCreateRoute = ({
                 )
               });
             })
-            .catch((claimError) => {
+            .catch(async (claimError) => {
+              let errorMessage = claimError.message;
+
+              try {
+                const resp = claimError?.response;
+                const body = resp && typeof resp.json === 'function' ? await resp.json() : null;
+
+                if (body) {
+                  errorMessage =
+                  body.message ||
+                  body.error ||
+                  (Array.isArray(body.errors)
+                    ? body.errors.map(error => error?.message || JSON.stringify(error)).join('; ')
+                    : null) ||
+                  (Object.keys(body).length ? JSON.stringify(body) : errorMessage);
+                }
+              } catch {
+                // ignore parsing errors, keep fallback message
+              }
+
               callout.sendCallout({
                 type: 'error',
                 message: (
                   <FormattedMessage
                     id="ui-agreements.agreements.claimPolicies.update.error.callout"
-                    values={{ name, error: claimError.message }}
+                    values={{ name, error: errorMessage }}
                   />
                 ),
                 timeout: 0,
