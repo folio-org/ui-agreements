@@ -151,8 +151,8 @@ describe('Packages', () => {
             });
 
             test.each([
-              'Start synchronisation of selected packages',
-              'Pause synchronisation of selected packages'
+              'Enable synchronisation of selected packages',
+              'Disable synchronisation of selected packages'
             ])(`'%s' button ${hasSelectedPackages ? 'exists' : 'is disabled'}`, async (buttonLabel) => {
               if (hasSelectedPackages) {
                 await waitFor(async () => {
