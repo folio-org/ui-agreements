@@ -9,7 +9,7 @@ import {
   useColumnManager,
 } from '@folio/stripes/smart-components';
 
-import { SASQRoute } from '@k-int/stripes-kint-components';
+import { SASQRoute, useQIndex } from '@k-int/stripes-kint-components';
 import RemoteKbResource from '../../components/views/RemoteKbResource';
 
 import config from '../../../docs/gokb-search-v1';
@@ -22,7 +22,7 @@ import RemoteKbFilters from '../../components/RemoteKbFilters';
 import {
   getFilterConfig,
   transformFilterString,
-  handlebarsCompile
+  handlebarsCompile,
 } from '../../components/utilities';
 import getSortConfig from '../utilities/getSortConfig';
 
@@ -32,6 +32,8 @@ const GokbRoute = () => {
   const displayConfig = config.configuration.view.display;
   const filterConfig = getFilterConfig(config);
   const { filterMap, initialFilterState } = filterConfig;
+
+  const [qindex, setQindex] = useQIndex();
 
   const viewFetchConfig = config.configuration.view.fetch;
   const viewQueryIdKey = viewFetchConfig?.viewQueryIdentifierKey || 'id';
@@ -54,11 +56,10 @@ const GokbRoute = () => {
     <RemoteKbResource {...props} displayConfig={displayConfig} />
   );
 
-  const {
-    formatter,
-    resultColumns,
-    sortableColumns,
-  } = getResultsDisplayConfig(columnsConfig, { iconKey: displayConfig.icon });
+  const { formatter, resultColumns, sortableColumns } = getResultsDisplayConfig(
+    columnsConfig,
+    { iconKey: displayConfig.icon }
+  );
 
   const fetchParameters = {
     endpoint: endpointData.endpoint,
@@ -91,11 +92,16 @@ const GokbRoute = () => {
       const { key: searchKey, string: searchString } = searchParameterParse(
         query?.query
       );
+
+      if (searchKey !== qindex) {
+        setQindex(searchKey);
+      }
+
       if (searchString) {
         queryParts.push(searchString);
         fetchParameters.SASQMap = {
           ...fetchParameters.SASQMap,
-          searchKey,
+          searchKey: qindex,
           filterKeys: filterMap,
         };
       }
@@ -118,8 +124,8 @@ const GokbRoute = () => {
 
   const columnMapping = resultColumns?.length
     ? Object.fromEntries(
-      resultColumns.map((col) => [col.propertyPath, col.label])
-    )
+        resultColumns.map((col) => [col.propertyPath, col.label])
+      )
     : {};
 
   const { visibleColumns, toggleColumn } = useColumnManager(
@@ -162,7 +168,9 @@ const GokbRoute = () => {
       }}
       mainPaneProps={{
         actionMenu: renderActionMenu,
-        appIcon: <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />,
+        appIcon: (
+          <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />
+        ),
         id: `${kbKey}-search-main-pane`,
         paneTitle: <FormattedMessage id="ui-agreements.remoteKb.gokbTitles" />,
       }}
@@ -185,7 +193,9 @@ const GokbRoute = () => {
       ViewComponent={ViewComponent}
       viewQueryPromise={({ _ky, resourceId, endpoint }) => {
         if (viewFetchConfig?.viewQueryUrl?.templateString) {
-          const template = handlebarsCompile(viewFetchConfig.viewQueryUrl.templateString);
+          const template = handlebarsCompile(
+            viewFetchConfig.viewQueryUrl.templateString
+          );
           const url = template({ endpoint, resourceId });
           return kyImport.get(url).json();
         }
