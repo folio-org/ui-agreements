@@ -784,8 +784,8 @@
     "eresources.syncStatus.false": "Pausiert",
     "eresources.syncStatus.true": "Wird synchronisiert",
     "eresources.syncStatus.notSet": "[kein Wert gewählt]",
-    "eresources.startSync": "Synchronisation starten",
-    "eresources.pauseSync": "Synchronisierung pausieren",
+    "eresources.startSync": "Synchronisation aktivieren",
+    "eresources.pauseSync": "Synchronisierung deaktivieren",
     "eresources.syncPackageSuccess.PAUSED": "Paket: <strong>{packageName}</strong> wurde pausiert",
     "eresources.syncPackageSuccess.SYNCHRONIZING": "Paket: <strong>{packageName}</strong> wird synchronisiert werden",
     "eresources.syncPackageError": "Fehler. Der Synchronisierungsstatus des Pakets konnte nicht aktualisiert werden.",
@@ -893,5 +893,7 @@
     "agreements.claimPolicies.update.callout": "<strong>Agreement acquisition units updated:</strong> {name}",
     "agreements.claimPolicies.update.error.callout": "<strong>Error:</strong> Acquisition units for agreement {name} were not updated: {error}",
     "remoteKb.actions.viewInLocalKb": "View title in local KB",
-    "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}"
+    "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}",
+    "eresources.gokbPackageUuid": "GOKB package UUID",
+    "eresources.gokbTitleUuid": "GOKB title UUID"
 }
