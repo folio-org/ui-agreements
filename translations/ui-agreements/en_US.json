@@ -778,8 +778,8 @@
     "emptyAccordion.documents": "No documents for this agreement line ",
     "line.documents": "Documents",
     "eresources.SynchronisationStatus": "Synchronisation status",
-    "eresources.syncContentsFromSource.true": "Synchronising",
-    "eresources.syncContentsFromSource.false": "Paused",
+    "eresources.syncContentsFromSource.true": "Enabled",
+    "eresources.syncContentsFromSource.false": "Disabled",
     "eresources.synchronisationStatus": "Synchronisation status",
     "eresources.syncStatus.false": "Disabled",
     "eresources.syncStatus.true": "Enabled",
@@ -791,8 +791,8 @@
     "eresources.syncPackageError": "Error. Unable to update the synchronisation status of the package.",
     "eresources.startSyncSelectedPackages": "Enable synchronisation of selected packages",
     "eresources.pauseSyncSelectedPackages": "Disable synchronisation of selected packages",
-    "eresources.syncMultiplePackagesSuccess.SYNCHRONIZING": "Synchronisation of packages has been enabled",
     "eresources.syncMultiplePackagesSuccess.PAUSED": "Synchronisation of packages has been disabled",
+    "eresources.syncMultiplePackagesSuccess.SYNCHRONIZING": "Synchronisation of packages has been enabled",
     "eresources.syncMultiplePackagesError": "Error. Unable to update the synchronisation status of the packages.",
     "gokbSearch": "GOKB",
     "settings.general.hideAccordions.usageData": "Usage data",
@@ -893,5 +893,7 @@
     "agreements.claimPolicies.update.callout": "<strong>Agreement acquisition units updated:</strong> {name}",
     "agreements.claimPolicies.update.error.callout": "<strong>Error:</strong> Acquisition units for agreement {name} were not updated: {error}",
     "remoteKb.actions.viewInLocalKb": "View title in local KB",
-    "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}"
+    "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}",
+    "eresources.gokbPackageUuid": "GOKB package UUID",
+    "eresources.gokbTitleUuid": "GOKB title UUID"
 }
