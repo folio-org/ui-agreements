@@ -110,7 +110,7 @@ const GokbTIPPTable = ({ tipps = [] }) => {
         return [...acc, ...(curr?.data ?? [])];
       }, [])
     ),
-    STEP_SIZE: 7 // This doesn't return 414
+    STEP_SIZE: 5 // This doesn't return 414
   });
 
   const getPackageInKb = (pkgUuid) => {
