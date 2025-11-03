@@ -14,11 +14,8 @@ import {
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
-import {
-  usePackages
-} from '../../../hooks';
 import Coverage from '../../../components/Coverage';
-import { PCIS_ENDPOINT } from '../../../constants';
+import { PACKAGES_ENDPOINT, PCIS_ENDPOINT } from '../../../constants';
 
 import GokbBasketButton from '../GokbBasketButton';
 
@@ -36,17 +33,34 @@ const GokbTIPPTable = ({ tipps = [] }) => {
     }
   });
 
-  const packageIdentifiersQuery = pkgIdentifiers.map(pid => `(identifiers.identifier.ns.value==gokb_uuid&&identifiers.identifier.value==${pid}&&identifiers.status.value==approved)`).join('||');
-  const packagesQueryParams = generateKiwtQueryParams({
-    filters: [{
-      value: packageIdentifiersQuery
-    }],
-    stats: false
-  }, {});
-  const { packages = [], arePackagesLoading } = usePackages({
-    queryParams: packagesQueryParams
-  });
+  const pkgChunkedQueryIdTransform = useCallback((chunkedIds) => {
+    const queryParams = generateKiwtQueryParams({
+      filters: [{
+        value: chunkedIds.map((pkgId => {
+          return `(
+            identifiers.identifier.ns.value==gokb_uuid&&
+            identifiers.identifier.value==${pkgId}&&
+            identifiers.status.value==approved
+          )`.replace(/[\s]/gm, ''); // Whitespace to make development easier but breaks query
+        })).join('||')
+      }],
+      stats: false
+    }, {});
 
+    return queryParams.join('&');
+  }, []);
+
+  const { items: packages, isLoading: arePackagesLoading } = useChunkedIdTransformFetch({
+    endpoint: PACKAGES_ENDPOINT,
+    chunkedQueryIdTransform: pkgChunkedQueryIdTransform,
+    ids: tipps.map(t => t.tippPackageUuid),
+    reduceFunction: (queries) => (
+      queries.reduce((acc, curr) => {
+        return [...acc, ...(curr?.data ?? [])];
+      }, [])
+    ),
+    STEP_SIZE: 10 // This doesn't return 414. Can actually get away with more probably but not much need to.
+  });
 
   // We need all the title UUIDs AND the package UUIDs for them as well, otherwise we'll only be making calls for one PCI
   // The approach here is to get a list of ids structured as titleUUID:packageUUID, then feed them into useChunkedIdTransformFetch
@@ -96,7 +110,7 @@ const GokbTIPPTable = ({ tipps = [] }) => {
         return [...acc, ...(curr?.data ?? [])];
       }, [])
     ),
-    STEP_SIZE: 7 // This doesn't return 414
+    STEP_SIZE: 5 // This doesn't return 414
   });
 
   const getPackageInKb = (pkgUuid) => {

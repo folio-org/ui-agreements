@@ -801,7 +801,7 @@ describe('PackageInfo', () => {
     });
 
     test('renders the expcected Synchronisation status field', async () => {
-      await KeyValue('Synchronisation status').has({ value:  'Synchronising' });
+      await KeyValue('Synchronisation status').has({ value:  'Enabled' });
     });
   });
 
