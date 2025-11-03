@@ -111,15 +111,15 @@ describe('EResource', () => {
         });
       });
 
-      test('Start synchronisation button exists', async () => {
+      test('Enable synchronisation button exists', async () => {
         await waitFor(async () => {
-          await Button('Start synchronisation').exists();
+          await Button('Enable synchronisation').exists();
         });
       });
 
-      test('Pause synchronisation button exists', async () => {
+      test('Disable synchronisation button exists', async () => {
         await waitFor(async () => {
-          await Button('Pause synchronisation').exists();
+          await Button('Disable synchronisation').exists();
         });
       });
 

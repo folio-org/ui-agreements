@@ -20,12 +20,13 @@ import {
   DocumentFilter,
   InternalContactSelection,
   OrganizationSelection,
+  SimpleAccessControlFilter
 } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
 import AgreementContentFilter from '../AgreementContentFilter';
-import { CUSTPROP_ENDPOINT } from '../../constants';
+import { AGREEMENTS_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOINT } from '../../constants';
 
 const propTypes = {
   activeFilters: PropTypes.object,
@@ -384,9 +385,20 @@ const AgreementFilters = ({
     />;
   };
 
+  const renderAccessControlFilter = () => {
+    return (
+      <SimpleAccessControlFilter
+        accessControlEndpoint={AGREEMENTS_ACCESSCONTROL_ENDPOINT}
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+      />
+    );
+  };
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('agreementStatus')}
+      {renderAccessControlFilter()}
       {renderMultiSelectFilter('reasonForClosure')}
       {renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
       {renderCheckboxFilter('isPerpetual', { closedByDefault: true })}

@@ -893,5 +893,7 @@
     "agreements.claimPolicies.update.callout": "<strong>Agreement acquisition units updated:</strong> {name}",
     "agreements.claimPolicies.update.error.callout": "<strong>Error:</strong> Acquisition units for agreement {name} were not updated: {error}",
     "remoteKb.actions.viewInLocalKb": "View title in local KB",
-    "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}"
+    "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}",
+    "eresources.gokbPackageUuid": "GOKB package UUID",
+    "eresources.gokbTitleUuid": "GOKB title UUID"
 }
