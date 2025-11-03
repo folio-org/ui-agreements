@@ -137,7 +137,7 @@ const AgreementCreateRoute = ({
                   const errorResp = await parseErrorResponse(claimError.response);
                   errorMessage = errorResp?.message || errorMessage;
                 } catch (parseError) {
-                  // ignore parsing errors, keep fallback message
+                  console.error('Error parsing response:', parseError);
                 }
               }
 
