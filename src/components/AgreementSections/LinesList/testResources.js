@@ -540,9 +540,118 @@ const agreement = {
         'error': 400,
         'message': 'Bad Request'
       }
+    },
+    {
+      'id': 'af5f5cca-d77b-433f-a7c6-cf78805fdba1',
+      'type': 'external',
+      'description': null,
+      'authority': 'GOKB-RESOURCE',
+      'reference': '3a3736cd-23d4-46c2-9899-d14fd136f49f:2d45d36b-5454-450a-bfa8-fa51eefbe61f',
+      'explanation': null,
+      'startDate': null,
+      'endDate': null,
+      'activeFrom': null,
+      'activeTo': null,
+      'contentUpdated': null,
+      'haveAccess': true,
+      'suppressFromDiscovery': false,
+      'note': null,
+      'docs': [],
+      'resourceName': '14th century English mystics newsletter',
+      'owner': {
+        'id': '144745fc-6fb6-49c9-81ef-d12100b15e79',
+        'dateCreated': '2025-11-03T14:13:15Z',
+        'agreementContentTypes': [],
+        'name': 'CM test 1',
+        'orgs': [],
+        'externalLicenseDocs': [],
+        'outwardRelationships': [],
+        'customProperties': {},
+        'contacts': [],
+        'tags': [],
+        'lastUpdated': '2025-11-03T15:28:30Z',
+        'inwardRelationships': [],
+        'startDate': '2025-11-01',
+        'linkedLicenses': [],
+        'docs': [],
+        'periods': [
+          {
+            'id': 'c0f62578-5104-4afa-a51b-fd91e4a8bfb4',
+            'startDate': '2025-11-01',
+            'owner': {
+              'id': '144745fc-6fb6-49c9-81ef-d12100b15e79'
+            },
+            'periodStatus': 'current'
+          }
+        ],
+        'usageDataProviders': [],
+        'agreementStatus': {
+          'id': '2c9180a89a4764e6019a476de17c0028',
+          'value': 'active',
+          'label': 'Active'
+        },
+        'supplementaryDocs': [],
+        'cancellationDeadline': null,
+        'alternateNames': [],
+        'version': 2
+      }
+    },
+    {
+      'id': '1349c793-0bea-486b-8fb3-1107e1be4104',
+      'type': 'external',
+      'description': null,
+      'authority': 'GOKB-RESOURCE',
+      'reference': 'bc634143-36ed-4ae2-a991-5e35ae4fee6a:e2a8df5b-4d2c-4f65-82f4-fbd96f43538c',
+      'explanation': null,
+      'startDate': null,
+      'endDate': null,
+      'activeFrom': null,
+      'activeTo': null,
+      'contentUpdated': null,
+      'haveAccess': true,
+      'suppressFromDiscovery': false,
+      'note': null,
+      'docs': [],
+      'owner': {
+        'id': '144745fc-6fb6-49c9-81ef-d12100b15e79',
+        'dateCreated': '2025-11-03T14:13:15Z',
+        'agreementContentTypes': [],
+        'name': 'CM test 1',
+        'orgs': [],
+        'externalLicenseDocs': [],
+        'outwardRelationships': [],
+        'customProperties': {},
+        'contacts': [],
+        'tags': [],
+        'lastUpdated': '2025-11-03T15:28:30Z',
+        'inwardRelationships': [],
+        'startDate': '2025-11-01',
+        'linkedLicenses': [],
+        'docs': [],
+        'periods': [
+          {
+            'id': 'c0f62578-5104-4afa-a51b-fd91e4a8bfb4',
+            'startDate': '2025-11-01',
+            'owner': {
+              'id': '144745fc-6fb6-49c9-81ef-d12100b15e79'
+            },
+            'periodStatus': 'current'
+          }
+        ],
+        'usageDataProviders': [],
+        'agreementStatus': {
+          'id': '2c9180a89a4764e6019a476de17c0028',
+          'value': 'active',
+          'label': 'Active'
+        },
+        'supplementaryDocs': [],
+        'cancellationDeadline': null,
+        'alternateNames': [],
+        'version': 2
+      }
     }
   ],
-  agreementLinesCount: 3,
+  agreementLinesCount: 5,
   eresources: [
     {
       id: '9b198bee-3eac-45db-8413-a191855307d5',
