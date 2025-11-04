@@ -215,6 +215,7 @@ PackageInfo.propTypes = {
       sourceDataCreated: PropTypes.string,
       sourceDataUpdated: PropTypes.string,
       syncContentsFromSource: PropTypes.bool,
+      sourceTitleCount: PropTypes.number,
 
       vendor: PropTypes.shape({
         name: PropTypes.string,
