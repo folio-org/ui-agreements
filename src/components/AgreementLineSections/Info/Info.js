@@ -87,21 +87,30 @@ const renderTemplatedUrls = (resource) => {
   );
 };
 
-const renderErrorCard = (resource) => (
-  <ErrorCard
-    cardStyle="positive"
-    error={{ number: resource.reference_object?.error, message: resource.reference_object?.message }}
-    headerStart={(
-      <AppIcon app="e-holdings" size="small">
-        <strong>
-          {(resource.reference && resource.authority)
-            ? `${resource.authority}: ${resource.reference}`
-            : (resource.authority ? resource.authority : resource.reference)}
-        </strong>
-      </AppIcon>
-    )}
-  />
-);
+const renderErrorCard = (resource) => {
+  let headerText;
+  if (resource.reference && resource.authority) {
+    headerText = `${resource.authority}: ${resource.reference}`;
+  } else if (resource.authority) {
+    headerText = resource.authority;
+  } else {
+    headerText = resource.reference;
+  }
+
+  return (
+    <ErrorCard
+      cardStyle="positive"
+      error={{ number: resource.reference_object?.error, message: resource.reference_object?.message }}
+      headerStart={(
+        <AppIcon app="e-holdings" size="small">
+          <strong>
+            {headerText}
+          </strong>
+        </AppIcon>
+      )}
+    />
+  );
+};
 
 const renderPackageSection = ({ resource, external }) => (
   <>
