@@ -1,7 +1,7 @@
 
 import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { externalLine, externalResource, externalResourceWithError, packageLine, packageResource } from './testResources';
+import { externalLine, externalResource, externalResourceWithError, gokbLine, localGokbPkg, packageLine, packageResource } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import Info from './Info';
 
@@ -14,6 +14,18 @@ jest.mock('../../PackageCardExternal', () => () => (<div>PackageCardExternal</di
 jest.mock('../../PackageCard', () => () => (<div>PackageCard</div>));
 jest.mock('../../TitleCardExternal', () => () => (<div>TitleCardExternal</div>));
 jest.mock('../../TitleCard', () => () => (<div>TitleCard</div>));
+
+const mockLocalGokbPkg = localGokbPkg;
+
+jest.mock('@folio/stripes/core', () => {
+  const actual = jest.requireActual('@folio/stripes/core');
+  return {
+    ...actual,
+    useOkapiKy: () => ({
+      get: () => ({ json: () => Promise.resolve([mockLocalGokbPkg]) }),
+    }),
+  };
+});
 
 const isSuppressFromDiscoveryEnabled = jest.fn().mockImplementation((res) => res);
 
@@ -175,6 +187,45 @@ describe('Info', () => {
     test('renders the ErrorCard component', () => {
       const { getByText } = renderComponent;
       expect(getByText('ErrorCard')).toBeInTheDocument();
+    });
+  });
+
+  describe('Info with GOKB line', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <Info
+            isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
+            line={gokbLine}
+            resource={gokbLine}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    test('renders Info component', async () => {
+      const { getByTestId } = renderComponent;
+      expect(getByTestId('lineInfo')).toBeInTheDocument();
+    });
+
+    test('displays parent agreements name', async () => {
+      await KeyValue('Parent agreement').has({ value: 'CM test 1' });
+    });
+
+    test('renders a link with the parent agreements name', () => {
+      const { getByRole } = renderComponent;
+      expect(getByRole('link', { name: 'CM test 1' })).toBeInTheDocument();
+    });
+
+    test('renders the TitleCardExternal component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('TitleCardExternal')).toBeInTheDocument();
+    });
+
+    test('renders the PackageCard component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('PackageCard')).toBeInTheDocument();
     });
   });
 });

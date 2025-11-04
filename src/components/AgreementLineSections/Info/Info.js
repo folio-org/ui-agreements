@@ -20,7 +20,9 @@ import PackageCard from '../../PackageCard';
 import PackageCardExternal from '../../PackageCardExternal';
 import TitleCard from '../../TitleCard';
 import TitleCardExternal from '../../TitleCardExternal';
+import { useLocalGokbPkg } from '../../../hooks';
 import { isDetached, isExternal, urls } from '../../utilities';
+import { GOKB_RESOURCE_AUTHORITY } from '../../../constants';
 
 const propTypes = {
   isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -45,7 +47,12 @@ const propTypes = {
   resource: PropTypes.object.isRequired,
 };
 
-const Info = ({ isSuppressFromDiscoveryEnabled, line, resource }) => {
+const Info = ({ isSuppressFromDiscoveryEnabled, line, resource: incomingResource }) => {
+  const isGokb = line?.authority === GOKB_RESOURCE_AUTHORITY;
+  const lookupReference = isGokb ? incomingResource?.reference : undefined;
+  const localPkg = useLocalGokbPkg({ reference: lookupReference });
+  const resource = isGokb ? { ...incomingResource, pkg: localPkg } : incomingResource;
+
   const sortedTemplatedUrls = orderBy(
     resource?.pti?.templatedUrls,
     'name',
@@ -222,7 +229,7 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource }) => {
                 <Headline size="large" tag="h3">
                   <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
                 </Headline>
-                {isExternal(line) ? (
+                {(isExternal(line) && !isGokb) ? (
                   <PackageCardExternal
                     packageData={resource.reference_object?.packageData ?? {}}
                   />

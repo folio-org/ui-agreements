@@ -605,10 +605,29 @@ const externalResourceWithError = {
   }
 };
 
+const gokbLine = {
+  id: '857ab328-757b-4c2f-8fcc-e501c5cdacfb',
+  type: 'external',
+  authority: 'GOKB-RESOURCE',
+  reference: '62a9c479-930e-4a60-a415-2ad62b4011ca:0f66bb0e-f6ae-4812-ad8e-cac2b0cc622d',
+  owner: { id: 'c0c324b1-d6a8-4ef3-8f80-64774e367920', name: 'CM test 1', periods: [] },
+  poLines: [],
+};
+
+const localGokbPkg = {
+  id: '69a6553b-0a82-4e5f-a902-84b8af4d2f21',
+  source: 'GOKb',
+  reference: 'cc5a19bf-4942-417a-9d44-5dbe51bd32a3',
+  name: 'Springer Journals : DEAL',
+  class: 'org.olf.kb.Pkg',
+};
+
 export {
   externalLine,
   externalResource,
   externalResourceWithError,
+  gokbLine,
+  localGokbPkg,
   packageLine,
   packageResource
 };
