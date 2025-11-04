@@ -134,7 +134,7 @@ const PackageInfo = ({
         </Col>
         <Col xs={3}>
           <KeyValue
-            label={<FormattedMessage id="ui-agreements.eresource.sourceTitleCount" />}
+            label={<FormattedMessage id="ui-agreements.eresources.sourceTitleCount" />}
             value={eresource?.sourceTitleCount || <NoValue />}
           />
         </Col>
