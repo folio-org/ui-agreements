@@ -29,6 +29,7 @@ const propTypes = {
   line: PropTypes.shape({
     activeFrom: PropTypes.string,
     activeTo: PropTypes.string,
+    authority: PropTypes.string,
     dateCreated: PropTypes.string,
     description: PropTypes.string,
     id: PropTypes.string,
