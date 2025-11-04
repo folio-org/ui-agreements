@@ -76,14 +76,14 @@ const PackageInfo = ({
         </Col>
         <Col xs={3}>
           <KeyValue
-            label={<FormattedMessage id="ui-agreements.eresources.source" />}
-            value={eresource.source || <NoValue />}
+            label={<FormattedMessage id="ui-agreements.eresources.status" />}
+            value={eresource?.lifecycleStatus?.label || <NoValue />}
           />
         </Col>
         <Col xs={3}>
           <KeyValue
-            label={<FormattedMessage id="ui-agreements.eresources.status" />}
-            value={eresource?.lifecycleStatus?.label || <NoValue />}
+            label={<FormattedMessage id="ui-agreements.eresources.reference" />}
+            value={eresource.reference || <NoValue />}
           />
         </Col>
         <Col xs={3}>
@@ -117,6 +117,27 @@ const PackageInfo = ({
             value={eresource?.availabilityScope?.label || <NoValue />}
           />
         </Col>
+
+      </Row>
+      <Row>
+        <Col xs={6}>
+          <PackageIdentifiers pkg={eresource} />
+        </Col>
+
+      </Row>
+      <Row>
+        <Col xs={3}>
+          <KeyValue
+            label={<FormattedMessage id="ui-agreements.eresources.source" />}
+            value={eresource.source || <NoValue />}
+          />
+        </Col>
+        <Col xs={3}>
+          <KeyValue
+            label={<FormattedMessage id="ui-agreements.eresource.sourceTitleCount" />}
+            value={eresource?.sourceTitleCount || <NoValue />}
+          />
+        </Col>
         <Col xs={3}>
           <KeyValue
             label={<FormattedMessage id="ui-agreements.eresources.sourceCreated" />}
@@ -141,17 +162,6 @@ const PackageInfo = ({
                 /> :
                 <NoValue />
             }
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={6}>
-          <PackageIdentifiers pkg={eresource} />
-        </Col>
-        <Col xs={3}>
-          <KeyValue
-            label={<FormattedMessage id="ui-agreements.eresources.reference" />}
-            value={eresource.reference || <NoValue />}
           />
         </Col>
       </Row>

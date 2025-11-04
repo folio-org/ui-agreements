@@ -230,6 +230,7 @@
   "eresource.moveIdentifier.noSourceTitle": "No source title selected",
   "eresource.moveIdentifier.noDestinationTitle": "No destination title selected",
   "eresource.sourceTitle": "Source title",
+  "eresource.sourceTitleCount": "Source title count",
   "eresource.destinationTitle": "Destination title",
   "eresource.sourceTitleSelectionText": "Select the source title for the identifier(s)",
   "eresource.destinationTitleSelectionText": "Select the destination title for the identifier(s)",
