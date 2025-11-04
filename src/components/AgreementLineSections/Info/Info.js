@@ -156,6 +156,17 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource: incomingResource
   const hasRefErr = !!resource.reference_object?.error;
   const isPkg = isPackage(resource);
 
+  let detailsSection = null;
+  if (!isDetached(line)) {
+    if (hasRefErr) {
+      detailsSection = renderErrorCard(resource);
+    } else if (isPkg) {
+      detailsSection = renderPackageSection({ resource, external });
+    } else {
+      detailsSection = renderTitleSection({ resource, external, isGokb });
+    }
+  }
+
   return (
     <div data-testid="lineInfo">
       <Headline size="x-large" tag="h2">
@@ -225,14 +236,7 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource: incomingResource
           </KeyValue>
         </Col>
       </Row>
-
-      {!isDetached(line) && (
-        hasRefErr
-          ? renderErrorCard(resource)
-          : (isPkg
-            ? renderPackageSection({ resource, external })
-            : renderTitleSection({ resource, external, isGokb }))
-      )}
+      {detailsSection}
     </div>
   );
 };
