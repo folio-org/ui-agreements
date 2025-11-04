@@ -1,6 +1,8 @@
 
-import { FormattedDateTime, renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { FormattedDateTime, renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../../test/helpers';
 import PackageInfo from './PackageInfo';
 
@@ -780,6 +782,10 @@ describe('PackageInfo', () => {
 
     test('renders the Source created field', async () => {
       await KeyValue('Source created').exists();
+    });
+
+    test('renders the expected source title count', async () => {
+      await KeyValue('Source title count').exists();
     });
 
     test('renders the expected source created date and time', async () => {
