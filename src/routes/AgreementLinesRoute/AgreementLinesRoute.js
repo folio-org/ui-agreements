@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   useTags,
-  getRefdataValuesByDesc
+  getRefdataValuesByDesc,
+  POLICIES_FILTER_CONFIG
 } from '@folio/stripes-erm-components';
 
 import {
@@ -56,6 +57,9 @@ const AgreementLinesRoute = ({
   const agreementLinesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey,
+      filterConfig: [
+        POLICIES_FILTER_CONFIG
+      ],
       filterKeys: {
         agreement: 'owner.id',
         // DO NOT INCLUDE "lineType" as filterKey, so that the values will be passed as is to the backend
