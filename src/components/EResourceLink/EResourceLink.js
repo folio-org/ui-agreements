@@ -34,8 +34,13 @@ class EResourceLink extends React.Component {
     if (authority === 'EKB-PACKAGE') return urls.eholdingsPackageView(reference);
     if (authority === 'EKB-TITLE') return urls.eholdingsResourceView(reference);
 
-    if (type === BASKET_TYPE_GOKB_TITLE || authority === GOKB_RESOURCE_AUTHORITY) {
+    if (type === BASKET_TYPE_GOKB_TITLE) {
       return urls.gokbResourceView(eresource.id);
+    }
+
+    if (authority === GOKB_RESOURCE_AUTHORITY) {
+      const titleUuid = reference?.split(':')[1];
+      return urls.gokbResourceView(titleUuid);
     }
 
     const pti = eresource?._object?.pti ?? eresource?.pti;

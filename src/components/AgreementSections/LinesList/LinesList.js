@@ -120,7 +120,7 @@ const LinesList = ({
           const resource = getResourceFromEntitlement(line);
           if (!resource) return line.label;
           if (isDetached(resource)) return resource.description;
-          if (isExternal(resource) && !resource.reference_object?.label) return resource.reference;
+          if (isExternal(resource) && !resource.reference_object?.label && !resource?.resourceName) return resource.reference;
           return (
             <EResourceLink
               data-test-external-reference={line.reference}
