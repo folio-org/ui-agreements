@@ -1,7 +1,9 @@
 
 import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { externalLine, externalResource, externalResourceWithError, gokbLine, localGokbPkg, packageLine, packageResource } from './testResources';
+import { externalResource, externalResourceWithError, localGokbPkg, packageResource } from '../../../../test/jest/eresources';
+import { externalLine, gokbLine, packageLine } from '../../../../test/jest/agreementLines';
+
 import translationsProperties from '../../../../test/helpers';
 import Info from './Info';
 
@@ -51,12 +53,12 @@ describe('Info', () => {
     });
 
     test('displays parent agreements name', async () => {
-      await KeyValue('Parent agreement').has({ value: 'MR test Info' });
+      await KeyValue('Parent agreement').has({ value: 'MR agr test' });
     });
 
     test('renders a link with the parent agreements name', () => {
       const { getByRole } = renderComponent;
-      expect(getByRole('link', { name: 'MR test Info' })).toBeInTheDocument();
+      expect(getByRole('link', { name: 'MR agr test' })).toBeInTheDocument();
     });
 
     test('displays agreement line activeFrom date', async () => {
@@ -176,12 +178,12 @@ describe('Info', () => {
     });
 
     test('displays parent agreements name', async () => {
-      await KeyValue('Parent agreement').has({ value: 'Test CM' });
+      await KeyValue('Parent agreement').has({ value: 'MR agr test' });
     });
 
     test('renders a link with the parent agreements name', () => {
       const { getByRole } = renderComponent;
-      expect(getByRole('link', { name: 'Test CM' })).toBeInTheDocument();
+      expect(getByRole('link', { name: 'MR agr test' })).toBeInTheDocument();
     });
 
     test('renders the ErrorCard component', () => {
