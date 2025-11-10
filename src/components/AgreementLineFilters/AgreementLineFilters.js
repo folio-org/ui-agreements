@@ -9,11 +9,12 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Layout, Spinner } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { DateFilter, DocumentFilter, useAgreement } from '@folio/stripes-erm-components';
+import { DateFilter, DocumentFilter, useAgreement, SimpleAccessControlFilter } from '@folio/stripes-erm-components';
 
 import AgreementSearchButton from '../AgreementSearchButton';
 import POLineFilterButton from '../POLineFilterButton';
 import { urls } from '../utilities';
+import { AGREEMENTS_ACCESSCONTROL_ENDPOINT } from '../../constants';
 
 const propTypes = {
   activeFilters: PropTypes.object,
@@ -268,10 +269,20 @@ const AgreementLineFilters = ({
     );
   };
 
+  const renderAccessControlFilter = () => {
+    return (
+      <SimpleAccessControlFilter
+        accessControlEndpoint={AGREEMENTS_ACCESSCONTROL_ENDPOINT}
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+      />
+    );
+  };
 
   return (
     <AccordionSet>
       {renderAgreementFilter('agreement')}
+      {renderAccessControlFilter()}
       {renderLineTypeFilter()}
       {renderDateFilter('activeFrom')}
       {renderDateFilter('activeTo')}
