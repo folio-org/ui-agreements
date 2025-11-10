@@ -1,20 +1,35 @@
-import { useQuery } from 'react-query';
-import { useOkapiKy } from '@folio/stripes/core';
+import { useMemo } from 'react';
 
-import { PACKAGES_ENDPOINT } from '../../constants';
+import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
+
+import usePackages from './usePackages';
 
 const useLocalGokbPkg = ({ reference }) => {
-  const ky = useOkapiKy();
   const remoteId = reference ? reference.split(':')[0] : null;
-  const { data } = useQuery(
-    ['PKG', 'fetchLocalPkg', remoteId],
-    () => ky.get(`${PACKAGES_ENDPOINT}?filters=identifiers.identifier.value==${remoteId}&&identifiers.identifier.ns.value==gokb_id&&identifiers.identifier.status.value==approved`).json(),
-    {
-      enabled: !!remoteId,
-    }
-  );
 
-  return data?.[0];
+  const queryParams = useMemo(() => (
+    generateKiwtQueryParams(
+      {
+        stats: false,
+        filters: [
+          {
+            groupValues: {
+              AND: [
+                { path: 'identifiers.identifier.value', value: remoteId },
+                { path: 'identifiers.identifier.ns.value', value: 'gokb_id' },
+                { path: 'identifiers.identifier.status.value', value: 'approved' },
+              ],
+            },
+          },
+        ],
+      },
+      {}
+    )
+  ), [remoteId]);
+
+  const data = usePackages({ queryParams, queryOptions: { enabled: !!remoteId } });
+
+  return data?.packages?.[0];
 };
 
 export default useLocalGokbPkg;
