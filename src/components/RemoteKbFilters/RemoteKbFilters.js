@@ -2,13 +2,17 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import isEqual from 'lodash/isEqual';
-import { Accordion, AccordionSet, FilterAccordionHeader, RadioButton } from '@folio/stripes/components';
+import {
+  Accordion,
+  AccordionSet,
+  FilterAccordionHeader,
+  RadioButton,
+} from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 
 const propTypes = {
-  activeFilters: PropTypes.objectOf(
-    PropTypes.arrayOf(PropTypes.string)
-  ).isRequired,
+  activeFilters: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string))
+    .isRequired,
   filterConfig: PropTypes.shape({
     filterNames: PropTypes.arrayOf(PropTypes.string),
     filterOptions: PropTypes.objectOf(
@@ -20,7 +24,7 @@ const propTypes = {
       )
     ),
     filterTypes: PropTypes.objectOf(PropTypes.string),
-    initialFilterState: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string))
+    initialFilterState: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
   }).isRequired,
   filterHandlers: PropTypes.shape({
     clear: PropTypes.func.isRequired,
@@ -31,8 +35,14 @@ const propTypes = {
   kbKey: PropTypes.string.isRequired,
 };
 
-const RemoteKbFilters = ({ activeFilters = {}, filterHandlers, filterConfig, kbKey }) => {
-  const { filterNames, filterOptions, filterTypes, initialFilterState } = filterConfig;
+const RemoteKbFilters = ({
+  activeFilters = {},
+  filterHandlers,
+  filterConfig,
+  kbKey,
+}) => {
+  const { filterNames, filterOptions, filterTypes, initialFilterState } =
+    filterConfig;
   const [filterState, setFilterState] = useState(initialFilterState);
 
   useEffect(() => {
@@ -54,9 +64,6 @@ const RemoteKbFilters = ({ activeFilters = {}, filterHandlers, filterConfig, kbK
     header: FilterAccordionHeader,
     id: `${kbKey}-${name}-filter-accordion`,
     label: <FormattedMessage id={`ui-agreements.remoteKb.filters.${name}`} />,
-    onClearFilter: () => {
-      filterHandlers.clearGroup(name);
-    },
     separator: false,
   });
 
@@ -69,7 +76,7 @@ const RemoteKbFilters = ({ activeFilters = {}, filterHandlers, filterConfig, kbK
         {...accordionDefaultProps(name, groupFilters)}
         {...prps}
       >
-        {options.map(opt => (
+        {options.map((opt) => (
           <RadioButton
             key={`${name}-${opt.value}`}
             checked={selectedValue === opt.value}
@@ -92,6 +99,9 @@ const RemoteKbFilters = ({ activeFilters = {}, filterHandlers, filterConfig, kbK
     const groupFilters = activeFilters[name] || [];
     return (
       <Accordion
+        onClearFilter={() => {
+          filterHandlers.clearGroup(name);
+        }}
         {...accordionDefaultProps(name, groupFilters)}
         {...prps}
       >
@@ -112,7 +122,7 @@ const RemoteKbFilters = ({ activeFilters = {}, filterHandlers, filterConfig, kbK
 
   return (
     <AccordionSet>
-      {filterNames.map(name => {
+      {filterNames.map((name) => {
         const type = filterTypes[name];
         return (
           <div key={name}>
