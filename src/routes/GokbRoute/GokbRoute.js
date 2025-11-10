@@ -124,8 +124,8 @@ const GokbRoute = () => {
 
   const columnMapping = resultColumns?.length
     ? Object.fromEntries(
-        resultColumns.map((col) => [col.propertyPath, col.label])
-      )
+      resultColumns.map((col) => [col.propertyPath, col.label])
+    )
     : {};
 
   const { visibleColumns, toggleColumn } = useColumnManager(
