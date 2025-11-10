@@ -48,104 +48,6 @@ const propTypes = {
   resource: PropTypes.object.isRequired,
 };
 
-const getTitlePlatformUrl = ({ resource, external }) => {
-  if (external) {
-    const url = resource.reference_object?.url;
-    return url ? (
-      <a href={url} rel="noopener noreferrer" target="_blank">{url}</a>
-    ) : <NoValue />;
-  }
-  const url = resource.pti?.url;
-  return url ? (
-    <a href={url} rel="noopener noreferrer" target="_blank">{url}</a>
-  ) : <NoValue />;
-};
-
-const renderTemplatedUrls = (resource) => {
-  const templated = resource?.pti?.templatedUrls ?? [];
-  if (templated.length <= 1) return null;
-
-  const sorted = orderBy(
-    templated.filter(tu => tu?.name !== 'defaultUrl'),
-    'name',
-    'asc'
-  );
-
-  return (
-    <KeyValue label={<FormattedMessage id="ui-agreements.eresources.proxiedAndCustomizedUrls" />}>
-      <MultiColumnList
-        columnMapping={{
-          name: <FormattedMessage id="ui-agreements.eresources.proxiesCustomizers" />,
-          url: <FormattedMessage id="ui-agreements.eresources.url" />,
-        }}
-        contentData={sorted}
-        id="templated-urls"
-        interactive={false}
-        visibleColumns={['name', 'url']}
-      />
-    </KeyValue>
-  );
-};
-
-const renderErrorCard = (resource) => {
-  let headerText;
-  if (resource.reference && resource.authority) {
-    headerText = `${resource.authority}: ${resource.reference}`;
-  } else if (resource.authority) {
-    headerText = resource.authority;
-  } else {
-    headerText = resource.reference;
-  }
-
-  return (
-    <ErrorCard
-      cardStyle="positive"
-      error={{ number: resource.reference_object?.error, message: resource.reference_object?.message }}
-      headerStart={(
-        <AppIcon app="e-holdings" size="small">
-          <strong>
-            {headerText}
-          </strong>
-        </AppIcon>
-      )}
-    />
-  );
-};
-
-const renderPackageSection = ({ resource, external }) => (
-  <>
-    <Headline size="large" tag="h3">
-      <FormattedMessage id="ui-agreements.eresources.packageDetails" />
-    </Headline>
-    {external ? <PackageCardExternal pkg={resource} /> : <PackageCard pkg={resource} />}
-  </>
-);
-
-const renderTitleSection = ({ resource, external, isGokb }) => (
-  <>
-    <Headline size="large" tag="h3">
-      <FormattedMessage id="ui-agreements.eresources.titleDetails" />
-    </Headline>
-
-    <KeyValue label={<FormattedMessage id="ui-agreements.eresources.titleOnPlatformURL" />}>
-      <div data-test-agreement-line-url>
-        {getTitlePlatformUrl({ resource, external })}
-      </div>
-    </KeyValue>
-
-    {renderTemplatedUrls(resource)}
-
-    {external ? <TitleCardExternal title={resource} /> : <TitleCard title={resource} />}
-
-    <Headline size="large" tag="h3">
-      <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
-    </Headline>
-    {(external && !isGokb)
-      ? <PackageCardExternal packageData={resource.reference_object?.packageData ?? {}} />
-      : <PackageCard pkg={resource.pkg ?? {}} />}
-  </>
-);
-
 const Info = ({ isSuppressFromDiscoveryEnabled, line, resource: incomingResource }) => {
   const isGokb = line?.authority === GOKB_RESOURCE_AUTHORITY;
   const lookupReference = isGokb ? incomingResource?.reference : undefined;
@@ -155,6 +57,104 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource: incomingResource
   const external = isExternal(line);
   const hasRefErr = !!resource.reference_object?.error;
   const isPkg = isPackage(resource);
+
+  const getTitlePlatformUrl = () => {
+    if (external) {
+      const url = resource.reference_object?.url;
+      return url ? (
+        <a href={url} rel="noopener noreferrer" target="_blank">{url}</a>
+      ) : <NoValue />;
+    }
+    const url = resource.pti?.url;
+    return url ? (
+      <a href={url} rel="noopener noreferrer" target="_blank">{url}</a>
+    ) : <NoValue />;
+  };
+
+  const renderTemplatedUrls = () => {
+    const templated = resource?.pti?.templatedUrls ?? [];
+    if (templated.length <= 1) return null;
+
+    const sorted = orderBy(
+      templated.filter(tu => tu?.name !== 'defaultUrl'),
+      'name',
+      'asc'
+    );
+
+    return (
+      <KeyValue label={<FormattedMessage id="ui-agreements.eresources.proxiedAndCustomizedUrls" />}>
+        <MultiColumnList
+          columnMapping={{
+            name: <FormattedMessage id="ui-agreements.eresources.proxiesCustomizers" />,
+            url: <FormattedMessage id="ui-agreements.eresources.url" />,
+          }}
+          contentData={sorted}
+          id="templated-urls"
+          interactive={false}
+          visibleColumns={['name', 'url']}
+        />
+      </KeyValue>
+    );
+  };
+
+  const renderErrorCard = () => {
+    let headerText;
+    if (resource.reference && resource.authority) {
+      headerText = `${resource.authority}: ${resource.reference}`;
+    } else if (resource.authority) {
+      headerText = resource.authority;
+    } else {
+      headerText = resource.reference;
+    }
+
+    return (
+      <ErrorCard
+        cardStyle="positive"
+        error={{ number: resource.reference_object?.error, message: resource.reference_object?.message }}
+        headerStart={(
+          <AppIcon app="e-holdings" size="small">
+            <strong>
+              {headerText}
+            </strong>
+          </AppIcon>
+        )}
+      />
+    );
+  };
+
+  const renderPackageSection = () => (
+    <>
+      <Headline size="large" tag="h3">
+        <FormattedMessage id="ui-agreements.eresources.packageDetails" />
+      </Headline>
+      {external ? <PackageCardExternal pkg={resource} /> : <PackageCard pkg={resource} />}
+    </>
+  );
+
+  const renderTitleSection = () => (
+    <>
+      <Headline size="large" tag="h3">
+        <FormattedMessage id="ui-agreements.eresources.titleDetails" />
+      </Headline>
+
+      <KeyValue label={<FormattedMessage id="ui-agreements.eresources.titleOnPlatformURL" />}>
+        <div data-test-agreement-line-url>
+          {getTitlePlatformUrl({ resource, external })}
+        </div>
+      </KeyValue>
+
+      {renderTemplatedUrls(resource)}
+
+      {external ? <TitleCardExternal title={resource} /> : <TitleCard title={resource} />}
+
+      <Headline size="large" tag="h3">
+        <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
+      </Headline>
+      {(external && !isGokb)
+        ? <PackageCardExternal packageData={resource.reference_object?.packageData ?? {}} />
+        : <PackageCard pkg={resource.pkg ?? {}} />}
+    </>
+  );
 
   let detailsSection = null;
   if (!isDetached(line)) {
