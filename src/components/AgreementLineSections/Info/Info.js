@@ -139,11 +139,11 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource: incomingResource
 
       <KeyValue label={<FormattedMessage id="ui-agreements.eresources.titleOnPlatformURL" />}>
         <div data-test-agreement-line-url>
-          {getTitlePlatformUrl({ resource, external })}
+          {getTitlePlatformUrl()}
         </div>
       </KeyValue>
 
-      {renderTemplatedUrls(resource)}
+      {renderTemplatedUrls()}
 
       {external ? <TitleCardExternal title={resource} /> : <TitleCard title={resource} />}
 
@@ -159,11 +159,11 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource: incomingResource
   let detailsSection = null;
   if (!isDetached(line)) {
     if (hasRefErr) {
-      detailsSection = renderErrorCard(resource);
+      detailsSection = renderErrorCard();
     } else if (isPkg) {
-      detailsSection = renderPackageSection({ resource, external });
+      detailsSection = renderPackageSection();
     } else {
-      detailsSection = renderTitleSection({ resource, external, isGokb });
+      detailsSection = renderTitleSection();
     }
   }
 
