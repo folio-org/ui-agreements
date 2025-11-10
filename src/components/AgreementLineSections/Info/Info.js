@@ -51,8 +51,8 @@ const propTypes = {
 const Info = ({ isSuppressFromDiscoveryEnabled, line, resource: incomingResource }) => {
   const isGokb = line?.authority === GOKB_RESOURCE_AUTHORITY;
   const lookupReference = isGokb ? incomingResource?.reference : undefined;
-  const localPkg = useLocalGokbPkg({ reference: lookupReference });
-  const resource = isGokb ? { ...incomingResource, pkg: localPkg } : incomingResource;
+  const { localGokbPkg } = useLocalGokbPkg({ reference: lookupReference });
+  const resource = isGokb ? { ...incomingResource, pkg: localGokbPkg } : incomingResource;
 
   const external = isExternal(line);
   const hasRefErr = !!resource.reference_object?.error;

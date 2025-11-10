@@ -27,9 +27,13 @@ const useLocalGokbPkg = ({ reference }) => {
     )
   ), [remoteId]);
 
-  const data = usePackages({ queryParams, queryOptions: { enabled: !!remoteId } });
+  const packagesQuery = usePackages({ queryParams, queryOptions: { enabled: !!remoteId } });
+  const localGokbPkg = packagesQuery.packages?.[0];
 
-  return data?.packages?.[0];
+  return {
+    localGokbPkg,
+    ...packagesQuery
+  };
 };
 
 export default useLocalGokbPkg;
