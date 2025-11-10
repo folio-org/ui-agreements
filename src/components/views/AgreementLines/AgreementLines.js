@@ -237,7 +237,7 @@ const AgreementLines = ({
                         if (line.type === 'detached') return '';
                         let output;
                         if (line.type === 'external') {
-                          output = line.reference;
+                          output = line?.resourceName ?? line.reference;
                         } else {
                           output = line.resource?.name;
                         }
