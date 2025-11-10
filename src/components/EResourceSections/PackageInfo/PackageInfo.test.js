@@ -1,13 +1,15 @@
 
 import { MemoryRouter } from 'react-router-dom';
-
 import { FormattedDateTime, renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
-import { packagesData, packagesWithNoValues } from '../../../../test/jest/packages';
 import PackageInfo from './PackageInfo';
+import { pkgs as centralPkgs } from '../../../../test/jest/eresources';
 
 jest.mock('../../AddToBasketButton', () => () => <div>Add package to basket</div>);
+
+const pkgs = { eresource: centralPkgs[0] };
+const packagesWithNoValues = { eresource: {} };
 
 let renderComponent;
 
@@ -17,7 +19,7 @@ describe('PackageInfo', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <PackageInfo
-            data={packagesData}
+            data={pkgs}
           />
         </MemoryRouter>,
         translationsProperties
@@ -26,7 +28,7 @@ describe('PackageInfo', () => {
 
     test('renders the package name', () => {
       const { getByText } = renderComponent;
-      expect(getByText(packagesData.eresource.name)).toBeInTheDocument();
+      expect(getByText(pkgs.eresource.name)).toBeInTheDocument();
     });
 
     test('renders the Add package to basket button', () => {
@@ -39,7 +41,7 @@ describe('PackageInfo', () => {
     });
 
     test('renders the expcected provider', async () => {
-      await KeyValue('Provider').has({ value: 'PBS Video' });
+      await KeyValue('Provider').has({ value: 'Emerald Group Publishing Limited' });
     });
 
     test('renders the Source field', async () => {
@@ -63,7 +65,7 @@ describe('PackageInfo', () => {
     });
 
     test('renders the expcected reference', async () => {
-      await KeyValue('Reference').has({ value: 'AVA_VOD_Library' });
+      await KeyValue('Reference').has({ value: '01de7360-8475-401e-8388-5c5c9b1186c3' });
     });
 
     test('renders the Content type field', async () => {
@@ -82,10 +84,6 @@ describe('PackageInfo', () => {
       await KeyValue('Availability').has({ value: 'Global' });
     });
 
-    test('renders the expcected availability constraints', async () => {
-      await KeyValue('Availability').has({ subValue: 'HBZGBV' });
-    });
-
     test('renders the Source created field', async () => {
       await KeyValue('Source created').exists();
     });
@@ -94,9 +92,13 @@ describe('PackageInfo', () => {
       await KeyValue('Source title count').exists();
     });
 
+    test('renders the expcected Source title count', async () => {
+      await KeyValue('Source title count').has({ value: '11' });
+    });
+
     test('renders the expected source created date and time', async () => {
-      await FormattedDateTime({ id: 'source-data-created-datetime' }).has({ date: '3/21/2022' });
-      await FormattedDateTime({ id: 'source-data-created-datetime' }).has({ time: '11:00 PM' });
+      await FormattedDateTime({ id: 'source-data-created-datetime' }).has({ date: '8/5/2021' });
+      await FormattedDateTime({ id: 'source-data-created-datetime' }).has({ time: '11:51 AM' });
     });
 
     test('renders the Source last updated field', async () => {
@@ -104,8 +106,8 @@ describe('PackageInfo', () => {
     });
 
     test('renders the expected source updated date and time', async () => {
-      await FormattedDateTime({ id: 'source-data-updated-datetime' }).has({ date: '3/28/2022' });
-      await FormattedDateTime({ id: 'source-data-updated-datetime' }).has({ time: '3:09 AM' });
+      await FormattedDateTime({ id: 'source-data-updated-datetime' }).has({ date: '9/21/2022' });
+      await FormattedDateTime({ id: 'source-data-updated-datetime' }).has({ time: '2:09 PM' });
     });
 
     test('renders the Synchronisation status field', async () => {
