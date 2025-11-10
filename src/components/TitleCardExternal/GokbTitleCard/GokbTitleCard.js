@@ -31,12 +31,11 @@ const GokbTitleCard = ({
     titleUuid: title?.tipp?.tippTitleUuid ?? title?.reference?.split(':')[1],
   };
 
-
   const renderHeaderStart = () => {
     return (
       <AppIcon app="agreements" iconKey="gokbTitle" size="small">
         <strong data-test-title-instance-name>
-          <EResourceLink eresource={{ ...title, id: titleInfo.titleUuid }} searchString={searchString} />
+          <EResourceLink eresource={title} searchString={searchString} />
         </strong>
       </AppIcon>
     );

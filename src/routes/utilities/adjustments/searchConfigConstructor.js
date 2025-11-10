@@ -1,7 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 import { Select } from '@folio/stripes/components';
 import handlebars from 'handlebars';
-import { useState } from 'react';
+import { useQIndex } from '@k-int/stripes-kint-components';
 
 const handleBarsTransform = (searchConfig, query) => {
   const template = handlebars.compile(searchConfig.templateString);
@@ -39,27 +39,27 @@ const QueryDropdown = ({ options }) => {
   });
 
   const defaultValue = options.find((opt) => opt.default === true)?.name;
-  const [searchKey, setSearchKey] = useState(defaultValue);
+  const [qindex, setQindex] = useQIndex();
 
   // This should also potentially be returning an sasqRenderProps object
   return {
     searchParameterParse: (query) => {
       const searchQueryString = searchConfigOptionsHandler(
-        searchLookup[searchKey]?.type,
-        searchLookup[searchKey],
+        searchLookup[qindex]?.type,
+        searchLookup[qindex],
         query
       );
 
-      return { key: searchKey, string: searchQueryString };
+      return { key: qindex, string: searchQueryString };
     },
     HeaderComponent: () => (
       <Select
         dataOptions={searchOptions}
         id="search-dropdown"
         onChange={(e) => {
-          setSearchKey(searchLookup[e.target.value]?.name);
+          setQindex(searchLookup[e.target.value]?.name);
         }}
-        value={searchKey || defaultValue}
+        value={qindex || defaultValue}
       />
     ),
   };

@@ -13,6 +13,7 @@ import {
   useClaim,
   useGetAccess
 } from '@folio/stripes-erm-components';
+import { parseErrorResponse } from '@k-int/stripes-kint-components';
 
 import queryString from 'query-string';
 import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
@@ -128,13 +129,15 @@ const AgreementCreateRoute = ({
                 )
               });
             })
-            .catch((claimError) => {
+            .catch(async (claimError) => {
+              const errorMessage = await parseErrorResponse(claimError.response)?.message;
+
               callout.sendCallout({
                 type: 'error',
                 message: (
                   <FormattedMessage
                     id="ui-agreements.agreements.claimPolicies.update.error.callout"
-                    values={{ name, error: claimError.message }}
+                    values={{ name, error: errorMessage }}
                   />
                 ),
                 timeout: 0,
