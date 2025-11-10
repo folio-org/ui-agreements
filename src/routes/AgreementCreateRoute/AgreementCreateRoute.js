@@ -130,16 +130,7 @@ const AgreementCreateRoute = ({
               });
             })
             .catch(async (claimError) => {
-              let errorMessage = claimError.message;
-
-              if (claimError.response) {
-                try {
-                  const errorResp = await parseErrorResponse(claimError.response);
-                  errorMessage = errorResp?.message || errorMessage;
-                } catch (parseError) {
-                  console.error('Error parsing response:', parseError);
-                }
-              }
+              const errorMessage = await parseErrorResponse(claimError.response)?.message;
 
               callout.sendCallout({
                 type: 'error',
