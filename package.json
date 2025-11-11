@@ -106,7 +106,8 @@
           "note.types.collection.get",
           "ui-agreements.accesspolicies.view",
           "acquisitions-units.memberships.collection.get",
-          "acquisitions-units.units.collection.get"
+          "acquisitions-units.units.collection.get",
+          "mod-settings.global.read.stripes-core.prefs.manage"
         ]
       },
       {
@@ -210,7 +211,8 @@
         "subPermissions": [
           "module.agreements.enabled",
           "settings.enabled",
-          "erm.settings.read"
+          "erm.settings.read",
+          "mod-settings.global.read.stripes-core.prefs.manage"
         ]
       },
       {
