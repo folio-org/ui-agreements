@@ -95,23 +95,32 @@ describe('AgreementCreateRoute', () => {
       expect(getByText('BasketLineButton')).toBeInTheDocument();
     });
 
-    test('calls the BasketLineButton', async () => {
-      await waitFor(async () => {
-        await Button('BasketLineButton').click();
+    describe('clicking the Basket Line button', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('BasketLineButton').click();
+        });
       });
-      await waitFor(async () => {
-        expect(mockBasketLinesAdded).toHaveBeenCalled();
+
+      test('calls the \'add basket lines\' callback', async () => {
+        await waitFor(async () => {
+          expect(mockBasketLinesAdded).toHaveBeenCalled();
+        });
       });
     });
 
-    // we check if the button is clicked it calls the historyPushMock(push) function to invoke the child callback (handleClose) defined in Route
-    test('calls the CloseButton', async () => {
-      await waitFor(async () => {
-        await Button('CloseButton').click();
+    describe('clicking the \'Close\' button', () => {
+      beforeEach(async () => {
+        historyPushMock.mockClear();
+        await waitFor(async () => {
+          await Button('CloseButton').click();
+        });
       });
 
-      await waitFor(async () => {
-        expect(historyPushMock).toHaveBeenCalled();
+      test('pushes the correct change to the history', async () => {
+        await waitFor(async () => {
+          expect(historyPushMock.mock.calls[0][0]).toEqual('/erm/agreements');
+        });
       });
     });
 
@@ -169,6 +178,45 @@ describe('AgreementCreateRoute', () => {
       test('Shows claims success callout', async () => {
         // EXAMPLE interactor selectors don't have injected intl values
         await Callout('<strong>Agreement acquisition units updated:</strong> {name}').exists();
+      });
+    });
+  });
+
+  describe('handling claim errors', () => {
+    beforeEach(() => {
+      mockKyJson
+        .mockResolvedValueOnce({ id: 'my-agreement-id', name: 'Test Agreement' })
+        .mockRejectedValueOnce({
+          message: 'Something went wrong',
+          response: {
+            json: async () => {
+              throw new Error('Invalid JSON');
+            },
+          },
+        });
+
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementCreateRoute {...data} />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    describe('clicking the subbmit button', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('SubmitButton').click();
+        });
+      });
+
+      test('correct error callout is rendered', async () => {
+        // Callout with HTML doesn't work as expected in interactor -- we should look into this
+        /* await waitFor(async () => {
+          await Callout('Acquisition units for agreement {name} were not updated: {error}').exists();
+        }); */
+        const { getByText } = renderComponent;
+        expect(getByText(/Acquisition units for agreement {name} were not updated: {error}/)).toBeInTheDocument();
       });
     });
   });
