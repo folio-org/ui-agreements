@@ -583,23 +583,6 @@ const refdata = [
     ]
   },
   {
-    id: '2c9180a2992c287001992c32811d0036',
-    desc: 'TitleInstance.SubType',
-    internal: true,
-    values: [
-      {
-        id: '2c9180a2992c287001992c32811f0037',
-        value: 'print',
-        label: 'Print'
-      },
-      {
-        id: '2c9180a2992c287001992c3281230038',
-        value: 'electronic',
-        label: 'Electronic'
-      }
-    ]
-  },
-  {
     id: '2c9180a2992c287001992dbc9d8300a1',
     desc: 'TitleInstance.PublicationType',
     internal: false,
@@ -613,23 +596,6 @@ const refdata = [
         id: '2c9180a2992c287001992dc1857000a4',
         value: 'book',
         label: 'Book'
-      }
-    ]
-  },
-  {
-    id: '2c9180a2992c287001992c3281270039',
-    desc: 'TitleInstance.Type',
-    internal: true,
-    values: [
-      {
-        id: '2c9180a2992c287001992c328129003a',
-        value: 'monograph',
-        label: 'Monograph'
-      },
-      {
-        id: '2c9180a2992c287001992c32812e003b',
-        value: 'serial',
-        label: 'Serial'
       }
     ]
   },
