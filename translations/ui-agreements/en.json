@@ -431,6 +431,7 @@
   "eresources.source": "Source",
   "eresources.sourceKb": "External data source",
   "eresources.status": "Status",
+  "eresources.sourceTitleCount": "Source title count",
   "eresources.synchronisationStatus": "Synchronisation status",
   "eresources.syncStatus.true": "Enabled",
   "eresources.syncStatus.false": "Disabled",
