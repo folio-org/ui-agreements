@@ -1,12 +1,7 @@
 
 import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import {
-  entitlements,
-  externalEntitlements,
-  pcis,
-  pkgs
-} from '../../../../test/jest';
+import { entitlements, externalEntitlements, pkgs } from '../../../../test/jest';
 
 import translationsProperties from '../../../../test/helpers';
 import Info from './Info';
@@ -16,7 +11,6 @@ const externalLineWithError = externalEntitlements.find(line => line.id === 'ff3
 const gokbLine = externalEntitlements.find(line => line.id === '857ab328-757b-4c2f-8fcc-e501c5cdacfb');
 const packageLine = entitlements.find(line => line.id === '13672d4d-1c9e-4957-b4c8-975e48fd9365');
 
-const packageResource = pcis.find(p => p.name === "'Institutions, industrial upgrading, and economic performance in Ja...' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...");
 const localGokbPkg = pkgs.find(p => p.name === 'Springer Journals : DEAL');
 
 jest.mock('@folio/stripes-erm-components', () => ({
@@ -114,7 +108,7 @@ describe('Info', () => {
           <Info
             isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
             line={packageLine}
-            resource={packageResource}
+            resource={packageLine.resource}
           />
         </MemoryRouter>,
         translationsProperties
