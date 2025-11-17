@@ -55,7 +55,7 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource: incomingResource
   const resource = isGokb ? { ...incomingResource, pkg: localGokbPkg } : incomingResource;
 
   const external = isExternal(line);
-  const hasRefErr = !!resource.reference_object?.error;
+  const hasRefErr = !!resource?.reference_object?.error;
   const isPkg = isPackage(resource);
 
   const getTitlePlatformUrl = () => {

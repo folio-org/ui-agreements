@@ -1,11 +1,23 @@
 
 import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { externalResource, externalResourceWithError, localGokbPkg, packageResource } from '../../../../test/jest/eresources';
-import { externalLine, gokbLine, packageLine } from '../../../../test/jest/agreementLines';
+import {
+  entitlements,
+  externalEntitlements,
+  pcis,
+  pkgs
+} from '../../../../test/jest';
 
 import translationsProperties from '../../../../test/helpers';
 import Info from './Info';
+
+const externalLine = externalEntitlements.find(line => line.id === '1c247260-bd39-4a5a-887f-25c40cfc53d2');
+const externalLineWithError = externalEntitlements.find(line => line.id === 'ff352239-ee90-42cc-9596-ea11e4a4c70d');
+const gokbLine = externalEntitlements.find(line => line.id === '857ab328-757b-4c2f-8fcc-e501c5cdacfb');
+const packageLine = entitlements.find(line => line.id === '13672d4d-1c9e-4957-b4c8-975e48fd9365');
+
+const packageResource = pcis.find(p => p.name === "'Institutions, industrial upgrading, and economic performance in Ja...' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...");
+const localGokbPkg = pkgs.find(p => p.name === 'Springer Journals : DEAL');
 
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
@@ -40,7 +52,7 @@ describe('Info', () => {
           <Info
             isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
             line={externalLine}
-            resource={externalResource}
+            resource={externalLine}
           />
         </MemoryRouter>,
         translationsProperties
@@ -164,8 +176,8 @@ describe('Info', () => {
         <MemoryRouter>
           <Info
             isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
-            line={externalResourceWithError}
-            resource={externalResourceWithError}
+            line={externalLineWithError}
+            resource={externalLineWithError}
           />
         </MemoryRouter>,
         translationsProperties
@@ -212,12 +224,12 @@ describe('Info', () => {
     });
 
     test('displays parent agreements name', async () => {
-      await KeyValue('Parent agreement').has({ value: 'CM test 1' });
+      await KeyValue('Parent agreement').has({ value: 'Minimal agreement' });
     });
 
     test('renders a link with the parent agreements name', () => {
       const { getByRole } = renderComponent;
-      expect(getByRole('link', { name: 'CM test 1' })).toBeInTheDocument();
+      expect(getByRole('link', { name: 'Minimal agreement' })).toBeInTheDocument();
     });
 
     test('renders the TitleCardExternal component', () => {
