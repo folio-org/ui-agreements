@@ -38,7 +38,7 @@ import BasketRoute from './routes/BasketRoute';
 import EResourceViewRoute from './routes/EResourceViewRoute';
 import EResourceEditRoute from './routes/EResourceEditRoute';
 
-import GokbRoute from './routes/GokbRoute';
+import RemoteKBRoute from './routes/RemoteKBRoute';
 
 import PackagesRoute from './routes/PackagesRoute';
 
@@ -225,7 +225,7 @@ const App = (props) => {
                   <Route component={AgreementLineViewRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId`} />
                 </Route>
 
-                <Route component={GokbRoute} path={`${path}/gokb/:id?`} />
+                <Route component={RemoteKBRoute} path={`${path}/gokb/:id?`} />
 
                 <Route component={EResourceEditRoute} path={`${path}/titles/:id/edit`} />
                 <Route component={TitlesRoute} path={`${path}/titles/:id?`}>

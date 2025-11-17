@@ -28,7 +28,7 @@ import {
 } from '../../components/utilities';
 import getSortConfig from '../utilities/getSortConfig';
 
-const GokbRoute = () => {
+const RemoteKBRoute = () => {
   const kbKey = 'gokb';
   const columnsConfig = config.configuration.results.display.columns;
   const displayConfig = config.configuration.view.display;
@@ -208,4 +208,4 @@ const GokbRoute = () => {
   );
 };
 
-export default GokbRoute;
+export default RemoteKBRoute;

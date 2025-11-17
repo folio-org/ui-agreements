@@ -1,7 +1,7 @@
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import ky from 'ky';
-import GokbRoute from './GokbRoute';
+import RemoteKBRoute from './RemoteKBRoute';
 import translationsProperties from '../../../test/helpers';
 
 let capturedProps = {};
@@ -103,7 +103,7 @@ jest.mock('ky', () => ({
 
 /** Tests */
 
-describe('GokbRoute', () => {
+describe('RemoteKBRoute', () => {
   beforeEach(() => {
     capturedProps = {};
     ky.get.mockClear();
@@ -111,7 +111,7 @@ describe('GokbRoute', () => {
 
   const renderComponent = () => renderWithIntl(
     <MemoryRouter>
-      <GokbRoute />
+      <RemoteKBRoute />
     </MemoryRouter>,
     translationsProperties
   );
