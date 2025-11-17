@@ -305,7 +305,17 @@ export const platforms = [
         domainName: 'www.emeraldinsight.com'
       }
     ]
-  }
+  },
+  {
+    id: 'ef6b100a-2490-4b36-ab5d-8a7925ba959f',
+    dateCreated: '2021-09-06T01:57:52Z',
+    lastUpdated: '2021-09-06T01:57:52Z',
+    name: 'Elgaronline',
+    locators: [{
+      id: '25532243-da35-4f76-941c-ddeb03394338',
+      domainName: 'www.elgaronline.com'
+    }]
+  },
 ];
 
 export const works = [
@@ -483,16 +493,7 @@ export const ptis = [
     dateCreated: '2021-09-06T02:02:53Z',
     tags: [],
     lastUpdated: '2021-09-06T02:02:53Z',
-    platform: {
-      id: 'ef6b100a-2490-4b36-ab5d-8a7925ba959f',
-      dateCreated: '2021-09-06T01:57:52Z',
-      lastUpdated: '2021-09-06T01:57:52Z',
-      name: 'Elgaronline',
-      locators: [{
-        id: '25532243-da35-4f76-941c-ddeb03394338',
-        domainName: 'www.elgaronline.com'
-      }]
-    },
+    platform: platforms.find(p => p.name === 'Elgaronline'),
     templatedUrls: [{
       id: '5b5b3349-9aa9-4fd8-94f1-016c748f6db0',
       url: 'https://doi.org/10.4337/9781845425678',
