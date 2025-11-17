@@ -22,7 +22,20 @@ export const pkgs = [
     sourceDataUpdated: '2022-09-21T14:09:16Z',
     source: 'GOKb',
     syncContentsFromSource: true,
-    contentTypes: [],
+    contentTypes: [{
+      id: '54e14560-caf5-4c3f-8769-e5ce173fc2b8',
+      contentType: {
+        value: 'print',
+        label: 'Print'
+      }
+    },
+    {
+      id: 'b5295cf8-db3c-4159-b923-92797ca2be28',
+      contentType: {
+        value: 'electronic',
+        label: 'Electronic'
+      }
+    }],
     sourceTitleCount: 11,
     alternateResourceNames: [],
     name: 'Accounting Finance and Economics eJournal collection',
@@ -59,7 +72,24 @@ export const pkgs = [
     id: '9bd869e3-6c3c-42d2-aaf6-96d2725e71f3',
     availabilityScope: refdata.find(rdc => rdc.desc === 'Pkg.AvailabilityScope').values.find(rdv => rdv.value === 'global'),
     dateCreated: '2025-09-09T02:00:42Z',
-    availabilityConstraints: [],
+    availabilityConstraints: [
+      {
+        id: 'f9a5977e-17a1-4399-8107-82f902007bae',
+        body: {
+          id: '02d3182883136e56018313ba8dfa0012',
+          value: 'hbz',
+          label: 'HBZ'
+        }
+      },
+      {
+        id: '8155baae-aac2-4699-a914-f60e5eed481b',
+        body: {
+          id: '02d3182883136e56018313ba8df10011',
+          value: 'gbv',
+          label: 'GBV'
+        }
+      }
+    ],
     packageDescriptionUrls: [
       {
         id: '9866f085-3bb5-4da1-95e3-66d6720deee4',

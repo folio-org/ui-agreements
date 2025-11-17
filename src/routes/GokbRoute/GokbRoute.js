@@ -9,7 +9,9 @@ import {
   useColumnManager,
 } from '@folio/stripes/smart-components';
 
-import { SASQRoute, useQIndex } from '@k-int/stripes-kint-components';
+import { useSASQQIndex } from '@folio/stripes-erm-components';
+
+import { SASQRoute } from '@k-int/stripes-kint-components';
 import RemoteKbResource from '../../components/views/RemoteKbResource';
 
 import config from '../../../docs/gokb-search-v1';
@@ -32,8 +34,6 @@ const GokbRoute = () => {
   const displayConfig = config.configuration.view.display;
   const filterConfig = getFilterConfig(config);
   const { filterMap, initialFilterState } = filterConfig;
-
-  const [qindex, setQindex] = useQIndex();
 
   const viewFetchConfig = config.configuration.view.fetch;
   const viewQueryIdKey = viewFetchConfig?.viewQueryIdentifierKey || 'id';
@@ -79,6 +79,8 @@ const GokbRoute = () => {
     config.configuration.results.fetch.sort
   );
 
+  const { qIndexSASQProps } = useSASQQIndex({ defaultQIndex: 'keyword' });
+
   // Function to generate the GOKb query string based on the current state
   // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
   // Something to revisit in the future, once we have all the query parts in place
@@ -93,15 +95,11 @@ const GokbRoute = () => {
         query?.query
       );
 
-      if (searchKey !== qindex) {
-        setQindex(searchKey);
-      }
-
       if (searchString) {
         queryParts.push(searchString);
         fetchParameters.SASQMap = {
           ...fetchParameters.SASQMap,
-          searchKey: qindex,
+          searchKey,
           filterKeys: filterMap,
         };
       }
@@ -188,6 +186,7 @@ const GokbRoute = () => {
       sasqProps={{
         initialFilterState,
         sortableColumns,
+        ...qIndexSASQProps,
       }}
       searchFieldAriaLabel={`input-${kbKey}-search`}
       ViewComponent={ViewComponent}
