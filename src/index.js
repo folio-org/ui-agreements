@@ -38,7 +38,7 @@ import BasketRoute from './routes/BasketRoute';
 import EResourceViewRoute from './routes/EResourceViewRoute';
 import EResourceEditRoute from './routes/EResourceEditRoute';
 
-import RemoteKBRoute from './routes/RemoteKBRoute';
+import RemoteKBRoute from './RemoteKB/RemoteKBRoute';
 
 import PackagesRoute from './routes/PackagesRoute';
 

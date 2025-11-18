@@ -1,7 +1,8 @@
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage } from 'react-intl';
 import { AppIcon } from '@folio/stripes/core';
-import { handlebarsCompile, renderPublicationDates } from '../../components/utilities';
+import { handlebarsCompile } from './handlebarsHelpers';
+import renderPublicationDates from './specialTypes/renderPublicationDates';
 
 /* helper functions */
 

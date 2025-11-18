@@ -1,4 +1,4 @@
-import { handlebarsCompile } from '../../components/utilities';
+import { handlebarsCompile } from './handlebarsHelpers';
 
 /* Recursive formatter function */
 

@@ -12,21 +12,20 @@ import {
 import { useSASQQIndex } from '@folio/stripes-erm-components';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
-import RemoteKbResource from '../../components/views/RemoteKbResource';
+import RemoteKbResource from './components/RemoteKbResourceView';
 
-import config from '../../../docs/gokb-search-v1';
+import config from '../../docs/gokb-search-v1';
 
-import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigConstructor';
+import RemoteKbFilters from './components/RemoteKbFilters';
 
-import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
-
-import RemoteKbFilters from '../../components/RemoteKbFilters';
 import {
   getFilterConfig,
   transformFilterString,
   handlebarsCompile,
-} from '../../components/utilities';
-import getSortConfig from '../utilities/getSortConfig';
+  searchConfigTypeHandler,
+  getResultsDisplayConfig,
+  getSortConfig,
+} from './utilities';
 
 const RemoteKBRoute = () => {
   const kbKey = 'gokb';
