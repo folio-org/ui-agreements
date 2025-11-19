@@ -71,7 +71,12 @@ const AgreementLineEditRoute = ({
         /* Invalidate cached queries */
         await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
+        callout.sendCallout({
+          message: (<FormattedMessage
+            id="ui-agreements.line.update.callout"
+            values={{ name: payload?.resource?.name || payload?.resourceName || payload?.reference || '' }}
+          />)
+        });
         if (!createAnother) {
           handleClose();
         } else {
