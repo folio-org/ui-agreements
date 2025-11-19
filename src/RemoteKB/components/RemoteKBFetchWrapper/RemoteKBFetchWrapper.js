@@ -6,10 +6,10 @@ const propTypes = {
   endpoints: PropTypes.string.isRequired,
 };
 
-const RemoteKBFetchWrapper = ({ id, endpoint, children }) => {
+const RemoteKBFetchWrapper = ({ id, endpoint }) => {
   const { data } = useQuery(['RemoteKBFetchWrapper', id], () => baseKy.get({ endpoint }).json());
 
-  return children(data);
+  return data;
 };
 
 RemoteKBFetchWrapper.propTypes = propTypes;
