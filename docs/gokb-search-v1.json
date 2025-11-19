@@ -730,9 +730,12 @@
                     "name": "packageTitles",
                     "collapsable": true,
                     "badge": {
-                      "type": "access",
-                      "accessType": "JSONPath",
-                      "expression": "$.packages.length"
+                      "type": "fetch",
+                      "endpoint": "https://gokbt.gbv.de/gokb-ui/title/{{resource.uuid}}",
+                      "value": {
+                        "type": "Handlebars",
+                        "templateString": "{{agreements.length}}"
+                      }
                     },
                     "renderStrategy": {
                       "type": "rows",
@@ -758,7 +761,14 @@
                   {
                     "name": "eresourceAgreements",
                     "collapsable": true,
-                    "badge": true,
+                    "badge": {
+                      "type": "fetch",
+                      "endpoint": "https://gokbt.gbv.de/gokb-ui/title/{{resource.uuid}}",
+                      "value": {
+                        "type": "Handlebars",
+                        "templateString": "{{agreements.length}}"
+                      }
+                    },
                     "renderStrategy": {
                       "type": "rows",
                       "values": [
