@@ -23,17 +23,11 @@ export const pkgs = [
     syncContentsFromSource: true,
     contentTypes: [{
       id: '54e14560-caf5-4c3f-8769-e5ce173fc2b8',
-      contentType: {
-        value: 'print',
-        label: 'Print'
-      }
+      contentType: refdata.find(rdc => rdc.desc === 'TitleInstance.SubType').values.find(rdv => rdv.value === 'print'),
     },
     {
       id: 'b5295cf8-db3c-4159-b923-92797ca2be28',
-      contentType: {
-        value: 'electronic',
-        label: 'Electronic'
-      }
+      contentType: refdata.find(rdc => rdc.desc === 'TitleInstance.SubType').values.find(rdv => rdv.value === 'electronic'),
     }],
     sourceTitleCount: 11,
     alternateResourceNames: [],
@@ -194,6 +188,108 @@ export const pkgs = [
         status: refdata.find(rdc => rdc.desc === 'IdentifierOccurrence.Status').values.find(rdv => rdv.value === 'approved'),
       }
     ]
+  },
+  {
+    id: '3901e11d-8236-4a73-b322-04df4aee6159',
+    dateCreated: '2021-09-06T02:02:52Z',
+    lastUpdated: '2021-09-06T02:02:52Z',
+    vendor: {
+      id: '9101ada1-1227-448a-ae9c-01cb4ab87b0d',
+      name: 'Edward Elgar',
+      orgsUuid_object: {
+        error: 400,
+        message: 'Bad Request'
+      }
+    },
+    source: 'GOKb',
+    remoteKb: {
+      id: '02ccb570-8581-4f51-b589-3113655a4992',
+      cursor: '2021-09-06T09:34:51Z',
+      active: true,
+      trustedSourceTI: false,
+      activationEnabled: false,
+      readonly: false,
+      syncStatus: 'idle',
+      lastCheck: 1630929320679,
+      name: 'GOKb_TEST',
+      type: 'org.olf.kb.adapters.GOKbOAIAdapter',
+      fullPrefix: 'gokb',
+      uri: 'https://gokbt.gbv.de/gokb/oai/index',
+      supportsHarvesting: true,
+      rectype: 1
+    },
+    name: 'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
+    suppressFromDiscovery: false,
+    reference: 'Edward_Elgar:Edward_Elgar_E-Book_Archive_in_Business_&_Management,_Economics_and_Finance:Nationalliz',
+    resourceCount: 2540,
+    class: 'org.olf.kb.Pkg'
+  },
+  {
+    'id': '6579cdf9-5601-4299-8d98-88ada4036091',
+    'availabilityScope': refdata.find(rdc => rdc.desc === 'Pkg.AvailabilityScope').values.find(rdv => rdv.value === 'local'),
+    'dateCreated': '2025-11-17T02:03:18Z',
+    'availabilityConstraints': [
+      {
+        'id': '0981f598-fb2d-4215-8897-3382e9cd72c9',
+        'body': {
+          'id': '2c9180a89a8f7d71019a8f8d60c8009b',
+          'value': 'ub_ilmenau',
+          'label': 'UB Ilmenau'
+        }
+      }
+    ],
+    'packageDescriptionUrls': [
+      {
+        'id': 'b23cc150-dd74-4dab-b822-e59a557e1116',
+        'url': 'https://gokbt.gbv.de/package/cc5a19bf-4942-417a-9d44-5dbe51bd32a3'
+      }
+    ],
+    'lastUpdated': '2025-11-17T02:03:18Z',
+    'normalizedName': 'springer journals : deal',
+    'vendor': {
+      'id': '43bacc81-9c5d-4642-a761-d8aa3cab940b',
+      'name': 'Springer Nature'
+    },
+    'sourceDataUpdated': '2025-11-07T17:40:52Z',
+    'source': 'GOKb',
+    'syncContentsFromSource': false,
+    'contentTypes': [
+      {
+        'id': '7c1e36ba-4b11-4ba2-b164-02796d15e454',
+        'contentType': refdata.find(rdc => rdc.desc === 'Pkg.ContentType').values.find(rdv => rdv.value === 'journal'),
+      }
+    ],
+    'sourceTitleCount': 3732,
+    'alternateResourceNames': [],
+    'name': 'Springer Journals : DEAL',
+    'lifecycleStatus': refdata.find(rdc => rdc.desc === 'Pkg.LifecycleStatus').values.find(rdv => rdv.value === 'current'),
+    'suppressFromDiscovery': false,
+    'sourceDataCreated': '2025-03-04T13:56:23Z',
+    'reference': 'cc5a19bf-4942-417a-9d44-5dbe51bd32a3',
+    'resourceCount': 0,
+    'class': 'org.olf.kb.Pkg',
+    'identifiers': [
+      {
+        'identifier': {
+          'value': '35898124',
+          'ns': {
+            'value': 'gokb_id'
+          },
+          'occurrenceCount': 1
+        },
+        'status': refdata.find(rdc => rdc.desc === 'IdentifierOccurrence.Status').values.find(rdv => rdv.value === 'approved'),
+      },
+      {
+        'identifier': {
+          'value': 'cc5a19bf-4942-417a-9d44-5dbe51bd32a3',
+          'ns': {
+            'value': 'gokb_uuid'
+          },
+          'occurrenceCount': 1
+        },
+        'status': refdata.find(rdc => rdc.desc === 'IdentifierOccurrence.Status').values.find(rdv => rdv.value === 'approved'),
+      }
+    ]
   }
 ];
 
@@ -209,7 +305,17 @@ export const platforms = [
         domainName: 'www.emeraldinsight.com'
       }
     ]
-  }
+  },
+  {
+    id: 'ef6b100a-2490-4b36-ab5d-8a7925ba959f',
+    dateCreated: '2021-09-06T01:57:52Z',
+    lastUpdated: '2021-09-06T01:57:52Z',
+    name: 'Elgaronline',
+    locators: [{
+      id: '25532243-da35-4f76-941c-ddeb03394338',
+      domainName: 'www.elgaronline.com'
+    }]
+  },
 ];
 
 export const works = [
@@ -327,7 +433,37 @@ export const tis = [
         ]
       }
     ]
-  }
+  },
+  {
+    id: '08eee460-758b-4339-960f-f16c4b8fe446',
+    subType: refdata.find(rdc => rdc.desc === 'TitleInstance.SubType').values.find(rdv => rdv.value === 'electronic'),
+    dateCreated: '2021-09-06T02:02:53Z',
+    tags: '[]',
+    lastUpdated: '2021-09-06T07:47:31Z',
+    publicationType: refdata.find(rdc => rdc.desc === 'TitleInstance.PublicationType').values.find(rdv => rdv.value === 'book'),
+    identifiers: [{
+      title: {
+        id: '08eee460-758b-4339-960f-f16c4b8fe446'
+      },
+      status: refdata.find(rdc => rdc.desc === 'IdentifierOccurrence.Status').values.find(rdv => rdv.value === 'approved'),
+      identifier: {
+        value: '9781845425678',
+        ns: {
+          value: 'isbn'
+        }
+      }
+    }],
+    coverage: '[]',
+    name: "\"Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth\"",
+    type: refdata.find(rdc => rdc.desc === 'TitleInstance.Type').values.find(rdv => rdv.value === 'monograph'),
+    suppressFromDiscovery: true,
+    work: {
+      id: 'f740075c-99da-43fe-a5d9-68318e83fb8b'
+    },
+    class: 'org.olf.kb.TitleInstance',
+    longName: "\"Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth\"",
+    relatedTitles: '[]'
+  },
 ];
 
 export const ptis = [
@@ -351,7 +487,29 @@ export const ptis = [
     suppressFromDiscovery: false,
     class: 'org.olf.kb.PlatformTitleInstance',
     longName: "'International Journal of Managerial Finance' on Platform 'Emerald Insight'"
-  }
+  },
+  {
+    id: 'b353eb8f-89e3-4de6-b099-ecfee80be537',
+    dateCreated: '2021-09-06T02:02:53Z',
+    tags: [],
+    lastUpdated: '2021-09-06T02:02:53Z',
+    platform: platforms.find(p => p.name === 'Elgaronline'),
+    templatedUrls: [{
+      id: '5b5b3349-9aa9-4fd8-94f1-016c748f6db0',
+      url: 'https://doi.org/10.4337/9781845425678',
+      name: 'defaultUrl',
+      resource: {
+        id: 'b353eb8f-89e3-4de6-b099-ecfee80be537'
+      }
+    }],
+    coverage: [],
+    titleInstance: tis.find(t => t.name === "\"Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth\""),
+    url: 'https://doi.org/10.4337/9781845425678',
+    name: "Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catc...' on Platform 'Elgaronline'",
+    suppressFromDiscovery: false,
+    class: 'org.olf.kb.PlatformTitleInstance',
+    longName: "'\"Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth\"' on Platform 'Elgaronline'"
+  },
 ];
 
 export const pcis = [
@@ -377,6 +535,24 @@ export const pcis = [
     lastSeenTimestamp: 1757409327783,
     suppressFromDiscovery: false,
     longName: "'International Journal of Managerial Finance' on Platform 'Emerald Insight' in Package Accounting Finance and Economics eJournal collection",
+    class: 'org.olf.kb.PackageContentItem'
+  },
+  {
+    id: '292c4a7b-281b-47ef-bd86-51de7a133e4d',
+    accessStart: '2008-01-01',
+    dateCreated: '2021-09-06T02:02:53Z',
+    tags: '[]',
+    lastUpdated: '2021-09-06T02:03:17Z',
+    depth: 'Fulltext',
+    coverage: '[]',
+    pti: ptis.find(p => p.name === "Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catc...' on Platform 'Elgaronline'"),
+    pkg: pkgs.find(p => p.name === 'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz'),
+    addedTimestamp: 1630893772634,
+    accessEnd: '2021-03-31',
+    name: "'Institutions, industrial upgrading, and economic performance in Ja...' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...",
+    lastSeenTimestamp: 1630893772634,
+    suppressFromDiscovery: false,
+    longName: "'\"Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth\"' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz",
     class: 'org.olf.kb.PackageContentItem'
   }
 ];
