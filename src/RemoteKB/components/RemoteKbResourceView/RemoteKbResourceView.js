@@ -35,6 +35,7 @@ import {
 } from '../../utilities';
 
 import getResultsDisplayConfig from '../../utilities/getResultsDisplayConfig';
+import RemoteKBFetchWrapper from '../RemoteKBFetchWrapper/RemoteKBFetchWrapper';
 
 const PANE_DEFAULT_WIDTH = '50%';
 
@@ -209,6 +210,18 @@ const RemoteKbResourceView = ({
           ''
         );
       }
+      case 'fetch': {
+        const endpoint = renderValue(value.endpoint);
+        return (
+          <RemoteKBFetchWrapper
+            endpoint={endpoint}
+          >
+            {(data) => {
+              renderValue(value.value, data);
+            }}
+          </RemoteKBFetchWrapper>
+        );
+      }
       case 'registry': {
         const registryResource = Registry.getResource(value.registryResource);
         const registryRenderFunction =
@@ -222,11 +235,13 @@ const RemoteKbResourceView = ({
 
         const props = {
           ...baseProps,
-          ...(badge && sectionName ? { setBadgeCount: setBadgeCount(sectionName) } : {}),
+          ...(badge && sectionName
+            ? { setBadgeCount: setBadgeCount(sectionName) }
+            : {}),
         };
 
-        return registryRenderFunction ?
-          props
+        return registryRenderFunction
+          ? props
             ? registryRenderFunction(props)
             : registryRenderFunction()
           : null;
