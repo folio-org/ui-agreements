@@ -1,8 +1,8 @@
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import ky from 'ky';
-import GokbRoute from './GokbRoute';
-import translationsProperties from '../../../test/helpers';
+import RemoteKBRoute from './RemoteKBRoute';
+import translationsProperties from '../../test/helpers';
 
 let capturedProps = {};
 
@@ -29,7 +29,7 @@ jest.mock('@folio/stripes/smart-components', () => ({
   }),
 }));
 
-jest.mock('../../../docs/gokb-search-v1', () => ({
+jest.mock('../../docs/gokb-search-v1', () => ({
   configuration: {
     results: {
       fetch: {
@@ -38,7 +38,13 @@ jest.mock('../../../docs/gokb-search-v1', () => ({
         search: { type: 'basic' },
         sort: { type: 'simple' },
       },
-      display: { columns: [{ name: 'name' }, { name: 'publicationType' }, { name: 'publicationDates' }] },
+      display: {
+        columns: [
+          { name: 'name' },
+          { name: 'publicationType' },
+          { name: 'publicationDates' },
+        ],
+      },
     },
     view: {
       fetch: {
@@ -46,50 +52,47 @@ jest.mock('../../../docs/gokb-search-v1', () => ({
         mapping: { data: 'records' },
         viewQueryUrl: {
           type: 'Handlebars',
-          templateString: '{{endpoint}}?uuid={{resourceId}}'
+          templateString: '{{endpoint}}?uuid={{resourceId}}',
         },
-        viewQueryIdentifierKey: 'uuid'
+        viewQueryIdentifierKey: 'uuid',
       },
       display: { icon: 'titles' },
     },
   },
 }));
 
-jest.mock('../utilities/adjustments/searchConfigConstructor', () => ({
-  searchConfigTypeHandler: jest.fn(() => ({
-    searchParameterParse: (q) => ({ key: 'q', string: `q=${q}` }),
-    HeaderComponent: () => <div>Header</div>,
-  })),
-}));
-
-jest.mock('../../components/utilities', () => ({
+jest.mock('./utilities', () => ({
   getFilterConfig: jest.fn(() => ({
     filterMap: { type: 'componentType' },
     initialFilterState: { pre: 'set' },
   })),
   transformFilterString: jest.fn((filters, _config) => (filters === 'type.Book' ? 'componentType=Book' : '')),
-  handlebarsCompile: jest.fn((tpl) => (ctx) => tpl
-    .replace('{{endpoint}}', ctx.endpoint)
-    .replace('{{resourceId}}', ctx.resourceId)),
+  handlebarsCompile: jest.fn(
+    (tpl) => (ctx) => tpl
+      .replace('{{endpoint}}', ctx.endpoint)
+      .replace('{{resourceId}}', ctx.resourceId)
+  ),
+  getResultsDisplayConfig: jest.fn(() => ({
+    resultColumns: [
+      { propertyPath: 'name', label: <span>Name</span> },
+      { propertyPath: 'publicationType', label: <span>Type</span> },
+      { propertyPath: 'publicationDates', label: <span>Dates</span> },
+    ],
+    sortableColumns: ['name'],
+    formatter: {
+      name: () => 'NAME',
+      publicationType: () => 'TYPE',
+      publicationDates: () => 'DATES',
+    },
+  })),
+  searchConfigTypeHandler: jest.fn(() => ({
+    searchParameterParse: (q) => ({ key: 'q', string: `q=${q}` }),
+    HeaderComponent: () => <div>Header</div>,
+  })),
+  getSortConfig: jest.fn(() => ({
+    sortQueryFunction: () => 'sort=title',
+  })),
 }));
-
-jest.mock('../utilities/getSortConfig', () => jest.fn(() => ({
-  sortQueryFunction: () => 'sort=title',
-})));
-
-jest.mock('../utilities/getResultsDisplayConfig', () => jest.fn(() => ({
-  resultColumns: [
-    { propertyPath: 'name', label: <span>Name</span> },
-    { propertyPath: 'publicationType', label: <span>Type</span> },
-    { propertyPath: 'publicationDates', label: <span>Dates</span> },
-  ],
-  sortableColumns: ['name'],
-  formatter: {
-    name: () => 'NAME',
-    publicationType: () => 'TYPE',
-    publicationDates: () => 'DATES',
-  },
-})));
 
 // ky fetches
 jest.mock('ky', () => ({
@@ -103,7 +106,7 @@ jest.mock('ky', () => ({
 
 /** Tests */
 
-describe('GokbRoute', () => {
+describe('RemoteKBRoute', () => {
   beforeEach(() => {
     capturedProps = {};
     ky.get.mockClear();
@@ -111,7 +114,7 @@ describe('GokbRoute', () => {
 
   const renderComponent = () => renderWithIntl(
     <MemoryRouter>
-      <GokbRoute />
+      <RemoteKBRoute />
     </MemoryRouter>,
     translationsProperties
   );
@@ -123,7 +126,7 @@ describe('GokbRoute', () => {
 
   test('passes resultColumns/formatter/sortableColumns to SASQRoute', () => {
     renderComponent();
-    expect(capturedProps.resultColumns.map(c => c.propertyPath)).toEqual([
+    expect(capturedProps.resultColumns.map((c) => c.propertyPath)).toEqual([
       'name',
       'publicationType',
       'publicationDates',
@@ -134,7 +137,9 @@ describe('GokbRoute', () => {
 
   test('mclProps.columnWidths includes publicationDates width', () => {
     renderComponent();
-    expect(capturedProps.mclProps.columnWidths).toEqual({ publicationDates: 300 });
+    expect(capturedProps.mclProps.columnWidths).toEqual({
+      publicationDates: 300,
+    });
   });
 
   test('lookupQueryPromise fetches via ky', async () => {
@@ -154,7 +159,9 @@ describe('GokbRoute', () => {
       resourceId: '123',
       endpoint: 'https://example.org/resource',
     });
-    expect(ky.get).toHaveBeenCalledWith('https://example.org/resource?uuid=123');
+    expect(ky.get).toHaveBeenCalledWith(
+      'https://example.org/resource?uuid=123'
+    );
   });
 
   test('lookupResponseTransform maps results and totalRecords from config mapping', () => {
@@ -169,7 +176,9 @@ describe('GokbRoute', () => {
 
   test('viewResponseTransform returns first element if array, otherwise object', () => {
     renderComponent();
-    const arr = capturedProps.viewResponseTransform({ records: [{ id: 1 }, { id: 2 }] });
+    const arr = capturedProps.viewResponseTransform({
+      records: [{ id: 1 }, { id: 2 }],
+    });
     expect(arr).toEqual({ id: 1 });
 
     const obj = capturedProps.viewResponseTransform({ records: { id: 9 } });
