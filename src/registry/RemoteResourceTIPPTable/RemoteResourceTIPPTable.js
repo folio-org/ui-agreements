@@ -19,9 +19,9 @@ const RemoteResourceTIPPTable = ({ resourceId, setBadgeCount }) => {
     {
       enabled: !!resourceId,
       onSuccess: (data) => {
-        const count = Array.isArray(data)
-          ? data.length
-          : (data?.totalRecords ?? 0);
+        const count = Array.isArray(data?.records)
+          ? data?.records.length
+          : (data?.count ?? 0);
         setBadgeCount(count);
       },
       onError: () => {
