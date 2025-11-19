@@ -729,6 +729,11 @@
                   {
                     "name": "packageTitles",
                     "collapsable": true,
+                    "badge": {
+                      "type": "access",
+                      "accessType": "JSONPath",
+                      "expression": "$.packages.length"
+                    },
                     "renderStrategy": {
                       "type": "rows",
                       "values": [
