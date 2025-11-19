@@ -214,7 +214,6 @@ const RemoteKbResourceView = ({
         const registryRenderFunction =
           registryResource?.getRenderFunction(value.registryRenderFunction) ??
           null;
-
         const baseProps = (value.props || []).reduce((acc, p) => {
           acc[p.name] = renderValue(p.value);
           return acc;
