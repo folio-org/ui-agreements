@@ -729,6 +729,7 @@
                   {
                     "name": "packageTitles",
                     "collapsable": true,
+                    "badge": true,
                     "renderStrategy": {
                       "type": "rows",
                       "values": [

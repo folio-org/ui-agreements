@@ -2,7 +2,7 @@ import React from 'react';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Registry } from '@folio/handler-stripes-registry';
-import RemoteKbResource from './RemoteKbResource';
+import RemoteKbResourceView from './RemoteKbResourceView';
 import translationsProperties from '../../../../test/helpers';
 
 jest.mock('@folio/handler-stripes-registry', () => ({
@@ -25,11 +25,14 @@ jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   Pane: (props) => {
     const { paneTitle, appIcon, children } = props;
-    const menu = typeof props.actionMenu === 'function' ? props.actionMenu() : null;
+    const menu =
+      typeof props.actionMenu === 'function' ? props.actionMenu() : null;
     return (
       <div>
         <div data-testid="pane-title">
-          {typeof paneTitle === 'string' ? paneTitle : (paneTitle?.props?.children || '')}
+          {typeof paneTitle === 'string'
+            ? paneTitle
+            : paneTitle?.props?.children || ''}
         </div>
         <div data-testid="pane-icon">{appIcon}</div>
         <div data-testid="action-menu">{menu}</div>
@@ -51,12 +54,19 @@ jest.mock('@folio/stripes/components', () => ({
   KeyValue: ({ label, value }) => (
     <div className="kv">
       <span className="kv-label">{label?.props?.id || ''}</span>
-      <span className="kv-value">{typeof value === 'string' ? value : value}</span>
+      <span className="kv-value">
+        {typeof value === 'string' ? value : value}
+      </span>
     </div>
   ),
   MetaSection: () => <div>Meta</div>,
   MultiColumnList: ({ visibleColumns = [], contentData = [] }) => (
-    <div data-rows={contentData.length} data-testid={`mcl-${visibleColumns.join('-')}`}>MCL</div>
+    <div
+      data-rows={contentData.length}
+      data-testid={`mcl-${visibleColumns.join('-')}`}
+    >
+      MCL
+    </div>
   ),
   Badge: ({ children }) => <span data-testid="badge">{children}</span>,
   Accordion: ({ id, label, displayWhenClosed, displayWhenOpen, children }) => (
@@ -91,8 +101,11 @@ jest.mock('../../utilities', () => ({
   stableKeyFrom: (v) => `k${(JSON.stringify(v) || '').length}`,
 }));
 
-jest.mock('../../../routes/utilities/getResultsDisplayConfig', () => jest.fn((cols) => ({
-  resultColumns: cols.map(c => ({ propertyPath: c.name, label: <span>{c.name}</span> })),
+jest.mock('../../utilities/getResultsDisplayConfig', () => jest.fn((cols) => ({
+  resultColumns: cols.map((c) => ({
+    propertyPath: c.name,
+    label: <span>{c.name}</span>,
+  })),
   sortableColumns: [],
   formatter: cols.reduce((acc, c) => {
     acc[c.name] = (row) => row[c.name] ?? row.namespaceName ?? row.value ?? row.altNames ?? '';
@@ -104,22 +117,38 @@ jest.mock('jsonpath-plus', () => ({
   JSONPath: jest.fn(({ path, json }) => {
     const r = json || {};
     switch (path) {
-      case '$.name': return r.name != null ? [r.name] : [];
-      case '$.dateCreated': return r.dateCreated != null ? [r.dateCreated] : [];
-      case '$.lastUpdatedDisplay': return r.lastUpdatedDisplay != null ? [r.lastUpdatedDisplay] : [];
-      case '$.componentType': return r.componentType != null ? [r.componentType] : [];
-      case '$.publishedFrom': return r.publishedFrom != null ? [r.publishedFrom] : [];
-      case '$.publishedTo': return r.publishedTo != null ? [r.publishedTo] : [];
-      case '$.publisherName': return r.publisherName != null ? [r.publisherName] : [];
-      case '$.id': return r.id != null ? [r.id] : [];
-      case '$.uuid': return r.uuid != null ? [r.uuid] : [];
-      case '$.altname[*]': return Array.isArray(r.altname) ? r.altname : [];
-      case '$.identifiers[*]': return Array.isArray(r.identifiers) ? r.identifiers : [];
-      case '$.subjects[*]': return Array.isArray(r.subjects) ? r.subjects : [];
-      case '$.altNames': return [r.name].filter(Boolean);
-      case '$.namespaceName': return (r.identifiers || []).map(i => i.namespaceName);
-      case '$.value': return (r.identifiers || []).map(i => i.value);
-      default: return [];
+      case '$.name':
+        return r.name != null ? [r.name] : [];
+      case '$.dateCreated':
+        return r.dateCreated != null ? [r.dateCreated] : [];
+      case '$.lastUpdatedDisplay':
+        return r.lastUpdatedDisplay != null ? [r.lastUpdatedDisplay] : [];
+      case '$.componentType':
+        return r.componentType != null ? [r.componentType] : [];
+      case '$.publishedFrom':
+        return r.publishedFrom != null ? [r.publishedFrom] : [];
+      case '$.publishedTo':
+        return r.publishedTo != null ? [r.publishedTo] : [];
+      case '$.publisherName':
+        return r.publisherName != null ? [r.publisherName] : [];
+      case '$.id':
+        return r.id != null ? [r.id] : [];
+      case '$.uuid':
+        return r.uuid != null ? [r.uuid] : [];
+      case '$.altname[*]':
+        return Array.isArray(r.altname) ? r.altname : [];
+      case '$.identifiers[*]':
+        return Array.isArray(r.identifiers) ? r.identifiers : [];
+      case '$.subjects[*]':
+        return Array.isArray(r.subjects) ? r.subjects : [];
+      case '$.altNames':
+        return [r.name].filter(Boolean);
+      case '$.namespaceName':
+        return (r.identifiers || []).map((i) => i.namespaceName);
+      case '$.value':
+        return (r.identifiers || []).map((i) => i.value);
+      default:
+        return [];
     }
   }),
 }));
@@ -136,15 +165,30 @@ const displayConfig = {
         renderStrategy: {
           type: 'rows',
           values: [
-            { type: 'heading', value: { type: 'access', accessType: 'JSONPath', expression: '$.name' } },
+            {
+              type: 'heading',
+              value: {
+                type: 'access',
+                accessType: 'JSONPath',
+                expression: '$.name',
+              },
+            },
             {
               type: 'row',
               colCount: '1',
               values: [
                 {
                   type: 'metadata',
-                  createdDate: { type: 'access', accessType: 'JSONPath', expression: '$.dateCreated' },
-                  lastUpdatedDate: { type: 'access', accessType: 'JSONPath', expression: '$.lastUpdatedDisplay' },
+                  createdDate: {
+                    type: 'access',
+                    accessType: 'JSONPath',
+                    expression: '$.dateCreated',
+                  },
+                  lastUpdatedDate: {
+                    type: 'access',
+                    accessType: 'JSONPath',
+                    expression: '$.lastUpdatedDisplay',
+                  },
                 },
               ],
             },
@@ -158,7 +202,11 @@ const displayConfig = {
                   value: {
                     type: 'handlebars',
                     templateString: "{{{replace this 'Instance' ''}}}",
-                    value: { type: 'access', accessType: 'JSONPath', expression: '$.componentType' },
+                    value: {
+                      type: 'access',
+                      accessType: 'JSONPath',
+                      expression: '$.componentType',
+                    },
                   },
                 },
               ],
@@ -170,7 +218,11 @@ const displayConfig = {
                 {
                   name: 'publisher',
                   type: 'keyValue',
-                  value: { type: 'access', accessType: 'JSONPath', expression: '$.publisherName' },
+                  value: {
+                    type: 'access',
+                    accessType: 'JSONPath',
+                    expression: '$.publisherName',
+                  },
                 },
               ],
             },
@@ -199,7 +251,7 @@ describe('RemoteKbResource', () => {
     const cfgWithActions = { ...cfg, actions: cfg.actions ?? { values: [] } };
     return renderWithIntl(
       <MemoryRouter>
-        <RemoteKbResource
+        <RemoteKbResourceView
           displayConfig={cfgWithActions}
           onClose={jest.fn()}
           queryProps={{ isLoading: false }}
@@ -218,7 +270,7 @@ describe('RemoteKbResource', () => {
   test('shows LoadingPane when isLoading=true', () => {
     const { getByText } = renderWithIntl(
       <MemoryRouter>
-        <RemoteKbResource
+        <RemoteKbResourceView
           displayConfig={displayConfig}
           onClose={jest.fn()}
           queryProps={{ isLoading: true }}
@@ -233,12 +285,16 @@ describe('RemoteKbResource', () => {
   test('renders pane title and AppIcon', () => {
     const { getByTestId } = renderComp();
     expect(getByTestId('pane-icon')).toHaveTextContent('AppIcon:title');
-    expect(getByTestId('pane-title').textContent).toContain('journal of philosophy');
+    expect(getByTestId('pane-title').textContent).toContain(
+      'journal of philosophy'
+    );
   });
 
   test('renders key values (handlebars + publisher) and label ids', () => {
     const { container, getByText } = renderComp();
-    expect(container.querySelector('.kv-value')?.textContent).toContain('Journal');
+    expect(container.querySelector('.kv-value')?.textContent).toContain(
+      'Journal'
+    );
     expect(getByText('Science Press')).toBeInTheDocument();
     expect(getByText('ui-agreements.remoteKb.publisher')).toBeInTheDocument();
   });
@@ -253,7 +309,12 @@ describe('RemoteKbResource', () => {
           {
             type: 'displayDates',
             value: [
-              { type: 'access', accessType: 'JSONPath', expression: '$.dateFirstOnline', key: 'dateFirstOnline' },
+              {
+                type: 'access',
+                accessType: 'JSONPath',
+                expression: '$.dateFirstOnline',
+                key: 'dateFirstOnline',
+              },
             ],
           },
         ],
@@ -318,7 +379,11 @@ describe('RemoteKbResource', () => {
                       {
                         type: 'keyValue',
                         name: 'publisher',
-                        value: { type: 'access', accessType: 'JSONPath', expression: '$.publisherName' },
+                        value: {
+                          type: 'access',
+                          accessType: 'JSONPath',
+                          expression: '$.publisherName',
+                        },
                       },
                     ],
                   },
@@ -332,7 +397,11 @@ describe('RemoteKbResource', () => {
                       {
                         type: 'keyValue',
                         name: 'publisher',
-                        value: { type: 'access', accessType: 'JSONPath', expression: '$.publisherName' },
+                        value: {
+                          type: 'access',
+                          accessType: 'JSONPath',
+                          expression: '$.publisherName',
+                        },
                       },
                     ],
                   },
@@ -400,7 +469,7 @@ describe('RemoteKbResource', () => {
     expect(getByText('RegistryContent')).toBeInTheDocument();
     const badges = getAllByTestId('badge');
     expect(badges.length).toBeGreaterThan(0);
-    expect(badges.some(b => b.textContent === '7')).toBe(true);
+    expect(badges.some((b) => b.textContent === '7')).toBe(true);
   });
 
   test('row kept when partially visual (hasVisualContent=true)', () => {
@@ -420,11 +489,19 @@ describe('RemoteKbResource', () => {
                   type: 'row',
                   colCount: '2',
                   values: [
-                    { type: 'access', accessType: 'Other', expression: '$.noop' },
+                    {
+                      type: 'access',
+                      accessType: 'Other',
+                      expression: '$.noop',
+                    },
                     {
                       type: 'keyValue',
                       name: 'publisher',
-                      value: { type: 'access', accessType: 'JSONPath', expression: '$.publisherName' },
+                      value: {
+                        type: 'access',
+                        accessType: 'JSONPath',
+                        expression: '$.publisherName',
+                      },
                     },
                   ],
                 },
@@ -449,10 +526,30 @@ describe('RemoteKbResource', () => {
         values: [
           {
             type: 'table',
-            resource: { type: 'access', accessType: 'JSONPath', expression: '$.subjects[*]' },
+            resource: {
+              type: 'access',
+              accessType: 'JSONPath',
+              expression: '$.subjects[*]',
+            },
             columns: [
-              { name: 'scheme', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.scheme' } },
-              { name: 'heading', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.heading' } },
+              {
+                name: 'scheme',
+                type: 'String',
+                value: {
+                  type: 'access',
+                  accessType: 'JSONPath',
+                  expression: '$.scheme',
+                },
+              },
+              {
+                name: 'heading',
+                type: 'String',
+                value: {
+                  type: 'access',
+                  accessType: 'JSONPath',
+                  expression: '$.heading',
+                },
+              },
             ],
           },
         ],
@@ -472,9 +569,21 @@ describe('RemoteKbResource', () => {
         values: [
           {
             type: 'table',
-            resource: { type: 'access', accessType: 'JSONPath', expression: '$.altname[*]' },
+            resource: {
+              type: 'access',
+              accessType: 'JSONPath',
+              expression: '$.altname[*]',
+            },
             columns: [
-              { name: 'altNames', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.altNames' } },
+              {
+                name: 'altNames',
+                type: 'String',
+                value: {
+                  type: 'access',
+                  accessType: 'JSONPath',
+                  expression: '$.altNames',
+                },
+              },
             ],
           },
         ],
@@ -510,12 +619,26 @@ describe('RemoteKbResource', () => {
   test('access JSONPath with no result renders <NoValue/>', () => {
     const cfg = {
       icon: 'title',
-      title: { type: 'access', accessType: 'JSONPath', expression: '$.missing' },
-      renderStrategy: { type: 'rows', values: [{ type: 'access', accessType: 'JSONPath', expression: '$.missing' }] },
+      title: {
+        type: 'access',
+        accessType: 'JSONPath',
+        expression: '$.missing',
+      },
+      renderStrategy: {
+        type: 'rows',
+        values: [
+          { type: 'access', accessType: 'JSONPath', expression: '$.missing' },
+        ],
+      },
     };
     const { getAllByText } = renderWithIntl(
       <MemoryRouter>
-        <RemoteKbResource displayConfig={cfg} onClose={jest.fn()} queryProps={{ isLoading: false }} resource={{}} />
+        <RemoteKbResourceView
+          displayConfig={cfg}
+          onClose={jest.fn()}
+          queryProps={{ isLoading: false }}
+          resource={{}}
+        />
       </MemoryRouter>,
       translationsProperties
     );
@@ -528,19 +651,26 @@ describe('RemoteKbResource', () => {
       title: { type: 'static', value: 't' },
       renderStrategy: {
         type: 'rows',
-        values: [{
-          type: 'displayDates',
-          value: [
-            { key: 'publishedFrom', expression: '$.publishedFrom' },
-            { key: 'publishedTo', expression: '$.publishedTo' },
-          ],
-        }],
+        values: [
+          {
+            type: 'displayDates',
+            value: [
+              { key: 'publishedFrom', expression: '$.publishedFrom' },
+              { key: 'publishedTo', expression: '$.publishedTo' },
+            ],
+          },
+        ],
       },
     };
     const res = { publishedFrom: '2001-01-01', publishedTo: '2002-02-02' };
     const { getByText } = renderWithIntl(
       <MemoryRouter>
-        <RemoteKbResource displayConfig={cfg} onClose={jest.fn()} queryProps={{ isLoading: false }} resource={res} />
+        <RemoteKbResourceView
+          displayConfig={cfg}
+          onClose={jest.fn()}
+          queryProps={{ isLoading: false }}
+          resource={res}
+        />
       </MemoryRouter>,
       translationsProperties
     );
@@ -553,16 +683,23 @@ describe('RemoteKbResource', () => {
       title: { type: 'static', value: 't' },
       renderStrategy: {
         type: 'rows',
-        values: [{
-          type: 'handlebars',
-          templateString: 'whatever',
-          value: { type: 'static', value: 'ignored' },
-        }],
+        values: [
+          {
+            type: 'handlebars',
+            templateString: 'whatever',
+            value: { type: 'static', value: 'ignored' },
+          },
+        ],
       },
     };
     const { container } = renderWithIntl(
       <MemoryRouter>
-        <RemoteKbResource displayConfig={cfg} onClose={jest.fn()} queryProps={{ isLoading: false }} resource={{ foo: 'bar' }} />
+        <RemoteKbResourceView
+          displayConfig={cfg}
+          onClose={jest.fn()}
+          queryProps={{ isLoading: false }}
+          resource={{ foo: 'bar' }}
+        />
       </MemoryRouter>,
       translationsProperties
     );
@@ -584,7 +721,7 @@ describe('RemoteKbResource', () => {
 
     const { getByTestId } = renderWithIntl(
       <MemoryRouter>
-        <RemoteKbResource
+        <RemoteKbResourceView
           displayConfig={cfg}
           onClose={jest.fn()}
           queryProps={{ isLoading: false }}
