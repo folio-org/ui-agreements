@@ -117,13 +117,6 @@ const PackageInfo = ({
             value={eresource?.availabilityScope?.label || <NoValue />}
           />
         </Col>
-
-      </Row>
-      <Row>
-        <Col xs={6}>
-          <PackageIdentifiers pkg={eresource} />
-        </Col>
-
       </Row>
       <Row>
         <Col xs={3}>
@@ -163,6 +156,11 @@ const PackageInfo = ({
                 <NoValue />
             }
           />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={6}>
+          <PackageIdentifiers pkg={eresource} />
         </Col>
       </Row>
     </div>
