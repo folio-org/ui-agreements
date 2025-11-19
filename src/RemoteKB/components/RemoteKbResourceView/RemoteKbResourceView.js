@@ -34,7 +34,7 @@ import {
   stableKeyFrom,
 } from '../../utilities';
 
-import getResultsDisplayConfig from '../../../routes/utilities/getResultsDisplayConfig';
+import getResultsDisplayConfig from '../../utilities/getResultsDisplayConfig';
 
 const PANE_DEFAULT_WIDTH = '50%';
 
@@ -56,7 +56,7 @@ const propTypes = {
   }),
 };
 
-const RemoteKbResource = ({
+const RemoteKbResourceView = ({
   displayConfig,
   resource,
   onClose,
@@ -214,7 +214,6 @@ const RemoteKbResource = ({
         const registryRenderFunction =
           registryResource?.getRenderFunction(value.registryRenderFunction) ??
           null;
-
         const baseProps = (value.props || []).reduce((acc, p) => {
           acc[p.name] = renderValue(p.value);
           return acc;
@@ -371,6 +370,6 @@ const RemoteKbResource = ({
   );
 };
 
-RemoteKbResource.propTypes = propTypes;
+RemoteKbResourceView.propTypes = propTypes;
 
-export default RemoteKbResource;
+export default RemoteKbResourceView;

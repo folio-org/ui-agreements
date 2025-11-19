@@ -8,7 +8,7 @@ import {
 } from '@folio/stripes-erm-testing';
 
 import { MemoryRouter } from 'react-router-dom';
-import translationsProperties from '../../../test/helpers';
+import translationsProperties from '../../../../test/helpers';
 import RemoteKbFilters from './RemoteKbFilters';
 
 const stateMock = jest.fn();
