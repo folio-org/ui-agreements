@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { useLocation, useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
 import {
   Button,
@@ -15,6 +15,8 @@ import {
   PaneMenu,
   Paneset,
 } from '@folio/stripes/components';
+
+import { parseErrorResponse } from '@k-int/stripes-kint-components';
 
 import { AGREEMENT_ENDPOINT, BASKET_TYPE_GOKB_TITLE } from '../../../constants';
 
@@ -44,6 +46,7 @@ const Basket = ({
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
+  const callout = useCallout();
   // State to hold basket items
   const [selectedItems, setSelectedItems] = useState({});
   // State to hide/display agreement create modal
@@ -54,20 +57,29 @@ const Basket = ({
 
   const { mutateAsync: putAgreement } = useMutation(
     ['ERM', 'Basket', 'addToExistingAgreement', AGREEMENT_ENDPOINT(selectedAgreement?.id), 'PUT'],
-    (data) => {
-      return ky
-        .put(AGREEMENT_ENDPOINT(selectedAgreement?.id), {
-          json: data,
-        })
-        .json()
-        .then(() => {
-          /* Quick FIX for ERM-3673; only add location.search when coming from agreements */
-          history.push(
-            `${urls.agreementView(selectedAgreement?.id)}${location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
-            }`
-          );
+    (data) => ky.put(AGREEMENT_ENDPOINT(selectedAgreement?.id), { json: data }).json()
+      .then(response => {
+        history.push(
+          `${urls.agreementView(selectedAgreement?.id)}${location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
+          }`
+        );
+        return response;
+      })
+      .catch(async (error) => {
+        const errorResp = await parseErrorResponse(error.response);
+        const errorMessage = errorResp?.message;
+
+        callout.sendCallout({
+          type: 'error',
+          message: (
+            <FormattedMessage
+              id="ui-agreements.basket.update.error.callout"
+              values={{ error: errorMessage }}
+            />
+          ),
+          timeout: 0,
         });
-    }
+      })
   );
 
   const handleAddToExistingAgreement = useCallback(async (addFromBasket) => {
@@ -105,10 +117,10 @@ const Basket = ({
 
 
     /* If an agreement gets selected, fire a PUT
-      (triggering close/view agreement etc etc)
-      If we wish to add confirmation at some point
-      this will need changing
-     */
+            (triggering close/view agreement etc etc)
+            If we wish to add confirmation at some point
+            this will need changing
+           */
     if (selectedAgreement) {
       handleAddToExistingAgreement(getSelectedItems());
       // Unset while we wait for push... what if PUT fails?
