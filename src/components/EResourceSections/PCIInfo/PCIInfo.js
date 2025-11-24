@@ -15,7 +15,7 @@ import {
 } from '@folio/stripes/components';
 
 import AddToBasketButton from '../../AddToBasketButton';
-import { buildPackageEntitlementOption } from '../../utilities';
+import { buildPCIEntitlementOption } from '../../utilities';
 
 const propTypes = {
   pci: PropTypes.shape({
@@ -46,7 +46,7 @@ const PCIInfo = ({ pci }) => {
 
   const renderAddTitleToBasketButton = () => {
     const { name: packageName } = pci;
-    const entitlementOption = buildPackageEntitlementOption(pci);
+    const entitlementOption = buildPCIEntitlementOption(pci);
 
     return (
       <AddToBasketButton
