@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import { omit } from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
 
@@ -55,6 +55,7 @@ const AgreementCreateRoute = ({
 }) => {
   const { authority, referenceId } = queryString.parse(location?.search);
 
+  const intl = useIntl();
   const callout = useCallout();
   const stripes = useStripes();
   const ky = useOkapiKy();
@@ -121,12 +122,7 @@ const AgreementCreateRoute = ({
             .then(() => {
               callout.sendCallout({
                 type: 'success',
-                message: (
-                  <FormattedMessage
-                    id="ui-agreements.agreements.claimPolicies.update.callout"
-                    values={{ name }}
-                  />
-                )
+                message: intl.formatMessage({ id: 'ui-agreements.agreements.claimPolicies.update.callout' }, { name })
               });
             })
             .catch(async (claimError) => {
@@ -134,12 +130,7 @@ const AgreementCreateRoute = ({
 
               callout.sendCallout({
                 type: 'error',
-                message: (
-                  <FormattedMessage
-                    id="ui-agreements.agreements.claimPolicies.update.error.callout"
-                    values={{ name, error: errorMessage }}
-                  />
-                ),
+                message: intl.formatMessage({ id: 'ui-agreements.agreements.claimPolicies.update.error.callout' }, { name, error: errorMessage }),
                 timeout: 0,
               });
             });
@@ -164,12 +155,7 @@ const AgreementCreateRoute = ({
 
         callout.sendCallout({
           type: 'success',
-          message: (
-            <FormattedMessage
-              id="ui-agreements.agreements.create.callout"
-              values={{ name }}
-            />
-          )
+          message: intl.formatMessage({ id: 'ui-agreements.agreements.create.callout' }, { name })
         });
 
         handleClose(id);
@@ -179,15 +165,7 @@ const AgreementCreateRoute = ({
         // Agreement failed to create, send callout
         callout.sendCallout({
           type: 'error',
-          message: (
-            <FormattedMessage
-              id="ui-agreements.agreements.error.callout"
-              values={{
-                name: payload?.name ?? 'unknown',
-                error: agreementError.message
-              }}
-            />
-          ),
+          message: intl.formatMessage({ id: 'ui-agreements.agreements.error.callout' }, { name: payload?.name ?? 'unknown', error: agreementError.message }),
           timeout: 0,
         });
       })

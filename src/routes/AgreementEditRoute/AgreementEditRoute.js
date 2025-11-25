@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 
 import { cloneDeep, omit } from 'lodash';
@@ -65,6 +65,7 @@ const AgreementEditRoute = ({
   location,
   match: { params: { id: agreementId } },
 }) => {
+  const intl = useIntl();
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
 
@@ -151,13 +152,13 @@ const AgreementEditRoute = ({
             .then(() => {
               callout.sendCallout({
                 type: 'success',
-                message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.callout" values={{ name }} />,
+                message: intl.formatMessage({ id: 'ui-agreements.agreements.claimPolicies.update.callout' }, { name })
               });
             })
             .catch((claimError) => {
               callout.sendCallout({
                 type: 'error',
-                message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.error.callout" values={{ name, error: claimError.message }} />,
+                message: intl.formatMessage({ id: 'ui-agreements.agreements.claimPolicies.update.error.callout' }, { name, error: claimError.message }),
                 timeout: 0,
               });
             });
@@ -181,7 +182,7 @@ const AgreementEditRoute = ({
 
         callout.sendCallout({
           type: 'success',
-          message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} />
+          message: intl.formatMessage({ id: 'ui-agreements.agreements.update.callout' }, { name })
         });
 
         history.push(`${urls.agreementView(agreementId)}${location.search}`);
@@ -191,7 +192,7 @@ const AgreementEditRoute = ({
       .catch((agreementError) => {
         callout.sendCallout({
           type: 'error',
-          message: <FormattedMessage id="ui-agreements.agreements.update.error.callout" values={{ name: payload?.name ?? '', error: agreementError.message }} />,
+          message: intl.formatMessage({ id: 'ui-agreements.agreements.update.error.callout' }, { name: payload?.name ?? '', error: agreementError.message }),
           timeout: 0,
         });
         throw agreementError;
