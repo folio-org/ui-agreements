@@ -1,4 +1,4 @@
-import { createRef, isValidElement, useState } from 'react';
+import { createRef, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -65,7 +65,6 @@ const RemoteKbResourceView = ({
 }) => {
   const intl = useIntl();
   const accordionStatusRef = createRef();
-  const [badges, setBadges] = useState({});
 
   const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
 
@@ -82,22 +81,6 @@ const RemoteKbResourceView = ({
         return acc;
       }, {}) || {};
 
-  const setBadgeCount = (sectionName) => (count) => {
-    setBadges((prev) => {
-      if (count == null) {
-        const { [sectionName]: _omit, ...rest } = prev;
-        return rest;
-      }
-      if (prev[sectionName] === count) return prev;
-      return { ...prev, [sectionName]: count };
-    });
-  };
-
-  const renderBadge = (name) => {
-    const count = badges[name] ?? 0;
-    return <Badge>{count}</Badge>;
-  };
-
   // treat '', null/false, empty arrays as "empty"
   const hasVisualContent = (node) => {
     if (node == null || node === false) return false;
@@ -111,7 +94,7 @@ const RemoteKbResourceView = ({
     return true;
   };
 
-  const renderValue = (value, sectionName, badge) => {
+  const renderValue = (value) => {
     switch (value.type) {
       case 'access':
         if (value.accessType === 'JSONPath') {
@@ -213,9 +196,7 @@ const RemoteKbResourceView = ({
       case 'fetch': {
         const endpoint = renderValue(value.endpoint);
         return (
-          <RemoteKBFetchWrapper
-            endpoint={endpoint}
-          >
+          <RemoteKBFetchWrapper endpoint={endpoint}>
             {(data) => {
               renderValue(value.value, data);
             }}
@@ -234,9 +215,6 @@ const RemoteKbResourceView = ({
 
         const props = {
           ...baseProps,
-          ...(badge && sectionName
-            ? { setBadgeCount: setBadgeCount(sectionName) }
-            : {}),
         };
 
         return registryRenderFunction
@@ -248,6 +226,11 @@ const RemoteKbResourceView = ({
       default:
         return '';
     }
+  };
+
+  const renderBadge = (strategy) => {
+    const count = renderValue(strategy);
+    return <Badge>{count}</Badge>;
   };
 
   const applyRenderStrategy = (
@@ -311,8 +294,8 @@ const RemoteKbResourceView = ({
             <Accordion
               key={name}
               closedByDefault
-              displayWhenClosed={badge ? renderBadge(name) : null}
-              displayWhenOpen={badge ? renderBadge(name) : null}
+              displayWhenClosed={badge ? renderBadge(strategy) : null}
+              displayWhenOpen={badge ? renderBadge(strategy) : null}
               id={name}
               label={accordionTitle}
             >
