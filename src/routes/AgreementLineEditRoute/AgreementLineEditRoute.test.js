@@ -97,13 +97,13 @@ describe('AgreementLineEditRoute', () => {
         <MemoryRouter>
           <AgreementLineEditRoute
             {
-              ...{
-                ...data,
-                location: {
-                  ...data?.location,
-                  pathname: '/erm/agreementLines/...'
-                }
+            ...{
+              ...data,
+              location: {
+                ...data?.location,
+                pathname: '/erm/agreementLines/...'
               }
+            }
             }
           />
         </MemoryRouter>,
@@ -133,7 +133,8 @@ describe('AgreementLineEditRoute', () => {
 
   describe('renders loading view', () => {
     beforeEach(() => {
-      useQuery.mockImplementationOnce(() => ({ data: {}, isLoading: true }));
+      useQuery.mockClear();
+      useQuery.mockImplementation(() => ({ data: {}, isLoading: true }));
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementLineEditRoute {...data} />

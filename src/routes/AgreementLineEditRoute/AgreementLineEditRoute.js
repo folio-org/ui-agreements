@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { isEmpty } from 'lodash';
 
-import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
@@ -30,7 +30,7 @@ const AgreementLineEditRoute = ({
   match: { params: { agreementId, lineId } },
 }) => {
   const ky = useOkapiKy();
-  const callout = useContext(CalloutContext);
+  const callout = useCallout();
   const stripes = useStripes();
   const queryClient = useQueryClient();
 
@@ -71,7 +71,12 @@ const AgreementLineEditRoute = ({
         /* Invalidate cached queries */
         await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
+        callout.sendCallout({
+          message: (<FormattedMessage
+            id="ui-agreements.line.update.callout"
+            values={{ name: payload?.resource?.name || payload?.resourceName || payload?.reference || '' }}
+          />)
+        });
         if (!createAnother) {
           handleClose();
         } else {
