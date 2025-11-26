@@ -6,7 +6,7 @@ import { useMutation, useQueryClient, useQuery } from 'react-query';
 
 import { cloneDeep, omit } from 'lodash';
 
-import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, parseErrorResponse } from '@k-int/stripes-kint-components';
 
 import { LoadingView } from '@folio/stripes/components';
 import { useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
@@ -154,15 +154,19 @@ const AgreementEditRoute = ({
                 message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.callout" values={{ name }} />,
               });
             })
-            .catch((claimError) => {
+            .catch(async (claimError) => {
+              const responseObj = claimError?.response;
+              const parsedError = await parseErrorResponse(responseObj);
               callout.sendCallout({
                 type: 'error',
-                message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.error.callout" values={{ name, error: claimError.message }} />,
+                message: <FormattedMessage
+                  id="ui-agreements.agreements.claimPolicies.update.error.callout"
+                  values={{ name, error: parsedError?.message }}
+                />,
                 timeout: 0,
               });
             });
         }
-
         return response;
       })
       .then(async (response) => {
