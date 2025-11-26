@@ -895,5 +895,6 @@
     "remoteKb.actions.viewInLocalKb": "Titel in lokale KB weergeven",
     "remoteKb.actions.viewInRemoteKb": "Titel bekijken in {remoteKbName}",
     "eresources.gokbPackageUuid": "GOKB pakket UUID",
-    "eresources.gokbTitleUuid": "Titel GOKB UUID"
+    "eresources.gokbTitleUuid": "Titel GOKB UUID",
+    "eresources.sourceTitleCount": "Source title count"
 }
