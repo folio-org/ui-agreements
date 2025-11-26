@@ -2,6 +2,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { useMutation } from 'react-query';
 
 import { waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import { mockKyJson } from '@folio/stripes/core';
 import { Button as MockButton } from '@folio/stripes/components';
 import {
   Button,
@@ -161,6 +162,50 @@ describe('Basket', () => {
           await waitFor(() => {
             expect(getByText('AgreementModal')).toBeInTheDocument();
           });
+        });
+      });
+    });
+  });
+
+  describe('handling basket update errors', () => {
+    let renderComponent;
+
+    beforeEach(() => {
+      mockKyJson
+        .mockRejectedValueOnce({
+          message: 'Something went wrong',
+          response: {
+            json: async () => {
+              throw new Error('Invalid JSON');
+            },
+          },
+        });
+
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <Basket
+            data={mockData}
+            handlers={handlers}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    describe('when update on selecting an agreement fails', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('AgreementSearchButton').click();
+        });
+      });
+
+      test('renders the error callout', async () => {
+        const { getByText } = renderComponent;
+
+        await waitFor(() => {
+          expect(
+            getByText('Unable to add resource(s) to agreement: something went wrong')
+          ).toBeInTheDocument();
         });
       });
     });
