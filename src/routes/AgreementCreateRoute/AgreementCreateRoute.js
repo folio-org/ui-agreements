@@ -130,14 +130,14 @@ const AgreementCreateRoute = ({
               });
             })
             .catch(async (claimError) => {
-              const errorMessage = await parseErrorResponse(claimError.response)?.message;
-
+              const responseObj = claimError?.response;
+              const parsedError = await parseErrorResponse(responseObj);
               callout.sendCallout({
                 type: 'error',
                 message: (
                   <FormattedMessage
                     id="ui-agreements.agreements.claimPolicies.update.error.callout"
-                    values={{ name, error: errorMessage }}
+                    values={{ name, error: parsedError?.message }}
                   />
                 ),
                 timeout: 0,

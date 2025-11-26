@@ -895,5 +895,6 @@
     "remoteKb.actions.viewInLocalKb": "Ver título na Base de Conhecimento local",
     "remoteKb.actions.viewInRemoteKb": "Ver título em {remoteKbName}",
     "eresources.gokbPackageUuid": "UUID do pacote GOKB",
-    "eresources.gokbTitleUuid": "UUID do título GOKB"
+    "eresources.gokbTitleUuid": "UUID do título GOKB",
+    "eresources.sourceTitleCount": "Contagem do título da fonte"
 }
