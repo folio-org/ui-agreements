@@ -155,15 +155,12 @@ describe('setUpRegistry', () => {
       expect(el.props.resourceId).toBe(resourceId);
     });
 
-    test('agreementsList renderer passes remoteId and setBadgeCount', () => {
+    test('agreementsList renderer passes remoteId', () => {
       const fn = registry.resources.remoteKb.renderers.agreementsList;
       expect(typeof fn).toBe('function');
-
-      const setBadgeCount = jest.fn();
-      const el = fn({ remoteId: 'kb-123', setBadgeCount });
+      const el = fn({ remoteId: 'kb-123' });
       expect(el.type).toBe(RemoteResourceAgreementsList);
       expect(el.props.remoteId).toBe('kb-123');
-      expect(el.props.setBadgeCount).toBe(setBadgeCount);
     });
   });
 });
