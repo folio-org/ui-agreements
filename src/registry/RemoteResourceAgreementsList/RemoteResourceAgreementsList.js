@@ -17,12 +17,10 @@ import { parseMclPageSize } from '../../components/utilities';
 
 const propTypes = {
   remoteId: PropTypes.string.isRequired,
-  setBadgeCount: PropTypes.func.isRequired,
 };
 
 const RemoteResourceAgreementsList = ({
   remoteId,
-  setBadgeCount,
 }) => {
   const ky = useOkapiKy();
 
@@ -56,16 +54,6 @@ const RemoteResourceAgreementsList = ({
       const params = [...queryParams];
       return ky.get(`${ERESOURCE_ENTITLEMENTS_ENDPOINT(eresourceId)}?${params.join('&')}`).json();
     },
-    {
-      enabled: !!eresourceId && !!currentPage && !!pageSize,
-      onSuccess: (data) => {
-        const count = Array.isArray(data) ? data.length : (data?.totalRecords ?? 0);
-        setBadgeCount(count);
-      },
-      onError: () => {
-        setBadgeCount(0);
-      },
-    }
   );
 
   return (

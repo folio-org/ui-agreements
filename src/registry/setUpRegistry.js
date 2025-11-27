@@ -47,10 +47,10 @@ const setUpRegistry = (registry) => {
   const remoteKbResource = registry.registerResource('remoteKb');
   // GOKB TIPP
   remoteKbResource.setRenderFunction('gokbAddToBasketButton', ({ tipp }) => <GokbBasketButton tipp={tipp} />);
-  remoteKbResource.setRenderFunction('tippTable', ({ resourceId, setBadgeCount }) => <RemoteResourceTIPPTable resourceId={resourceId} setBadgeCount={setBadgeCount} />);
+  remoteKbResource.setRenderFunction('tippTable', ({ resourceId }) => <RemoteResourceTIPPTable resourceId={resourceId} />);
 
   // Render RemoteKb Agreements List
-  remoteKbResource.setRenderFunction('agreementsList', ({ remoteId, setBadgeCount }) => <RemoteResourceAgreementsList remoteId={remoteId} setBadgeCount={setBadgeCount} />);
+  remoteKbResource.setRenderFunction('agreementsList', ({ remoteId }) => <RemoteResourceAgreementsList remoteId={remoteId} />);
   remoteKbResource.setRenderFunction('viewInLocalKbButton', ({ remoteId }) => <ViewInLocalKbButton remoteId={remoteId} />);
   remoteKbResource.setRenderFunction('viewInRemoteKbButton', ({ url, remoteKbName }) => <ViewInRemoteKbButton remoteKbName={remoteKbName} url={url} />);
 };

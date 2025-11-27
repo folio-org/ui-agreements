@@ -53,13 +53,10 @@ jest.mock('react-query', () => ({
 }));
 
 describe('RemoteResourceAgreementsList (props & callbacks)', () => {
-  const setBadgeCount = jest.fn();
-
   const renderIt = () => renderWithIntl(
     <MemoryRouter>
       <RemoteResourceAgreementsList
         remoteId={remoteId}
-        setBadgeCount={setBadgeCount}
       />
     </MemoryRouter>,
     translationsProperties
@@ -97,8 +94,6 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
       'name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage'
     ]);
     expect(props.isEmptyMessage).toBeUndefined();
-
-    expect(setBadgeCount).toHaveBeenCalledWith(entitlements.length);
   });
 
   test('remote title not found, renders message (no child), entitlements query disabled, no badge', () => {
@@ -123,11 +118,9 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
     expect(messageNode).toBeInTheDocument();
 
     expect(entitlementsQueryOpts?.enabled).toBe(false);
-
-    expect(setBadgeCount).not.toHaveBeenCalled();
   });
 
-  test('TI found but no entitlements, child gets empty array, badge count set to 0', () => {
+  test('TI found but no entitlements, child gets empty array,', () => {
     useQuery.mockImplementation((key, _fn, opts) => {
       if (key[1] === 'fetchLocalTitleId') {
         return { data: eresourceId };
@@ -147,8 +140,6 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
 
     expect(props.eresourceId).toBe(eresourceId);
     expect(props.entitlements).toEqual([]);
-
-    expect(setBadgeCount).toHaveBeenCalledWith(0);
   });
 
   test('select function in fetchLocalTitleId query works as expected', () => {
@@ -192,7 +183,5 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
     });
 
     renderIt();
-
-    expect(setBadgeCount).toHaveBeenCalledWith(0);
   });
 });
