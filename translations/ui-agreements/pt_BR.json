@@ -896,5 +896,6 @@
     "remoteKb.actions.viewInRemoteKb": "Ver título em {remoteKbName}",
     "eresources.gokbPackageUuid": "UUID do pacote GOKB",
     "eresources.gokbTitleUuid": "UUID do título GOKB",
-    "eresources.sourceTitleCount": "Contagem do título da fonte"
+    "eresources.sourceTitleCount": "Contagem do título da fonte",
+    "basket.update.error.callout": "Não é possível adicionar recurso(s) ao contrato: {error}"
 }

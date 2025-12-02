@@ -896,5 +896,6 @@
     "remoteKb.actions.viewInRemoteKb": "Titel bekijken in {remoteKbName}",
     "eresources.gokbPackageUuid": "GOKB pakket UUID",
     "eresources.gokbTitleUuid": "Titel GOKB UUID",
-    "eresources.sourceTitleCount": "Source title count"
+    "eresources.sourceTitleCount": "Bron titel tellen",
+    "basket.update.error.callout": "Kan bron(nen) niet Toevoegen aan Overeenkomst: {error}"
 }
