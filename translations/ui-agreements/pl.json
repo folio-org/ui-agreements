@@ -778,11 +778,11 @@
     "emptyAccordion.documents": "Brak dokumentów dla tej pozycji umowy",
     "line.documents": "Dokumenty",
     "eresources.SynchronisationStatus": "Status synchronizacji",
-    "eresources.syncContentsFromSource.true": "Synchronizacja",
+    "eresources.syncContentsFromSource.true": "Włączony",
     "eresources.syncContentsFromSource.false": "Wstrzymano",
     "eresources.synchronisationStatus": "Status synchronizacji",
     "eresources.syncStatus.false": "Wstrzymano",
-    "eresources.syncStatus.true": "Synchronizacja",
+    "eresources.syncStatus.true": "Włączony",
     "eresources.syncStatus.notSet": "Nie ustawiono",
     "eresources.startSync": "Rozpocznij synchronizację",
     "eresources.pauseSync": "Wstrzymaj synchronizację",
@@ -896,5 +896,6 @@
     "remoteKb.actions.viewInRemoteKb": "Wyświetl tytuł w {remoteKbName}",
     "eresources.gokbPackageUuid": "GOKB package UUID",
     "eresources.gokbTitleUuid": "GOKB title UUID",
-    "eresources.sourceTitleCount": "Source title count"
+    "eresources.sourceTitleCount": "Source title count",
+    "basket.update.error.callout": "Unable to add resource(s) to agreement: {error}"
 }

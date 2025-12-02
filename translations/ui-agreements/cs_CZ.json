@@ -888,7 +888,7 @@
     "gokbSearch.basket.manageBasketForPackageName": "Spravovat košík pro {name}",
     "remoteKb.eresourceAgreements": "Smlouvy pro tento e-zdroj",
     "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion",
-    "remoteKb.packageTitles": "Package titles",
+    "remoteKb.packageTitles": "Názvy balíčků",
     "agreements.update.error.callout": "<strong>Error:</strong> Agreement {name} was not updated: {error}",
     "agreements.claimPolicies.update.callout": "<strong>Agreement acquisition units updated:</strong> {name}",
     "agreements.claimPolicies.update.error.callout": "<strong>Error:</strong> Acquisition units for agreement {name} were not updated: {error}",
@@ -896,5 +896,6 @@
     "remoteKb.actions.viewInRemoteKb": "Zobrazit název v {remoteKbName}",
     "eresources.gokbPackageUuid": "Balíček GOKB (UUID)",
     "eresources.gokbTitleUuid": "Název GOKB (UUID)",
-    "eresources.sourceTitleCount": "Source title count"
+    "eresources.sourceTitleCount": "Počet titulů zdroje",
+    "basket.update.error.callout": "Nelze přidat zdroj(e) do dohody: {error}"
 }

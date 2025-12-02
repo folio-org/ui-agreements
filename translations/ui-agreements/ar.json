@@ -896,5 +896,6 @@
     "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}",
     "eresources.gokbPackageUuid": "GOKB package UUID",
     "eresources.gokbTitleUuid": "GOKB title UUID",
-    "eresources.sourceTitleCount": "Source title count"
+    "eresources.sourceTitleCount": "Source title count",
+    "basket.update.error.callout": "Unable to add resource(s) to agreement: {error}"
 }
