@@ -57,9 +57,9 @@ const ContentTypesFieldArray = ({
 
 
   useEffect(() => {
-    // the second conditional is checking if the current field to be focused is the default content type field.
-    if (contentTypeRefs.current.length > 1 || (contentTypeRefs.current.length > 0 && previousCount - itemsLength === 1)) {
-      contentTypeRefs.current[itemsLength - 1].focus();
+  // it focus on the newly added dropdown if a new item was added
+    if (itemsLength > previousCount) {
+      contentTypeRefs.current[itemsLength - 1]?.focus();
     }
   }, [previousCount, itemsLength]);
 
