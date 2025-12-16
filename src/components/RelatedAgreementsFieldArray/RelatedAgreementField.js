@@ -47,6 +47,7 @@ const propTypes = {
   parentAgreementId: PropTypes.string,
   parentAgreementName: PropTypes.string,
 };
+
 const RelatedAgreementField = ({
   agreement = {},
   id,
@@ -57,22 +58,51 @@ const RelatedAgreementField = ({
   parentAgreementName,
 }) => {
   const { change } = useForm();
-  let triggerButton = useRef(null);
+
+  const triggerButton = useRef(null);
 
   const { selfLinkedWarning, setSelfLinkedWarning } = useLinkedWarning(change, input, parentAgreementId, triggerButton);
+
+  const handleAgreementSelected = (selectedAgreement) => {
+    onAgreementSelected(selectedAgreement);
+
+    const btnId = `${id}-find-agreement-btn`;
+
+    let tries = 0;
+    const tryFocus = () => {
+      const el = document.getElementById(btnId);
+      if (el && typeof el.focus === 'function') {
+        el.focus();
+        return;
+      }
+      tries += 1;
+      if (tries < 10) setTimeout(tryFocus, 25);
+    };
+
+    setTimeout(tryFocus, 0);
+  };
 
   /* istanbul ignore next */
   const renderLinkAgreementButton = value => (
     <Pluggable
       dataKey={id}
-      onAgreementSelected={onAgreementSelected}
+      onAgreementSelected={handleAgreementSelected} // CHANGED
       renderTrigger={(pluggableRenderProps) => {
-        triggerButton = pluggableRenderProps.buttonRef;
+        const setButtonRef = (node) => {
+          triggerButton.current = node;
+
+          const { buttonRef } = pluggableRenderProps;
+          if (typeof buttonRef === 'function') {
+            buttonRef(node);
+          } else if (buttonRef && typeof buttonRef === 'object') {
+            buttonRef.current = node;
+          }
+        };
 
         const agreementName = agreement?.name;
         const buttonProps = {
           'aria-haspopup': 'true',
-          'buttonRef': triggerButton,
+          'buttonRef': setButtonRef,
           'buttonStyle': value ? 'default' : 'primary',
           'id': `${id}-find-agreement-btn`,
           'marginBottom0': true,
@@ -98,10 +128,9 @@ const RelatedAgreementField = ({
             </Tooltip>
           );
         }
+
         return (
-          <Button
-            {...buttonProps}
-          >
+          <Button {...buttonProps}>
             <FormattedMessage id="ui-agreements.relatedAgreements.linkAgreement" />
           </Button>
         );
@@ -175,6 +204,7 @@ const RelatedAgreementField = ({
   );
 
   const iconKey = agreement?.agreementStatus?.value === statuses.CLOSED ? 'closedAgreement' : 'app';
+
   return (
     <Card
       cardStyle={input.value ? 'positive' : 'negative'}
@@ -198,4 +228,3 @@ const RelatedAgreementField = ({
 RelatedAgreementField.propTypes = propTypes;
 
 export default RelatedAgreementField;
-
