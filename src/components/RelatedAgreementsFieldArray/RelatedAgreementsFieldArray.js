@@ -12,6 +12,8 @@ import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import RelatedAgreementField from './RelatedAgreementField';
 import { agreementRelationshipTypes } from '../../constants';
+import { focusByIdWhenReady } from '../utilities';
+
 
 const RelatedAgreementsFieldArray = ({
   currentAgreementId,
@@ -41,8 +43,9 @@ const RelatedAgreementsFieldArray = ({
     }
   });
 
-  const handleAgreementSelected = (index, agreement) => {
+  const handleAgreementSelected = (index, agreement, triggerButtonId) => {
     onUpdateField(index, { agreement });
+    focusByIdWhenReady(triggerButtonId);
   };
 
   const renderEmpty = () => (
@@ -69,51 +72,75 @@ const RelatedAgreementsFieldArray = ({
   };
 
   const renderRelatedAgreements = () => {
-    return items.map((relatedAgreement, index) => (
-      <EditCard
-        key={index}
-        data-testid={`relatedAgreementsFieldArray[${index}]`}
-        deleteBtnProps={{
-          'id': `ra-delete-${index}`,
-          'data-test-delete-field-button': true
-        }}
-        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.relatedAgreements.remove" values={{ index: index + 1 }} />}
-        header={<FormattedMessage id="ui-agreements.relatedAgreements.relatedAgreementIndex" values={{ index: index + 1 }} />}
-        id={`edit-ra-card-${index}`}
-        onDelete={() => onDeleteField(index, relatedAgreement)}
-      >
-        <Field
-          agreement={relatedAgreement.agreement}
-          component={RelatedAgreementField}
-          id={`ra-agreement-${index}`}
-          index={index}
-          name={`${name}[${index}].agreement`}
-          onAgreementSelected={selectedAgreement => handleAgreementSelected(index, selectedAgreement)}
-          parentAgreementId={currentAgreementId}
-          parentAgreementName={currentAgreementName}
-          validate={requiredValidator}
-        />
-        <Field
-          component={Select}
-          dataOptions={relationshipTypes}
-          disabled={!get(relatedAgreement, 'agreement.id')}
-          id={`ra-type-${index}`}
-          label={<FormattedMessage id="ui-agreements.relatedAgreements.relationshipToThisAgreement" />}
-          name={`${name}[${index}].type`}
-          required
-          validate={requiredValidator}
-        />
-        {renderRelationshipSummary(relatedAgreement)}
-        <Field
-          component={TextArea}
-          id={`ra-note-${index}`}
-          label={<FormattedMessage id="ui-agreements.note" />}
-          name={`${name}[${index}].note`}
-          parse={v => v}
-        />
-      </EditCard>
-    ));
+    return items.map((relatedAgreement, index) => {
+      const fieldId = `ra-agreement-${index}`;
+      const triggerButtonId = `${fieldId}-find-agreement-btn`;
+
+      return (
+        <EditCard
+          key={index}
+          data-testid={`relatedAgreementsFieldArray[${index}]`}
+          deleteBtnProps={{
+            id: `ra-delete-${index}`,
+            'data-test-delete-field-button': true
+          }}
+          deleteButtonTooltipText={
+            <FormattedMessage
+              id="ui-agreements.relatedAgreements.remove"
+              values={{ index: index + 1 }}
+            />
+          }
+          header={
+            <FormattedMessage
+              id="ui-agreements.relatedAgreements.relatedAgreementIndex"
+              values={{ index: index + 1 }}
+            />
+          }
+          id={`edit-ra-card-${index}`}
+          onDelete={() => onDeleteField(index, relatedAgreement)}
+        >
+          <Field
+            agreement={relatedAgreement.agreement}
+            component={RelatedAgreementField}
+            id={fieldId}
+            index={index}
+            name={`${name}[${index}].agreement`}
+            onAgreementSelected={selectedAgreement => handleAgreementSelected(index, selectedAgreement, triggerButtonId)
+            }
+            parentAgreementId={currentAgreementId}
+            parentAgreementName={currentAgreementName}
+            triggerButtonId={triggerButtonId}
+            validate={requiredValidator}
+          />
+
+          <Field
+            component={Select}
+            dataOptions={relationshipTypes}
+            disabled={!get(relatedAgreement, 'agreement.id')}
+            id={`ra-type-${index}`}
+            label={
+              <FormattedMessage id="ui-agreements.relatedAgreements.relationshipToThisAgreement" />
+            }
+            name={`${name}[${index}].type`}
+            required
+            validate={requiredValidator}
+          />
+
+          {renderRelationshipSummary(relatedAgreement)}
+
+          <Field
+            component={TextArea}
+            id={`ra-note-${index}`}
+            label={<FormattedMessage id="ui-agreements.note" />}
+            name={`${name}[${index}].note`}
+            parse={v => v}
+          />
+        </EditCard>
+      );
+    });
   };
+
+
   return (
     <div data-test-ra-fa>
       <div>

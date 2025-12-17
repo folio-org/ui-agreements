@@ -11,3 +11,4 @@ export { default as getTranslatedAcqMethod } from './getTranslatedAcqMethod';
 export { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 export { filterObjectKeys, filterIgnoreObjectKeys } from './filterObjectKeys';
 export * from './entitlementOptions';
+export { default as focusByIdWhenReady } from './focusByIdWhenReady';

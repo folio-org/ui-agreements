@@ -46,6 +46,7 @@ const propTypes = {
   onAgreementSelected: PropTypes.func.isRequired,
   parentAgreementId: PropTypes.string,
   parentAgreementName: PropTypes.string,
+  triggerButtonId: PropTypes.string,
 };
 
 const RelatedAgreementField = ({
@@ -56,6 +57,7 @@ const RelatedAgreementField = ({
   onAgreementSelected,
   parentAgreementId,
   parentAgreementName,
+  triggerButtonId
 }) => {
   const { change } = useForm();
   let triggerButton = useRef(null);
@@ -82,7 +84,7 @@ const RelatedAgreementField = ({
           'aria-haspopup': 'true',
           'buttonRef': triggerButton,
           'buttonStyle': value ? 'default' : 'primary',
-          'id': `${id}-find-agreement-btn`,
+          'id': triggerButtonId || `${id}-find-agreement-btn`,
           'marginBottom0': true,
           'name': input.name,
           'onClick': pluggableRenderProps.onClick
@@ -98,7 +100,6 @@ const RelatedAgreementField = ({
               {({ ariaIds }) => (
                 <Button
                   aria-labelledby={ariaIds.text}
-                  autoFocus
                   {...buttonProps}
                 >
                   <FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreement" />
