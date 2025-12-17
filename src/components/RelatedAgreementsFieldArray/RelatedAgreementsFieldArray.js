@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -21,6 +21,29 @@ const RelatedAgreementsFieldArray = ({
   const intl = useIntl();
   const { items, onAddField, onDeleteField, onUpdateField } = useKiwtFieldArray(name);
   const relationshipTypes = [{ label: '', value: '' }];
+
+  const lastAddedIndexRef = useRef(null);
+
+  useEffect(() => {
+    const idx = lastAddedIndexRef.current;
+    if (idx === null) return;
+
+    const btnId = `ra-agreement-${idx}-find-agreement-btn`;
+
+    let tries = 0;
+    const tryFocus = () => {
+      const el = document.getElementById(btnId);
+      if (el && typeof el.focus === 'function') {
+        el.focus();
+        lastAddedIndexRef.current = null;
+        return;
+      }
+      tries += 1;
+      if (tries < 10) setTimeout(tryFocus, 25);
+    };
+
+    setTimeout(tryFocus, 0);
+  }, [items.length]);
 
   agreementRelationshipTypes.forEach(type => {
     relationshipTypes.push({
@@ -122,7 +145,10 @@ const RelatedAgreementsFieldArray = ({
       <Button
         data-test-ra-fa-add-button
         id="add-ra-btn"
-        onClick={() => onAddField()}
+        onClick={() => {
+          lastAddedIndexRef.current = items.length;
+          onAddField();
+        }}
       >
         <FormattedMessage id="ui-agreements.relatedAgreements.addRelatedAgreement" />
       </Button>

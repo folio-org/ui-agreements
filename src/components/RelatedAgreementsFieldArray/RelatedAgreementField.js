@@ -58,10 +58,14 @@ const RelatedAgreementField = ({
   parentAgreementName,
 }) => {
   const { change } = useForm();
+  let triggerButton = useRef(null);
 
-  const triggerButton = useRef(null);
-
-  const { selfLinkedWarning, setSelfLinkedWarning } = useLinkedWarning(change, input, parentAgreementId, triggerButton);
+  const { selfLinkedWarning, setSelfLinkedWarning } = useLinkedWarning(
+    change,
+    input,
+    parentAgreementId,
+    triggerButton
+  );
 
   const handleAgreementSelected = (selectedAgreement) => {
     onAgreementSelected(selectedAgreement);
@@ -76,7 +80,7 @@ const RelatedAgreementField = ({
         return;
       }
       tries += 1;
-      if (tries < 10) setTimeout(tryFocus, 25);
+      if (tries < 10) setTimeout(tryFocus, 25); // ~250ms total
     };
 
     setTimeout(tryFocus, 0);
@@ -88,21 +92,12 @@ const RelatedAgreementField = ({
       dataKey={id}
       onAgreementSelected={handleAgreementSelected}
       renderTrigger={(pluggableRenderProps) => {
-        const setButtonRef = (node) => {
-          triggerButton.current = node;
-
-          const { buttonRef } = pluggableRenderProps;
-          if (typeof buttonRef === 'function') {
-            buttonRef(node);
-          } else if (buttonRef && typeof buttonRef === 'object') {
-            buttonRef.current = node;
-          }
-        };
+        triggerButton = pluggableRenderProps.buttonRef;
 
         const agreementName = agreement?.name;
         const buttonProps = {
           'aria-haspopup': 'true',
-          'buttonRef': setButtonRef,
+          'buttonRef': triggerButton,
           'buttonStyle': value ? 'default' : 'primary',
           'id': `${id}-find-agreement-btn`,
           'marginBottom0': true,
@@ -118,10 +113,7 @@ const RelatedAgreementField = ({
               triggerRef={triggerButton}
             >
               {({ ariaIds }) => (
-                <Button
-                  aria-labelledby={ariaIds.text}
-                  {...buttonProps}
-                >
+                <Button aria-labelledby={ariaIds.text} {...buttonProps}>
                   <FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreement" />
                 </Button>
               )}
@@ -143,10 +135,7 @@ const RelatedAgreementField = ({
 
   const renderAgreement = () => (
     <div>
-      <Link
-        data-test-agreement-card-name
-        to={urls.agreementView(agreement.id)}
-      >
+      <Link data-test-agreement-card-name to={urls.agreementView(agreement.id)}>
         {agreement.name}
       </Link>
       <Row>
@@ -197,9 +186,7 @@ const RelatedAgreementField = ({
 
   const renderError = () => (
     <Layout className={`textCentered ${css.error}`}>
-      <strong>
-        {meta.error}
-      </strong>
+      <strong>{meta.error}</strong>
     </Layout>
   );
 
