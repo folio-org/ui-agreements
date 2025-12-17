@@ -4,47 +4,28 @@ import { Button, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 
 import { FieldArray } from 'react-final-form-arrays';
 import RelatedAgreementsFieldArray from '../RelatedAgreementsFieldArray';
-
+import { focusByIdWhenReady } from '../../utilities';
+import { relatedAgreements } from '../../../../test/jest';
 import translationsProperties from '../../../../test/helpers';
 
 const onSubmit = jest.fn();
 
-jest.mock('../RelatedAgreementField', () => () => <div>RelatedAgreementField</div>);
+jest.mock('../../utilities', () => ({
+  focusByIdWhenReady: jest.fn(),
+}));
 
-const relatedAgreements = [
-  {
-    id: '6bcca40d-138c-4c51-b7f5-235fb02552a6',
-    note: 'test note 1',
-    agreement: {
-      id: 'f591806e-fe8c-4b16-a3cb-8cccc180d82b',
-      name: 'AM ag 1',
-      agreementStatus: {
-        id: '2c91809c7ba954b5017ba95c586a0035',
-        value: 'active',
-        label: 'Active'
-      },
-      startDate: '2021-09-02',
-      endDate: null
-    },
-    type: 'supersedes'
-  },
-  {
-    id: 'ac2fde6e-a6a2-4df5-b244-8d803382d2d5',
-    note: 'test note 2',
-    agreement: {
-      id: 'b958c1be-54f5-4f3d-9131-4255cd21b109',
-      name: 'AM ag 3',
-      agreementStatus: {
-        id: '2c91809c7ba954b5017ba95c58630034',
-        value: 'in_negotiation',
-        label: 'In negotiation'
-      },
-      startDate: '2021-09-18',
-      endDate: null
-    },
-    type: 'provides_post-cancellation_access_for'
-  }
-];
+jest.mock('../RelatedAgreementField', () => (props) => (
+  <div>
+    <div>RelatedAgreementField</div>
+    <button
+      onClick={() => props.onAgreementSelected({ id: 'selected-agreement-id', name: 'Selected' })}
+      type="button"
+    >
+      Select agreement
+    </button>
+  </div>
+));
+
 
 describe('RelatedAgreementsFieldArray', () => {
   describe('render with empty initial values', () => {
@@ -61,6 +42,20 @@ describe('RelatedAgreementsFieldArray', () => {
           />
         </TestForm>, translationsProperties
       );
+    });
+
+    test('calling onAgreementSelected focuses the trigger button id for that card', async () => {
+      const { getByRole } = renderComponent;
+
+      await waitFor(async () => {
+        await Button('Add related agreement').click();
+      });
+
+      await waitFor(async () => {
+        await userEvent.click(getByRole('button', { name: 'Select agreement' }));
+      });
+
+      expect(focusByIdWhenReady).toHaveBeenCalledWith('ra-agreement-0-find-agreement-btn');
     });
 
     it('renders empty field', () => {
@@ -132,8 +127,8 @@ describe('RelatedAgreementsFieldArray', () => {
 
     it('renders the expected relationship summary in each field', () => {
       const { getByTestId } = renderComponent;
-      expect(within(getByTestId('relatedAgreementsFieldArray[0]')).getByText(/"AM ag 1" supersedes the agreement being created/)).toBeInTheDocument();
-      expect(within(getByTestId('relatedAgreementsFieldArray[1]')).getByText(/"AM ag 3" provides post-cancellation access for the agreement being created/)).toBeInTheDocument();
+      expect(within(getByTestId('relatedAgreementsFieldArray[0]')).getByText(/"Related agreement 1" supersedes the agreement being created/)).toBeInTheDocument();
+      expect(within(getByTestId('relatedAgreementsFieldArray[1]')).getByText(/"Related agreement 2" provides post-cancellation access for the agreement being created/)).toBeInTheDocument();
     });
 
     it('renders the expected note in each field', () => {
