@@ -86,7 +86,7 @@ const RelatedAgreementField = ({
   const renderLinkAgreementButton = value => (
     <Pluggable
       dataKey={id}
-      onAgreementSelected={handleAgreementSelected} // CHANGED
+      onAgreementSelected={handleAgreementSelected}
       renderTrigger={(pluggableRenderProps) => {
         const setButtonRef = (node) => {
           triggerButton.current = node;
