@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-final-form';
 import { Link } from 'react-router-dom';
@@ -60,37 +60,20 @@ const RelatedAgreementField = ({
   const { change } = useForm();
   let triggerButton = useRef(null);
 
-  const { selfLinkedWarning, setSelfLinkedWarning } = useLinkedWarning(
-    change,
-    input,
-    parentAgreementId,
-    triggerButton
-  );
+  const { selfLinkedWarning, setSelfLinkedWarning } = useLinkedWarning(change, input, parentAgreementId, triggerButton);
 
-  const handleAgreementSelected = (selectedAgreement) => {
-    onAgreementSelected(selectedAgreement);
-
-    const btnId = `${id}-find-agreement-btn`;
-
-    let tries = 0;
-    const tryFocus = () => {
-      const el = document.getElementById(btnId);
-      if (el && typeof el.focus === 'function') {
-        el.focus();
-        return;
-      }
-      tries += 1;
-      if (tries < 10) setTimeout(tryFocus, 25); // ~250ms total
-    };
-
-    setTimeout(tryFocus, 0);
-  };
+  useEffect(() => {
+    if (!input.value?.id && triggerButton.current) {
+      triggerButton.current.focus();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /* istanbul ignore next */
   const renderLinkAgreementButton = value => (
     <Pluggable
       dataKey={id}
-      onAgreementSelected={handleAgreementSelected}
+      onAgreementSelected={onAgreementSelected}
       renderTrigger={(pluggableRenderProps) => {
         triggerButton = pluggableRenderProps.buttonRef;
 
@@ -113,16 +96,21 @@ const RelatedAgreementField = ({
               triggerRef={triggerButton}
             >
               {({ ariaIds }) => (
-                <Button aria-labelledby={ariaIds.text} {...buttonProps}>
+                <Button
+                  aria-labelledby={ariaIds.text}
+                  autoFocus
+                  {...buttonProps}
+                >
                   <FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreement" />
                 </Button>
               )}
             </Tooltip>
           );
         }
-
         return (
-          <Button {...buttonProps}>
+          <Button
+            {...buttonProps}
+          >
             <FormattedMessage id="ui-agreements.relatedAgreements.linkAgreement" />
           </Button>
         );
@@ -135,7 +123,10 @@ const RelatedAgreementField = ({
 
   const renderAgreement = () => (
     <div>
-      <Link data-test-agreement-card-name to={urls.agreementView(agreement.id)}>
+      <Link
+        data-test-agreement-card-name
+        to={urls.agreementView(agreement.id)}
+      >
         {agreement.name}
       </Link>
       <Row>
@@ -186,12 +177,13 @@ const RelatedAgreementField = ({
 
   const renderError = () => (
     <Layout className={`textCentered ${css.error}`}>
-      <strong>{meta.error}</strong>
+      <strong>
+        {meta.error}
+      </strong>
     </Layout>
   );
 
   const iconKey = agreement?.agreementStatus?.value === statuses.CLOSED ? 'closedAgreement' : 'app';
-
   return (
     <Card
       cardStyle={input.value ? 'positive' : 'negative'}
