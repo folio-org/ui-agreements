@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-final-form';
 import { Link } from 'react-router-dom';
@@ -46,7 +46,9 @@ const propTypes = {
   onAgreementSelected: PropTypes.func.isRequired,
   parentAgreementId: PropTypes.string,
   parentAgreementName: PropTypes.string,
+  triggerButtonId: PropTypes.string,
 };
+
 const RelatedAgreementField = ({
   agreement = {},
   id,
@@ -55,11 +57,19 @@ const RelatedAgreementField = ({
   onAgreementSelected,
   parentAgreementId,
   parentAgreementName,
+  triggerButtonId
 }) => {
   const { change } = useForm();
   let triggerButton = useRef(null);
 
   const { selfLinkedWarning, setSelfLinkedWarning } = useLinkedWarning(change, input, parentAgreementId, triggerButton);
+
+  useEffect(() => {
+    if (!input.value?.id && triggerButton.current) {
+      triggerButton.current.focus();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /* istanbul ignore next */
   const renderLinkAgreementButton = value => (
@@ -74,7 +84,7 @@ const RelatedAgreementField = ({
           'aria-haspopup': 'true',
           'buttonRef': triggerButton,
           'buttonStyle': value ? 'default' : 'primary',
-          'id': `${id}-find-agreement-btn`,
+          'id': triggerButtonId || `${id}-find-agreement-btn`,
           'marginBottom0': true,
           'name': input.name,
           'onClick': pluggableRenderProps.onClick
@@ -198,4 +208,3 @@ const RelatedAgreementField = ({
 RelatedAgreementField.propTypes = propTypes;
 
 export default RelatedAgreementField;
-
