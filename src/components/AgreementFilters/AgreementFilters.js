@@ -23,7 +23,7 @@ import {
   SimpleAccessControlFilter
 } from '@folio/stripes-erm-components';
 
-import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
+import { CustomPropertiesFilter, useTagsEnabled } from '@k-int/stripes-kint-components';
 
 import AgreementContentFilter from '../AgreementContentFilter';
 import { AGREEMENTS_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOINT } from '../../constants';
@@ -48,6 +48,7 @@ const AgreementFilters = ({
   filterHandlers,
 }) => {
   const intl = useIntl();
+  const tagsEnabled = useTagsEnabled();
 
   const [filterState, setFilterState] = useState({
     agreementStatus: [],
@@ -410,7 +411,7 @@ const AgreementFilters = ({
       {renderInternalContactFilter()}
       {renderInternalContactRoleFilter()}
       {renderCheckboxFilter('agreementContentType', { closedByDefault: true })}
-      {renderTagsFilter()}
+      {tagsEnabled && renderTagsFilter()}
       {renderCustomPropertyFilters()}
       {renderAgreementContentFilter()}
       {renderSupplementaryDocumentFilter()}
