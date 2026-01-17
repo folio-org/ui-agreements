@@ -623,7 +623,7 @@
     "agreementLines.activeFrom.includeNoDateSet": "Включити рядки, без встановленої дати для \"активно з\"",
     "agreementLines.activeTo.includeNoDateSet": "Включити рядки, без встановленої дати для \"активно до\"",
     "agreementLines.agreementLineType": "Тип рядка угоди",
-    "agreementsSearch": "Пошук угод",
+    "agreementsSearch": "Угоди",
     "localKBSearch": "Пошук в локальній базі знань (KB)",
     "edit": "Редагувати",
     "save": "Зберегти",
