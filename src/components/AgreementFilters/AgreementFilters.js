@@ -48,7 +48,7 @@ const AgreementFilters = ({
   filterHandlers,
 }) => {
   const intl = useIntl();
-  const tagsEnabled = useTagsEnabled({ useSettings: false });
+  const tagsEnabled = useTagsEnabled({ useSettings: true });
 
   const [filterState, setFilterState] = useState({
     agreementStatus: [],
