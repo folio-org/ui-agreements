@@ -887,7 +887,7 @@
     "gokbSearch.basket.packageNameNotInKB": "{name} ne v místní KB",
     "gokbSearch.basket.manageBasketForPackageName": "Spravovat košík pro {name}",
     "remoteKb.eresourceAgreements": "Smlouvy pro tento e-zdroj",
-    "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion",
+    "remoteKb.remoteTitleNotFound": "Název se momentálně nenachází v místní znalostní bázi. Chcete-li název přidat, synchronizujte jeden z balíčků uvedených v akordeonu Balíčky",
     "remoteKb.packageTitles": "Názvy balíčků",
     "agreements.update.error.callout": "<strong>Chyba:</strong> {name} nebyla aktualizována: {error}",
     "agreements.claimPolicies.update.callout": "<strong>Aktualizace jednotek pro získávání dohod:</strong> {name}",

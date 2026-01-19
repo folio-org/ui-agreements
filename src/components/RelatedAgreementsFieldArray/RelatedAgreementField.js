@@ -90,6 +90,7 @@ const RelatedAgreementField = ({
               {({ ariaIds }) => (
                 <Button
                   aria-labelledby={ariaIds.text}
+                  autoFocus
                   {...buttonProps}
                 >
                   <FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreement" />
@@ -100,6 +101,7 @@ const RelatedAgreementField = ({
         }
         return (
           <Button
+            autoFocus
             {...buttonProps}
           >
             <FormattedMessage id="ui-agreements.relatedAgreements.linkAgreement" />
