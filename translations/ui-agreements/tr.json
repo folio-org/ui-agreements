@@ -583,7 +583,7 @@
     "moveIdentifiers.selectTitle": "Başlık seçin",
     "moveIdentifiers.replaceTitle": "Başlığı Değiştir",
     "moveIdentifiers.replaceTitleSpecific": "eresource'u değiştirin {eresourceName}",
-    "identifier.type": "{label} ",
+    "identifier.type": "{label}",
     "identifiers.identifiersToMove": "Taşınacak tanımlayıcı(lar)",
     "identifiers.identifierDestination": "Tanımlayıcı hedef",
     "moveIdentifiers.noPlugin": "\"find-eresource\" eklentisi yüklü değil",
