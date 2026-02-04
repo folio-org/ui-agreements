@@ -349,7 +349,7 @@ const RemoteKbResourceView = ({
   const renderActionMenu = () => {
     return (
       <div>
-        {displayConfig.actions.values.map((value) => renderValue(value))}
+        {displayConfig.actions.values.map((value) => <span key={value.name}>{renderValue(value)}</span>)}
       </div>
     );
   };
