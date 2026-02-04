@@ -6,7 +6,7 @@ import kyImport from 'ky';
 
 import { AppIcon } from '@folio/stripes/core';
 
-import { MessageBanner, TextLink } from '@folio/stripes/components';
+import { MessageBanner } from '@folio/stripes/components';
 import {
   ColumnManagerMenu,
   useColumnManager,
@@ -48,7 +48,6 @@ const RemoteKBRoute = ({ externalKbInfo }) => {
           kbName,
           settingsLink: (text) => (
             <Link to="/settings/local-kb-admin/external-data-sources">{text}</Link>
-            // <TextLink to="/settings/local-kb-admin/external-data-sources">{text}</TextLink>
           ),
         }}
       />
