@@ -1,9 +1,12 @@
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import kyImport from 'ky';
 
 import { AppIcon } from '@folio/stripes/core';
 
+import { MessageBanner, TextLink } from '@folio/stripes/components';
 import {
   ColumnManagerMenu,
   useColumnManager,
@@ -27,7 +30,30 @@ import {
   getSortConfig,
 } from './utilities';
 
-const RemoteKBRoute = () => {
+const propTypes = {
+  externalKbInfo: PropTypes.shape({
+    baseOrigin: PropTypes.string.isRequired,
+    kbCount: PropTypes.number,
+    kbName: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+const RemoteKBRoute = ({ externalKbInfo }) => {
+  const { baseOrigin, kbCount, kbName } = externalKbInfo;
+  const messageBanner = kbCount > 1 &&
+    <MessageBanner type="warning">
+      <FormattedMessage
+        id="ui-agreements.remoteKb.warn.externalKbs"
+        values={{
+          kbName,
+          settingsLink: (text) => (
+            <Link to="/settings/local-kb-admin/external-data-sources">{text}</Link>
+            // <TextLink to="/settings/local-kb-admin/external-data-sources">{text}</TextLink>
+          ),
+        }}
+      />
+    </MessageBanner>;
+
   const kbKey = 'gokb';
   const columnsConfig = config.configuration.results.display.columns;
   const displayConfig = config.configuration.view.display;
@@ -37,13 +63,21 @@ const RemoteKBRoute = () => {
   const viewFetchConfig = config.configuration.view.fetch;
   const viewQueryIdKey = viewFetchConfig?.viewQueryIdentifierKey || 'id';
 
+  const resolveUrl = (urlConfig, baseOrigin) => {
+    if (urlConfig?.type === 'handlebars') {
+      const template = handlebarsCompile(urlConfig.templateString);
+      return template({ baseOrigin });
+    }
+    return urlConfig;
+  };
+
   const itemEndpointData = {
-    endpoint: viewFetchConfig.baseUrl,
+    endpoint: resolveUrl(viewFetchConfig.baseUrl, baseOrigin),
     ...viewFetchConfig.mapping,
   };
 
   const endpointData = {
-    endpoint: config.configuration.results.fetch.baseUrl,
+    endpoint: resolveUrl(config.configuration.results.fetch.baseUrl, baseOrigin),
     ...config.configuration.results.fetch.mapping,
   };
 
@@ -52,7 +86,7 @@ const RemoteKBRoute = () => {
   );
 
   const ViewComponent = (props) => (
-    <RemoteKbResource {...props} displayConfig={displayConfig} />
+    <RemoteKbResource {...props} displayConfig={displayConfig} baseOrigin={baseOrigin} />
   );
 
   const { formatter, resultColumns, sortableColumns } = getResultsDisplayConfig(
@@ -182,6 +216,7 @@ const RemoteKBRoute = () => {
       }}
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
+      resultsHeaderContent={messageBanner}
       sasqProps={{
         initialFilterState,
         sortableColumns,
@@ -206,5 +241,7 @@ const RemoteKBRoute = () => {
     />
   );
 };
+
+RemoteKBRoute.propTypes = propTypes;
 
 export default RemoteKBRoute;

@@ -39,6 +39,7 @@ import getResultsDisplayConfig from '../../utilities/getResultsDisplayConfig';
 const PANE_DEFAULT_WIDTH = '50%';
 
 const propTypes = {
+  baseOrigin: PropTypes.string,
   displayConfig: PropTypes.shape({
     icon: PropTypes.string,
     title: PropTypes.objectOf(PropTypes.string),
@@ -57,6 +58,7 @@ const propTypes = {
 };
 
 const RemoteKbResourceView = ({
+  baseOrigin,
   displayConfig,
   resource,
   onClose,
@@ -180,7 +182,7 @@ const RemoteKbResourceView = ({
             <NoValue />
           );
         } else {
-          return template({ resource });
+          return template({ resource, baseOrigin });
         }
       }
       case 'table': {
@@ -215,7 +217,11 @@ const RemoteKbResourceView = ({
           registryResource?.getRenderFunction(value.registryRenderFunction) ??
           null;
         const baseProps = (value.props || []).reduce((acc, p) => {
-          acc[p.name] = renderValue(p.value);
+          const v = renderValue(p.value);
+          acc[p.name] =
+            typeof v === 'string' || typeof v === 'number'
+              ? v
+              : null;
           return acc;
         }, {});
 

@@ -10,3 +10,4 @@ export { default as useBasket } from './useBasket';
 export { default as useBasketStore } from './useBasketStore';
 export * from './resourceHooks';
 export { default as useHasLicensesInterface } from './useHasLicensesInterface';
+export { default as useExternalKbInfo } from './useExternalKbInfo';
