@@ -112,108 +112,136 @@ describe('RemoteKBRoute', () => {
     ky.get.mockClear();
   });
 
-  const renderComponent = () => renderWithIntl(
-    <MemoryRouter>
-      <RemoteKBRoute />
-    </MemoryRouter>,
-    translationsProperties
-  );
+  describe('with a single gokb', () => {
+    const externalKbInfo = {
+      baseOrigin: 'https://example.org',
+      kbCount: 1,
+      kbName: 'gokb',
+    };
 
-  test('renders SASQRoute', () => {
-    const { getByText } = renderComponent();
-    expect(getByText('SASQRoute')).toBeInTheDocument();
-  });
-
-  test('passes resultColumns/formatter/sortableColumns to SASQRoute', () => {
-    renderComponent();
-    expect(capturedProps.resultColumns.map((c) => c.propertyPath)).toEqual([
-      'name',
-      'publicationType',
-      'publicationDates',
-    ]);
-    expect(capturedProps.mclProps.formatter.name()).toBe('NAME');
-    expect(capturedProps.sasqProps.sortableColumns).toEqual(['name']);
-  });
-
-  test('mclProps.columnWidths includes publicationDates width', () => {
-    renderComponent();
-    expect(capturedProps.mclProps.columnWidths).toEqual({
-      publicationDates: 300,
-    });
-  });
-
-  test('lookupQueryPromise fetches via ky', async () => {
-    renderComponent();
-    await capturedProps.lookupQueryPromise({
-      _ky: {},
-      queryParams: '',
-      endpoint: 'https://example.org/find',
-    });
-    expect(ky.get).toHaveBeenCalled();
-  });
-
-  test('viewQueryPromise fetches via ky with uuid param (template branch)', async () => {
-    renderComponent();
-    await capturedProps.viewQueryPromise({
-      _ky: {},
-      resourceId: '123',
-      endpoint: 'https://example.org/resource',
-    });
-    expect(ky.get).toHaveBeenCalledWith(
-      'https://example.org/resource?uuid=123'
-    );
-  });
-
-  test('lookupResponseTransform maps results and totalRecords from config mapping', () => {
-    renderComponent();
-    const transformed = capturedProps.lookupResponseTransform({
-      count: 5,
-      records: ['test-data'],
-    });
-    expect(transformed.totalRecords).toBe(5);
-    expect(transformed.results).toEqual(['test-data']);
-  });
-
-  test('viewResponseTransform returns first element if array, otherwise object', () => {
-    renderComponent();
-    const arr = capturedProps.viewResponseTransform({
-      records: [{ id: 1 }, { id: 2 }],
-    });
-    expect(arr).toEqual({ id: 1 });
-
-    const obj = capturedProps.viewResponseTransform({ records: { id: 9 } });
-    expect(obj).toEqual({ id: 9 });
-  });
-
-  test('queryParameterGenerator builds expected query string (q, sort, filters, paging)', () => {
-    renderComponent();
-    const result = capturedProps.queryParameterGenerator(
-      { page: 2, perPage: 10 },
-      { query: 'foo', filters: 'type.Book' }
+    const renderComponent = () => renderWithIntl(
+      <MemoryRouter>
+        <RemoteKBRoute externalKbInfo={externalKbInfo} />
+      </MemoryRouter>,
+      translationsProperties
     );
 
-    expect(result).toContain('q=foo');
-    expect(result).toContain('sort=title');
-    expect(result).toContain('componentType=Book');
-    expect(result).toContain('max=10');
-    expect(result).toContain('offset=10');
+    test('renders SASQRoute', () => {
+      const { getByText } = renderComponent();
+      expect(getByText('SASQRoute')).toBeInTheDocument();
+    });
+
+    test('passes resultColumns/formatter/sortableColumns to SASQRoute', () => {
+      renderComponent();
+      expect(capturedProps.resultColumns.map((c) => c.propertyPath)).toEqual([
+        'name',
+        'publicationType',
+        'publicationDates',
+      ]);
+      expect(capturedProps.mclProps.formatter.name()).toBe('NAME');
+      expect(capturedProps.sasqProps.sortableColumns).toEqual(['name']);
+    });
+
+    test('mclProps.columnWidths includes publicationDates width', () => {
+      renderComponent();
+      expect(capturedProps.mclProps.columnWidths).toEqual({
+        publicationDates: 300,
+      });
+    });
+
+    test('lookupQueryPromise fetches via ky', async () => {
+      renderComponent();
+      await capturedProps.lookupQueryPromise({
+        _ky: {},
+        queryParams: '',
+        endpoint: 'https://example.org/find',
+      });
+      expect(ky.get).toHaveBeenCalled();
+    });
+
+    test('viewQueryPromise fetches via ky with uuid param (template branch)', async () => {
+      renderComponent();
+      await capturedProps.viewQueryPromise({
+        _ky: {},
+        resourceId: '123',
+        endpoint: 'https://example.org/resource',
+      });
+      expect(ky.get).toHaveBeenCalledWith(
+        'https://example.org/resource?uuid=123'
+      );
+    });
+
+    test('lookupResponseTransform maps results and totalRecords from config mapping', () => {
+      renderComponent();
+      const transformed = capturedProps.lookupResponseTransform({
+        count: 5,
+        records: ['test-data'],
+      });
+      expect(transformed.totalRecords).toBe(5);
+      expect(transformed.results).toEqual(['test-data']);
+    });
+
+    test('viewResponseTransform returns first element if array, otherwise object', () => {
+      renderComponent();
+      const arr = capturedProps.viewResponseTransform({
+        records: [{ id: 1 }, { id: 2 }],
+      });
+      expect(arr).toEqual({ id: 1 });
+
+      const obj = capturedProps.viewResponseTransform({ records: { id: 9 } });
+      expect(obj).toEqual({ id: 9 });
+    });
+
+    test('queryParameterGenerator builds expected query string (q, sort, filters, paging)', () => {
+      renderComponent();
+      const result = capturedProps.queryParameterGenerator(
+        { page: 2, perPage: 10 },
+        { query: 'foo', filters: 'type.Book' }
+      );
+
+      expect(result).toContain('q=foo');
+      expect(result).toContain('sort=title');
+      expect(result).toContain('componentType=Book');
+      expect(result).toContain('max=10');
+      expect(result).toContain('offset=10');
+    });
+
+    test('actionMenu renders ColumnManagerMenu', () => {
+      renderComponent();
+      const { actionMenu } = capturedProps.mainPaneProps;
+      const { getByText } = renderWithIntl(actionMenu(), translationsProperties);
+      expect(getByText('ColumnManagerMenu')).toBeInTheDocument();
+    });
+
+    test('initialFilterState is passed to SASQ via sasqProps', () => {
+      renderComponent();
+      expect(capturedProps.sasqProps.initialFilterState).toEqual({ pre: 'set' });
+    });
+
+    test('passes getNavigationIdentifier to SASQRoute as function', () => {
+      renderComponent();
+      expect(typeof capturedProps.getNavigationIdentifier).toBe('function');
+      expect(capturedProps.getNavigationIdentifier({ uuid: 'abc' })).toBe('abc');
+    });
   });
 
-  test('actionMenu renders ColumnManagerMenu', () => {
-    renderComponent();
-    const { actionMenu } = capturedProps.mainPaneProps;
-    const { getByText } = renderWithIntl(actionMenu(), translationsProperties);
-    expect(getByText('ColumnManagerMenu')).toBeInTheDocument();
-  });
+  describe('with multiple gokbs', () => {
+    const externalKbInfo = {
+      baseOrigin: 'https://example.org',
+      kbCount: 2,
+      kbName: 'gokb',
+    };
 
-  test('initialFilterState is passed to SASQ via sasqProps', () => {
-    renderComponent();
-    expect(capturedProps.sasqProps.initialFilterState).toEqual({ pre: 'set' });
-  });
+    const renderComponent = () => renderWithIntl(
+      <MemoryRouter>
+        <RemoteKBRoute externalKbInfo={externalKbInfo} />
+      </MemoryRouter>,
+      translationsProperties
+    );
 
-  test('passes getNavigationIdentifier to SASQRoute as function', () => {
-    renderComponent();
-    expect(typeof capturedProps.getNavigationIdentifier).toBe('function');
-    expect(capturedProps.getNavigationIdentifier({ uuid: 'abc' })).toBe('abc');
+    test('passes resultsHeaderContent warning banner', () => {
+      renderComponent();
+      expect(capturedProps.resultsHeaderContent).toBeTruthy();
+    });
   });
 });
