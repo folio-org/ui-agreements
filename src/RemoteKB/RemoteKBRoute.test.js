@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import ky from 'ky';
 import RemoteKBRoute from './RemoteKBRoute';
 import translationsProperties from '../../test/helpers';
+import * as utilities from './utilities';
 
 let capturedProps = {};
 
@@ -14,6 +15,7 @@ jest.mock('@k-int/stripes-kint-components', () => ({
     capturedProps = props;
     return <div>SASQRoute</div>;
   },
+  SASQTableBody: () => <div>SASQTableBody</div>,
 }));
 
 jest.mock('@folio/stripes/core', () => ({
@@ -206,6 +208,39 @@ describe('RemoteKBRoute', () => {
       expect(result).toContain('offset=10');
     });
 
+    test('queryParameterGenerator omits q when searchParameterParse returns empty string', () => {
+      utilities.searchConfigTypeHandler.mockImplementationOnce(() => ({
+        searchParameterParse: () => ({ key: 'q', string: '' }),
+        HeaderComponent: () => <div>Header</div>,
+      }));
+
+      renderComponent();
+
+      const result = capturedProps.queryParameterGenerator(
+        { page: 1, perPage: 10 },
+        { query: 'foo', filters: 'type.Book' }
+      );
+
+      expect(result).not.toContain('q=foo');
+      expect(result).toContain('sort=title');
+      expect(result).toContain('componentType=Book');
+      expect(result).toContain('max=10');
+      expect(result).toContain('offset=0');
+    });
+
+    test('queryParameterGenerator omits filter part when transformFilterString returns empty string', () => {
+      renderComponent();
+
+      const result = capturedProps.queryParameterGenerator(
+        { page: 1, perPage: 10 },
+        { query: 'foo', filters: 'type.Unknown' } // your mock returns '' for anything else
+      );
+
+      expect(result).toContain('q=foo');
+      expect(result).toContain('sort=title');
+      expect(result).not.toContain('componentType=');
+    });
+
     test('actionMenu renders ColumnManagerMenu', () => {
       renderComponent();
       const { actionMenu } = capturedProps.mainPaneProps;
@@ -242,6 +277,17 @@ describe('RemoteKBRoute', () => {
     test('passes RenderBody warning banner', () => {
       renderComponent();
       expect(capturedProps.RenderBody).toBeTruthy();
+    });
+
+    test('RenderBody renders SASQTableBody (and banner branch is executed)', () => {
+      renderComponent();
+
+      const { getByText } = renderWithIntl(
+        capturedProps.RenderBody({}),
+        translationsProperties
+      );
+
+      expect(getByText('SASQTableBody')).toBeInTheDocument();
     });
   });
 });
