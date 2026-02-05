@@ -35,7 +35,8 @@ jest.mock('../../docs/gokb-search-v1', () => ({
   configuration: {
     results: {
       fetch: {
-        baseUrl: 'https://example.org/find',
+        // baseUrl: 'https://example.org/find',
+        baseUrl: { type: 'handlebars', templateString: '{{baseOrigin}}/find' },
         mapping: { results: 'records', totalRecords: 'count' },
         search: { type: 'basic' },
         sort: { type: 'simple' },
@@ -50,7 +51,8 @@ jest.mock('../../docs/gokb-search-v1', () => ({
     },
     view: {
       fetch: {
-        baseUrl: 'https://example.org/resource',
+        // baseUrl: 'https://example.org/resource',
+        baseUrl: { type: 'handlebars', templateString: '{{baseOrigin}}/resource' },
         mapping: { data: 'records' },
         viewQueryUrl: {
           type: 'Handlebars',
@@ -73,6 +75,7 @@ jest.mock('./utilities', () => ({
     (tpl) => (ctx) => tpl
       .replace('{{endpoint}}', ctx.endpoint)
       .replace('{{resourceId}}', ctx.resourceId)
+      .replace('{{baseOrigin}}', ctx.baseOrigin)
   ),
   getResultsDisplayConfig: jest.fn(() => ({
     resultColumns: [
@@ -257,6 +260,13 @@ describe('RemoteKBRoute', () => {
       renderComponent();
       expect(typeof capturedProps.getNavigationIdentifier).toBe('function');
       expect(capturedProps.getNavigationIdentifier({ uuid: 'abc' })).toBe('abc');
+    });
+
+    test('fetchParameters use resolved handlebars baseUrl with baseOrigin', () => {
+      renderComponent();
+
+      expect(capturedProps.fetchParameters.endpoint).toBe('https://example.org/find');
+      expect(capturedProps.fetchParameters.itemEndpoint).toBe('https://example.org/resource');
     });
   });
 
