@@ -246,7 +246,6 @@ const baseResource = {
 };
 
 describe('RemoteKbResource', () => {
-  // const renderComp = (res = resource, cfg = displayConfig) => renderWithIntl(
   const renderComp = (res = resource, cfg = displayConfig) => {
     const cfgWithActions = { ...cfg, actions: cfg.actions ?? { values: [] } };
     return renderWithIntl(
@@ -734,5 +733,54 @@ describe('RemoteKbResource', () => {
     const menu = getByTestId('action-menu');
     expect(menu.textContent).toContain('Act1');
     expect(menu.textContent).toContain('Act2');
+  });
+
+  test('badge count can be cleared (setBadgeCount(null))', () => {
+    const RegistryContent = ({ setBadgeCount }) => {
+      React.useEffect(() => {
+        setBadgeCount(7);
+        setBadgeCount(null);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+
+      return <div>RegistryContent</div>;
+    };
+
+    Registry.getResource.mockReturnValue({
+      getRenderFunction: () => (props) => <RegistryContent {...props} />,
+    });
+
+    const cfg = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
+      renderStrategy: {
+        type: 'sections',
+        values: [{
+          name: 'accordions',
+          collapsable: true,
+          renderStrategy: {
+            type: 'accordionset',
+            values: [{
+              name: 'withBadge',
+              collapsable: true,
+              badge: true,
+              renderStrategy: {
+                type: 'rows',
+                values: [{
+                  type: 'registry',
+                  registryResource: 'foo',
+                  registryRenderFunction: 'bar',
+                  props: [],
+                }],
+              },
+            }],
+          },
+        }],
+      },
+    };
+
+    const { getAllByTestId } = renderComp(baseResource, cfg);
+    const badges = getAllByTestId('badge');
+    expect(badges.some((b) => b.textContent === '0')).toBe(true);
   });
 });
