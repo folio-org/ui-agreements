@@ -239,9 +239,9 @@ describe('RemoteKBRoute', () => {
       translationsProperties
     );
 
-    test('passes resultsHeaderContent warning banner', () => {
+    test('passes RenderBody warning banner', () => {
       renderComponent();
-      expect(capturedProps.resultsHeaderContent).toBeTruthy();
+      expect(capturedProps.RenderBody).toBeTruthy();
     });
   });
 });
