@@ -783,4 +783,58 @@ describe('RemoteKbResource', () => {
     const badges = getAllByTestId('badge');
     expect(badges.some((b) => b.textContent === '0')).toBe(true);
   });
+
+  test('table with object source array: subjects objects rendered without wrapping', () => {
+    const cfg = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
+      renderStrategy: {
+        type: 'rows',
+        values: [{
+          type: 'table',
+          resource: { type: 'access', accessType: 'JSONPath', expression: '$.subjects[*]' },
+          columns: [
+            { name: 'scheme', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.scheme' } },
+            { name: 'heading', type: 'String', value: { type: 'access', accessType: 'JSONPath', expression: '$.heading' } },
+          ],
+        }],
+      },
+    };
+
+    const res = { ...baseResource, subjects: [{ scheme: 'DDC', heading: 'Philosophy' }] };
+    const { getByTestId } = renderComp(res, cfg);
+
+    expect(getByTestId('mcl-scheme-heading')).toHaveAttribute('data-rows', '1');
+  });
+
+  test('registry baseProps coerces non-primitive values to null', () => {
+    const mockRenderFn = jest.fn(() => <div>RegistryContent</div>);
+    Registry.getResource.mockReturnValue({
+      getRenderFunction: () => mockRenderFn,
+    });
+
+    const cfg = {
+      icon: 'title',
+      title: { type: 'access', accessType: 'JSONPath', expression: '$.name' },
+      renderStrategy: {
+        type: 'rows',
+        values: [{
+          type: 'registry',
+          registryResource: 'foo',
+          registryRenderFunction: 'bar',
+          props: [
+            { name: 'foo', value: { type: 'static', value: { a: 1 } } }, // object -> null
+            { name: 'bar', value: { type: 'static', value: 'ok' } },      // string stays
+          ],
+        }],
+      },
+    };
+
+    renderComp(baseResource, cfg);
+
+    expect(mockRenderFn).toHaveBeenCalled();
+    const passedProps = mockRenderFn.mock.calls[0][0];
+    expect(passedProps.foo).toBeNull();
+    expect(passedProps.bar).toBe('ok');
+  });
 });
