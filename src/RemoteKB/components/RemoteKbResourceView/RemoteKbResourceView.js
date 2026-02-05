@@ -41,6 +41,10 @@ const PANE_DEFAULT_WIDTH = '50%';
 const propTypes = {
   baseOrigin: PropTypes.string,
   displayConfig: PropTypes.shape({
+    actions: PropTypes.shape({
+      type: PropTypes.string,
+      values: PropTypes.arrayOf(PropTypes.shape({})),
+    }),
     icon: PropTypes.string,
     title: PropTypes.objectOf(PropTypes.string),
     renderStrategy: PropTypes.shape({
