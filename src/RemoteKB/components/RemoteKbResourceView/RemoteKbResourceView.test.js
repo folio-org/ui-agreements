@@ -40,14 +40,6 @@ jest.mock('@folio/stripes/components', () => ({
       </div>
     );
   },
-  // Pane: ({ paneTitle, appIcon, children }) => (
-  //   <div>
-  //     <div data-testid="pane-title">{typeof paneTitle === 'string' ? paneTitle : (paneTitle?.props?.children || '')}</div>
-  //     <div data-testid="pane-icon">{appIcon}</div>
-  //     <div data-testid="action-menu">{typeof actionMenu === 'function' ? actionMenu() : null}</div>
-  //     {children}
-  //   </div>
-  // ),
   LoadingPane: () => <div>LoadingPane</div>,
   NoValue: () => <span>NoValue</span>,
   Headline: ({ children }) => <h2>{children}</h2>,
@@ -245,7 +237,7 @@ const baseResource = {
   subjects: [],
 };
 
-describe('RemoteKbResource', () => {
+describe('RemoteKbResourceView', () => {
   const renderComp = (res = resource, cfg = displayConfig) => {
     const cfgWithActions = { ...cfg, actions: cfg.actions ?? { values: [] } };
     return renderWithIntl(
