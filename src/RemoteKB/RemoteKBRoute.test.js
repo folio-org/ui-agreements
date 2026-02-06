@@ -9,6 +9,19 @@ let capturedProps = {};
 
 /** Mocks */
 
+let remoteKbFiltersProps;
+let remoteKbResourceProps;
+
+jest.mock('./components/RemoteKbFilters', () => (props) => {
+  remoteKbFiltersProps = props;
+  return <div>RemoteKbFilters</div>;
+});
+
+jest.mock('./components/RemoteKbResourceView', () => (props) => {
+  remoteKbResourceProps = props;
+  return <div>RemoteKbResource</div>;
+});
+
 jest.mock('@k-int/stripes-kint-components', () => ({
   ...jest.requireActual('@k-int/stripes-kint-components'),
   SASQRoute: (props) => {
@@ -115,6 +128,9 @@ describe('RemoteKBRoute', () => {
   beforeEach(() => {
     capturedProps = {};
     ky.get.mockClear();
+
+    remoteKbFiltersProps = undefined;
+    remoteKbResourceProps = undefined;
   });
 
   describe('with a single gokb', () => {
@@ -268,6 +284,51 @@ describe('RemoteKBRoute', () => {
       expect(capturedProps.fetchParameters.endpoint).toBe('https://example.org/find');
       expect(capturedProps.fetchParameters.itemEndpoint).toBe('https://example.org/resource');
     });
+
+    test('FilterComponent renders RemoteKbFilters and passes kbKey + filterConfig', () => {
+      renderComponent();
+
+      const { getByText } = renderWithIntl(
+        <MemoryRouter>
+          <capturedProps.FilterComponent />
+        </MemoryRouter>,
+        translationsProperties
+      );
+
+      expect(getByText('RemoteKbFilters')).toBeInTheDocument();
+      expect(remoteKbFiltersProps.kbKey).toBe('gokb');
+      expect(remoteKbFiltersProps.filterConfig).toBeTruthy();
+    });
+
+    test('ViewComponent renders RemoteKbResource and passes baseOrigin + displayConfig', () => {
+      renderComponent();
+
+      const { getByText } = renderWithIntl(
+        <MemoryRouter>
+          <capturedProps.ViewComponent />
+        </MemoryRouter>,
+        translationsProperties
+      );
+
+      expect(getByText('RemoteKbResource')).toBeInTheDocument();
+      expect(remoteKbResourceProps.baseOrigin).toBe('https://example.org');
+      expect(remoteKbResourceProps.displayConfig).toBeTruthy();
+    });
+
+    test('viewQueryPromise uses \'{endpoint}/{resourceId}\' when templateString is missing', async () => {
+      const gokbConfig = jest.requireMock('../../docs/gokb-search-v1');
+      delete gokbConfig.configuration.view.fetch.viewQueryUrl.templateString;
+
+      renderComponent();
+
+      await capturedProps.viewQueryPromise({
+        _ky: {},
+        resourceId: '123',
+        endpoint: 'https://example.org/resource',
+      });
+
+      expect(ky.get).toHaveBeenCalledWith('https://example.org/resource/123');
+    });
   });
 
   describe('with multiple gokbs', () => {
@@ -289,15 +350,32 @@ describe('RemoteKBRoute', () => {
       expect(capturedProps.RenderBody).toBeTruthy();
     });
 
-    test('RenderBody renders SASQTableBody (and banner branch is executed)', () => {
+    test('warning MessageBanner includes settings text and settingsLink renders correct Link', () => {
       renderComponent();
 
       const { getByText } = renderWithIntl(
-        capturedProps.RenderBody({}),
+        <MemoryRouter>
+          {capturedProps.RenderBody({})}
+        </MemoryRouter>,
         translationsProperties
       );
 
-      expect(getByText('SASQTableBody')).toBeInTheDocument();
+      expect(getByText(/external data source settings/i)).toBeInTheDocument();
+
+      const renderBodyEl = capturedProps.RenderBody({});
+      const messageBannerEl = renderBodyEl.props.children[0]; // MessageBanner
+      const formattedMsgEl = messageBannerEl.props.children; // FormattedMessage
+      const { settingsLink } = formattedMsgEl.props.values;
+
+      const { getByRole } = renderWithIntl(
+        <MemoryRouter>
+          {settingsLink('external data source settings')}
+        </MemoryRouter>,
+        translationsProperties
+      );
+
+      const link = getByRole('link', { name: /external data source settings/i });
+      expect(link).toHaveAttribute('href', '/settings/local-kb-admin/external-data-sources');
     });
   });
 });
