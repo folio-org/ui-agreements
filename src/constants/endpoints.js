@@ -45,3 +45,5 @@ export const ORDER_LINES_ENDPOINT = 'orders/order-lines';
 export const STRING_TEMPLATES_ENDPOINT = 'erm/sts';
 export const STRING_TEMPLATE_ENDPOINT = (id) => `${STRING_TEMPLATES_ENDPOINT}/${id}`;
 export const STRING_TEMPLATES_PLATFORM_ENDPOINT = (platformId) => `${STRING_TEMPLATES_ENDPOINT}/template/${platformId}`;
+
+export const KBS_ENDPOINT = 'erm/kbs';

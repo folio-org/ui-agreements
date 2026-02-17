@@ -896,6 +896,7 @@
   "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion",
   "remoteKb.actions.viewInLocalKb": "View title in local KB",
   "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}",
+  "remoteKb.warn.externalKbs": "<strong>GOKB source</strong> is <strong>{kbName}</strong>. More than one active GOKB data source exists. It is recommended to have a <strong>single active GOKB</strong> configured. Sources can be changed in <settingsLink>external data source settings</settingsLink>",
   "eresources.gokbPackageUuid": "GOKB package UUID",
   "eresources.gokbTitleUuid": "GOKB title UUID"
 }

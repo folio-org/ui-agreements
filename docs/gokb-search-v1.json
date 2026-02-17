@@ -226,7 +226,10 @@
         ]
       },
       "fetch": {
-        "baseUrl": "https://gokbt.gbv.de/gokb/api/find",
+        "baseUrl": {
+          "type": "handlebars",
+          "templateString": "{{baseOrigin}}/gokb/api/find"
+        },
         "mapping": {
           "results": "records",
           "totalRecords": "count"
@@ -353,7 +356,10 @@
     },
     "view": {
       "fetch": {
-        "baseUrl": "https://gokbt.gbv.de/gokb/api/find",
+        "baseUrl": {
+          "type": "handlebars",
+          "templateString": "{{baseOrigin}}/gokb/api/find"
+        },
         "mapping": {
           "data": "records"
         },
@@ -377,7 +383,7 @@
                   "name": "url",
                   "value": {
                     "type": "handlebars",
-                    "templateString": "https://gokbt.gbv.de/gokb-ui/title/{{resource.uuid}}"
+                    "templateString": "{{baseOrigin}}/gokb-ui/title/{{resource.uuid}}"
                   }
                 },
                 {

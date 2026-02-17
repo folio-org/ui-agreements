@@ -3,10 +3,24 @@ import { MemoryRouter } from 'react-router-dom';
 import ky from 'ky';
 import RemoteKBRoute from './RemoteKBRoute';
 import translationsProperties from '../../test/helpers';
+import * as utilities from './utilities';
 
 let capturedProps = {};
 
 /** Mocks */
+
+let remoteKbFiltersProps;
+let remoteKbResourceProps;
+
+jest.mock('./components/RemoteKbFilters', () => (props) => {
+  remoteKbFiltersProps = props;
+  return <div>RemoteKbFilters</div>;
+});
+
+jest.mock('./components/RemoteKbResourceView', () => (props) => {
+  remoteKbResourceProps = props;
+  return <div>RemoteKbResource</div>;
+});
 
 jest.mock('@k-int/stripes-kint-components', () => ({
   ...jest.requireActual('@k-int/stripes-kint-components'),
@@ -14,6 +28,7 @@ jest.mock('@k-int/stripes-kint-components', () => ({
     capturedProps = props;
     return <div>SASQRoute</div>;
   },
+  SASQTableBody: () => <div>SASQTableBody</div>,
 }));
 
 jest.mock('@folio/stripes/core', () => ({
@@ -33,7 +48,8 @@ jest.mock('../../docs/gokb-search-v1', () => ({
   configuration: {
     results: {
       fetch: {
-        baseUrl: 'https://example.org/find',
+        // baseUrl: 'https://example.org/find',
+        baseUrl: { type: 'handlebars', templateString: '{{baseOrigin}}/find' },
         mapping: { results: 'records', totalRecords: 'count' },
         search: { type: 'basic' },
         sort: { type: 'simple' },
@@ -48,7 +64,8 @@ jest.mock('../../docs/gokb-search-v1', () => ({
     },
     view: {
       fetch: {
-        baseUrl: 'https://example.org/resource',
+        // baseUrl: 'https://example.org/resource',
+        baseUrl: { type: 'handlebars', templateString: '{{baseOrigin}}/resource' },
         mapping: { data: 'records' },
         viewQueryUrl: {
           type: 'Handlebars',
@@ -71,6 +88,7 @@ jest.mock('./utilities', () => ({
     (tpl) => (ctx) => tpl
       .replace('{{endpoint}}', ctx.endpoint)
       .replace('{{resourceId}}', ctx.resourceId)
+      .replace('{{baseOrigin}}', ctx.baseOrigin)
   ),
   getResultsDisplayConfig: jest.fn(() => ({
     resultColumns: [
@@ -110,110 +128,254 @@ describe('RemoteKBRoute', () => {
   beforeEach(() => {
     capturedProps = {};
     ky.get.mockClear();
+
+    remoteKbFiltersProps = undefined;
+    remoteKbResourceProps = undefined;
   });
 
-  const renderComponent = () => renderWithIntl(
-    <MemoryRouter>
-      <RemoteKBRoute />
-    </MemoryRouter>,
-    translationsProperties
-  );
+  describe('with a single gokb', () => {
+    const externalKbInfo = {
+      baseOrigin: 'https://example.org',
+      kbCount: 1,
+      kbName: 'gokb',
+    };
 
-  test('renders SASQRoute', () => {
-    const { getByText } = renderComponent();
-    expect(getByText('SASQRoute')).toBeInTheDocument();
-  });
-
-  test('passes resultColumns/formatter/sortableColumns to SASQRoute', () => {
-    renderComponent();
-    expect(capturedProps.resultColumns.map((c) => c.propertyPath)).toEqual([
-      'name',
-      'publicationType',
-      'publicationDates',
-    ]);
-    expect(capturedProps.mclProps.formatter.name()).toBe('NAME');
-    expect(capturedProps.sasqProps.sortableColumns).toEqual(['name']);
-  });
-
-  test('mclProps.columnWidths includes publicationDates width', () => {
-    renderComponent();
-    expect(capturedProps.mclProps.columnWidths).toEqual({
-      publicationDates: 300,
-    });
-  });
-
-  test('lookupQueryPromise fetches via ky', async () => {
-    renderComponent();
-    await capturedProps.lookupQueryPromise({
-      _ky: {},
-      queryParams: '',
-      endpoint: 'https://example.org/find',
-    });
-    expect(ky.get).toHaveBeenCalled();
-  });
-
-  test('viewQueryPromise fetches via ky with uuid param (template branch)', async () => {
-    renderComponent();
-    await capturedProps.viewQueryPromise({
-      _ky: {},
-      resourceId: '123',
-      endpoint: 'https://example.org/resource',
-    });
-    expect(ky.get).toHaveBeenCalledWith(
-      'https://example.org/resource?uuid=123'
-    );
-  });
-
-  test('lookupResponseTransform maps results and totalRecords from config mapping', () => {
-    renderComponent();
-    const transformed = capturedProps.lookupResponseTransform({
-      count: 5,
-      records: ['test-data'],
-    });
-    expect(transformed.totalRecords).toBe(5);
-    expect(transformed.results).toEqual(['test-data']);
-  });
-
-  test('viewResponseTransform returns first element if array, otherwise object', () => {
-    renderComponent();
-    const arr = capturedProps.viewResponseTransform({
-      records: [{ id: 1 }, { id: 2 }],
-    });
-    expect(arr).toEqual({ id: 1 });
-
-    const obj = capturedProps.viewResponseTransform({ records: { id: 9 } });
-    expect(obj).toEqual({ id: 9 });
-  });
-
-  test('queryParameterGenerator builds expected query string (q, sort, filters, paging)', () => {
-    renderComponent();
-    const result = capturedProps.queryParameterGenerator(
-      { page: 2, perPage: 10 },
-      { query: 'foo', filters: 'type.Book' }
+    const renderComponent = () => renderWithIntl(
+      <MemoryRouter>
+        <RemoteKBRoute externalKbInfo={externalKbInfo} />
+      </MemoryRouter>,
+      translationsProperties
     );
 
-    expect(result).toContain('q=foo');
-    expect(result).toContain('sort=title');
-    expect(result).toContain('componentType=Book');
-    expect(result).toContain('max=10');
-    expect(result).toContain('offset=10');
+    test('renders SASQRoute', () => {
+      const { getByText } = renderComponent();
+      expect(getByText('SASQRoute')).toBeInTheDocument();
+    });
+
+    test('passes resultColumns/formatter/sortableColumns to SASQRoute', () => {
+      renderComponent();
+      expect(capturedProps.resultColumns.map((c) => c.propertyPath)).toEqual([
+        'name',
+        'publicationType',
+        'publicationDates',
+      ]);
+      expect(capturedProps.mclProps.formatter.name()).toBe('NAME');
+      expect(capturedProps.sasqProps.sortableColumns).toEqual(['name']);
+    });
+
+    test('mclProps.columnWidths includes publicationDates width', () => {
+      renderComponent();
+      expect(capturedProps.mclProps.columnWidths).toEqual({
+        publicationDates: 300,
+      });
+    });
+
+    test('lookupQueryPromise fetches via ky', async () => {
+      renderComponent();
+      await capturedProps.lookupQueryPromise({
+        _ky: {},
+        queryParams: '',
+        endpoint: 'https://example.org/find',
+      });
+      expect(ky.get).toHaveBeenCalled();
+    });
+
+    test('viewQueryPromise fetches via ky with uuid param (template branch)', async () => {
+      renderComponent();
+      await capturedProps.viewQueryPromise({
+        _ky: {},
+        resourceId: '123',
+        endpoint: 'https://example.org/resource',
+      });
+      expect(ky.get).toHaveBeenCalledWith(
+        'https://example.org/resource?uuid=123'
+      );
+    });
+
+    test('lookupResponseTransform maps results and totalRecords from config mapping', () => {
+      renderComponent();
+      const transformed = capturedProps.lookupResponseTransform({
+        count: 5,
+        records: ['test-data'],
+      });
+      expect(transformed.totalRecords).toBe(5);
+      expect(transformed.results).toEqual(['test-data']);
+    });
+
+    test('viewResponseTransform returns first element if array, otherwise object', () => {
+      renderComponent();
+      const arr = capturedProps.viewResponseTransform({
+        records: [{ id: 1 }, { id: 2 }],
+      });
+      expect(arr).toEqual({ id: 1 });
+
+      const obj = capturedProps.viewResponseTransform({ records: { id: 9 } });
+      expect(obj).toEqual({ id: 9 });
+    });
+
+    test('queryParameterGenerator builds expected query string (q, sort, filters, paging)', () => {
+      renderComponent();
+      const result = capturedProps.queryParameterGenerator(
+        { page: 2, perPage: 10 },
+        { query: 'foo', filters: 'type.Book' }
+      );
+
+      expect(result).toContain('q=foo');
+      expect(result).toContain('sort=title');
+      expect(result).toContain('componentType=Book');
+      expect(result).toContain('max=10');
+      expect(result).toContain('offset=10');
+    });
+
+    test('queryParameterGenerator omits q when searchParameterParse returns empty string', () => {
+      utilities.searchConfigTypeHandler.mockImplementationOnce(() => ({
+        searchParameterParse: () => ({ key: 'q', string: '' }),
+        HeaderComponent: () => <div>Header</div>,
+      }));
+
+      renderComponent();
+
+      const result = capturedProps.queryParameterGenerator(
+        { page: 1, perPage: 10 },
+        { query: 'foo', filters: 'type.Book' }
+      );
+
+      expect(result).not.toContain('q=foo');
+      expect(result).toContain('sort=title');
+      expect(result).toContain('componentType=Book');
+      expect(result).toContain('max=10');
+      expect(result).toContain('offset=0');
+    });
+
+    test('queryParameterGenerator omits filter part when transformFilterString returns empty string', () => {
+      renderComponent();
+
+      const result = capturedProps.queryParameterGenerator(
+        { page: 1, perPage: 10 },
+        { query: 'foo', filters: 'type.Unknown' } // your mock returns '' for anything else
+      );
+
+      expect(result).toContain('q=foo');
+      expect(result).toContain('sort=title');
+      expect(result).not.toContain('componentType=');
+    });
+
+    test('actionMenu renders ColumnManagerMenu', () => {
+      renderComponent();
+      const { actionMenu } = capturedProps.mainPaneProps;
+      const { getByText } = renderWithIntl(actionMenu(), translationsProperties);
+      expect(getByText('ColumnManagerMenu')).toBeInTheDocument();
+    });
+
+    test('initialFilterState is passed to SASQ via sasqProps', () => {
+      renderComponent();
+      expect(capturedProps.sasqProps.initialFilterState).toEqual({ pre: 'set' });
+    });
+
+    test('passes getNavigationIdentifier to SASQRoute as function', () => {
+      renderComponent();
+      expect(typeof capturedProps.getNavigationIdentifier).toBe('function');
+      expect(capturedProps.getNavigationIdentifier({ uuid: 'abc' })).toBe('abc');
+    });
+
+    test('fetchParameters use resolved handlebars baseUrl with baseOrigin', () => {
+      renderComponent();
+
+      expect(capturedProps.fetchParameters.endpoint).toBe('https://example.org/find');
+      expect(capturedProps.fetchParameters.itemEndpoint).toBe('https://example.org/resource');
+    });
+
+    test('FilterComponent renders RemoteKbFilters and passes kbKey + filterConfig', () => {
+      renderComponent();
+
+      const { getByText } = renderWithIntl(
+        <MemoryRouter>
+          <capturedProps.FilterComponent />
+        </MemoryRouter>,
+        translationsProperties
+      );
+
+      expect(getByText('RemoteKbFilters')).toBeInTheDocument();
+      expect(remoteKbFiltersProps.kbKey).toBe('gokb');
+      expect(remoteKbFiltersProps.filterConfig).toBeTruthy();
+    });
+
+    test('ViewComponent renders RemoteKbResource and passes baseOrigin + displayConfig', () => {
+      renderComponent();
+
+      const { getByText } = renderWithIntl(
+        <MemoryRouter>
+          <capturedProps.ViewComponent />
+        </MemoryRouter>,
+        translationsProperties
+      );
+
+      expect(getByText('RemoteKbResource')).toBeInTheDocument();
+      expect(remoteKbResourceProps.baseOrigin).toBe('https://example.org');
+      expect(remoteKbResourceProps.displayConfig).toBeTruthy();
+    });
+
+    test('viewQueryPromise uses \'{endpoint}/{resourceId}\' when templateString is missing', async () => {
+      const gokbConfig = jest.requireMock('../../docs/gokb-search-v1');
+      delete gokbConfig.configuration.view.fetch.viewQueryUrl.templateString;
+
+      renderComponent();
+
+      await capturedProps.viewQueryPromise({
+        _ky: {},
+        resourceId: '123',
+        endpoint: 'https://example.org/resource',
+      });
+
+      expect(ky.get).toHaveBeenCalledWith('https://example.org/resource/123');
+    });
   });
 
-  test('actionMenu renders ColumnManagerMenu', () => {
-    renderComponent();
-    const { actionMenu } = capturedProps.mainPaneProps;
-    const { getByText } = renderWithIntl(actionMenu(), translationsProperties);
-    expect(getByText('ColumnManagerMenu')).toBeInTheDocument();
-  });
+  describe('with multiple gokbs', () => {
+    const externalKbInfo = {
+      baseOrigin: 'https://example.org',
+      kbCount: 2,
+      kbName: 'gokb',
+    };
 
-  test('initialFilterState is passed to SASQ via sasqProps', () => {
-    renderComponent();
-    expect(capturedProps.sasqProps.initialFilterState).toEqual({ pre: 'set' });
-  });
+    const renderComponent = () => renderWithIntl(
+      <MemoryRouter>
+        <RemoteKBRoute externalKbInfo={externalKbInfo} />
+      </MemoryRouter>,
+      translationsProperties
+    );
 
-  test('passes getNavigationIdentifier to SASQRoute as function', () => {
-    renderComponent();
-    expect(typeof capturedProps.getNavigationIdentifier).toBe('function');
-    expect(capturedProps.getNavigationIdentifier({ uuid: 'abc' })).toBe('abc');
+    test('passes RenderBody warning banner', () => {
+      renderComponent();
+      expect(capturedProps.RenderBody).toBeTruthy();
+    });
+
+    test('warning MessageBanner includes settings text and settingsLink renders correct Link', () => {
+      renderComponent();
+
+      const { getByText } = renderWithIntl(
+        <MemoryRouter>
+          {capturedProps.RenderBody({})}
+        </MemoryRouter>,
+        translationsProperties
+      );
+
+      expect(getByText(/external data source settings/i)).toBeInTheDocument();
+
+      const renderBodyEl = capturedProps.RenderBody({});
+      const messageBannerEl = renderBodyEl.props.children[0]; // MessageBanner
+      const formattedMsgEl = messageBannerEl.props.children; // FormattedMessage
+      const { settingsLink } = formattedMsgEl.props.values;
+
+      const { getByRole } = renderWithIntl(
+        <MemoryRouter>
+          {settingsLink('external data source settings')}
+        </MemoryRouter>,
+        translationsProperties
+      );
+
+      const link = getByRole('link', { name: /external data source settings/i });
+      expect(link).toHaveAttribute('href', '/settings/local-kb-admin/external-data-sources');
+    });
   });
 });
