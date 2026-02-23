@@ -6,15 +6,14 @@ import GokbTIPPTable from '../Gokb/GokbTIPPTable';
 const propTypes = {
   resourceId: PropTypes.string.isRequired,
   setBadgeCount: PropTypes.func.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 const RemoteResourceTIPPTable = ({ resourceId, setBadgeCount, url }) => {
   const { data: { records: tipps = [] } = {} } = useQuery(
     ['GOKB', 'fetchTIPPS', resourceId],
     () => baseKy
-      .get(
-        `${url}?componentType=TIPP&title=${resourceId}&status=Current&max=10000`
-      )
+      .get(url)
       .json(),
     {
       enabled: !!resourceId,
