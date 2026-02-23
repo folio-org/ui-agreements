@@ -8,12 +8,12 @@ const propTypes = {
   setBadgeCount: PropTypes.func.isRequired,
 };
 
-const RemoteResourceTIPPTable = ({ resourceId, setBadgeCount }) => {
+const RemoteResourceTIPPTable = ({ resourceId, setBadgeCount, url }) => {
   const { data: { records: tipps = [] } = {} } = useQuery(
     ['GOKB', 'fetchTIPPS', resourceId],
     () => baseKy
       .get(
-        `https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&title=${resourceId}&status=Current&max=10000`
+        `${url}?componentType=TIPP&title=${resourceId}&status=Current&max=10000`
       )
       .json(),
     {
