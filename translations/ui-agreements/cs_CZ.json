@@ -897,5 +897,6 @@
     "eresources.gokbPackageUuid": "Balíček GOKB (UUID)",
     "eresources.gokbTitleUuid": "Název GOKB (UUID)",
     "eresources.sourceTitleCount": "Počet titulů zdroje",
-    "basket.update.error.callout": "Nelze přidat zdroj(e) do dohody: {error}"
+    "basket.update.error.callout": "Nelze přidat zdroj(e) do dohody: {error}",
+    "remoteKb.warn.externalKbs": "<strong>Zdroj GOKB</strong> je <strong>{kbName}</strong>. Existuje více než jeden aktivní zdroj dat GOKB. Doporučuje se mít nastaven pouze <strong>jeden aktivní GOKB</strong>. Zdroje lze změnit v <settingsLink>nastavení externího zdroje dat</settingsLink>"
 }
