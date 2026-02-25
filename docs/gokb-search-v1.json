@@ -751,6 +751,13 @@
                                 "accessType": "JSONPath",
                                 "expression": "$.uuid"
                               }
+                            },
+                            {
+                              "name": "url",
+                              "value": {
+                                "type": "handlebars",
+                                "templateString": "{{baseOrigin}}/gokb/api/find?componentType=TIPP&title={{resource.uuid}}&status=Current&max=10000"
+                              }
                             }
                           ]
                         }

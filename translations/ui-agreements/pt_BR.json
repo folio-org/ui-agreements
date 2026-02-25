@@ -897,5 +897,6 @@
     "eresources.gokbPackageUuid": "UUID do pacote GOKB",
     "eresources.gokbTitleUuid": "UUID do título GOKB",
     "eresources.sourceTitleCount": "Contagem do título da fonte",
-    "basket.update.error.callout": "Não é possível adicionar recurso(s) ao contrato: {error}"
+    "basket.update.error.callout": "Não é possível adicionar recurso(s) ao contrato: {error}",
+    "remoteKb.warn.externalKbs": "<strong>GOKB source</strong> is <strong>{kbName}</strong>. More than one active GOKB data source exists. It is recommended to have a <strong>single active GOKB</strong> configured. Sources can be changed in <settingsLink>external data source settings</settingsLink>"
 }
