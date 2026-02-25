@@ -119,7 +119,7 @@ describe('RemoteResourceAgreementsList (props & callbacks)', () => {
     const { queryByText } = renderIt();
 
     expect(mockEntitlementAgreementsList).not.toHaveBeenCalled();
-    const messageNode = queryByText('Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Packages accordion');
+    const messageNode = queryByText('Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Package titles accordion');
     expect(messageNode).toBeInTheDocument();
 
     expect(entitlementsQueryOpts?.enabled).toBe(false);
