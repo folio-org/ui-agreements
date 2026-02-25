@@ -897,5 +897,6 @@
     "eresources.gokbPackageUuid": "GOKB pakket UUID",
     "eresources.gokbTitleUuid": "Titel GOKB UUID",
     "eresources.sourceTitleCount": "Bron titel tellen",
-    "basket.update.error.callout": "Kan bron(nen) niet Toevoegen aan Overeenkomst: {error}"
+    "basket.update.error.callout": "Kan bron(nen) niet Toevoegen aan Overeenkomst: {error}",
+    "remoteKb.warn.externalKbs": "<strong>GOKB source</strong> is <strong>{kbName}</strong>. More than one active GOKB data source exists. It is recommended to have a <strong>single active GOKB</strong> configured. Sources can be changed in <settingsLink>external data source settings</settingsLink>"
 }

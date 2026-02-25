@@ -24,7 +24,6 @@ const renderPublicationDates = (resource) => {
       )}
       {(publishedFrom || publishedTo) && (
         <div>
-          <FormattedMessage id="ui-agreements.remoteKb.publicationDates.coverage" />:{' '}
           <span>
             {publishedFrom ? <FormattedUTCDate value={publishedFrom} /> : '*'}{' '}
             <Icon icon="arrow-right" size="small" />{' '}

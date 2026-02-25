@@ -897,5 +897,6 @@
     "eresources.gokbPackageUuid": "GOKB paket Evrensel benzersiz tanımlayıcı'sı",
     "eresources.gokbTitleUuid": "GOKB başlık Evrensel benzersiz tanımlayıcı",
     "eresources.sourceTitleCount": "Kaynak başlık sayısı",
-    "basket.update.error.callout": "Anlaşmaya kaynak(lar) ekleme işlemi gerçekleştirilemiyor: {error}"
+    "basket.update.error.callout": "Anlaşmaya kaynak(lar) ekleme işlemi gerçekleştirilemiyor: {error}",
+    "remoteKb.warn.externalKbs": "<strong>GOKB source</strong> is <strong>{kbName}</strong>. More than one active GOKB data source exists. It is recommended to have a <strong>single active GOKB</strong> configured. Sources can be changed in <settingsLink>external data source settings</settingsLink>"
 }

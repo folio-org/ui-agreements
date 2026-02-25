@@ -897,5 +897,6 @@
     "eresources.gokbPackageUuid": "GOKB 资源包 UUID",
     "eresources.gokbTitleUuid": "GOKB 标题 UUID",
     "eresources.sourceTitleCount": "来源标题计数",
-    "basket.update.error.callout": "无法添加资源到协议中： {error}"
+    "basket.update.error.callout": "无法添加资源到协议中： {error}",
+    "remoteKb.warn.externalKbs": "<strong>GOKB source</strong> is <strong>{kbName}</strong>. More than one active GOKB data source exists. It is recommended to have a <strong>single active GOKB</strong> configured. Sources can be changed in <settingsLink>external data source settings</settingsLink>"
 }
