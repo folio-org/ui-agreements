@@ -897,5 +897,6 @@
     "eresources.gokbPackageUuid": "GOKB package UUID",
     "eresources.gokbTitleUuid": "GOKB title UUID",
     "eresources.sourceTitleCount": "Source title count",
-    "basket.update.error.callout": "Unable to add resource(s) to agreement: {error}"
+    "basket.update.error.callout": "Unable to add resource(s) to agreement: {error}",
+    "remoteKb.warn.externalKbs": "<strong>GOKB source</strong> is <strong>{kbName}</strong>. More than one active GOKB data source exists. It is recommended to have a <strong>single active GOKB</strong> configured. Sources can be changed in <settingsLink>external data source settings</settingsLink>"
 }
