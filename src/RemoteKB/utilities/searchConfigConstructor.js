@@ -5,7 +5,7 @@ import { useSASQQIndex } from '@folio/stripes-erm-components';
 
 const handleBarsTransform = (searchConfig, query) => {
   const template = handlebars.compile(searchConfig.templateString);
-  return template({ query });
+  return template({ query: encodeURIComponent(query ?? '') });
 };
 
 // Since this is reusing handlebars logic, should 1000% be moved elsewhere
