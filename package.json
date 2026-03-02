@@ -107,8 +107,7 @@
           "ui-agreements.accesspolicies.view",
           "acquisitions-units.memberships.collection.get",
           "acquisitions-units.units.collection.get",
-          "mod-settings.global.read.stripes-core.prefs.manage",
-          "mod-settings.entries.collection.get"
+          "stripes-core.settings.read"
         ]
       },
       {
@@ -213,8 +212,7 @@
           "module.agreements.enabled",
           "settings.enabled",
           "erm.settings.read",
-          "mod-settings.global.read.stripes-core.prefs.manage",
-          "mod-settings.entries.collection.get"
+          "stripes-core.settings.read"
         ]
       },
       {
