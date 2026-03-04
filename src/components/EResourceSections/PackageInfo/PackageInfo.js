@@ -158,11 +158,6 @@ const PackageInfo = ({
           />
         </Col>
       </Row>
-      <Row>
-        <Col xs={6}>
-          <PackageIdentifiers pkg={eresource} />
-        </Col>
-      </Row>
     </div>
   );
 };
