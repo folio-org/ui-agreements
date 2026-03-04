@@ -14,7 +14,6 @@ import {
 import { FormattedDateTime } from '@folio/stripes-erm-components';
 
 import AddToBasketButton from '../../AddToBasketButton';
-import PackageIdentifiers from '../PackageIdentifiers';
 import PackageSyncronisingValue from '../PackageSyncronisingValue';
 import css from '../../styles.css';
 import { buildPackageEntitlementOption } from '../../utilities';
