@@ -16,7 +16,6 @@ const Identifiers = ({
   id
 }) => {
   const intl = useIntl();
-  console.log('identifiers', identifiers);
 
   const [sortedColumn, setSortedColumn] = useState('type');
   const [sortDirection, setSortDirection] = useState('ascending');
@@ -42,7 +41,7 @@ const Identifiers = ({
   };
 
   const renderBadge = () => {
-    const count = identifiers.length;
+    const count = identifiers?.length || 0;
     return <Badge>{count}</Badge>;
   };
 

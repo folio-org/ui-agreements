@@ -55,7 +55,7 @@ const Package = ({ data, handlers, isLoading }) => {
     },
   ];
 
-  const { eresource: { alternateResourceNames, description, identifiers, packageDescriptionUrls } } = data;
+  const { eresource: { alternateResourceNames, description, packageDescriptionUrls } } = data;
   return (
     <HasCommand
       commands={shortcuts}
