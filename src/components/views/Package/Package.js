@@ -18,6 +18,7 @@ import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import {
   Agreements,
   ExtendedPackageInformation,
+  Identifiers,
   PackageContents,
   PackageInfo,
 } from '../../EResourceSections';
@@ -25,7 +26,7 @@ import {
 import { urls } from '../../utilities';
 import { ERESOURCE_ENTITY_TYPE } from '../../../constants';
 
-const Package = ({ data, handlers }) => {
+const Package = ({ data, handlers, isLoading }) => {
   const accordionStatusRef = useRef();
 
   const getSectionProps = (id) => ({
@@ -38,6 +39,7 @@ const Package = ({ data, handlers }) => {
   const initialAccordionsState = {
     eresourceAgreements: false,
     extendedPackageInformation: false,
+    identifiers: false,
     notes: false,
     packageContents: false,
   };
@@ -53,7 +55,7 @@ const Package = ({ data, handlers }) => {
     },
   ];
 
-  const { eresource: { alternateResourceNames, description, identifiers, packageDescriptionUrls } } = data;
+  const { eresource: { alternateResourceNames, description, packageDescriptionUrls } } = data;
   return (
     <HasCommand
       commands={shortcuts}
@@ -69,7 +71,7 @@ const Package = ({ data, handlers }) => {
             </Col>
           </Row>
           <AccordionSet initialStatus={initialAccordionsState}>
-            {(!!description || !!alternateResourceNames?.length || !!packageDescriptionUrls?.length || !!identifiers?.length) &&
+            {(!!description || !!alternateResourceNames?.length || !!packageDescriptionUrls?.length) &&
               <ExtendedPackageInformation {...getSectionProps('extendedPackageInformation')} />
             }
             <Agreements
@@ -79,8 +81,10 @@ const Package = ({ data, handlers }) => {
             />
             <PackageContents
               {...getSectionProps('packageContents')}
+              isLoading={isLoading}
               onFilterPackageContents={handlers.onFilterPackageContents}
             />
+            <Identifiers {...getSectionProps('identifiers')} />
             <NotesSmartAccordion
               {...getSectionProps('notes')}
               domainName="agreements"
@@ -100,6 +104,7 @@ const Package = ({ data, handlers }) => {
 Package.propTypes = {
   data: PropTypes.object.isRequired,
   handlers: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default Package;
