@@ -28,7 +28,7 @@ const PackageIdentifiers = ({
       Object.entries(identifierValues)?.filter(([_k, value]) => !!value),
       ([key, value]) => (
         <KeyValue
-          label={<FormattedMessage id={`ui-agreements.identifiers.${key}`} />}
+          label={<FormattedMessage id={`ui-agreements.eresources.identifiers.${key}`} />}
           value={value.value}
         />
       )
