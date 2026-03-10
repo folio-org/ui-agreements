@@ -39,6 +39,11 @@ const cases = [
 describe.each(cases)('Identifiers ($name)', ({ eresource, typeLabels }) => {
   const typeLabel = (item) => typeLabels[item.identifier.ns.value] || item.identifier.ns.value;
 
+  const sortedByTypeAsc = orderBy(eresource.identifiers, [typeLabel], ['asc']);
+  const sortedByTypeDesc = orderBy(eresource.identifiers, [typeLabel], ['desc']);
+  const sortedByIdentifierAsc = orderBy(eresource.identifiers, [i => i.identifier.value], ['asc']);
+  const sortedByIdentifierDesc = orderBy(eresource.identifiers, [i => i.identifier.value], ['desc']);
+
   beforeEach(() => {
     renderWithIntl(
       <MemoryRouter>
@@ -66,28 +71,13 @@ describe.each(cases)('Identifiers ($name)', ({ eresource, typeLabels }) => {
   });
 
   describe('sorting', () => {
-    let sortedByTypeAsc;
-    let sortedByTypeDesc;
-    let sortedByIdentifierAsc;
-    let sortedByIdentifierDesc;
-
-    beforeEach(() => {
-      const identifiers = eresource.identifiers;
-
-      sortedByTypeAsc = orderBy(identifiers, [typeLabel], ['asc']);
-      sortedByTypeDesc = orderBy(identifiers, [typeLabel], ['desc']);
-
-      sortedByIdentifierAsc = orderBy(identifiers, [i => i.identifier.value], ['asc']);
-      sortedByIdentifierDesc = orderBy(identifiers, [i => i.identifier.value], ['desc']);
-    });
-
-    test('initial sort is ascending by type (all rows)', async () => {
-      for (let row = 0; row < sortedByTypeAsc.length; row++) {
-        // eslint-disable-next-line no-await-in-loop
-        await MultiColumnListCell({ row, columnIndex: 0 }).has({
-          content: typeLabel(sortedByTypeAsc[row])
-        });
-      }
+    test.each(
+      sortedByTypeAsc.map((item, row) => ({
+        row,
+        content: typeLabel(item),
+      }))
+    )('initial sort is ascending by type - row $row', async ({ row, content }) => {
+      await MultiColumnListCell({ row, columnIndex: 0 }).has({ content });
     });
 
     describe('clicking Resource identifier type header', () => {
@@ -95,13 +85,13 @@ describe.each(cases)('Identifiers ($name)', ({ eresource, typeLabels }) => {
         await MultiColumnList('identifiers-list').clickHeader('Resource identifier type');
       });
 
-      test('sort toggles to descending by type (all rows)', async () => {
-        for (let row = 0; row < sortedByTypeDesc.length; row++) {
-          // eslint-disable-next-line no-await-in-loop
-          await MultiColumnListCell({ row, columnIndex: 0 }).has({
-            content: typeLabel(sortedByTypeDesc[row])
-          });
-        }
+      test.each(
+        sortedByTypeDesc.map((item, row) => ({
+          row,
+          content: typeLabel(item),
+        }))
+      )('sort toggles to descending by type - row $row', async ({ row, content }) => {
+        await MultiColumnListCell({ row, columnIndex: 0 }).has({ content });
       });
 
       describe('clicking Resource identifier type header again', () => {
@@ -109,13 +99,13 @@ describe.each(cases)('Identifiers ($name)', ({ eresource, typeLabels }) => {
           await MultiColumnList('identifiers-list').clickHeader('Resource identifier type');
         });
 
-        test('sort toggles back to ascending by type (all rows)', async () => {
-          for (let row = 0; row < sortedByTypeAsc.length; row++) {
-            // eslint-disable-next-line no-await-in-loop
-            await MultiColumnListCell({ row, columnIndex: 0 }).has({
-              content: typeLabel(sortedByTypeAsc[row])
-            });
-          }
+        test.each(
+          sortedByTypeAsc.map((item, row) => ({
+            row,
+            content: typeLabel(item),
+          }))
+        )('sort toggles back to ascending by type - row $row', async ({ row, content }) => {
+          await MultiColumnListCell({ row, columnIndex: 0 }).has({ content });
         });
       });
     });
@@ -125,13 +115,13 @@ describe.each(cases)('Identifiers ($name)', ({ eresource, typeLabels }) => {
         await MultiColumnList('identifiers-list').clickHeader('Resource identifier');
       });
 
-      test('sort is ascending by identifier (all rows)', async () => {
-        for (let row = 0; row < sortedByIdentifierAsc.length; row++) {
-          // eslint-disable-next-line no-await-in-loop
-          await MultiColumnListCell({ row, columnIndex: 1 }).has({
-            content: sortedByIdentifierAsc[row].identifier.value
-          });
-        }
+      test.each(
+        sortedByIdentifierAsc.map((item, row) => ({
+          row,
+          content: item.identifier.value,
+        }))
+      )('sort is ascending by identifier - row $row', async ({ row, content }) => {
+        await MultiColumnListCell({ row, columnIndex: 1 }).has({ content });
       });
 
       describe('clicking Resource identifier header again', () => {
@@ -139,13 +129,13 @@ describe.each(cases)('Identifiers ($name)', ({ eresource, typeLabels }) => {
           await MultiColumnList('identifiers-list').clickHeader('Resource identifier');
         });
 
-        test('sort toggles to descending by identifier (all rows)', async () => {
-          for (let row = 0; row < sortedByIdentifierDesc.length; row++) {
-            // eslint-disable-next-line no-await-in-loop
-            await MultiColumnListCell({ row, columnIndex: 1 }).has({
-              content: sortedByIdentifierDesc[row].identifier.value
-            });
-          }
+        test.each(
+          sortedByIdentifierDesc.map((item, row) => ({
+            row,
+            content: item.identifier.value,
+          }))
+        )('sort toggles to descending by identifier - row $row', async ({ row, content }) => {
+          await MultiColumnListCell({ row, columnIndex: 1 }).has({ content });
         });
       });
     });
