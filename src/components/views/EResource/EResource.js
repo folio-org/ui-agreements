@@ -202,7 +202,7 @@ const EResource = ({
         {...paneProps}
       >
         <TitleManager record={eresource.name}>
-          <EResourceViewComponent data={data} handlers={handlers} />
+          <EResourceViewComponent data={data} handlers={handlers} isLoading={isLoading} />
         </TitleManager>
       </Pane>
       <HelperComponent
