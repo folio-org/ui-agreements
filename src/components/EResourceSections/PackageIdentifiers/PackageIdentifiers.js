@@ -19,8 +19,8 @@ const PackageIdentifiers = ({
     zdb: findIdByNamespace('zdb-pkg'),
     ezb: findIdByNamespace('ezb-collection-id'),
     eBookPool: findIdByNamespace('ebp-id-pkg'),
-    gokbId: findIdByNamespace('gokb_id'),
-    gokbUUID: findIdByNamespace('gokb_uuid')
+    gokb_id: findIdByNamespace('gokb_id'),
+    gokb_uuid: findIdByNamespace('gokb_uuid')
   };
 
   return (
@@ -28,7 +28,7 @@ const PackageIdentifiers = ({
       Object.entries(identifierValues)?.filter(([_k, value]) => !!value),
       ([key, value]) => (
         <KeyValue
-          label={<FormattedMessage id={`ui-agreements.packageIdentifiers.${key}`} />}
+          label={<FormattedMessage id={`ui-agreements.eresources.identifiers.${key}`} />}
           value={value.value}
         />
       )
