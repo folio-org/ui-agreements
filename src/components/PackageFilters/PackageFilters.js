@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
@@ -31,6 +31,7 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
     tags: [],
     synchronisationStatus: [],
   });
+  const intl = useIntl();
 
   useEffect(() => {
     const newState = {};
@@ -96,6 +97,7 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
         separator={false}
       >
         <MultiSelectionFilter
+          aria-label={intl.formatMessage({ id: 'ui-agreements.eresources.sourceKb' })}
           dataOptions={dataOptions || []}
           id="source-filter"
           name="source"
@@ -120,6 +122,7 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
         separator={false}
       >
         <MultiSelectionFilter
+          aria-label={intl.formatMessage({ id: 'ui-agreements.agreements.tags' })}
           dataOptions={filterState.tags || []}
           id="tags-filter"
           name="tags"
@@ -143,6 +146,7 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
         separator={false}
       >
         <MultiSelectionFilter
+          aria-label={intl.formatMessage({ id: 'ui-agreements.eresources.availability' })}
           dataOptions={filterState.availability || []}
           id="availability-filter"
           name="availability"
