@@ -50,7 +50,6 @@ const IconDropdown = ({
           <IconButton
             ref={theRef}
             icon={icon}
-            marginBottom0
             onClick={onToggle}
             onKeyDown={keyHandler}
             type="button"

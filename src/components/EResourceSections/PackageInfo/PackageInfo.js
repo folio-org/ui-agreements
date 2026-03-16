@@ -14,7 +14,6 @@ import {
 import { FormattedDateTime } from '@folio/stripes-erm-components';
 
 import AddToBasketButton from '../../AddToBasketButton';
-import PackageIdentifiers from '../PackageIdentifiers';
 import PackageSyncronisingValue from '../PackageSyncronisingValue';
 import css from '../../styles.css';
 import { buildPackageEntitlementOption } from '../../utilities';
@@ -156,11 +155,6 @@ const PackageInfo = ({
                 <NoValue />
             }
           />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={6}>
-          <PackageIdentifiers pkg={eresource} />
         </Col>
       </Row>
     </div>

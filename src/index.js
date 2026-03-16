@@ -60,7 +60,7 @@ import IfEResourcesEnabled from './components/IfEResourcesEnabled';
 import OpenBasketButton from './components/OpenBasketButton';
 
 import Settings from './settings';
-import { useEresourcesEnabled } from './hooks';
+import { useEresourcesEnabled, useExternalKbInfo } from './hooks';
 
 const App = (props) => {
   // Destructure important props
@@ -77,6 +77,7 @@ const App = (props) => {
   addKey('ui-agreements');
 
   const eresourcesEnabled = useEresourcesEnabled();
+  const externalKbInfo = useExternalKbInfo();
 
   const shortcutModalToggle = (handleToggle) => {
     handleToggle();
@@ -133,7 +134,7 @@ const App = (props) => {
           <Button
             buttonStyle={
               (pathname?.startsWith('/erm/agreements') ||
-              pathname?.startsWith('/erm/agreementLines')) ?
+                pathname?.startsWith('/erm/agreementLines')) ?
                 'primary' :
                 'default'
             }
@@ -144,8 +145,8 @@ const App = (props) => {
           <Button
             buttonStyle={
               (pathname?.startsWith('/erm/titles') ||
-              pathname?.startsWith('/erm/packages') ||
-              pathname?.startsWith('/erm/platforms')) ?
+                pathname?.startsWith('/erm/packages') ||
+                pathname?.startsWith('/erm/platforms')) ?
                 'primary' :
                 'default'
             }
@@ -153,16 +154,18 @@ const App = (props) => {
           >
             <FormattedMessage id="ui-agreements.localKBSearch" />
           </Button>
-          <Button
-            buttonStyle={
-              pathname?.startsWith('/erm/gokb') ?
-                'primary' :
-                'default'
-            }
-            to="/erm/gokb"
-          >
-            <FormattedMessage id="ui-agreements.gokbSearch" />
-          </Button>
+          {externalKbInfo?.kbCount > 0 && (
+            <Button
+              buttonStyle={
+                pathname?.startsWith('/erm/gokb') ?
+                  'primary' :
+                  'default'
+              }
+              to="/erm/gokb"
+            >
+              <FormattedMessage id="ui-agreements.gokbSearch" />
+            </Button>
+          )}
         </ButtonGroup>
       );
     }
@@ -224,9 +227,24 @@ const App = (props) => {
                 <Route component={AgreementLinesRoute} path={`${path}/agreementLines/:id?`}>
                   <Route component={AgreementLineViewRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId`} />
                 </Route>
+                <Route
+                  path={`${path}/gokb/:id?`}
+                  render={(routeProps) => {
+                    if (externalKbInfo.isLoading) return null;
 
-                <Route component={RemoteKBRoute} path={`${path}/gokb/:id?`} />
+                    if (externalKbInfo.kbCount === 0) {
+                      history.replace(`${path}/packages`);
+                      return null;
+                    }
 
+                    return (
+                      <RemoteKBRoute
+                        {...routeProps}
+                        externalKbInfo={externalKbInfo}
+                      />
+                    );
+                  }}
+                />
                 <Route component={EResourceEditRoute} path={`${path}/titles/:id/edit`} />
                 <Route component={TitlesRoute} path={`${path}/titles/:id?`}>
                   <Route component={EResourceViewRoute} path={`${path}/titles/:id`} />

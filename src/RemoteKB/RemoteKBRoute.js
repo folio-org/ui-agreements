@@ -1,9 +1,12 @@
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import kyImport from 'ky';
 
 import { AppIcon } from '@folio/stripes/core';
 
+import { MessageBanner } from '@folio/stripes/components';
 import {
   ColumnManagerMenu,
   useColumnManager,
@@ -11,7 +14,7 @@ import {
 
 import { useSASQQIndex } from '@folio/stripes-erm-components';
 
-import { SASQRoute } from '@k-int/stripes-kint-components';
+import { SASQRoute, SASQTableBody } from '@k-int/stripes-kint-components';
 import RemoteKbResource from './components/RemoteKbResourceView';
 
 import config from '../../docs/gokb-search-v1';
@@ -27,7 +30,38 @@ import {
   getSortConfig,
 } from './utilities';
 
-const RemoteKBRoute = () => {
+const propTypes = {
+  externalKbInfo: PropTypes.shape({
+    baseOrigin: PropTypes.string.isRequired,
+    kbCount: PropTypes.number,
+    kbName: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+const RemoteKBRoute = ({ externalKbInfo }) => {
+  const { baseOrigin, kbCount, kbName } = externalKbInfo;
+
+  const TableBodyComponent = (props) => {
+    return (
+      <>
+        {kbCount > 1 &&
+          <MessageBanner type="warning">
+            <FormattedMessage
+              id="ui-agreements.remoteKb.warn.externalKbs"
+              values={{
+                kbName,
+                settingsLink: (text) => (
+                  <Link to="/settings/local-kb-admin/external-data-sources">{text}</Link>
+                ),
+              }}
+            />
+          </MessageBanner>
+        }
+        <SASQTableBody {...props} />
+      </>
+    );
+  };
+
   const kbKey = 'gokb';
   const columnsConfig = config.configuration.results.display.columns;
   const displayConfig = config.configuration.view.display;
@@ -37,13 +71,21 @@ const RemoteKBRoute = () => {
   const viewFetchConfig = config.configuration.view.fetch;
   const viewQueryIdKey = viewFetchConfig?.viewQueryIdentifierKey || 'id';
 
+  const resolveUrl = (urlConfig) => {
+    if (urlConfig?.type === 'handlebars') {
+      const template = handlebarsCompile(urlConfig.templateString);
+      return template({ baseOrigin });
+    }
+    return urlConfig;
+  };
+
   const itemEndpointData = {
-    endpoint: viewFetchConfig.baseUrl,
+    endpoint: resolveUrl(viewFetchConfig.baseUrl),
     ...viewFetchConfig.mapping,
   };
 
   const endpointData = {
-    endpoint: config.configuration.results.fetch.baseUrl,
+    endpoint: resolveUrl(config.configuration.results.fetch.baseUrl),
     ...config.configuration.results.fetch.mapping,
   };
 
@@ -52,7 +94,7 @@ const RemoteKBRoute = () => {
   );
 
   const ViewComponent = (props) => (
-    <RemoteKbResource {...props} displayConfig={displayConfig} />
+    <RemoteKbResource {...props} baseOrigin={baseOrigin} displayConfig={displayConfig} />
   );
 
   const { formatter, resultColumns, sortableColumns } = getResultsDisplayConfig(
@@ -181,6 +223,7 @@ const RemoteKBRoute = () => {
         id: `${kbKey}-search-main-paneset`,
       }}
       queryParameterGenerator={generateQuery}
+      RenderBody={TableBodyComponent}
       resultColumns={resultColumns}
       sasqProps={{
         initialFilterState,
@@ -206,5 +249,7 @@ const RemoteKBRoute = () => {
     />
   );
 };
+
+RemoteKBRoute.propTypes = propTypes;
 
 export default RemoteKBRoute;

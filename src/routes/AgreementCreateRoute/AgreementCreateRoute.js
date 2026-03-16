@@ -8,7 +8,6 @@ import { useMutation, useQueryClient } from 'react-query';
 import { LoadingView } from '@folio/stripes/components';
 import { useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
-  CREATE,
   getRefdataValuesByDesc,
   useClaim,
   useGetAccess
@@ -70,13 +69,12 @@ const AgreementCreateRoute = ({
 
   const accessControlData = useGetAccess({
     resourceEndpoint: AGREEMENTS_ENDPOINT,
-    restrictions: [CREATE],
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', canDo]
   });
 
   const {
     canCreate,
-    canCreateLoading,
+    isLoading: isAccessControlLoading
   } = accessControlData;
 
   const refdata = useAgreementsRefdata({
@@ -238,12 +236,11 @@ const AgreementCreateRoute = ({
   return (
     <View
       accessControlData={{
-        isAccessControlLoading: canCreateLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
+        isAccessControlLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
         isAccessDenied: !canCreate, // Special prop used by AgreementForm to avoid edit/create distinctions
         ...accessControlData,
         // Cheat these values for the sake of the form.
         canApplyPolicies: true,
-        canApplyPoliciesLoading: false,
       }}
       data={{
         agreementLines: getAgreementLinesToAdd(),

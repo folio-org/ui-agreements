@@ -45,6 +45,7 @@
     "rxjs": "^6.6.3"
   },
   "dependencies": {
+    "@folio/stripes-acq-components": "^7.0.0",
     "@k-int/stripes-kint-components": "^5.28.3",
     "@rehooks/local-storage": "^2.4.4",
     "compose-function": "^3.0.3",
@@ -65,7 +66,6 @@
   "peerDependencies": {
     "@folio/handler-stripes-registry": "^3.0.0",
     "@folio/stripes": "^10.0.0",
-    "@folio/stripes-acq-components": "^7.0.0",
     "@folio/stripes-erm-components": "^10.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -107,8 +107,7 @@
           "ui-agreements.accesspolicies.view",
           "acquisitions-units.memberships.collection.get",
           "acquisitions-units.units.collection.get",
-          "mod-settings.global.read.stripes-core.prefs.manage",
-          "mod-settings.entries.collection.get"
+          "stripes-core.settings.read"
         ]
       },
       {
@@ -213,8 +212,7 @@
           "module.agreements.enabled",
           "settings.enabled",
           "erm.settings.read",
-          "mod-settings.global.read.stripes-core.prefs.manage",
-          "mod-settings.entries.collection.get"
+          "stripes-core.settings.read"
         ]
       },
       {

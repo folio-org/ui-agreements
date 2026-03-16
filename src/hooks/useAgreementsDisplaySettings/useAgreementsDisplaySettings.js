@@ -104,7 +104,7 @@ const useAgreementsDisplaySettings = ({
                 const translationId = getAgreementsSettingsField(update.key);
                 const settingLabel = intl.formatMessage({
                   id: `ui-agreements.settings.${translationId}`,
-                  fallbackMessage: update.key
+                  defaultMessage: update.key
                 });
 
                 return (

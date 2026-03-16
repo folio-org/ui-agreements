@@ -14,11 +14,8 @@ import {
   useGetAccess,
   useInterfaces,
   usePolicies,
-  DELETE,
   INVALID_JSON_ERROR,
   JSON_ERROR,
-  READ,
-  UPDATE,
 } from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
@@ -77,19 +74,18 @@ const AgreementViewRoute = ({
   const accessControlData = useGetAccess({
     resourceEndpoint: AGREEMENTS_ENDPOINT,
     resourceId: agreementId,
-    restrictions: [READ, UPDATE, DELETE],
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo]
   });
   const {
     canRead,
-    canReadLoading,
+    isLoading: isAccessControlLoading,
   } = accessControlData;
 
   // FIXME how do we want to handle an error?
   const { agreement, isFetching: isAgreementLoading = true } = useAgreement({
     agreementId,
     queryOptions: {
-      enabled: !canReadLoading && !!canRead
+      enabled: !isAccessControlLoading && !!canRead
     }
   });
 

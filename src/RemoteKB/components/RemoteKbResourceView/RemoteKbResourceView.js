@@ -39,7 +39,12 @@ import getResultsDisplayConfig from '../../utilities/getResultsDisplayConfig';
 const PANE_DEFAULT_WIDTH = '50%';
 
 const propTypes = {
+  baseOrigin: PropTypes.string,
   displayConfig: PropTypes.shape({
+    actions: PropTypes.shape({
+      type: PropTypes.string,
+      values: PropTypes.arrayOf(PropTypes.shape({})),
+    }),
     icon: PropTypes.string,
     title: PropTypes.objectOf(PropTypes.string),
     renderStrategy: PropTypes.shape({
@@ -57,6 +62,7 @@ const propTypes = {
 };
 
 const RemoteKbResourceView = ({
+  baseOrigin,
   displayConfig,
   resource,
   onClose,
@@ -180,7 +186,7 @@ const RemoteKbResourceView = ({
             <NoValue />
           );
         } else {
-          return template({ resource });
+          return template({ resource, baseOrigin });
         }
       }
       case 'table': {
@@ -215,7 +221,11 @@ const RemoteKbResourceView = ({
           registryResource?.getRenderFunction(value.registryRenderFunction) ??
           null;
         const baseProps = (value.props || []).reduce((acc, p) => {
-          acc[p.name] = renderValue(p.value);
+          const v = renderValue(p.value);
+          acc[p.name] =
+            typeof v === 'string' || typeof v === 'number'
+              ? v
+              : null;
           return acc;
         }, {});
 
@@ -343,7 +353,7 @@ const RemoteKbResourceView = ({
   const renderActionMenu = () => {
     return (
       <div>
-        {displayConfig.actions.values.map((value) => renderValue(value))}
+        {displayConfig.actions.values.map((value) => <span key={value.name}>{renderValue(value)}</span>)}
       </div>
     );
   };
