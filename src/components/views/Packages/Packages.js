@@ -320,7 +320,7 @@ const Packages = ({
                     formatter={{
                       select: item => (
                         <Checkbox
-                          aria-label={`select-${item.id}`}
+                          aria-label={`select-${item.name}`}
                           checked={selectedPackageIds.includes(item.id)}
                           name={`select-${item.id}`}
                           onChange={(e) => handleCheckboxClick(e, item.id)}
