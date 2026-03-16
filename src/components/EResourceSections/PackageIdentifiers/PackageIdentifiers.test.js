@@ -84,7 +84,7 @@ describe('PackageInfo', () => {
     });
 
     test('renders the expected e-book pool value', async () => {
-      await KeyValue('E-Book Pool').has({ value: 'e-book-pool-1' });
+      await KeyValue('eBookPool (Package)').has({ value: 'e-book-pool-1' });
     });
 
     test('renders the expected gokb id value', async () => {
