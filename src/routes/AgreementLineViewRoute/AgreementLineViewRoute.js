@@ -10,8 +10,6 @@ import {
   useGetAccess,
   usePolicies,
   DELETE,
-  READ,
-  UPDATE,
 } from '@folio/stripes-erm-components';
 import View from '../../components/views/AgreementLine';
 import { urls } from '../../components/utilities';
@@ -37,23 +35,22 @@ const AgreementLineViewRoute = ({
   const accessControlData = useGetAccess({
     resourceEndpoint: AGREEMENT_LINES_ENDPOINT,
     resourceId: lineId,
-    restrictions: [READ, UPDATE, DELETE],
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', lineId, canDo]
   });
   const {
     canRead,
-    canReadLoading,
+    isLoading: isAccessControlLoading
   } = accessControlData;
 
   const { data: agreementLine = {}, isLoading: isLineQueryLoading } = useQuery(
     ['ERM', 'AgreementLine', lineId, agreementLinePath],
     () => ky.get(agreementLinePath).json(),
-    { enabled: !canReadLoading && !!canRead }
+    { enabled: !isAccessControlLoading && !!canRead }
   );
 
   const { mutateAsync: deleteAgreementLine } = useMutation(
     // As opposed to ['ERM', 'AgreementLine', lineId, 'DELETE', agreementLinePath] if we did this via a DELETE call to entitlements endpoint
-    ['ERM', 'AgreementLine', lineId, 'DELETE', agreementPath],
+    ['ERM', 'AgreementLine', lineId, DELETE, agreementPath],
     () => ky.put(agreementPath, {
       json: {
         id: agreementId,

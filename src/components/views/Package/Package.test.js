@@ -45,6 +45,11 @@ describe('Package', () => {
     expect(getByText('PackageContents')).toBeInTheDocument();
   });
 
+  it('renders the Identifiers component', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('Identifiers')).toBeInTheDocument();
+  });
+
   it('renders the NotesSmartAccordion component', () => {
     const { getByText } = renderComponent;
     expect(getByText('NotesSmartAccordion')).toBeInTheDocument();

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -51,7 +51,6 @@ const AgreementForm = ({
     isAccessDenied,
     isAccessControlLoading,
     canApplyPolicies,
-    canApplyPoliciesLoading,
   } = {},
   data = {},
   form,
@@ -202,7 +201,7 @@ const AgreementForm = ({
                       <FormAccessControl
                         accessControlEndpoint={AGREEMENTS_ACCESSCONTROL_ENDPOINT}
                         disabled={!canApplyPolicies}
-                        isLoading={canApplyPoliciesLoading}
+                        isLoading={isAccessControlLoading}
                         resourceEndpoint={AGREEMENT_ENDPOINT(id)}
                         resourceId={id}
                         resourceType="Agreements"

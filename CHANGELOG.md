@@ -4,7 +4,7 @@
   * ERM-3705 Update UI to reflect BE changes: `userLimit` type (`number` → `string`) and schema cleanup
   * ERM-3939 Dependency correction: supply missing `@folio/stripes-acq-components` dep
 
-## 12.0.2 2024-04-15
+## 12.0.2 2025-04-15
   * ERM-3673 Agreements: query mixup in Agreements and Local KB package search box
   * ERM-3652 Extend tests for Package multi-select/synchronise switch
 
