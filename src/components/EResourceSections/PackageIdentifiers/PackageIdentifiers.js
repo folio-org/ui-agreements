@@ -18,7 +18,7 @@ const PackageIdentifiers = ({
     isil: findIdByNamespace('isil'),
     zdb: findIdByNamespace('zdb-pkg'),
     ezb: findIdByNamespace('ezb-collection-id'),
-    eBookPool: findIdByNamespace('ebp-id-pkg'),
+    'ebp-id-pkg': findIdByNamespace('ebp-id-pkg'),
     gokb_id: findIdByNamespace('gokb_id'),
     gokb_uuid: findIdByNamespace('gokb_uuid')
   };
