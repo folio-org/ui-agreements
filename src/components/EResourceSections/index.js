@@ -7,3 +7,4 @@ export { default as PCICoverage } from './PCICoverage';
 export { default as PCIInfo } from './PCIInfo';
 export { default as PCIFormCoverage } from './PCIFormCoverage';
 export { default as PCIFormInfo } from './PCIFormInfo';
+export { default as Identifiers } from './Identifiers';
