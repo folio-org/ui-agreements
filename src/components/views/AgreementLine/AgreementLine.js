@@ -41,12 +41,10 @@ import { AGREEMENT_LINE_ENTITY_TYPE } from '../../../constants';
 
 const propTypes = {
   accessControlData: PropTypes.shape({
+    isLoading: PropTypes.bool,
     canRead: PropTypes.bool,
-    canReadLoading: PropTypes.bool,
     canEdit: PropTypes.bool,
-    canEditLoading: PropTypes.bool,
     canDelete: PropTypes.bool,
-    canDeleteLoading: PropTypes.bool,
   }),
   components: PropTypes.shape({
     HelperComponent: PropTypes.elementType,
@@ -98,19 +96,15 @@ const propTypes = {
 
 const AgreementLine = ({
   accessControlData: {
+    isLoading: isAccessControlLoading,
     canRead,
-    canReadLoading,
     canEdit,
-    canEditLoading,
     canDelete,
-    canDeleteLoading,
   } = {
+    isLoading: false,
     canRead: true,
-    canReadLoading: false,
     canEdit: true,
-    canEditLoading: false,
     canDelete: true,
-    canDeleteLoading: false,
   }, // If not passed, assume everything is accessible and not loading...?
   components: { TagButton, HelperComponent },
   data: { line, policies, tagsLink, tagsInvalidateLinks },
@@ -131,7 +125,7 @@ const AgreementLine = ({
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
     useState(false);
 
-  if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
+  if (isLoading || isAccessControlLoading) return <LoadingPane data-loading {...paneProps} />;
 
   if (!canRead) {
     return <AccessControlErrorPane {...paneProps} />;
@@ -163,11 +157,11 @@ const AgreementLine = ({
       buttons.push(
         <Button
           buttonStyle="dropdownItem"
-          disabled={!canEdit || canEditLoading}
+          disabled={!canEdit || isAccessControlLoading}
           id="clickable-dropdown-edit-agreement-line"
           onClick={handlers.onEdit}
         >
-          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
+          <Icon icon={isAccessControlLoading ? 'spinner-ellipsis' : 'edit'}>
             <FormattedMessage id="ui-agreements.agreements.edit" />
           </Icon>
         </Button>
@@ -178,11 +172,11 @@ const AgreementLine = ({
       buttons.push(
         <Button
           buttonStyle="dropdownItem"
-          disabled={!canDelete || canDeleteLoading}
+          disabled={!canDelete || isAccessControlLoading}
           id="clickable-dropdown-delete-agreement-line"
           onClick={() => setShowDeleteConfirmationModal(true)}
         >
-          <Icon icon={canDeleteLoading ? 'spinner-ellipsis' : 'trash'}>
+          <Icon icon={isAccessControlLoading ? 'spinner-ellipsis' : 'trash'}>
             <FormattedMessage id="ui-agreements.delete" />
           </Icon>
         </Button>

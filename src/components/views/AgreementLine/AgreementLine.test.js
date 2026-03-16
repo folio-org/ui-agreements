@@ -160,7 +160,7 @@ describe('AgreementLine', () => {
         <MemoryRouter>
           <AgreementLine
             {...agreementLineDefaultProps}
-            accessControlData={{ canRead: false, canReadLoading: false }}
+            accessControlData={{ canRead: false, isLoading: false }}
           />
         </MemoryRouter>,
         translationsProperties
@@ -181,11 +181,9 @@ describe('AgreementLine', () => {
             {...agreementLineDefaultProps}
             accessControlData={{
               canRead: true,
-              canReadLoading: false,
-              canEditLoading: false,
               canEdit: false,
-              canDeleteLoading: false,
               canDelete: false,
+              isLoading: false
             }}
           />
         </MemoryRouter>,
@@ -237,8 +235,7 @@ describe('AgreementLine', () => {
     beforeEach(() => {
       useStripes.mockImplementation(() => ({
         hasPerm: (perm) => {
-          if (perm === 'ui-agreements.agreements.edit') return true;
-          return false;
+          return perm === 'ui-agreements.agreements.edit';
         },
       }));
       renderComponent = renderWithIntl(
@@ -272,8 +269,7 @@ describe('AgreementLine', () => {
     beforeEach(() => {
       useStripes.mockImplementation(() => ({
         hasPerm: (perm) => {
-          if (perm === 'ui-agreements.agreements.delete') return true;
-          return false;
+          return perm === 'ui-agreements.agreements.delete';
         },
       }));
       renderComponent = renderWithIntl(

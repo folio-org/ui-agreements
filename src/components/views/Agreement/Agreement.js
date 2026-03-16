@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -60,22 +60,12 @@ import {
 } from '../../../constants';
 
 const Agreement = ({
-  accessControlData: {
-    canRead,
-    canReadLoading,
-    canEdit,
-    canEditLoading,
-    canDelete,
-    canDeleteLoading
-  } = {
+  accessControlData = {
+    isLoading: false,
     canRead: true,
-    canReadLoading: false,
     canEdit: true,
-    canEditLoading: false,
     canDelete: true,
-    canDeleteLoading: false,
     canCreate: true,
-    canCreateLoading: false,
   }, // If not passed, assume everything is accessible and not loading...?
   components: {
     HelperComponent,
@@ -85,6 +75,14 @@ const Agreement = ({
   isLoading,
   handlers,
 }) => {
+  const {
+    isLoading: isAccessControlLoading,
+    canRead,
+    canEdit,
+    canDelete,
+  } = accessControlData;
+
+
   const poLineIdsArray = useMemo(
     () => data.agreement?.lines?.filter((line) => line.poLines?.length)
       .map((line) => line.poLines.map((poLine) => poLine.poLineId))
@@ -133,11 +131,11 @@ const Agreement = ({
         <Button
           key="clickable-dropdown-edit-agreement"
           buttonStyle="dropdownItem"
-          disabled={!canEdit || canEditLoading}
+          disabled={!canEdit || isAccessControlLoading}
           id="clickable-dropdown-edit-agreement"
           onClick={handlers.onEdit}
         >
-          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
+          <Icon icon={isAccessControlLoading ? 'spinner-ellipsis' : 'edit'}>
             <FormattedMessage id="ui-agreements.agreements.edit" />
           </Icon>
         </Button>
@@ -185,14 +183,14 @@ const Agreement = ({
         <Button
           key="clickable-dropdown-delete-agreement"
           buttonStyle="dropdownItem"
-          disabled={!canDelete || canDeleteLoading}
+          disabled={!canDelete || isAccessControlLoading}
           id="clickable-dropdown-delete-agreement"
           onClick={() => {
             setShowDeleteConfirmationModal(true);
             onToggle();
           }}
         >
-          <Icon icon={canDeleteLoading ? 'spinner-ellipsis' : 'trash'}>
+          <Icon icon={isAccessControlLoading ? 'spinner-ellipsis' : 'trash'}>
             <FormattedMessage id="ui-agreements.delete" />
           </Icon>
         </Button>
@@ -241,7 +239,7 @@ const Agreement = ({
     onClose: handlers.onClose,
   };
 
-  if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
+  if (isLoading || isAccessControlLoading) return <LoadingPane data-loading {...paneProps} />;
 
   if (!canRead) {
     return (
@@ -302,10 +300,7 @@ const Agreement = ({
                 {data.agreement?.contacts?.length > 0 && <InternalContacts {...getSectionProps('internalContacts')} />}
                 <Lines
                   {...getSectionProps('lines')}
-                  accessControlData={{
-                    canEdit,
-                    canEditLoading,
-                  }}
+                  accessControlData={accessControlData}
                 />
                 {controllingLicenses?.length > 0 && <ControllingLicense {...getSectionProps('controllingLicense')} />}
                 {futureLicenses?.length > 0 && <FutureLicenses {...getSectionProps('futureLicenses')} />}
