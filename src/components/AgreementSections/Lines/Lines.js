@@ -37,10 +37,10 @@ const Lines = ({
 }) => {
   const {
     canEdit = true,
-    canEditLoading = false,
+    isLoading: isAccessControlLoading,
   } = accessControlData;
 
-  const isDisabled = canEditLoading || !canEdit;
+  const isDisabled = isAccessControlLoading || !canEdit;
 
   const { visibleColumns, toggleColumn } = useColumnManager('line-listing-column-manager', LINE_LISTING_COLUMN_MAPPING);
   const renderBadge = () => {

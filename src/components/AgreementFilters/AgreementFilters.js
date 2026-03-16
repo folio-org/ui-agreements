@@ -128,6 +128,7 @@ const AgreementFilters = ({
         {...prps}
       >
         <MultiSelectionFilter
+          aria-label={intl.formatMessage({ id: `ui-agreements.agreements.${name}` })}
           dataOptions={filterState[name] || []}
           name={name}
           onChange={(group) => {
