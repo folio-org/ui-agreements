@@ -296,6 +296,7 @@ const Packages = ({
                       select: (
                         <Checkbox
                           /* This assumes that the MCL page includes everything from the fetch, which is the case right now */
+                          aria-label="select-all"
                           checked={selectedPackageIds.length === (data.packages ? data.packages.length : 0)}
                           name="select-all"
                           onChange={handleToggleSelectAll}
@@ -319,6 +320,7 @@ const Packages = ({
                     formatter={{
                       select: item => (
                         <Checkbox
+                          aria-label={`select-${item.id}`}
                           checked={selectedPackageIds.includes(item.id)}
                           name={`select-${item.id}`}
                           onChange={(e) => handleCheckboxClick(e, item.id)}
