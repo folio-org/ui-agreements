@@ -11,10 +11,7 @@ import { generateKiwtQueryParams, parseErrorResponse } from '@k-int/stripes-kint
 import { LoadingView } from '@folio/stripes/components';
 import { useCallout, useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
-  APPLY_POLICIES,
   getRefdataValuesByDesc,
-  READ,
-  UPDATE,
   useAgreement,
   useChunkedUsers,
   useClaim,
@@ -76,15 +73,13 @@ const AgreementEditRoute = ({
   const accessControlData = useGetAccess({
     resourceEndpoint: AGREEMENTS_ENDPOINT,
     resourceId: agreementId,
-    restrictions: [READ, UPDATE, APPLY_POLICIES],
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo]
   });
 
   const {
     canRead,
-    canReadLoading,
     canEdit,
-    canEditLoading,
+    isLoading: isAccessControlLoading
   } = accessControlData;
 
   const refdata = useAgreementsRefdata({
@@ -105,7 +100,7 @@ const AgreementEditRoute = ({
   const { agreement, isAgreementLoading = true } = useAgreement({
     agreementId,
     queryOptions: {
-      enabled: !canReadLoading && !!canRead
+      enabled: !isAccessControlLoading && !!canRead
     }
   });
 
@@ -273,7 +268,7 @@ const AgreementEditRoute = ({
   return (
     <View
       accessControlData={{
-        isAccessControlLoading: canEditLoading || canReadLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
+        isAccessControlLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
         isAccessDenied: !canRead || !canEdit, // Special prop used by AgreementForm to avoid edit/create distinctions
         ...accessControlData
       }}
