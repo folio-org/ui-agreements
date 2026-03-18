@@ -122,7 +122,7 @@ describe('Packages', () => {
       test('renders expected packages columns', async () => {
         await MultiColumnList({
           columns: [
-            '',
+            'Select all packages on this page',
             'Name',
             'Provider',
             'Source (external data source)',
