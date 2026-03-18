@@ -907,6 +907,5 @@
     "eresources.identifiers.pisbn": "ISBN (Print)",
     "eresources.identifiers.eisbn": "ISBN (Online)",
     "eresources.identifiers.doi": "DOI",
-    "eresources.identifiers.isil": "ISIL",
-    "eresources.identifiers.eBookPool": "E-Book Pool"
+    "eresources.identifiers.isil": "ISIL"
 }
