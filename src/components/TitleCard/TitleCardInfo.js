@@ -27,6 +27,7 @@ const propTypes = {
 
 const TitleCardInfo = ({ title }) => {
   const titleInstance = title?.pti?.titleInstance ?? title;
+  console.log('titleInstance', titleInstance);
   const type = (titleInstance?.type?.value ?? titleInstance?.type ?? '').toLowerCase();
   return (
     <>
