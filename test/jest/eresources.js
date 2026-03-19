@@ -334,7 +334,22 @@ export const works = [
         occurrenceCount: 1
       }
     }
-  }
+  },
+  {
+    id: 'f740075c-99da-43fe-a5d9-68318e83fb8b',
+    title: "Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth",
+    sourceIdentifier: {
+      dateCreated: '2026-03-19T11:54:31Z',
+      lastUpdated: '2026-03-19T11:54:31Z',
+      status: refdata.find(rdc => rdc.desc === 'IdentifierOccurrence.Status').values.find(rdv => rdv.value === 'approved'),
+      identifier: {
+        'value': '43111',
+        'ns': {
+          'value': 'projectgutenberg'
+        }
+      }
+    }
+  },
 ];
 
 export const tis = [
@@ -452,17 +467,31 @@ export const tis = [
           value: 'isbn'
         }
       }
+    }, {
+      title: {
+        id: 'ccb3e844-fb2d-4d8b-80c6-ba402177d2a6'
+      },
+      status: refdata.find(rdc => rdc.desc === 'IdentifierOccurrence.Status').values.find(rdv => rdv.value === 'approved'),
+      identifier: {
+        value: '10.4324/9781315185927',
+        ns: {
+          value: 'doi'
+        }
+      }
     }],
     coverage: '[]',
     name: "\"Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth\"",
     type: refdata.find(rdc => rdc.desc === 'TitleInstance.Type').values.find(rdv => rdv.value === 'monograph'),
     suppressFromDiscovery: true,
-    work: {
-      id: 'f740075c-99da-43fe-a5d9-68318e83fb8b'
-    },
+    work: works.find(w => w.title === "Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth"),
     class: 'org.olf.kb.TitleInstance',
     longName: "\"Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth\"",
-    relatedTitles: '[]'
+    relatedTitles: '[]',
+    firstAuthor: 'Ozawa',
+    firstEditor: 'Doe',
+    dateMonographPublished: '2005-01-01',
+    monographEdition: '1. ed.',
+    monographVolume: 'Vol. 1',
   },
 ];
 
