@@ -910,5 +910,7 @@
   "eresources.identifiers.isil": "ISIL",
   "eresources.identifiers.ebp-id": "eBookPool",
   "eresources.identifiers.ebp-id-pkg": "eBookPool (Package)",
-  "eresources.identifiers.zdb-pkg": "ZDB-ID (Package)"
+  "eresources.identifiers.zdb-pkg": "ZDB-ID (Package)",
+  "eresources.workIdentifier": "Work identifier",
+  "eresources.workIdentifierType": "Work identifier type"
 }

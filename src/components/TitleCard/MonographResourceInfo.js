@@ -47,6 +47,18 @@ const MonographResourceInfo = ({
         </KeyValue>
       </Col>
       <Col xs={3}>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.workIdentifier" />}>
+          <div data-test-title-instance-work-identifier>{titleInstance.work.sourceIdentifier.identifier.value ?? <NoValue />}</div>
+        </KeyValue>
+      </Col>
+      <Col xs={3}>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.workIdentifierType" />}>
+          <div data-test-title-instance-work-identifier>{titleInstance.work.sourceIdentifier.identifier.ns.value ?? <NoValue />}</div>
+        </KeyValue>
+      </Col>
+    </Row>
+    <Row>
+      <Col xs={3}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.firstAuthor" />}>
           <div data-test-title-instance-first-author>{titleInstance.firstAuthor ?? <NoValue />}</div>
         </KeyValue>
@@ -54,6 +66,16 @@ const MonographResourceInfo = ({
       <Col xs={3}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.firstEditor" />}>
           <div data-test-title-instance-first-editor>{titleInstance.firstEditor ?? <NoValue />}</div>
+        </KeyValue>
+      </Col>
+      <Col xs={3}>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.edition" />}>
+          <div data-test-title-instance-monograph-edition>{titleInstance.monographEdition ?? <NoValue />}</div>
+        </KeyValue>
+      </Col>
+      <Col xs={3}>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.volume" />}>
+          <div data-test-title-instance-monograph-volume>{titleInstance.monographVolume ?? <NoValue />}</div>
         </KeyValue>
       </Col>
     </Row>
@@ -67,16 +89,6 @@ const MonographResourceInfo = ({
               <NoValue />
             }
           </div>
-        </KeyValue>
-      </Col>
-      <Col xs={3}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.edition" />}>
-          <div data-test-title-instance-monograph-edition>{titleInstance.monographEdition ?? <NoValue />}</div>
-        </KeyValue>
-      </Col>
-      <Col xs={3}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.volume" />}>
-          <div data-test-title-instance-monograph-volume>{titleInstance.monographVolume ?? <NoValue />}</div>
         </KeyValue>
       </Col>
     </Row>
