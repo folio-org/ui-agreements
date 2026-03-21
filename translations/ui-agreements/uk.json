@@ -883,15 +883,15 @@
     "remoteKb.eresourceAgreements": "Agreements for this e-resource",
     "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Package titles accordion",
     "remoteKb.packageTitles": "Package titles",
-    "agreements.update.error.callout": "<strong>Error:</strong> Agreement {name} was not updated: {error}",
-    "agreements.claimPolicies.update.callout": "<strong>Agreement acquisition units updated:</strong> {name}",
-    "agreements.claimPolicies.update.error.callout": "<strong>Error:</strong> Acquisition units for agreement {name} were not updated: {error}",
+    "agreements.update.error.callout": "<strong>Помилка:</strong> Угоду {name} не було оновлено: {error}",
+    "agreements.claimPolicies.update.callout": "<strong>Підрозділи для придбання/комплектування для Угоди оновлені:</strong> {name}",
+    "agreements.claimPolicies.update.error.callout": "<strong>Помилка:</strong> Підрозділи для придбання/комплектування для угоди {name} не були оновлені: {error}",
     "remoteKb.actions.viewInLocalKb": "View title in local KB",
     "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}",
     "eresources.gokbPackageUuid": "GOKB package UUID",
     "eresources.gokbTitleUuid": "GOKB title UUID",
     "eresources.sourceTitleCount": "Source title count",
-    "basket.update.error.callout": "Unable to add resource(s) to agreement: {error}",
+    "basket.update.error.callout": "Неможливо додати ресурс(и) до угоди: {error}",
     "remoteKb.warn.externalKbs": "<strong>GOKB source</strong> is <strong>{kbName}</strong>. More than one active GOKB data source exists. It is recommended to have a <strong>single active GOKB</strong> configured. Sources can be changed in <settingsLink>external data source settings</settingsLink>",
     "eresources.identifiers": "Identifiers",
     "eresources.identifiers.resourceIdentifier": "Resource identifier",
@@ -908,5 +908,7 @@
     "eresources.identifiers.eisbn": "ISBN (Online)",
     "eresources.identifiers.doi": "DOI",
     "eresources.identifiers.isil": "ISIL",
-    "eresources.identifiers.eBookPool": "E-Book Pool"
+    "eresources.identifiers.ebp-id": "eBookPool",
+    "eresources.identifiers.ebp-id-pkg": "eBookPool (Package)",
+    "eresources.identifiers.zdb-pkg": "ZDB-ID (Package)"
 }
