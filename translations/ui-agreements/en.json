@@ -779,6 +779,8 @@
   "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyMultiRefdata": "Pick list (multi-select)",
   "customProperties.config.all": "All",
   "customProperties.config.delete.errorMessage": "There was an error deleting supplementary property: <strong>{label}</strong>. {error}",
+  "customProperties.config.create.errorMessage": "There was an error saving supplementary property: <strong>{error}</strong>",
+  "customProperties.config.edit.errorMessage": "There was an error editing supplementary property: <strong>{label}</strong>. {error}",
   "customProperties.config.delete.confirmHeading": "Delete supplementary property",
   "customProperties.config.delete.confirmMessage": "Supplementary property <strong>{name}</strong> will be <strong>deleted</strong>.",
   "customProperties.config.newModal": "New supplementary property",
