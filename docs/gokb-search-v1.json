@@ -268,24 +268,14 @@
               "templateString": "identifier={{query}}"
             },
             {
-              "name": "eisbn",
-              "type": "Handlebars",
-              "templateString": "identifier=isbn,{{query}}"
-            },
-            {
               "name": "isbn",
               "type": "Handlebars",
-              "templateString": "identifier=pisbn,{{query}}"
-            },
-            {
-              "name": "eissn",
-              "type": "Handlebars",
-              "templateString": "identifier=eissn,{{query}}"
+              "templateString": "identifier=isbn,{{query}}&identifier=pisbn,{{query}}"
             },
             {
               "name": "issn",
               "type": "Handlebars",
-              "templateString": "identifier=issn,{{query}}"
+              "templateString": "identifier=issn,{{query}}&identifier=eissn,{{query}}"
             },
             {
               "name": "ezb",
