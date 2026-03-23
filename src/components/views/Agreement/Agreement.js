@@ -24,7 +24,7 @@ import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import { AccessControl, AccessControlErrorPane } from '@folio/stripes-erm-components';
 
-import { CustomPropertiesView, useCustomProperties } from '@k-int/stripes-kint-components';
+import { CustomPropertiesView } from '@k-int/stripes-kint-components';
 
 import DuplicateAgreementModal from '../../DuplicateAgreementModal';
 
@@ -104,26 +104,9 @@ const Agreement = ({
 
   const stripes = useStripes();
 
-  const { hasLicensesInterface } = useHasLicensesInterface();
-
   const { data: custpropContexts = [] } = useAgreementsContexts();
   // Ensure the custprops with no contexts get rendered
   const contexts = ['isNull', ...custpropContexts];
-
-  const { data: terms } = useCustomProperties({
-    endpoint: LICENSE_CUSTPROP_ENDPOINT,
-    options: {
-      sort: [
-        { path: 'retired' }, // Place retired custprops at the end
-        { path: 'primary', direction: 'desc' }, // Primary properties should display before optional
-        { path: 'label' } // Within those groups, sort by label
-      ]
-    },
-    queryParams: {
-      enabled: licenses?.length > 0 && hasLicensesInterface
-    },
-    returnQueryObject: true,
-  });
 
   const getSectionProps = (id) => {
     return {
@@ -137,7 +120,6 @@ const Agreement = ({
       id,
       handlers,
       searchString: data.searchString,
-      terms
     };
   };
 
