@@ -53,14 +53,19 @@ const QueryDropdown = ({ options }) => {
       return { key: qindex || defaultValue, string: searchQueryString };
     },
     HeaderComponent: () => (
-      <Select
-        dataOptions={searchOptions}
-        id="search-dropdown"
-        onChange={(e) => {
-          setQIndex(searchLookup[e.target.value]?.name);
-        }}
-        value={qindex || defaultValue}
-      />
+      <FormattedMessage id="ui-agreements.gokbSearch.searchBy">
+        {([ariaLabel]) => (
+          <Select
+            aria-label={ariaLabel}
+            dataOptions={searchOptions}
+            id="search-dropdown"
+            onChange={(e) => {
+              setQIndex(searchLookup[e.target.value]?.name);
+            }}
+            value={qindex || defaultValue}
+          />
+        )}
+      </FormattedMessage>
     ),
   };
 };
