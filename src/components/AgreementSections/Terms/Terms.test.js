@@ -940,6 +940,19 @@ const terms = [
   }
 ];
 
+jest.mock('../../../hooks', () => ({
+  useHasLicensesInterface: jest.fn(() => ({
+    hasLicensesInterface: true
+  }))
+}));
+
+jest.mock('@k-int/stripes-kint-components', () => ({
+  CustomPropertyCard: jest.fn(() => <div>CustomPropertyCard</div>),
+  useCustProps: jest.fn(() => ({
+    custprops: terms
+  }))
+}));
+
 let renderComponent;
 
 describe('Terms', () => {
@@ -948,7 +961,6 @@ describe('Terms', () => {
       <Terms
         agreement={agreement}
         id="terms"
-        terms={terms}
       />,
       translationsProperties
     );
