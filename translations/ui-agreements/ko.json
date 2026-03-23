@@ -893,9 +893,9 @@
     "eresources.sourceTitleCount": "Source title count",
     "basket.update.error.callout": "자원을 계약에 추가할 수 없습니다: {error}",
     "remoteKb.warn.externalKbs": "<strong>GOKB source</strong> is <strong>{kbName}</strong>. More than one active GOKB data source exists. It is recommended to have a <strong>single active GOKB</strong> configured. Sources can be changed in <settingsLink>external data source settings</settingsLink>",
-    "eresources.identifiers": "Identifiers",
-    "eresources.identifiers.resourceIdentifier": "Resource identifier",
-    "eresources.identifiers.resourceIdentifierType": "Resource identifier type",
+    "eresources.identifiers": "식별자",
+    "eresources.identifiers.resourceIdentifier": "리소스 식별자",
+    "eresources.identifiers.resourceIdentifierType": "리소스 식별자 유형",
     "eresources.identifiers.gokb_id": "GOKB ID",
     "eresources.identifiers.gokb_uuid": "GOKB UUID",
     "eresources.identifiers.ezb": "EZB",
@@ -908,5 +908,7 @@
     "eresources.identifiers.eisbn": "ISBN (Online)",
     "eresources.identifiers.doi": "DOI",
     "eresources.identifiers.isil": "ISIL",
-    "eresources.identifiers.eBookPool": "E-Book Pool"
+    "eresources.identifiers.ebp-id": "eBookPool",
+    "eresources.identifiers.ebp-id-pkg": "eBookPool (Package)",
+    "eresources.identifiers.zdb-pkg": "ZDB-ID (Package)"
 }
