@@ -909,11 +909,8 @@
   "eresources.identifiers.ebp-id": "eBookPool",
   "eresources.identifiers.ebp-id-pkg": "eBookPool (Package)",
   "eresources.identifiers.zdb-pkg": "ZDB-ID (Package)",
-<<<<<<< erm-3973
   "eresources.workIdentifier": "Work identifier",
-  "eresources.workIdentifierType": "Work identifier type"
-=======
+  "eresources.workIdentifierType": "Work identifier type",
   "packages.selectAllTooltip": "Select all packages on this page",
   "packages.selectCheckboxLabel": "Select package {name}"
->>>>>>> master
 }
