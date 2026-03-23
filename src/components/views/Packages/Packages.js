@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
@@ -10,7 +10,8 @@ import {
   Icon,
   Button,
   PaneMenu,
-  Checkbox
+  Checkbox,
+  Tooltip
 } from '@folio/stripes/components';
 
 import { AppIcon, useStripes } from '@folio/stripes/core';
@@ -80,6 +81,7 @@ const Packages = ({
   handleSyncPackages,
   onSelectPackageIds
 }) => {
+  const intl = useIntl();
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
@@ -294,12 +296,21 @@ const Packages = ({
                     autosize
                     columnMapping={{
                       select: (
-                        <Checkbox
-                          /* This assumes that the MCL page includes everything from the fetch, which is the case right now */
-                          checked={selectedPackageIds.length === (data.packages ? data.packages.length : 0)}
-                          name="select-all"
-                          onChange={handleToggleSelectAll}
-                        />
+                        <Tooltip
+                          id="select-all-tooltip"
+                          text={<FormattedMessage id="ui-agreements.packages.selectAllTooltip" />}
+                        >
+                          {({ ref, ariaIds }) => (
+                            <Checkbox
+                              aria-labelledby={ariaIds.text}
+                              /* This assumes that the MCL page includes everything from the fetch, which is the case right now */
+                              checked={selectedPackageIds.length === (data.packages ? data.packages.length : 0)}
+                              inputRef={ref}
+                              name="select-all"
+                              onChange={handleToggleSelectAll}
+                            />
+                          )}
+                        </Tooltip>
                       ),
                       name: <FormattedMessage id="ui-agreements.eresources.name" />,
                       provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
@@ -319,6 +330,7 @@ const Packages = ({
                     formatter={{
                       select: item => (
                         <Checkbox
+                          aria-label={intl.formatMessage({ id: 'ui-agreements.packages.selectCheckboxLabel' }, { name: item.name })}
                           checked={selectedPackageIds.includes(item.id)}
                           name={`select-${item.id}`}
                           onChange={(e) => handleCheckboxClick(e, item.id)}
