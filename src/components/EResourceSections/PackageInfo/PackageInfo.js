@@ -23,17 +23,6 @@ const PackageInfo = ({
     eresource
   }
 }) => {
-  const renderContentTypes = (contentTypes) => (
-    contentTypes.map(ct => {
-      const { contentType: { label, value } } = ct;
-      return (
-        <li key={value}>
-          {label}
-        </li>
-      );
-    })
-  );
-
   const entitlementOption = buildPackageEntitlementOption(eresource);
 
   return (
@@ -96,7 +85,17 @@ const PackageInfo = ({
         <Col xs={3}>
           <KeyValue
             label={<FormattedMessage id="ui-agreements.eresources.contentType" />}
-            value={eresource?.contentTypes?.length > 0 ? renderContentTypes(eresource.contentTypes) : <NoValue />}
+            value={eresource?.contentTypes?.length > 0 ?
+              <List
+                id="contentTypes"
+                items={eresource?.contentTypes?.map(ct => ct?.contentType?.label)}
+                listClass={css.fontNormal}
+                listStyle="bullets"
+                marginBottom0
+              />
+              :
+              <NoValue />
+            }
           />
         </Col>
         <Col xs={3}>
