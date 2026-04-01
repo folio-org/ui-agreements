@@ -819,10 +819,8 @@
     "gokbSearch.searchIndex.name": "Name only",
     "gokbSearch.searchIndex.altname": "Alternative names only",
     "gokbSearch.searchIndex.identifiers": "Identifiers (all)",
-    "gokbSearch.searchIndex.eisbn": "EISBN",
-    "gokbSearch.searchIndex.isbn": "PISBN",
-    "gokbSearch.searchIndex.eissn": "EISSN",
-    "gokbSearch.searchIndex.issn": "PISSN",
+    "gokbSearch.searchIndex.isbn": "ISBN",
+    "gokbSearch.searchIndex.issn": "ISSN",
     "gokbSearch.searchIndex.ezb": "EZB ID",
     "gokbSearch.searchIndex.zdb": "ZDB ID",
     "gokbSearch.searchIndex.uuid": "GOKB UUID",
@@ -910,5 +908,11 @@
     "eresources.identifiers.isil": "ISIL",
     "eresources.identifiers.ebp-id": "eBookPool",
     "eresources.identifiers.ebp-id-pkg": "eBookPool (แพ็กเกจ)",
-    "eresources.identifiers.zdb-pkg": "ZDB-ID (แพ็กเกจ)"
+    "eresources.identifiers.zdb-pkg": "ZDB-ID (แพ็กเกจ)",
+    "packages.selectAllTooltip": "Select all packages on this page",
+    "packages.selectCheckboxLabel": "Select package {name}",
+    "eresources.workIdentifier": "Work identifier",
+    "eresources.workIdentifierType": "Work identifier type",
+    "customProperties.config.create.errorMessage": "There was an error saving supplementary property: <strong>{error}</strong>",
+    "customProperties.config.edit.errorMessage": "There was an error editing supplementary property: <strong>{label}</strong>. {error}"
 }

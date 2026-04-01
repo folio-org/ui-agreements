@@ -819,10 +819,8 @@
     "gokbSearch.searchIndex.name": "Apenas nome",
     "gokbSearch.searchIndex.altname": "Apenas nomes alternativos",
     "gokbSearch.searchIndex.identifiers": "Identificadores (todos)",
-    "gokbSearch.searchIndex.eisbn": "EISBN",
-    "gokbSearch.searchIndex.isbn": "PISBN",
-    "gokbSearch.searchIndex.eissn": "EISSN",
-    "gokbSearch.searchIndex.issn": "PISSN",
+    "gokbSearch.searchIndex.isbn": "ISBN",
+    "gokbSearch.searchIndex.issn": "ISSN",
     "gokbSearch.searchIndex.ezb": "ID do EZB",
     "gokbSearch.searchIndex.zdb": "ID do ZDB",
     "gokbSearch.searchIndex.uuid": "UUID do GOKB",
@@ -910,5 +908,11 @@
     "eresources.identifiers.isil": "ISIL",
     "eresources.identifiers.ebp-id": "eBookPool",
     "eresources.identifiers.ebp-id-pkg": "eBookPool (Pacote)",
-    "eresources.identifiers.zdb-pkg": "ZDB-ID (Pacote)"
+    "eresources.identifiers.zdb-pkg": "ZDB-ID (Pacote)",
+    "packages.selectAllTooltip": "Selecione todos os pacotes desta página",
+    "packages.selectCheckboxLabel": "Selecionar o pacote {name}",
+    "eresources.workIdentifier": "Identificador do trabalho",
+    "eresources.workIdentifierType": "Tipo de identificador do trabalho",
+    "customProperties.config.create.errorMessage": "Ocorreu um erro ao salvar a propriedade suplementar: <strong>{error}</strong>",
+    "customProperties.config.edit.errorMessage": "Ocorreu um erro ao editar a propriedade suplementar: <strong>{label}</strong>. {error}"
 }

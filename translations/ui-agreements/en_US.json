@@ -908,5 +908,11 @@
     "eresources.identifiers.isil": "ISIL",
     "eresources.identifiers.ebp-id": "eBookPool",
     "eresources.identifiers.ebp-id-pkg": "eBookPool (Package)",
-    "eresources.identifiers.zdb-pkg": "ZDB-ID (Package)"
+    "eresources.identifiers.zdb-pkg": "ZDB-ID (Package)",
+    "packages.selectAllTooltip": "Select all packages on this page",
+    "packages.selectCheckboxLabel": "Select package {name}",
+    "eresources.workIdentifier": "Work identifier",
+    "eresources.workIdentifierType": "Work identifier type",
+    "customProperties.config.create.errorMessage": "There was an error saving supplementary property: <strong>{error}</strong>",
+    "customProperties.config.edit.errorMessage": "There was an error editing supplementary property: <strong>{label}</strong>. {error}"
 }
