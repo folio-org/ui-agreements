@@ -819,10 +819,8 @@
     "gokbSearch.searchIndex.name": "Pouze názvy",
     "gokbSearch.searchIndex.altname": "Pouze alternativní názvy",
     "gokbSearch.searchIndex.identifiers": "Identifikátory (všechny)",
-    "gokbSearch.searchIndex.eisbn": "EISBN",
-    "gokbSearch.searchIndex.isbn": "PISBN",
-    "gokbSearch.searchIndex.eissn": "EISSN",
-    "gokbSearch.searchIndex.issn": "PISSN",
+    "gokbSearch.searchIndex.isbn": "ISBN",
+    "gokbSearch.searchIndex.issn": "ISSN",
     "gokbSearch.searchIndex.ezb": "EZB ID",
     "gokbSearch.searchIndex.zdb": "ZDB ID",
     "gokbSearch.searchIndex.uuid": "GOKB (UUID)",
@@ -909,6 +907,12 @@
     "eresources.identifiers.doi": "DOI",
     "eresources.identifiers.isil": "ISIL",
     "eresources.identifiers.ebp-id": "eBookPool",
-    "eresources.identifiers.ebp-id-pkg": "eBookPool (Package)",
-    "eresources.identifiers.zdb-pkg": "ZDB-ID (Package)"
+    "eresources.identifiers.ebp-id-pkg": "eBookPool (balíček)",
+    "eresources.identifiers.zdb-pkg": "ZDB-ID (balíček)",
+    "packages.selectAllTooltip": "Vybat všechny balíčky na této stránce",
+    "packages.selectCheckboxLabel": "Vybrat balíček {name}",
+    "eresources.workIdentifier": "Identifikátor díla",
+    "eresources.workIdentifierType": "Typ identifikátoru díla",
+    "customProperties.config.create.errorMessage": "Došlo k chybě při ukládání doplňkové vlastnosti: <strong>{error}</strong>",
+    "customProperties.config.edit.errorMessage": "Při úpravě doplňkové vlastnosti: <strong>{label}</strong> došlo k chybě. {error}"
 }
