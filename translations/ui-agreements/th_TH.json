@@ -880,12 +880,12 @@
     "gokbSearch.basket.manageBasketForPackageName": "Manage basket for {name}",
     "remoteKb.eresourceAgreements": "Agreements for this e-resource",
     "remoteKb.remoteTitleNotFound": "Title not currently present in Local KB. To add the title, synchronise one of the packages listed in the Package titles accordion",
-    "remoteKb.packageTitles": "Package titles",
+    "remoteKb.packageTitles": "ชื่อแพ๊กเกจ",
     "agreements.update.error.callout": "<strong>Error:</strong> Agreement {name} was not updated: {error}",
     "agreements.claimPolicies.update.callout": "<strong>Agreement acquisition units updated:</strong> {name}",
     "agreements.claimPolicies.update.error.callout": "<strong>Error:</strong> Acquisition units for agreement {name} were not updated: {error}",
     "remoteKb.actions.viewInLocalKb": "View title in local KB",
-    "remoteKb.actions.viewInRemoteKb": "View title in {remoteKbName}",
+    "remoteKb.actions.viewInRemoteKb": "ดูชื่อเรื่องใน {remoteKbName}",
     "eresources.gokbPackageUuid": "GOKB package UUID",
     "eresources.gokbTitleUuid": "GOKB title UUID",
     "eresources.sourceTitleCount": "จำนวนหัวข้อแหล่งที่มา",
@@ -910,9 +910,9 @@
     "eresources.identifiers.ebp-id-pkg": "eBookPool (แพ็กเกจ)",
     "eresources.identifiers.zdb-pkg": "ZDB-ID (แพ็กเกจ)",
     "packages.selectAllTooltip": "Select all packages on this page",
-    "packages.selectCheckboxLabel": "Select package {name}",
+    "packages.selectCheckboxLabel": "เลือกแพ๊กเกจ {name}",
     "eresources.workIdentifier": "Work identifier",
     "eresources.workIdentifierType": "Work identifier type",
     "customProperties.config.create.errorMessage": "There was an error saving supplementary property: <strong>{error}</strong>",
-    "customProperties.config.edit.errorMessage": "There was an error editing supplementary property: <strong>{label}</strong>. {error}"
+    "customProperties.config.edit.errorMessage": "เกิดข้อผิดพลาดในการแก้ไขข้อมูลคุณสมบัติเพิ่มเติม{label}1. {error}"
 }
