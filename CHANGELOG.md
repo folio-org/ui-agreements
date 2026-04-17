@@ -1,8 +1,94 @@
 # Change history for ui-agreements
 
-## 12.1.0 IN PROGRESS
-  * ERM-3705 Update UI to reflect BE changes: `userLimit` type (`number` → `string`) and schema cleanup
-  * ERM-3939 Dependency correction: supply missing `@folio/stripes-acq-components` dep
+## 12.1.0 2026-04-17
+  * ERM-3975: Agreements|Local KB Package view: List item li does not have a ul parent element
+  * ERM-3969: Agreements|GOKB Search box: Select element must have an accessible name
+  * ERM-3967: can* calls can now be consolidated into a single call to Agreements/Licenses (cutting down MASSIVELY) on calls to acquisitions
+  * ERM-3966: Add additional eresource identifier namespace translation keys
+  * ERM-3965: Agreements|Local KB Search results: Table header text should not be empty
+  * ERM-3964: Agreements|Local KB Search results: Form elements must have labels
+  * ERM-3956: Agreements|Local KB search filters: Form elements must have label within 'Availability' dropdown
+  * ERM-3953: Implement a 'parallel batched fetch' approach for retrieving custom properties in Agreements and Licenses
+  * ERM-3949: Agreements|Local KB search filters: Form elements must have labels
+  * ERM-3943: Agreements|Agreements search filters: Form elements must have labels within 'Tags' dropdown
+  * ERM-3940: Agreements|Agreements search filters: Form elements must have labels within 'Reason for closure' dropdown
+  * ERM-3939: ui-agreements: supply missing @folio/stripes-acq-components dependency
+  * ERM-3938: GOKB Search Integration: Correct use of "Coverage" in title display
+  * ERM-3936: GOKB Search Integration: Use consistent language
+  * ERM-3935: GOKB Search integration: Ensure special characters in search string are searched correctly
+  * ERM-3906: UI: Add agreement line option not inactive and greyed out when agreement acquisition unit restricts Edit
+  * ERM-3900: Hide tags filter in agreements search and sort when tags not enabled
+  * ERM-3898: Agreements: In "Supplementary documents filter builder" on "Add rule" focus should move to "Attribute" field
+  * ERM-3897: Agreements: In "Supplementary property filter builder" on "Add rule" focus should move to "Operator" field
+  * ERM-3896: Agreements: On supplementary documents "add filter" focus should move to "Attribute" field
+  * ERM-3895: Agreements: On "add supplementary property filter" focus should move to "Supplementary property" field
+  * ERM-3894: On "add related agreement" focus should move to "Link agreement" button
+  * ERM-3882: In Agreement edit and create forms, after clicking "Add content type" for first time focus stays on the button
+  * ERM-3881: Local KB title shows as type 'Package' in basket when added from PCI view
+  * ERM-3873: Translation key ui-agreements.line.update.callout displays instead of message
+  * ERM-3866: User should get error message when trying to add agreement line to agreement from basket if agreement cannot be updated
+  * ERM-3861: Move package identifiers to their own accordion and display as an MCL
+  * ERM-3856: ui-agreements: include global permissions in package.json base permissions
+  * ERM-3848: GOKB search sometimes omits the `componentType` parameter
+  * ERM-3841: Implement badge on GOKB view Package accordion
+  * ERM-3840: Ensure correct parameters are included in fetch for TIPPs from GOKB
+  * ERM-3839: Package fetch issues in gokb tipp table registry component
+  * ERM-3838: Add local KB package information to Agreement line display for external entitlements with GOKB-RESOURCE authority
+  * ERM-3834: Use 'Resource name' in Agreement Line MCL when entitlement type = 'external' and 'resourceName' not null/empty
+  * ERM-3831: Change Synchronising/Paused terminology
+  * ERM-3830: Error code shown instead of message when access policy `claim` fails
+  * ERM-3826: Add sourceTitleCount to package display
+  * ERM-3825: Remove "Search" from the top level options in Agreements
+  * ERM-3822: Switch to using `titleType` in place of `componentType` as the `Publication type` in the basket
+  * ERM-3821: New icon for GOKB titles
+  * ERM-3820: On creating/editing an agreement, do not POST a `claim` for access policies unless there are changes
+  * ERM-3818: On adding a related agreement error displays immediately on adding card
+  * ERM-3814: Cannot view an agreement with a linked license on snapshot
+  * ERM-3808: Toast message for access policies on saving an agreement
+  * ERM-3806: On creating/saving an agreement, do not include the `claimPolicies`
+  * ERM-3804: FE: Create an entitlement from a GOKB package title in the basket
+  * ERM-3800: Implement access control permissions in Agreements
+  * ERM-3798: GOKB search integration doesn't re-fire on index / doesn't reset index
+  * ERM-3793: FE: Display of external entitlements with GOKb package titles
+  * ERM-3792: FE: Add GOKb package title to basket
+  * ERM-3791: Implement ability to add resources from GOKb search to an Agreement
+  * ERM-3789: Add Sort to configuration and support sort functionality in search screen
+  * ERM-3784: Add Acquisition Units filter to Agreement line search
+  * ERM-3783: Add Acquisition Units filter to Agreement search
+  * ERM-3782: Use acquisition units to modify Actions menus in agreement line view
+  * ERM-3781: Use acquisition units to modify Actions menus in agreements view
+  * ERM-3780: Add Acquisition Units to Agreement Line view screen
+  * ERM-3779: Add Acquisition Units to Agreement view screen
+  * ERM-3778: External search integration tidyup
+  * ERM-3777: Add Acquisition Units to Agreement creation and edit screens
+  * ERM-3776: Add "View in GOKB/Local KB" button to display
+  * ERM-3775: Agreements: Remove dependencies on mod-configuration / configuration API
+  * ERM-3774: Add display of package titles accordion
+  * ERM-3773: Add display of agreements for resource
+  * ERM-3772: Setup display of properties in view pane
+  * ERM-3761: Build initial GOKb SASQRoute
+  * ERM-3758: Make agreement dependency on licenses optional
+  * ERM-3756: Zero character "0" displaying in package view screen when there is no "Extended package information" accordion
+  * ERM-3755: Build search results transformation
+  * ERM-3754: Build search component transformation
+  * ERM-3753: Build filter component transformation
+  * ERM-3743: Add support to delete the content of a single package to the UI
+  * ERM-3727: On saving Agreements display settings the user should get a toast message per changed setting
+  * ERM-3724: Extend GOKb SASQ configuration to include view component
+  * ERM-3723: Extend GOKb SASQ configuration to include filters
+  * ERM-3722: Setup a GOKb configuration / type to be able to construct the search options and results display
+  * ERM-3719: Replace deprecated components from erm-components
+  * ERM-3711: Migrate all setting uses in ui-agreements to use app settings
+  * ERM-3705: Update UI to reflect BE changes: userLimit type (number → string) and schema cleanup
+  * ERM-3704: Hide tags icon when tags are disabled
+  * ERM-3702: Agreements: Use external data source for GOKb URL in search configuration
+  * ERM-3698: View a GOKb Title record
+  * ERM-3697: Implement a GOKb title search in Agreements
+  * ERM-3693: Unclamp workflow dependency
+  * ERM-3652: Extend tests for Package multi-select/synchronise switch
+  * ERM-3977: Creating new custom property: Error message appears only in Dev Tools when attempting to create a license term with the same name as an existing one
+  * ERM-3976: Combine print/electronic ISBN and print/electronic ISSN searching in GOKB search
+  * ERM-3973: Add Work Source Identifier and Work Source Identifier namespace to Title view
 
 ## 12.0.2 2025-04-15
   * ERM-3673 Agreements: query mixup in Agreements and Local KB package search box
