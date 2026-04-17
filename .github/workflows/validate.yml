@@ -13,7 +13,7 @@ jobs:
     needs: version-number
     uses: folio-org/.github/.github/workflows/ui-module-descriptor-generate.yml@v1
     with:
-      node-version: 20.x ## Doing these directly for now
+      node-version: 22.x ## Doing these directly for now
       folio-npm-registry: https://repository.folio.org/repository/npm-folioci/
       package-version: ${{ needs.version-number.outputs.version-number }}
   validate_module_descriptor:
