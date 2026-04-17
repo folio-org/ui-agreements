@@ -1,5 +1,7 @@
 # Change history for ui-agreements
 
+## 12.2.0 IN PROGRESS
+
 ## 12.1.0 2026-04-17
   * ERM-3975: Agreements|Local KB Package view: List item li does not have a ul parent element
   * ERM-3969: Agreements|GOKB Search box: Select element must have an accessible name
