@@ -8,8 +8,8 @@ import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Layout, Spinner } from '@folio/stripes/components';
-import { CheckboxFilter } from '@folio/stripes/smart-components';
-import { DateFilter, DocumentFilter, useAgreement, SimpleAccessControlFilter, TagsFilter } from '@folio/stripes-erm-components';
+import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
+import { DateFilter, DocumentFilter, useAgreement, SimpleAccessControlFilter } from '@folio/stripes-erm-components';
 
 import AgreementSearchButton from '../AgreementSearchButton';
 import POLineFilterButton from '../POLineFilterButton';
@@ -236,12 +236,26 @@ const AgreementLineFilters = ({
   };
 
   const renderTagsFilter = () => {
+    const tagFilters = activeFilters.tags || [];
+
     return (
-      <TagsFilter
-        activeFilters={activeFilters}
-        filterHandlers={filterHandlers}
-        tags={filterState.tags}
-      />
+      <Accordion
+        closedByDefault
+        displayClearButton={tagFilters.length > 0}
+        header={FilterAccordionHeader}
+        id="clickable-tags-filter"
+        label={<FormattedMessage id="ui-agreements.agreements.tags" />}
+        onClearFilter={() => { filterHandlers.clearGroup('tags'); }}
+        separator={false}
+      >
+        <MultiSelectionFilter
+          dataOptions={filterState.tags || []}
+          id="tags-filter"
+          name="tags"
+          onChange={e => filterHandlers.state({ ...activeFilters, tags: e.values })}
+          selectedValues={tagFilters}
+        />
+      </Accordion>
     );
   };
 
