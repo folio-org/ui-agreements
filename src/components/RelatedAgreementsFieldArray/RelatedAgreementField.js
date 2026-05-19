@@ -70,8 +70,11 @@ const RelatedAgreementField = ({
         triggerButton = pluggableRenderProps.buttonRef;
 
         const agreementName = agreement?.name;
+        const autoFocus = !input?.value?.id;
+
         const buttonProps = {
           'aria-haspopup': 'true',
+          'autoFocus': autoFocus,
           'buttonRef': triggerButton,
           'buttonStyle': value ? 'default' : 'primary',
           'id': `${id}-find-agreement-btn`,
@@ -90,7 +93,6 @@ const RelatedAgreementField = ({
               {({ ariaIds }) => (
                 <Button
                   aria-labelledby={ariaIds.text}
-                  autoFocus
                   {...buttonProps}
                 >
                   <FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreement" />
@@ -101,7 +103,6 @@ const RelatedAgreementField = ({
         }
         return (
           <Button
-            autoFocus
             {...buttonProps}
           >
             <FormattedMessage id="ui-agreements.relatedAgreements.linkAgreement" />
