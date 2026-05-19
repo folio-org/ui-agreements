@@ -8,7 +8,7 @@ import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Layout, Spinner } from '@folio/stripes/components';
-import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
+import { CheckboxFilter } from '@folio/stripes/smart-components';
 import { DateFilter, DocumentFilter, useAgreement, SimpleAccessControlFilter, TagsFilter } from '@folio/stripes-erm-components';
 
 import AgreementSearchButton from '../AgreementSearchButton';

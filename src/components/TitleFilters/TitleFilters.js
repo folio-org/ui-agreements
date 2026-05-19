@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Headline } from '@folio/stripes/components';
-import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
+import { CheckboxFilter } from '@folio/stripes/smart-components';
 import { TagsFilter } from '@folio/stripes-erm-components';
 
 const propTypes = {
