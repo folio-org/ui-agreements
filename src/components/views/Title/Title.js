@@ -26,7 +26,7 @@ import {
 import TitleCardInfo from '../../TitleCard/TitleCardInfo';
 
 import { urls } from '../../utilities';
-import { ERESOURCE_ENTITY_TYPE } from '../../../constants';
+import { DEFAULT_META_SECTION_HEADING_LEVEL, ERESOURCE_ENTITY_TYPE } from '../../../constants';
 
 export default class Title extends React.Component {
   static propTypes = {
@@ -71,6 +71,7 @@ export default class Title extends React.Component {
       <MetaSection
         contentId="titleRecordMetaContent"
         createdDate={eresource.dateCreated}
+        headingLevel={DEFAULT_META_SECTION_HEADING_LEVEL}
         hideSource
         id="titleRecordMeta"
         lastUpdatedDate={eresource.lastUpdated}

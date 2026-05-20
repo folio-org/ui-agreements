@@ -25,3 +25,4 @@ export * from './paginationIds';
 
 export * from './queryKeys';
 export * from './basket';
+export * from './metasection';
