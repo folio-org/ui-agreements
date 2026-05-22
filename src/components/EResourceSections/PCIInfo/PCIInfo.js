@@ -14,6 +14,7 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 
+import { DEFAULT_META_SECTION_HEADING_LEVEL } from '../../../constants';
 import AddToBasketButton from '../../AddToBasketButton';
 import { buildPCIEntitlementOption } from '../../utilities';
 
@@ -110,6 +111,7 @@ const PCIInfo = ({ pci }) => {
       <MetaSection
         contentId="pciInfoRecordMetaContent"
         createdDate={pci.dateCreated}
+        headingLevel={DEFAULT_META_SECTION_HEADING_LEVEL}
         hideSource
         id="pciInfoRecordMeta"
         lastUpdatedDate={pci.lastUpdated}

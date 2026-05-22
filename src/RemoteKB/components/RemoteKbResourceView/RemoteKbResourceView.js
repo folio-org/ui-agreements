@@ -34,6 +34,7 @@ import {
   stableKeyFrom,
 } from '../../utilities';
 
+import { DEFAULT_META_SECTION_HEADING_LEVEL } from '../../../constants';
 import getResultsDisplayConfig from '../../utilities/getResultsDisplayConfig';
 
 const PANE_DEFAULT_WIDTH = '50%';
@@ -152,6 +153,7 @@ const RemoteKbResourceView = ({
           <MetaSection
             contentId="remoteKbResourceMetaContent"
             createdDate={renderValue(value.createdDate)}
+            headingLevel={DEFAULT_META_SECTION_HEADING_LEVEL}
             hideSource
             lastUpdatedDate={renderValue(value.lastUpdatedDate)}
           />

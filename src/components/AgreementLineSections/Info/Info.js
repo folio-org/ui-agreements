@@ -22,7 +22,7 @@ import TitleCard from '../../TitleCard';
 import TitleCardExternal from '../../TitleCardExternal';
 import { useLocalGokbPkg } from '../../../hooks';
 import { isDetached, isExternal, urls } from '../../utilities';
-import { GOKB_RESOURCE_AUTHORITY } from '../../../constants';
+import { DEFAULT_META_SECTION_HEADING_LEVEL, GOKB_RESOURCE_AUTHORITY } from '../../../constants';
 
 const propTypes = {
   isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -176,6 +176,7 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource: incomingResource
       <MetaSection
         contentId="agreementLineInfoRecordMetaContent"
         createdDate={line.dateCreated}
+        headingLevel={DEFAULT_META_SECTION_HEADING_LEVEL}
         hideSource
         id="agreementLineInfoRecordMeta"
         lastUpdatedDate={line.lastUpdated}
