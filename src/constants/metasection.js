@@ -1,0 +1,1 @@
+export const DEFAULT_META_SECTION_HEADING_LEVEL = 3;
