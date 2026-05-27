@@ -81,8 +81,6 @@ const AgreementCreateRoute = ({
     queryOptions: { enabled: Boolean(authority && referenceId) },
   });
 
-  console.log('externalEntitlement', externalEntitlement);
-
   const accessControlData = useGetAccess({
     resourceEndpoint: AGREEMENTS_ENDPOINT,
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', canDo]
