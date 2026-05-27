@@ -34,6 +34,10 @@ class EResourceLink extends React.Component {
     if (authority === 'EKB-PACKAGE') return urls.eholdingsPackageView(reference);
     if (authority === 'EKB-TITLE') return urls.eholdingsResourceView(reference);
 
+    // For specific use in form components where the eresource may not have a reference_object, but we can determine the path based on the type or authority of the eresource itself.
+    if (eresource.type === 'packages') return urls.eholdingsPackageView(eresource.id);
+    if (eresource.type === 'titles') return urls.eholdingsResourceView(eresource.id);
+
     if (type === BASKET_TYPE_GOKB_TITLE) {
       return urls.gokbResourceView(eresource.id);
     }

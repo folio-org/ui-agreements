@@ -2,6 +2,7 @@
 
 ## 12.2.0 IN PROGRESS
   * ERM-4014: Change default `headingLevel` in meta section header to `3`
+  * ERM-4007 Populate `resourceName` when adding an eHoldings resource to an agreement line via "eHoldings"
 
 ## 12.1.0 2026-04-17
   * ERM-3975: Agreements|Local KB Package view: List item li does not have a ul parent element
