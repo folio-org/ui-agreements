@@ -2,6 +2,7 @@ export { default as useAcqMethods } from './useAcqMethods';
 export { default as useAgreementsContexts } from './useAgreementsContexts';
 export { default as useAgreementsDisplaySettings } from './useAgreementsDisplaySettings';
 export { default as useChunkedOrderLines } from './useChunkedOrderLines';
+export { useExternalEntitlements } from './useExternalEntitlements';
 export { default as useSuppressFromDiscovery } from './useSuppressFromDiscovery';
 export { default as useAddFromBasket } from './useAddFromBasket';
 export { default as useAgreementsRefdata } from './useAgreementsRefdata';
