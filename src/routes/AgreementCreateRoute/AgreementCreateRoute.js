@@ -77,9 +77,11 @@ const AgreementCreateRoute = ({
     data: externalEntitlement,
     isLoading: isEHoldingEntitlementLoading,
   } = useExternalEntitlements({
-    searchParams: { authority, referenceId },
+    searchParams: { authority, reference: referenceId },
     queryOptions: { enabled: Boolean(authority && referenceId) },
   });
+
+  console.log('externalEntitlement', externalEntitlement);
 
   const accessControlData = useGetAccess({
     resourceEndpoint: AGREEMENTS_ENDPOINT,
