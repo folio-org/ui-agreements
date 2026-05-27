@@ -78,7 +78,7 @@ const AgreementCreateRoute = ({
     isLoading: isEHoldingEntitlementLoading,
   } = useExternalEntitlements({
     searchParams: { authority, referenceId },
-    enabled: Boolean(authority && referenceId),
+    queryOptions: { enabled: Boolean(authority && referenceId) },
   });
 
   const accessControlData = useGetAccess({

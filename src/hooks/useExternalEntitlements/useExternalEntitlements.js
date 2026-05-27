@@ -4,20 +4,31 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import { AGREEMENT_LINES_EXTERNAL_ENDPOINT } from '../../constants';
 
-export const useExternalEntitlements = (options = {}) => {
-  const {
-    enabled = true,
-    searchParams,
-    tenantId,
-  } = options;
+const defaultQueryNamespaceGenerator = (searchParams, tenantId) => [
+  'ERM',
+  'AgreementLine',
+  'external',
+  AGREEMENT_LINES_EXTERNAL_ENDPOINT,
+  searchParams,
+  tenantId,
+];
 
+export const useExternalEntitlements = ({
+  queryNamespaceGenerator = defaultQueryNamespaceGenerator,
+  queryOptions = {},
+  searchParams,
+  tenantId,
+} = {}) => {
   const ky = useOkapiKy({ tenant: tenantId });
 
-  const result = useQuery({
-    queryKey: [AGREEMENT_LINES_EXTERNAL_ENDPOINT, searchParams, tenantId],
-    queryFn: () => ky.get(AGREEMENT_LINES_EXTERNAL_ENDPOINT, { searchParams }).json(),
-    enabled,
+  const { data, isLoading } = useQuery({
+    queryKey: queryNamespaceGenerator(searchParams, tenantId),
+    queryFn: ({ signal }) => ky.get(AGREEMENT_LINES_EXTERNAL_ENDPOINT, { searchParams, signal }).json(),
+    ...queryOptions,
   });
 
-  return result;
+  return {
+    data,
+    isLoading,
+  };
 };

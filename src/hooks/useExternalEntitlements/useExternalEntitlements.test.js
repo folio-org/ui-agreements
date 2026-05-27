@@ -1,48 +1,87 @@
 import {
-  QueryClient,
-  QueryClientProvider,
+  useQuery,
+  mockGetQueryReturn,
 } from 'react-query';
 
-import {
-  renderHook,
-  waitFor,
-} from '@folio/jest-config-stripes/testing-library/react';
-import { useOkapiKy } from '@folio/stripes/core';
+import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
+import { mockKy } from '@folio/stripes/core';
 
 import { externalEntitlements } from '../../../test/jest/entitlements';
 import { AGREEMENT_LINES_EXTERNAL_ENDPOINT } from '../../constants';
 import { useExternalEntitlements } from './useExternalEntitlements';
 
-jest.unmock('react-query');
-
-const queryClient = new QueryClient();
-const wrapper = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    {children}
-  </QueryClientProvider>
-);
-
-const DATA = externalEntitlements[0];
-
-const mockGet = jest.fn().mockReturnValue({ json: () => Promise.resolve(DATA) });
+const customQueryNamespaceGenerator = jest.fn((searchParams, tenantId) => [
+  'ERM',
+  'AgreementLine',
+  'external',
+  AGREEMENT_LINES_EXTERNAL_ENDPOINT,
+  searchParams,
+  tenantId,
+]);
 
 describe('useExternalEntitlements', () => {
-  beforeEach(() => {
-    useOkapiKy.mockReturnValue({ get: mockGet });
-  });
+  describe.each([
+    {
+      testTitle: 'basic use',
+      useExternalEntitlementsProps: {
+        searchParams: { filter: 'test' },
+      },
+      expectedKyCall: AGREEMENT_LINES_EXTERNAL_ENDPOINT,
+      expectedReturn: externalEntitlements[0],
+      expectedQueryNamespace: customQueryNamespaceGenerator({ filter: 'test' }),
+    },
+    {
+      testTitle: 'custom query namespace generator',
+      useExternalEntitlementsProps: {
+        searchParams: { filter: 'custom' },
+      },
+      expectedKyCall: AGREEMENT_LINES_EXTERNAL_ENDPOINT,
+      expectedReturn: externalEntitlements[0],
+      expectedQueryNamespace: customQueryNamespaceGenerator({ filter: 'custom' }),
+    },
+  ])('$testTitle', ({
+    useExternalEntitlementsProps = {},
+    expectedKyCall,
+    expectedQueryNamespace,
+    expectedQueryOpts,
+    expectedReturn
+  }) => {
+    let result;
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+    beforeEach(() => {
+      mockGetQueryReturn.mockImplementation(() => ({ data: expectedReturn }));
 
-  it('should fetch external entitlements with provided parameters', async () => {
-    const searchParams = { authority: DATA.authority, reference: DATA.reference };
+      result = renderHook(() => useExternalEntitlements(useExternalEntitlementsProps)).result;
+    });
 
-    const { result } = renderHook(() => useExternalEntitlements({ searchParams }), { wrapper });
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
 
-    await waitFor(() => expect(result.current.isFetched).toBeTruthy());
+    it('should make a call with the expected path and search params', () => {
+      expect(mockKy).toHaveBeenCalledWith(
+        expectedKyCall,
+        expect.objectContaining({ searchParams: useExternalEntitlementsProps.searchParams }),
+      );
+    });
 
-    expect(mockGet).toHaveBeenCalledWith(AGREEMENT_LINES_EXTERNAL_ENDPOINT, { searchParams });
-    expect(result.current.data).toEqual(DATA);
+    it('should return the expected data', () => {
+      expect(result.current.data).toEqual(expectedReturn);
+    });
+
+    it('should call useQuery with the expected namespace and options', () => {
+      if (typeof useExternalEntitlementsProps.queryNamespaceGenerator === 'function') {
+        expect(customQueryNamespaceGenerator).toHaveBeenCalledWith(
+          useExternalEntitlementsProps.searchParams,
+          useExternalEntitlementsProps.tenantId,
+        );
+      }
+
+      expect(useQuery).toHaveBeenCalledWith(expect.objectContaining({
+        queryKey: expectedQueryNamespace,
+        queryFn: expect.any(Function),
+        ...expectedQueryOpts,
+      }));
+    });
   });
 });
