@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
+import { TagsFilter } from '@folio/stripes-erm-components';
 
 const propTypes = {
   activeFilters: PropTypes.object,
@@ -109,27 +110,12 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
   };
 
   const renderTagsFilter = () => {
-    const tagFilters = activeFilters.tags || [];
-
     return (
-      <Accordion
-        closedByDefault
-        displayClearButton={tagFilters.length > 0}
-        header={FilterAccordionHeader}
-        id="clickable-tags-filter"
-        label={<FormattedMessage id="ui-agreements.agreements.tags" />}
-        onClearFilter={() => { filterHandlers.clearGroup('tags'); }}
-        separator={false}
-      >
-        <MultiSelectionFilter
-          aria-label={intl.formatMessage({ id: 'ui-agreements.agreements.tags' })}
-          dataOptions={filterState.tags || []}
-          id="tags-filter"
-          name="tags"
-          onChange={e => filterHandlers.state({ ...activeFilters, tags: e.values })}
-          selectedValues={tagFilters}
-        />
-      </Accordion>
+      <TagsFilter
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+        tags={filterState.tags}
+      />
     );
   };
 
