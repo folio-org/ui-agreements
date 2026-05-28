@@ -21,7 +21,12 @@ import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 
 import { AGREEMENTS_ENDPOINT } from '../../constants';
-import { useAddFromBasket, useAgreementsRefdata, useBasket } from '../../hooks';
+import {
+  useAddFromBasket,
+  useAgreementsRefdata,
+  useBasket,
+  useExternalEntitlements,
+} from '../../hooks';
 
 const [
   AGREEMENT_STATUS,
@@ -66,6 +71,15 @@ const AgreementCreateRoute = ({
     isExternalEntitlementLoading,
     getAgreementLinesToAdd
   } = useAddFromBasket(basket);
+
+  // if authority && referenceId exist we can assume the call came from e-holdings
+  const {
+    data: externalEntitlement,
+    isLoading: isEHoldingEntitlementLoading,
+  } = useExternalEntitlements({
+    searchParams: { authority, reference: referenceId },
+    queryOptions: { enabled: Boolean(authority && referenceId) },
+  });
 
   const accessControlData = useGetAccess({
     resourceEndpoint: AGREEMENTS_ENDPOINT,
@@ -199,7 +213,7 @@ const AgreementCreateRoute = ({
   };
 
   const fetchIsPending = () => {
-    return isExternalEntitlementLoading;
+    return isExternalEntitlementLoading || isEHoldingEntitlementLoading;
   };
 
   const getInitialValues = () => {
@@ -220,6 +234,7 @@ const AgreementCreateRoute = ({
           'type': 'external',
           'authority': authority,
           'reference': referenceId,
+          resourceName: externalEntitlement?.reference_object?.label,
         }
       ];
     }
