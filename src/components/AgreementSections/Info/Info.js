@@ -11,7 +11,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { statuses } from '../../../constants';
+import { DEFAULT_META_SECTION_HEADING_LEVEL, statuses } from '../../../constants';
 import InfoPeriods from '../InfoPeriods';
 
 const Info = ({ agreement }) => {
@@ -39,6 +39,7 @@ const Info = ({ agreement }) => {
       <MetaSection
         contentId="agreementInfoRecordMetaContent"
         createdDate={agreement.dateCreated}
+        headingLevel={DEFAULT_META_SECTION_HEADING_LEVEL}
         hideSource
         id="agreementInfoRecordMeta"
         lastUpdatedDate={agreement.lastUpdated}
