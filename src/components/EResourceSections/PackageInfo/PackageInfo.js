@@ -17,6 +17,7 @@ import AddToBasketButton from '../../AddToBasketButton';
 import PackageSyncronisingValue from '../PackageSyncronisingValue';
 import css from '../../styles.css';
 import { buildPackageEntitlementOption } from '../../utilities';
+import { DEFAULT_META_SECTION_HEADING_LEVEL } from '../../../constants';
 
 const PackageInfo = ({
   data: {
@@ -51,6 +52,7 @@ const PackageInfo = ({
       <MetaSection
         contentId="packageInfoRecordMetaContent"
         createdDate={eresource.dateCreated}
+        headingLevel={DEFAULT_META_SECTION_HEADING_LEVEL}
         hideSource
         id="packageInfoRecordMeta"
         lastUpdatedDate={eresource.lastUpdated}

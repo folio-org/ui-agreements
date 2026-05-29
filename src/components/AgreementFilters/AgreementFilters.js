@@ -20,7 +20,8 @@ import {
   DocumentFilter,
   InternalContactSelection,
   OrganizationSelection,
-  SimpleAccessControlFilter
+  SimpleAccessControlFilter,
+  TagsFilter
 } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter, useTagsEnabled } from '@k-int/stripes-kint-components';
@@ -275,30 +276,12 @@ const AgreementFilters = ({
   };
 
   const renderTagsFilter = () => {
-    const tagFilters = activeFilters.tags || [];
-
     return (
-      <Accordion
-        closedByDefault
-        displayClearButton={tagFilters.length > 0}
-        header={FilterAccordionHeader}
-        id="clickable-tags-filter"
-        label={<FormattedMessage id="ui-agreements.agreements.tags" />}
-        onClearFilter={() => {
-          filterHandlers.clearGroup('tags');
-        }}
-        separator={false}
-      >
-        <MultiSelectionFilter
-          aria-label={intl.formatMessage({ id: 'ui-agreements.agreements.tags' })}
-          dataOptions={filterState.tags || []}
-          id="tags-filter"
-          name="tags"
-          onChange={(e) => filterHandlers.state({ ...activeFilters, tags: e.values })
-          }
-          selectedValues={tagFilters}
-        />
-      </Accordion>
+      <TagsFilter
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+        tags={filterState.tags}
+      />
     );
   };
 
