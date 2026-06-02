@@ -5,9 +5,11 @@
 ## 12.1.1 2026-05-29
   * ERM-4061: Focus pulled to "Replace agreement' agreement button in Related agreement card
   * ERM-4014: Change default `headingLevel` in meta section header to `3`
+  * ERM-4007 Populate `resourceName` when adding an eHoldings resource to an agreement line via "eHoldings"
   * ERM-3994: Tags helper not exposed in Amendment UI
   * ERM-3992: On linking an eholding resource to an agreement line the link to view resource is incorrect 
   * Updated dependencies for Trillium release
+  * ERM-4008 Populate `resourceName` when adding an eHoldings resource to an agreement line via "Agreements"
 
 ## 12.1.0 2026-04-17
   * ERM-3975: Agreements|Local KB Package view: List item li does not have a ul parent element

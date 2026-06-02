@@ -78,6 +78,7 @@ const AgreementLineCreateRoute = ({
         'type': 'external',
         'authority': resource?.type === 'packages' ? 'ekb-package' : 'ekb-title',
         'reference': resource.id,
+        resourceName: resource.name,
         ...rest
       };
     } else if (resource?.type === BASKET_TYPE_GOKB_TITLE) { // external line from GOKB
