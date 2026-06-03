@@ -59,7 +59,10 @@ const Platform = ({
   const shortcuts = [
     {
       name: 'edit',
-      handler: handlers.onEdit,
+      handler: (e) => {
+        e.preventDefault();
+        return handlers.onEdit(e);
+      }
     },
     {
       name: 'expandAllSections',
