@@ -26,6 +26,18 @@ const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const [DOCUMENT_AT_TYPE] = ['DocumentAttachment.AtType'];
 
+const BASE_SEARCH_KEYS = [
+  'reference',
+  'description',
+  'note',
+];
+
+const getSearchKey = (eresourcesEnabled) => {
+  return eresourcesEnabled
+    ? ['resource.name', 'resourceName', ...BASE_SEARCH_KEYS].join()
+    : BASE_SEARCH_KEYS.join();
+};
+
 const AgreementLinesRoute = ({
   children,
   history,
@@ -52,7 +64,7 @@ const AgreementLinesRoute = ({
   const eresourcesEnabled = useEresourcesEnabled();
   const { currentPage } = usePrevNextPagination();
 
-  const searchKey = eresourcesEnabled ? 'resource.name,reference,description,note' : 'reference,description,note';
+  const searchKey = getSearchKey(eresourcesEnabled);
 
   const agreementLinesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
