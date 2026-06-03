@@ -1,6 +1,7 @@
 # Change history for ui-agreements
 
-## 12.2.0 IN PROGRESS
+## 12.1.2 IN PROGRESS
+  * ERM-4070: Prevent propagation of the edit shortcut "Ctrl-Alt-E", as this results in typing a Euro symbol `€` into the focused field when using a German keyboard layout on Windows.
 
 ## 12.1.1 2026-05-29
   * ERM-4061: Focus pulled to "Replace agreement' agreement button in Related agreement card
