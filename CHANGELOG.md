@@ -1,5 +1,10 @@
 # Change history for ui-agreements
 
+## 12.2.0 IN PROGRESS
+
+## 12.1.3 2026-06-04
+  * ERM-4061: Focus pulled to "Replace agreement' agreement button in Related agreement card
+
 ## 12.1.2 2026-06-04
   * ERM-4095: Bump erm-stripes-components dep in ui-agreements to ^10.1.1
   * ERM-4070: Prevent propagation of the edit shortcut "Ctrl-Alt-E", as this results in typing a Euro symbol `€
