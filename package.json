@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "12.1.1",
+  "version": "12.1.2",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -25,7 +25,7 @@
     "@folio/stripes": "^10.1.0",
     "@folio/stripes-acq-components": "^7.1.0",
     "@folio/stripes-cli": "^5.0.0",
-    "@folio/stripes-erm-components": "^10.1.0",
+    "@folio/stripes-erm-components": "^10.1.1",
     "@folio/stripes-erm-testing": "^3.1.0",
     "@formatjs/cli": "^6.6.0",
     "classnames": ">=2.2.6",
@@ -66,7 +66,7 @@
   "peerDependencies": {
     "@folio/handler-stripes-registry": "^3.1.0",
     "@folio/stripes": "^10.1.0",
-    "@folio/stripes-erm-components": "^10.1.0",
+    "@folio/stripes-erm-components": "^10.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^7.1.5",
