@@ -10,16 +10,16 @@ import {
 import { IfPermission } from '@folio/stripes/core';
 import { EResourceType } from '@folio/stripes-erm-components';
 
-import Coverage from '../Coverage';
-import CustomCoverageIcon from '../CustomCoverageIcon';
-import EResourceLink from '../EResourceLink';
-import EResourceCount from '../EResourceCount';
-import EResourceProvider from '../EResourceProvider';
+import Coverage from '../../Coverage';
+import CustomCoverageIcon from '../../CustomCoverageIcon';
+import EResourceLink from '../../EResourceLink';
+import EResourceCount from '../../EResourceCount';
+import EResourceProvider from '../../EResourceProvider';
 
-import getResourceFromEntitlement from './getResourceFromEntitlement';
-import isDetached from './isDetached';
-import isExternal from './isExternal';
-import urls from './urls';
+import getResourceFromEntitlement from '../../utilities/getResourceFromEntitlement';
+import isDetached from '../../utilities/isDetached';
+import isExternal from '../../utilities/isExternal';
+import urls from '../../utilities/urls';
 
 const renderDate = (date) => (date ? <FormattedUTCDate value={date} /> : '');
 
@@ -81,7 +81,7 @@ const wrapError = (renderFunc) => (agreementLine) => {
   return renderFunc(agreementLine);
 };
 
-export const getAgreementLinesListFormatter = ({ areOrderLinesLoading, orderLines }) => {
+const getAgreementLinesListFormatter = ({ areOrderLinesLoading, orderLines }) => {
   return {
     name: (agreementLine) => {
       const resource = getResourceFromEntitlement(agreementLine);
@@ -133,3 +133,5 @@ export const getAgreementLinesListFormatter = ({ areOrderLinesLoading, orderLine
     ))
   };
 };
+
+export default getAgreementLinesListFormatter;

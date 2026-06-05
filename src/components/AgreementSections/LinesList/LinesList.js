@@ -14,10 +14,8 @@ import {
   AGREEMENT_LINES_PAGINATION_ID,
   LINE_LISTING_COLUMN_MAPPING,
 } from '../../../constants';
-import {
-  getAgreementLinesListFormatter,
-  parseMclPageSize,
-} from '../../utilities';
+import { parseMclPageSize } from '../../utilities';
+import getAgreementLinesListFormatter from './getAgreementLinesListFormatter';
 
 const propTypes = {
   agreement: PropTypes.shape({

@@ -1,4 +1,3 @@
-export { getAgreementLinesListFormatter } from './getAgreementLinesListFormatter';
 export { default as getLicenseAmendments } from './getLicenseAmendments';
 export { default as getResourceFromEntitlement } from './getResourceFromEntitlement';
 export { default as getConflictWarnings } from './getConflictWarnings';
