@@ -40,6 +40,7 @@ const propTypes = {
       name: PropTypes.string.isRequired,
     }),
     reference_object: PropTypes.object,
+    resourceName: PropTypes.string,
     resource: PropTypes.shape({
       _object: PropTypes.object,
     }),
@@ -105,6 +106,10 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource: incomingResource
       headerText = resource.authority;
     } else {
       headerText = resource.reference;
+    }
+
+    if (resource.resourceName) {
+      headerText = `${headerText} (${resource.resourceName})`;
     }
 
     return (

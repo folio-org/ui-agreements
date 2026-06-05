@@ -54,7 +54,7 @@ describe('LinesList', () => {
     Promise.all([
       await MultiColumnListCell({ row: 0, columnIndex: 0 }).has({ content: 'ACS in Focus Test' }),
       await MultiColumnListCell({ row: 1, columnIndex: 0 }).has({ content: 'American Society of Civil Engineers : Journals' }),
-      await MultiColumnListCell({ row: 2, columnIndex: 0 }).has({ content: '22-1887786-11234147a' }),
+      await MultiColumnListCell({ row: 2, columnIndex: 0 }).has({ content: 'EKB-TITLE: 22-1887786-11234147a (Missing eHoldings title)' }),
       await MultiColumnListCell({ row: 3, columnIndex: 0 }).has({ content: '14th century English mystics newsletter' }),
       await MultiColumnListCell({ row: 4, columnIndex: 0 }).has({ content: 'bc634143-36ed-4ae2-a991-5e35ae4fee6a:e2a8df5b-4d2c-4f65-82f4-fbd96f43538c' })
 
@@ -72,9 +72,22 @@ describe('LinesList', () => {
     Promise.all([
       await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({ content: 'Package' }),
       await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: 'Package' }),
-      await MultiColumnListCell({ row: 2, columnIndex: 2 }).has({ content: 'Title' }),
+      await MultiColumnListCell({ row: 2, columnIndex: 2 }).has({ content: '' }),
       await MultiColumnListCell({ row: 3, columnIndex: 2 }).has({ content: 'Title' }),
       await MultiColumnListCell({ row: 4, columnIndex: 2 }).has({ content: 'Title' })
+    ]);
+  });
+
+  test('does not display other data for errored eHoldings line row', async () => {
+    await Promise.all([
+      MultiColumnListCell({ row: 2, columnIndex: 1 }).has({ content: '' }),
+      MultiColumnListCell({ row: 2, columnIndex: 2 }).has({ content: '' }),
+      MultiColumnListCell({ row: 2, columnIndex: 3 }).has({ content: '' }),
+      MultiColumnListCell({ row: 2, columnIndex: 4 }).has({ content: '' }),
+      MultiColumnListCell({ row: 2, columnIndex: 5 }).has({ content: '' }),
+      MultiColumnListCell({ row: 2, columnIndex: 7 }).has({ content: '' }),
+      MultiColumnListCell({ row: 2, columnIndex: 8 }).has({ content: '' }),
+      MultiColumnListCell({ row: 2, columnIndex: 9 }).has({ content: '' }),
     ]);
   });
 
@@ -92,4 +105,3 @@ describe('LinesList', () => {
     });
   });
 });
-
