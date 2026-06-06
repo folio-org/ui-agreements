@@ -26,12 +26,7 @@ const renderDate = (date) => (date ? <FormattedUTCDate value={date} /> : '');
 const hasReferenceError = (line) => !!line?.reference_object?.error;
 
 const renderErroredExternalReference = (resource) => {
-  let output;
-  if (resource.reference && resource.authority) {
-    output = `${resource.authority}: ${resource.reference}`;
-  } else {
-    output = resource.authority || resource.reference;
-  }
+  const output = [resource.authority, resource.reference].filter(Boolean).join(': ');
 
   return resource.resourceName ? `${output} (${resource.resourceName})` : output;
 };
@@ -69,7 +64,7 @@ const renderPOLines = (agreementLine, orderLines, areOrderLinesLoading) => {
               )}
             </Tooltip>
           )
-          : <Spinner key={i} />
+          : <Spinner key={`spinner-${agreementLine.id}-${i}`} />
       ))}
     </div>
   );

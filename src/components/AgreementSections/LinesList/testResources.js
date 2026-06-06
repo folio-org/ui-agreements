@@ -59,7 +59,11 @@ const agreement = {
   name: 'AM ag 1',
   agreementLinesCount: 5,
   orderLines: [
-    { id: '1bcd1b4f-df7d-48a3-b2c9-6fc0a0cc2c7e', poLineNumber: '20-1' }
+    {
+      id: '1bcd1b4f-df7d-48a3-b2c9-6fc0a0cc2c7e',
+      poLineNumber: '20-1',
+      titleOrPackage: 'Test PO Line title',
+    }
   ],
   lines: [
     mkPkgLine({
