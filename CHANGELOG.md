@@ -4,6 +4,7 @@
 
 ## 12.1.3 2026-06-04
   * ERM-4061: Focus pulled to "Replace agreement' agreement button in Related agreement card
+  * ERM-4020: Support search by entitlement `resourceName` property in agreement lines search
 
 ## 12.1.2 2026-06-04
   * ERM-4095: Bump erm-stripes-components dep in ui-agreements to ^10.1.1

@@ -75,9 +75,9 @@ const AgreementLineCreateRoute = ({
 
     if (resource?.type === 'packages' || resource?.type === 'resources') { // external line
       items = {
-        'type': 'external',
-        'authority': resource?.type === 'packages' ? 'ekb-package' : 'ekb-title',
-        'reference': resource.id,
+        type: 'external',
+        authority: resource?.type === 'packages' ? 'ekb-package' : 'ekb-title',
+        reference: resource.id,
         resourceName: resource.name,
         ...rest
       };
@@ -85,7 +85,7 @@ const AgreementLineCreateRoute = ({
       items = resource?.payload;
     } else if (isEmpty(resource)) { // detached line
       items = {
-        'type': 'detached',
+        type: 'detached',
         ...rest,
         resource: null,
         coverage: []
