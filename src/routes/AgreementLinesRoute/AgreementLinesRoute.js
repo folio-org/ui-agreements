@@ -26,6 +26,15 @@ const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const [DOCUMENT_AT_TYPE] = ['DocumentAttachment.AtType'];
 
+const SEARCH_KEYS_DICT = {
+  RESOURCE_NAME: 'resourceName',
+  RESOURCE_DOT_NAME: 'resource.name',
+  REFERENCE: 'reference',
+  DESCRIPTION: 'description',
+  NOTE: 'note',
+};
+const BASE_SEARCH_KEYS = [SEARCH_KEYS_DICT.REFERENCE, SEARCH_KEYS_DICT.DESCRIPTION, SEARCH_KEYS_DICT.NOTE];
+
 const AgreementLinesRoute = ({
   children,
   history,
@@ -52,7 +61,9 @@ const AgreementLinesRoute = ({
   const eresourcesEnabled = useEresourcesEnabled();
   const { currentPage } = usePrevNextPagination();
 
-  const searchKey = eresourcesEnabled ? 'resource.name,reference,description,note' : 'reference,description,note';
+  const searchKey = eresourcesEnabled
+    ? [SEARCH_KEYS_DICT.RESOURCE_NAME, SEARCH_KEYS_DICT.RESOURCE_DOT_NAME, ...BASE_SEARCH_KEYS].join()
+    : BASE_SEARCH_KEYS.join();
 
   const agreementLinesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
