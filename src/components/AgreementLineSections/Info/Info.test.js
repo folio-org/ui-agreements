@@ -15,7 +15,7 @@ const localGokbPkg = pkgs.find(p => p.name === 'Springer Journals : DEAL');
 
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
-  ErrorCard: () => <div>ErrorCard</div>,
+  ErrorCard: ({ headerStart }) => <div>ErrorCard {headerStart}</div>,
 }));
 
 jest.mock('../../PackageCardExternal', () => () => (<div>PackageCardExternal</div>));
@@ -194,7 +194,12 @@ describe('Info', () => {
 
     test('renders the ErrorCard component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('ErrorCard')).toBeInTheDocument();
+      expect(getByText(/ErrorCard/)).toBeInTheDocument();
+    });
+
+    test('displays the errored reference with resourceName', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('EKB-TITLE: 22-1887786-11234147a (Missing eHoldings title)')).toBeInTheDocument();
     });
   });
 

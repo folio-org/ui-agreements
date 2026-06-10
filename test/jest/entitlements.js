@@ -60,6 +60,7 @@ const externalEntitlements = [
     description: null,
     authority: 'EKB-TITLE',
     reference: '22-1887786-11234147a',
+    resourceName: 'Missing eHoldings title',
     explanation: null,
     startDate: null,
     endDate: null,
