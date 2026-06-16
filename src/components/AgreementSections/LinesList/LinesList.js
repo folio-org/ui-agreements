@@ -48,8 +48,9 @@ const columnMapping = {
 
 const hasReferenceError = (line) => !!line?.reference_object?.error;
 
-const wrapError = (renderFunc) => (agreementLine) => {
-  if (hasReferenceError(agreementLine)) return <></>;
+// Do not render column if reference object is in error state
+const renderIfNoReferenceError = (renderFunc) => (agreementLine) => {
+  if (hasReferenceError(agreementLine)) return <></>; // return empty element to keep type consistency in formatter
 
   return renderFunc(agreementLine);
 };
@@ -144,17 +145,17 @@ const LinesList = ({
             />
           );
         },
-        provider: wrapError((agreementLine) => <EResourceProvider resource={agreementLine.resource || agreementLine} />),
-        publicationType: wrapError((agreementLine) => {
+        provider: renderIfNoReferenceError((agreementLine) => <EResourceProvider resource={agreementLine.resource || agreementLine} />),
+        publicationType: renderIfNoReferenceError((agreementLine) => {
           const resource = getResourceFromEntitlement(agreementLine);
           return isDetached(resource) ? <NoValue /> : <EResourceType resource={resource} />;
         }),
-        activeFrom: wrapError((agreementLine) => <div data-test-active-from>{renderDate(agreementLine.startDate)}</div>),
-        activeTo: wrapError((agreementLine) => <div data-test-active-to>{renderDate(agreementLine.endDate)}</div>),
-        count: wrapError((agreementLine) => <EResourceCount resource={getResourceFromEntitlement(agreementLine)} />),
-        note: wrapError((agreementLine) => <div style={{ overflowWrap: 'break-word', maxWidth: 250, whiteSpace: 'pre-wrap' }}>{agreementLine.note}</div>),
-        coverage: wrapError((agreementLine) => <Coverage line={agreementLine} />),
-        isCustomCoverage: wrapError((agreementLine) => {
+        activeFrom: renderIfNoReferenceError((agreementLine) => <div data-test-active-from>{renderDate(agreementLine.startDate)}</div>),
+        activeTo: renderIfNoReferenceError((agreementLine) => <div data-test-active-to>{renderDate(agreementLine.endDate)}</div>),
+        count: renderIfNoReferenceError((agreementLine) => <EResourceCount resource={getResourceFromEntitlement(agreementLine)} />),
+        note: renderIfNoReferenceError((agreementLine) => <div style={{ overflowWrap: 'break-word', maxWidth: 250, whiteSpace: 'pre-wrap' }}>{agreementLine.note}</div>),
+        coverage: renderIfNoReferenceError((agreementLine) => <Coverage line={agreementLine} />),
+        isCustomCoverage: renderIfNoReferenceError((agreementLine) => {
           if (!agreementLine.customCoverage) return <></>;
 
           return (
@@ -167,7 +168,7 @@ const LinesList = ({
             </Tooltip>
           );
         }),
-        poLines: wrapError((agreementLine) => (
+        poLines: renderIfNoReferenceError((agreementLine) => (
           <IfPermission perm="orders.po-lines.collection.get">
             {({ hasPermission }) => {
               if (hasPermission) return renderPOLines(agreementLine);
