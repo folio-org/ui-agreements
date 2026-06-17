@@ -30,7 +30,11 @@ const mkPkgLine = ({ id, pkgName, vendorName, poLines = [] }) => ({
 });
 
 const mkExternalTitleLine = ({
-  id, authority, reference, resourceName,
+  authority,
+  id,
+  reference,
+  resourceName,
+  ...rest
 }) => ({
   id,
   type: 'external',
@@ -47,6 +51,7 @@ const mkExternalTitleLine = ({
   contentUpdated: null,
   poLines: [],
   owner: { id: 'owner-2' },
+  ...rest,
 });
 
 const agreement = {
@@ -54,7 +59,11 @@ const agreement = {
   name: 'AM ag 1',
   agreementLinesCount: 5,
   orderLines: [
-    { id: '1bcd1b4f-df7d-48a3-b2c9-6fc0a0cc2c7e', poLineNumber: '20-1' }
+    {
+      id: '1bcd1b4f-df7d-48a3-b2c9-6fc0a0cc2c7e',
+      poLineNumber: '20-1',
+      titleOrPackage: 'Test PO Line title',
+    }
   ],
   lines: [
     mkPkgLine({
@@ -72,6 +81,14 @@ const agreement = {
       id: 'line-3',
       authority: 'EKB-TITLE',
       reference: '22-1887786-11234147a',
+      resourceName: 'Missing eHoldings title',
+      reference_object: {
+        error: 404,
+        message: 'Not Found',
+      },
+      note: 'This note should not display for an errored eHoldings line',
+      startDate: '2026-05-01',
+      endDate: '2026-05-31',
     }),
     mkExternalTitleLine({
       id: 'line-4',

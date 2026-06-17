@@ -1,6 +1,7 @@
 # Change history for ui-agreements
 
 ## 12.2.0 IN PROGRESS
+  * ERM-4019: Elegantly handle `404` from eHoldings to inform user of issue and display `resourceName` property for agreement lines
 
 ## 12.1.3 2026-06-04
   * ERM-4061: Focus pulled to "Replace agreement' agreement button in Related agreement card
