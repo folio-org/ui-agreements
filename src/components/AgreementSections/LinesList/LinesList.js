@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
@@ -44,21 +44,6 @@ const propTypes = {
 const columnMapping = {
   ...LINE_LISTING_COLUMN_MAPPING,
   isCustomCoverage: ' ',
-};
-
-const hasReferenceError = (line) => !!line?.reference_object?.error;
-
-// Do not render column if reference object is in error state
-const renderIfNoReferenceError = (renderFunc) => (agreementLine) => {
-  if (hasReferenceError(agreementLine)) return <></>; // return empty element to keep type consistency in formatter
-
-  return renderFunc(agreementLine);
-};
-
-const renderErroredExternalReference = (resource) => {
-  const output = [resource.authority, resource.reference].filter(Boolean).join(': ');
-
-  return resource.resourceName ? `${output} (${resource.resourceName})` : output;
 };
 
 const LinesList = ({
@@ -120,6 +105,14 @@ const LinesList = ({
     );
   };
 
+  const renderErroredExternalReference = useCallback((resource) => {
+    const output = [resource.authority, resource.reference].filter(Boolean).join(': ');
+
+    return resource.resourceName ? `${output} (${resource.resourceName})` : output;
+  }, []);
+
+  const hasReferenceError = useCallback((line) => !!line?.reference_object?.error, []);
+
   const rowUpdater = () => orderLines.map(orderLine => orderLine.id);
   return lines ? (
     <MultiColumnList
@@ -145,18 +138,20 @@ const LinesList = ({
             />
           );
         },
-        provider: renderIfNoReferenceError((agreementLine) => <EResourceProvider resource={agreementLine.resource || agreementLine} />),
-        publicationType: renderIfNoReferenceError((agreementLine) => {
+        provider: (agreementLine) => !hasReferenceError(agreementLine) && <EResourceProvider resource={agreementLine.resource || agreementLine} />,
+        publicationType: (agreementLine) => {
+          if (hasReferenceError(agreementLine)) return <></>;
+
           const resource = getResourceFromEntitlement(agreementLine);
           return isDetached(resource) ? <NoValue /> : <EResourceType resource={resource} />;
-        }),
-        activeFrom: renderIfNoReferenceError((agreementLine) => <div data-test-active-from>{renderDate(agreementLine.startDate)}</div>),
-        activeTo: renderIfNoReferenceError((agreementLine) => <div data-test-active-to>{renderDate(agreementLine.endDate)}</div>),
-        count: renderIfNoReferenceError((agreementLine) => <EResourceCount resource={getResourceFromEntitlement(agreementLine)} />),
-        note: renderIfNoReferenceError((agreementLine) => <div style={{ overflowWrap: 'break-word', maxWidth: 250, whiteSpace: 'pre-wrap' }}>{agreementLine.note}</div>),
-        coverage: renderIfNoReferenceError((agreementLine) => <Coverage line={agreementLine} />),
-        isCustomCoverage: renderIfNoReferenceError((agreementLine) => {
-          if (!agreementLine.customCoverage) return <></>;
+        },
+        activeFrom: (agreementLine) => !hasReferenceError(agreementLine) && <div data-test-active-from>{renderDate(agreementLine.startDate)}</div>,
+        activeTo: (agreementLine) => !hasReferenceError(agreementLine) && <div data-test-active-to>{renderDate(agreementLine.endDate)}</div>,
+        count: (agreementLine) => !hasReferenceError(agreementLine) && <EResourceCount resource={getResourceFromEntitlement(agreementLine)} />,
+        note: (agreementLine) => !hasReferenceError(agreementLine) && <div style={{ overflowWrap: 'break-word', maxWidth: 250, whiteSpace: 'pre-wrap' }}>{agreementLine.note}</div>,
+        coverage: (agreementLine) => !hasReferenceError(agreementLine) && <Coverage line={agreementLine} />,
+        isCustomCoverage: (agreementLine) => {
+          if (hasReferenceError(agreementLine) || !agreementLine.customCoverage) return <></>;
 
           return (
             <Tooltip
@@ -167,18 +162,22 @@ const LinesList = ({
               }
             </Tooltip>
           );
-        }),
-        poLines: renderIfNoReferenceError((agreementLine) => (
-          <IfPermission perm="orders.po-lines.collection.get">
-            {({ hasPermission }) => {
-              if (hasPermission) return renderPOLines(agreementLine);
+        },
+        poLines: (agreementLine) => {
+          if (hasReferenceError(agreementLine)) return <></>;
 
-              return agreementLine?.poLines?.length
-                ? <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" />
-                : null;
-            }}
-          </IfPermission>
-        ))
+          return (
+            <IfPermission perm="orders.po-lines.collection.get">
+              {({ hasPermission }) => {
+                if (hasPermission) return renderPOLines(agreementLine);
+
+                return agreementLine?.poLines?.length
+                  ? <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" />
+                  : null;
+              }}
+            </IfPermission>
+          );
+        }
       }}
       id="agreement-lines"
       isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.agreementLines" />}
