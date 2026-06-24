@@ -404,6 +404,7 @@
     "pci.coverage.endIssue": "End issue",
     "agreementLinePluralizable": "{count} {count, plural, one {agreement line} other {agreement lines}}",
     "agreementLine": "Agreement line",
+    "agreementLines.localKBResourceName": "Local KB resource name",
     "agreementLines.custom": "Custom",
     "agreementLines.customCoverage.coverageType": "Coverage type",
     "eresources.packageDetails": "Package details",
