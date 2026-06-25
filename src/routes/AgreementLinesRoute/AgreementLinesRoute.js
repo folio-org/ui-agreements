@@ -35,6 +35,20 @@ const SEARCH_KEYS_DICT = {
 };
 const BASE_SEARCH_KEYS = [SEARCH_KEYS_DICT.REFERENCE, SEARCH_KEYS_DICT.DESCRIPTION, SEARCH_KEYS_DICT.NOTE];
 
+const SORT_KEYS_DICT = {
+  ID: 'id',
+  REFERENCE: 'reference',
+  RESOURCE_DOT_NAME: 'resource.name',
+  RESOURCE_NAME: 'resourceName',
+};
+// Order of keys in this array determines the order of sorting in the UI
+const SORT_KEYS = [
+  SORT_KEYS_DICT.RESOURCE_DOT_NAME,
+  SORT_KEYS_DICT.RESOURCE_NAME,
+  SORT_KEYS_DICT.REFERENCE,
+  SORT_KEYS_DICT.ID
+];
+
 const AgreementLinesRoute = ({
   children,
   history,
@@ -80,7 +94,7 @@ const AgreementLinesRoute = ({
       page: currentPage,
       perPage: RESULT_COUNT_INCREMENT_MEDIUM,
       sortKeys: {
-        name: 'resource.name,reference',
+        name: SORT_KEYS.join(),
       },
       fetchExternalResources: false,
     }, (query ?? {}))
