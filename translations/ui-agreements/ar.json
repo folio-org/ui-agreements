@@ -627,7 +627,7 @@
     "settings.default": "default",
     "settings.valueFor": "قيمة الإعداد {name}",
     "errors.invalidNumber": "يرجى إدخال رقم صالح للمتابعة",
-    "errors.hasNonAlphaName": "The name can only contain Latin alphabetical characters (a-z) and non-leading numeric characters.",
+    "errors.hasNonAlphaName": "The name must start with a letter, and can only contain letters, numbers, and underscores.",
     "errors.valueNotInRange": "يرجى إدخال رقم كامل في النطاق من {min} إلى {max} للمتابعة",
     "errors.decimalValueNotInRange": "يرجى إدخال رقم في النطاق من {min} إلى {max} للمتابعة",
     "errors.maxTwoDecimals": "يرجى إدخال عدد برقمين عشريين فقط كحد أقصى",
