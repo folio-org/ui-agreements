@@ -31,7 +31,9 @@ import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 import {
   AGREEMENT_ENDPOINT,
   AGREEMENT_LINES_ENDPOINT,
-  AGREEMENT_LINES_PAGINATION_ID, AGREEMENTS_ENDPOINT,
+  AGREEMENT_LINES_PAGINATION_ID,
+  AGREEMENTS_ENDPOINT,
+  AGREEMENTS_ACCESSCONTROL_ENDPOINT,
   httpStatuses,
 } from '../../constants';
 import {
@@ -72,13 +74,18 @@ const AgreementViewRoute = ({
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
 
   const accessControlData = useGetAccess({
+    accessControlEndpoint: AGREEMENTS_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: AGREEMENTS_ENDPOINT,
     resourceId: agreementId,
-    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo]
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo],
+    policiesQueryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies']
   });
   const {
     canRead,
+    doAccessControl,
     isLoading: isAccessControlLoading,
+    isDoAccessControlLoading,
+    policies,
   } = accessControlData;
 
   // FIXME how do we want to handle an error?
@@ -247,12 +254,6 @@ const AgreementViewRoute = ({
       enabled: false,
     }
   );
-
-  const { policies } = usePolicies({
-    resourceEndpoint: AGREEMENTS_ENDPOINT,
-    resourceId: agreementId,
-    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
-  });
 
   const getCompositeAgreement = () => {
     const contacts = agreement.contacts.map((c) => ({

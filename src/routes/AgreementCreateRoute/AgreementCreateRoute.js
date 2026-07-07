@@ -20,7 +20,7 @@ import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 
-import { AGREEMENTS_ENDPOINT } from '../../constants';
+import { AGREEMENTS_ENDPOINT, AGREEMENTS_ACCESSCONTROL_ENDPOINT } from '../../constants';
 import {
   useAddFromBasket,
   useAgreementsRefdata,
@@ -82,6 +82,7 @@ const AgreementCreateRoute = ({
   });
 
   const accessControlData = useGetAccess({
+    accessControlEndpoint: AGREEMENTS_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: AGREEMENTS_ENDPOINT,
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', canDo]
   });
