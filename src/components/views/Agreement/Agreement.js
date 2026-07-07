@@ -48,14 +48,12 @@ import {
 import {
   useAgreementsContexts,
   useChunkedOrderLines,
-  useHasLicensesInterface
 } from '../../../hooks';
 
 import { urls } from '../../utilities';
 import {
   AGREEMENT_ENTITY_TYPE,
   CUSTPROP_ENDPOINT,
-  LICENSE_CUSTPROP_ENDPOINT,
   statuses
 } from '../../../constants';
 

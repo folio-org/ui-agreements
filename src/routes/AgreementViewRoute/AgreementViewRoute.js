@@ -13,7 +13,6 @@ import {
   useErmHelperApp,
   useGetAccess,
   useInterfaces,
-  usePolicies,
   INVALID_JSON_ERROR,
   JSON_ERROR,
 } from '@folio/stripes-erm-components';
@@ -82,9 +81,7 @@ const AgreementViewRoute = ({
   });
   const {
     canRead,
-    doAccessControl,
     isLoading: isAccessControlLoading,
-    isDoAccessControlLoading,
     policies,
   } = accessControlData;
 
