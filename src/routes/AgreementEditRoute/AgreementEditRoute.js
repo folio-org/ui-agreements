@@ -72,7 +72,7 @@ const AgreementEditRoute = ({
   const { basket = [] } = useBasket();
 
   const accessControlData = useGetAccess({
-    // accessControlEndpoint: AGREEMENTS_ACCESSCONTROL_ENDPOINT,
+    accessControlEndpoint: AGREEMENTS_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: AGREEMENTS_ENDPOINT,
     resourceId: agreementId,
     queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo]
