@@ -20,8 +20,11 @@ const GeneralSettingsForm = ({
   handleSubmit,
   label,
   pristine,
-  submitting
+  submitting,
+  ...props
 }) => {
+  console.log("PROPS: %o", props);
+  console.log("HANDLESUBMIT: %o", handleSubmit);
   const stripes = useStripes();
   const disabled = !stripes.hasPerm('ui-agreements.generalSettings.manage');
 

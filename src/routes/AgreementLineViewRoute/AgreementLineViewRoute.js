@@ -8,14 +8,18 @@ import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 import {
   useErmHelperApp,
   useGetAccess,
-  usePolicies,
   DELETE,
 } from '@folio/stripes-erm-components';
 import View from '../../components/views/AgreementLine';
 import { urls } from '../../components/utilities';
 
 import { useChunkedOrderLines, useSuppressFromDiscovery } from '../../hooks';
-import { AGREEMENT_ENDPOINT, AGREEMENT_LINE_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants';
+import {
+  AGREEMENT_ENDPOINT,
+  AGREEMENT_LINE_ENDPOINT,
+  AGREEMENT_LINES_ENDPOINT,
+  AGREEMENTS_ACCESSCONTROL_ENDPOINT
+} from '../../constants';
 
 const AgreementLineViewRoute = ({
   handlers,
@@ -33,13 +37,16 @@ const AgreementLineViewRoute = ({
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
 
   const accessControlData = useGetAccess({
+    accessControlEndpoint: AGREEMENTS_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: AGREEMENT_LINES_ENDPOINT,
     resourceId: lineId,
-    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', lineId, canDo]
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', lineId, canDo],
+    policiesQueryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'linePolicies', lineId],
   });
   const {
     canRead,
-    isLoading: isAccessControlLoading
+    isLoading: isAccessControlLoading,
+    policies
   } = accessControlData;
 
   const { data: agreementLine = {}, isLoading: isLineQueryLoading } = useQuery(
@@ -78,12 +85,6 @@ const AgreementLineViewRoute = ({
 
   const poLineIdsArray = (agreementLine.poLines ?? []).map(poLine => poLine.poLineId).flat();
   const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
-
-  const { policies } = usePolicies({
-    resourceEndpoint: AGREEMENT_LINES_ENDPOINT,
-    resourceId: lineId,
-    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'linePolicies', lineId],
-  });
 
   const getCompositeLine = () => {
     const poLines = (agreementLine.poLines || [])

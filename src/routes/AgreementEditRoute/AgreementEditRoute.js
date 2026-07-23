@@ -16,7 +16,6 @@ import {
   useChunkedUsers,
   useClaim,
   useGetAccess,
-  usePolicies,
   isEqualClaimPolicies
 } from '@folio/stripes-erm-components';
 
@@ -28,7 +27,8 @@ import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/proc
 import {
   AGREEMENT_ENDPOINT,
   AGREEMENT_LINES_ENDPOINT,
-  AGREEMENTS_ENDPOINT
+  AGREEMENTS_ENDPOINT,
+  AGREEMENTS_ACCESSCONTROL_ENDPOINT
 } from '../../constants';
 import { useAgreementsRefdata, useBasket } from '../../hooks';
 
@@ -71,15 +71,18 @@ const AgreementEditRoute = ({
   const { basket = [] } = useBasket();
 
   const accessControlData = useGetAccess({
+    accessControlEndpoint: AGREEMENTS_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: AGREEMENTS_ENDPOINT,
     resourceId: agreementId,
-    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo]
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo],
+    policiesQueryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
   });
 
   const {
     canRead,
     canEdit,
-    isLoading: isAccessControlLoading
+    isLoading: isAccessControlLoading,
+    policies
   } = accessControlData;
 
   const refdata = useAgreementsRefdata({
@@ -127,12 +130,6 @@ const AgreementEditRoute = ({
   const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
 
   const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
-
-  const { policies } = usePolicies({
-    resourceEndpoint: AGREEMENTS_ENDPOINT,
-    resourceId: agreementId,
-    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
-  });
 
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
