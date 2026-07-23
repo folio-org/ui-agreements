@@ -92,21 +92,21 @@ const AgreementLookup = ({ disabled, id, input: { name, value }, onResourceSelec
     <div>
       <Link
         data-test-agreement-card-name
-        to={urls.agreementView(resource.id)}
+        to={urls.agreementView(resource?.id)}
       >
-        {resource.name}
+        {resource?.name}
       </Link>
       <Row>
         <Col md={4} xs={6}>
           <KeyValue
             label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
-            value={resource.startDate ? <FormattedUTCDate value={resource.startDate} /> : <NoValue />}
+            value={resource?.startDate ? <FormattedUTCDate value={resource.startDate} /> : <NoValue />}
           />
         </Col>
         <Col md={4} xs={6}>
           <KeyValue
             label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
-            value={resource.endDate ? <FormattedUTCDate value={resource.endDate} /> : <NoValue />}
+            value={resource?.endDate ? <FormattedUTCDate value={resource.endDate} /> : <NoValue />}
           />
         </Col>
         <Col md={4} xs={12}>
