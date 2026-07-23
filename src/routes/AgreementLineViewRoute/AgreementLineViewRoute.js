@@ -8,7 +8,6 @@ import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 import {
   useErmHelperApp,
   useGetAccess,
-  usePolicies,
   DELETE,
 } from '@folio/stripes-erm-components';
 import View from '../../components/views/AgreementLine';
@@ -41,13 +40,13 @@ const AgreementLineViewRoute = ({
     accessControlEndpoint: AGREEMENTS_ACCESSCONTROL_ENDPOINT,
     resourceEndpoint: AGREEMENT_LINES_ENDPOINT,
     resourceId: lineId,
-    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', lineId, canDo]
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', lineId, canDo],
+    policiesQueryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'linePolicies', lineId],
   });
   const {
     canRead,
-    doAccessControl,
     isLoading: isAccessControlLoading,
-    isDoAccessControlLoading,
+    policies
   } = accessControlData;
 
   const { data: agreementLine = {}, isLoading: isLineQueryLoading } = useQuery(
@@ -86,14 +85,6 @@ const AgreementLineViewRoute = ({
 
   const poLineIdsArray = (agreementLine.poLines ?? []).map(poLine => poLine.poLineId).flat();
   const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
-
-  const { policies } = usePolicies({
-    resourceEndpoint: AGREEMENT_LINES_ENDPOINT,
-    resourceId: lineId,
-    doAccessControl,
-    isDoAccessControlLoading,
-    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'linePolicies', lineId],
-  });
 
   const getCompositeLine = () => {
     const poLines = (agreementLine.poLines || [])
