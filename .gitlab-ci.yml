@@ -1,0 +1,30 @@
+include:
+  # include the component located in the current project from the current SHA
+  - component: $CI_SERVER_FQDN/knowledge-integration/pipeline-utils/gitlab-components/git-sync/branch-sync@v0.0.3
+    rules:
+      - if: '$CI_COMMIT_BRANCH == "community-edition"'
+    inputs:
+      stage: synchronise
+      target_url: "ssh://git@github.com/folio-org/ui-agreements.git"
+      branches:
+        - "community-edition:community-edition"
+      ssh_key: "${SSH_FOLIO_SYNC}"
+
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "community-edition"'
+      when: always
+    - when: never
+
+stages:
+  - test
+  - synchronise
+
+replace-me:
+  stage: test
+  script:
+    - echo "Replace this as necessary, to handle the none-community steps"
+  rules:
+    - if: $CI_COMMIT_BRANCH != "community-edition"
+      when: always
+    - when: never
