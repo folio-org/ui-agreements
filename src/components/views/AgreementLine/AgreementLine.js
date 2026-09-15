@@ -214,10 +214,10 @@ const AgreementLine = ({
           appIcon={<AppIcon app="agreements" iconKey="agreementLine" />}
           lastMenu={
             <PaneMenu>
-              <ConnectedTasksJobsButton {...connectedTasksJobsProps} />
               <IfPermission perm="ui-agreements.agreements.edit">
                 <TagButton entity={line} />
               </IfPermission>
+              <ConnectedTasksJobsButton {...connectedTasksJobsProps} />
             </PaneMenu>
           }
           paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}

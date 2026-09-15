@@ -236,12 +236,12 @@ const Agreement = ({
 
     return (
       <PaneMenu>
-        <ConnectedTasksJobsButton {...connectedTasksJobsProps} />
         {stripes.hasPerm('ui-agreements.agreements.edit') && handlers.onToggleTags &&
           <TagButton
             entity={agreement}
           />
         }
+        <ConnectedTasksJobsButton {...connectedTasksJobsProps} />
       </PaneMenu>
     );
   };
