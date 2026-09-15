@@ -37,6 +37,11 @@ import {
 
 import { isExternal, urls } from '../../utilities';
 import DiscoverySettings from '../../DiscoverySettings';
+import {
+  ConnectedTasksJobsButton,
+  ConnectedTasksJobsPane,
+} from '../../ConnectedTasksJobs';
+import { CONNECTED_RECORD_TYPES } from '../../ConnectedTasksJobs/constants';
 import { AGREEMENT_LINE_ENTITY_TYPE } from '../../../constants';
 
 const propTypes = {
@@ -57,6 +62,7 @@ const propTypes = {
       endDate: PropTypes.string,
       id: PropTypes.string,
       note: PropTypes.string,
+      description: PropTypes.string,
       owner: PropTypes.shape({
         name: PropTypes.string.isRequired,
       }),
@@ -70,7 +76,10 @@ const propTypes = {
       ),
       resource: PropTypes.shape({
         _object: PropTypes.shape({}),
+        name: PropTypes.string,
       }),
+      resourceName: PropTypes.string,
+      reference: PropTypes.string,
       startDate: PropTypes.string,
       tags: PropTypes.arrayOf(
         PropTypes.shape({
@@ -134,6 +143,14 @@ const AgreementLine = ({
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const resourceName =
     resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
+  const connectedTasksJobsProps = {
+    recordId: line.id,
+    recordObject: {
+      description: line.description,
+      name: line.resource?.name ?? line.resourceName ?? line.reference,
+    },
+    recordType: CONNECTED_RECORD_TYPES.AGREEMENT_LINE,
+  };
 
   // istanbul ignore next
   const shortcuts = [
@@ -196,11 +213,12 @@ const AgreementLine = ({
           actionMenu={getActionMenu}
           appIcon={<AppIcon app="agreements" iconKey="agreementLine" />}
           lastMenu={
-            <IfPermission perm="ui-agreements.agreements.edit">
-              <PaneMenu>
+            <PaneMenu>
+              <ConnectedTasksJobsButton {...connectedTasksJobsProps} />
+              <IfPermission perm="ui-agreements.agreements.edit">
                 <TagButton entity={line} />
-              </PaneMenu>
-            </IfPermission>
+              </IfPermission>
+            </PaneMenu>
           }
           paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
           {...paneProps}
@@ -251,6 +269,7 @@ const AgreementLine = ({
             </AccordionSet>
           </AccordionStatus>
         </Pane>
+        <ConnectedTasksJobsPane {...connectedTasksJobsProps} />
         <HelperComponent
           invalidateLinks={tagsInvalidateLinks}
           link={tagsLink}
