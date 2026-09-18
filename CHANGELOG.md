@@ -4,6 +4,7 @@
   * ERM-4019: Elegantly handle `404` from eHoldings to inform user of issue and display `resourceName` property for agreement lines
   * ERM-4101: Update validation and user feedback for creating/updating the supplementary properties settings
   * ERM-4103: Extend sort in agreement lines search and filter results to include by `resourceName` and `id`
+  * ERM-4156: Add the Connected Tasks/Jobs fourth pane to Agreement and Agreement line views.
 
 ## 12.1.3 2026-06-04
   * ERM-4061: Focus pulled to "Replace agreement' agreement button in Related agreement card

@@ -1,6 +1,7 @@
 const data = {
   line: {
     id: 'e700b115-ee47-41ee-b2c1-1512946bf46a',
+    description: 'Agreement line description',
     dateCreated: '2021-11-04T16:25:52Z',
     tags: [],
     lastUpdated: '2021-11-04T16:25:52Z',

@@ -1,5 +1,8 @@
 import { MemoryRouter } from 'react-router-dom';
-import { useStripes } from '@folio/stripes/core';
+import {
+  Pluggable,
+  useStripes,
+} from '@folio/stripes/core';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button, Modal, renderWithIntl } from '@folio/stripes-erm-testing';
@@ -87,6 +90,27 @@ describe('AgreementLine', () => {
     it('renders the DiscoverySettings component', () => {
       const { getByText } = renderComponent;
       expect(getByText('DiscoverySettings')).toBeInTheDocument();
+    });
+
+    it('provides the Agreement line context to the connected Tasks/Jobs plugin', () => {
+      expect(Pluggable.mock.calls.map(([props]) => props)).toEqual(expect.arrayContaining([
+        expect.objectContaining({
+          componentType: 'ConnectedTasksJobsButton',
+          recordId: data.line.id,
+          recordObject: {
+            description: data.line.description,
+            name: data.line.resource.name,
+          },
+          recordType: 'agreementLine',
+          type: 'task-list',
+        }),
+        expect.objectContaining({
+          componentType: 'ConnectedTasksJobsPane',
+          recordId: data.line.id,
+          recordType: 'agreementLine',
+          type: 'task-list',
+        }),
+      ]));
     });
 
     describe('opening the actions menu', () => {

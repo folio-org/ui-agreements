@@ -3,6 +3,7 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button, Modal, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+import { Pluggable } from '@folio/stripes/core';
 import translationsProperties from '../../../../test/helpers';
 import Agreement from './Agreement';
 import { data, handlers } from './testResources';
@@ -156,6 +157,27 @@ describe('Agreement', () => {
     it('renders the UsageData component', () => {
       const { getByText } = renderComponent;
       expect(getByText('UsageData')).toBeInTheDocument();
+    });
+
+    it('provides the Agreement context to the connected Tasks/Jobs plugin', () => {
+      expect(Pluggable.mock.calls.map(([props]) => props)).toEqual(expect.arrayContaining([
+        expect.objectContaining({
+          componentType: 'ConnectedTasksJobsButton',
+          recordId: data.agreement.id,
+          recordObject: {
+            agreementStatus: data.agreement.agreementStatus,
+            name: data.agreement.name,
+          },
+          recordType: 'agreement',
+          type: 'task-list',
+        }),
+        expect.objectContaining({
+          componentType: 'ConnectedTasksJobsPane',
+          recordId: data.agreement.id,
+          recordType: 'agreement',
+          type: 'task-list',
+        }),
+      ]));
     });
 
     describe('opening actions menu', () => {

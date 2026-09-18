@@ -27,6 +27,11 @@ import { AccessControl, AccessControlErrorPane } from '@folio/stripes-erm-compon
 import { CustomPropertiesView } from '@k-int/stripes-kint-components';
 
 import DuplicateAgreementModal from '../../DuplicateAgreementModal';
+import {
+  ConnectedTasksJobsButton,
+  ConnectedTasksJobsPane,
+} from '../../ConnectedTasksJobs';
+import { CONNECTED_RECORD_TYPES } from '../../ConnectedTasksJobs/constants';
 
 import {
   AllPeriods,
@@ -101,6 +106,15 @@ const Agreement = ({
   const historicalLicenses = licenses.filter(l => l.status.value === statuses.HISTORICAL);
 
   const stripes = useStripes();
+
+  const connectedTasksJobsProps = {
+    recordId: data.agreement.id,
+    recordObject: {
+      agreementStatus: data.agreement.agreementStatus,
+      name: data.agreement.name,
+    },
+    recordType: CONNECTED_RECORD_TYPES.AGREEMENT,
+  };
 
   const { data: custpropContexts = [] } = useAgreementsContexts();
   // Ensure the custprops with no contexts get rendered
@@ -217,17 +231,19 @@ const Agreement = ({
     };
   };
 
-  const renderEditAgreementPaneMenu = () => {
+  const renderAgreementPaneMenu = () => {
     const { agreement } = data;
-    return stripes.hasPerm('ui-agreements.agreements.edit') ? (
+
+    return (
       <PaneMenu>
-        {handlers.onToggleTags &&
+        {stripes.hasPerm('ui-agreements.agreements.edit') && handlers.onToggleTags &&
           <TagButton
             entity={agreement}
           />
         }
+        <ConnectedTasksJobsButton {...connectedTasksJobsProps} />
       </PaneMenu>
-    ) : null;
+    );
   };
 
   const paneProps = {
@@ -279,7 +295,7 @@ const Agreement = ({
         <Pane
           actionMenu={getActionMenu}
           appIcon={<AppIcon app="agreements" />}
-          lastMenu={renderEditAgreementPaneMenu()}
+          lastMenu={renderAgreementPaneMenu()}
           paneTitle={data.agreement.name}
           {...paneProps}
         >
@@ -329,6 +345,7 @@ const Agreement = ({
             </AccordionStatus>
           </TitleManager>
         </Pane>
+        <ConnectedTasksJobsPane {...connectedTasksJobsProps} />
         <HelperComponent
           invalidateLinks={data.tagsInvalidateLinks}
           link={data.tagsLink}
